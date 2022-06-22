@@ -1,5 +1,5 @@
 import numpy as np
-from calculate_advection import calculate_advection #this probably isn't the correct method
+from .calculate_advection import calculate_advection
 
 def advection_sf(par_u, par_v, x, y, boundary="Periodic"):
     """
