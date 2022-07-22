@@ -1,7 +1,7 @@
 import numpy as np
 from .calculate_advection import calculate_advection
 
-def advection_sf(par_u, par_v, x, y, boundary="Periodic"):
+def advection_scalar(par_u, par_v, x, y, boundary="Periodic"):
     """
     Add docstring
     """
