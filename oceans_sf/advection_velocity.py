@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from .calculate_advection import calculate_advection
+from .calculate_velocity_advection import calculate_velocity_advection
 
 
 def advection_velocity(par_u, par_v, x, y, boundary="Periodic"):
@@ -21,7 +21,7 @@ def advection_velocity(par_u, par_v, x, y, boundary="Periodic"):
     xd = np.zeros(np.shape(sep))
     yd = np.zeros(np.shape(sep))
 
-    adv_E, adv_N = calculate_advection(u, v, x, y)
+    adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
     for i in range(len(sep)):
         xd[i] = (np.abs(np.roll(x, i, axis=0) - x))[len(sep)]

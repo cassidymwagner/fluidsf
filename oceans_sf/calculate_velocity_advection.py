@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calculate_advection(par_u, par_v, x, y):
+def calculate_velocity_advection(par_u, par_v, x, y):
     """
     Add docstring
     """
