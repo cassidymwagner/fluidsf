@@ -26,7 +26,7 @@ def traditional_velocity(par_u, par_v, x, y, boundary="Periodic",order=3):
         dm = np.roll(v,i,axis=0) - v
         dz3 = dz**order
         dm3 = dm**order
-        SF_z[i] = (2/3)*np.nanmean(dz3) / xd[i]
-        SF_m[i] = (2/3)*np.nanmean(dm3) / yd[i]
+        SF_z[i] = np.nanmean(dz3)
+        SF_m[i] = np.nanmean(dm3)
 
     return(SF_z,SF_m,xd,yd)

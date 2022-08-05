@@ -27,12 +27,12 @@ def advection_velocity(par_u, par_v, x, y, boundary="Periodic"):
         xd[i] = (np.abs(np.roll(x, i, axis=0) - x))[len(sep)]
         yd[i] = (np.abs(np.roll(y, i, axis=0) - y))[len(sep)]
 
-        SF_z[i] = 0.5 * np.nanmean(
+        SF_z[i] = np.nanmean(
             (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
             + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
         )
 
-        SF_m[i] = 0.5 * np.nanmean(
+        SF_m[i] = np.nanmean(
             (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
             + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
         )
@@ -43,7 +43,7 @@ def advection_velocity(par_u, par_v, x, y, boundary="Periodic"):
     for idx,xy in enumerate(sep_combinations):
         sep_distance = np.round(np.sqrt(xy[0]**2 + xy[1]**2))
 
-        SF_iso = 0.5 * np.nanmean(
+        SF_iso = np.nanmean(
             (np.roll(adv_E, xy[0]) - adv_E) * (np.roll(u, xy[0]) - u)
             + (np.roll(adv_N, xy[1]) - adv_N) * (np.roll(v, xy[1]) - v)
         ) 
