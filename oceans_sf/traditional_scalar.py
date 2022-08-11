@@ -1,6 +1,7 @@
 import numpy as np
 
-def traditional_scalar(scalar, par_u, par_v, x, y, boundary="Periodic",order=3):
+
+def traditional_scalar(scalar, par_u, par_v, x, y, boundary="Periodic", order=3):
     """
     Add docstring
     """
