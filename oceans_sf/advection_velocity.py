@@ -113,7 +113,7 @@ def advection_velocity(
         isod = None
 
     data = {
-        "SF_zonal": SF_Z,
+        "SF_zonal": SF_z,
         "SF_meridional": SF_m,
         "SF_isotropic": SF_iso,
         "x-diffs": xd,

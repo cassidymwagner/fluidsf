@@ -107,4 +107,13 @@ def advection_scalar(
     except NameError:
         isod = None
 
-    return (SF_z, SF_m, SF_iso, xd, yd, isod)
+    data = {
+        "SF_zonal": SF_z,
+        "SF_meridional": SF_m,
+        "SF_isotropic": SF_iso,
+        "x-diffs": xd,
+        "y-diffs": yd,
+        "iso-diffs": isod,
+    }
+
+    return data
