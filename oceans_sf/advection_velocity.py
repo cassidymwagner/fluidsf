@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import geopy.distance as gd
 from .calculate_velocity_advection import calculate_velocity_advection
 
 
@@ -9,6 +10,8 @@ def advection_velocity(
     x,
     y,
     boundary="Periodic",
+    even="True",
+    nbins=10,
     zonal=True,
     meridional=True,
     isotropic=False,
@@ -22,10 +25,13 @@ def advection_velocity(
     if boundary == "Periodic":
         sep = range(int(len(u) / 2))
     else:
-        sep = range(int(len(u)))
+        sep = range(int(len(u)) - 1)
 
     xd = np.zeros(np.shape(sep))
     yd = np.zeros(np.shape(sep))
+
+    if even == False:
+        d_uneven = np.zeros(np.shape(sep))
 
     if zonal == True:
         SF_z = np.zeros(np.shape(sep))
@@ -37,27 +43,43 @@ def advection_velocity(
         SF_iso = np.zeros(np.shape(sep))
 
     if zonal == False and meridional == False and isotropic == False:
-        raise Error(
+        raise SystemExit(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
     adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
     for i in range(len(sep)):
-        xd[i] = (np.abs(np.roll(x, i, axis=0) - x))[len(sep)]
-        yd[i] = (np.abs(np.roll(y, i, axis=0) - y))[len(sep)]
-
-        if zonal == True:
-            SF_z[i] = np.nanmean(
-                (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
-                + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
-            )
+        xroll = np.roll(x, i, axis=0)
+        yroll = np.roll(y, i, axis=0)
+        xd[i] = (np.abs(xroll - x))[len(sep)]
+        yd[i] = (np.abs(yroll - y))[len(sep)]
 
         if meridional == True:
             SF_m[i] = np.nanmean(
                 (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
                 + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
             )
+
+        if zonal == True:
+            if even == True:
+                SF_z[i] = np.nanmean(
+                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
+                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
+                )
+            if even == False:
+                d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+                SF_z[i] = np.nanmean(
+                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
+                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
+                )
+
+    if even == False:
+        tmp = {"d": d_uneven, "SF_z": SF_z}
+        df = pd.DataFrame(tmp)
+        means = df.groupby(pd.qcut(df["d"], q=nbins)).mean()
+        d_uneven = means["d"].values
+        SF_z = means["SF_z"].values
 
     if isotropic == True:
         sep_combinations = np.array(np.meshgrid(sep, sep)).T.reshape(-1, 2)
@@ -78,7 +100,7 @@ def advection_velocity(
         SF_iso = df_mean.iloc[:, 1]
 
     if zonal == False and meridional == False and isotropic == False:
-        raise Error(
+        raise SystemExit(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
@@ -112,6 +134,11 @@ def advection_velocity(
     except NameError:
         isod = None
 
+    try:
+        d_uneven
+    except NameError:
+        d_uneven = None
+
     data = {
         "SF_zonal": SF_z,
         "SF_meridional": SF_m,
@@ -119,6 +146,7 @@ def advection_velocity(
         "x-diffs": xd,
         "y-diffs": yd,
         "iso-diffs": isod,
+        "x-diffs_uneven": d_uneven,
     }
 
     return data
