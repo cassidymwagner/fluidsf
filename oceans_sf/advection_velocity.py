@@ -62,17 +62,13 @@ def advection_velocity(
             )
 
         if zonal == True:
-            if even == True:
-                SF_z[i] = np.nanmean(
-                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
-                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
-                )
+            SF_z[i] = np.nanmean(
+                (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
+                + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
+            )
+
             if even == False:
                 d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
-                SF_z[i] = np.nanmean(
-                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
-                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
-                )
 
     if even == False:
         tmp = {"d": d_uneven, "SF_z": SF_z}
