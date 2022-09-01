@@ -75,7 +75,7 @@ def advection_velocity(
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins)).mean()
         d_uneven = means["d"].values
-        SF_z = means["SF_z"].values
+        SF_z_uneven = means["SF_z"].values
 
     if isotropic == True:
         sep_combinations = np.array(np.meshgrid(sep, sep)).T.reshape(-1, 2)
@@ -104,6 +104,11 @@ def advection_velocity(
         SF_z
     except NameError:
         SF_z = None
+
+    try:
+        SF_z_uneven
+    except NameError:
+        SF_z_uneven = None
 
     try:
         SF_m
@@ -137,6 +142,7 @@ def advection_velocity(
 
     data = {
         "SF_zonal": SF_z,
+        "SF_zonal_uneven": SF_z_uneven,
         "SF_meridional": SF_m,
         "SF_isotropic": SF_iso,
         "x-diffs": xd,

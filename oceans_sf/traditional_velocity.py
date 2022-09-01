@@ -48,15 +48,21 @@ def traditional_velocity(
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins)).mean()
         d_uneven = means["d"].values
-        SF_z = means["SF_z"].values
+        SF_z_uneven = means["SF_z"].values
 
     try:
         d_uneven
     except NameError:
         d_uneven = None
 
+    try:
+        SF_z_uneven
+    except NameError:
+        SF_z_uneven = None
+
     data = {
         "SF_zonal": SF_z,
+        "SF_zonal_uneven": SF_z_uneven,
         "SF_meridional": SF_m,
         "x-diffs": xd,
         "y-diffs": yd,
