@@ -49,26 +49,43 @@ def advection_velocity(
 
     adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
-    for i in range(len(sep)):
-        xroll = np.roll(x, i, axis=0)
-        yroll = np.roll(y, i, axis=0)
-        xd[i] = (np.abs(xroll - x))[len(sep)]
-        yd[i] = (np.abs(yroll - y))[len(sep)]
+    if meridional == True:
+        if boundary == "Periodic":
+            sep = range(int(len(y) / 2))
+        else:
+            sep = range(int(len(y)) - 1)
 
-        if meridional == True:
+        for i in range(len(sep)):
+            xroll = np.roll(x, i, axis=0)
+            yroll = np.roll(y, i, axis=0)
+            # xd[i] = (np.abs(xroll - x))[len(sep)]
+            yd[i] = (np.abs(yroll - y))[len(sep)]
+
             SF_m[i] = np.nanmean(
                 (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
                 + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
             )
 
-        if zonal == True:
-            SF_z[i] = np.nanmean(
-                (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
-                + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
-            )
+    if zonal == True:
+        if boundary == "Periodic":
+            sep = range(int(len(x) / 2))
+        else:
+            sep = range(int(len(x)) - 1)
 
-            if even == False:
-                d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+        for i in range(len(sep)):
+            xroll = np.roll(x, i, axis=0)
+            yroll = np.roll(y, i, axis=0)
+            xd[i] = (np.abs(xroll - x))[len(sep)]
+            # yd[i] = (np.abs(yroll - y))[len(sep)]
+
+            if zonal == True:
+                SF_z[i] = np.nanmean(
+                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
+                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
+                )
+
+                if even == False:
+                    d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
 
     if even == False:
         tmp = {"d": d_uneven, "SF_z": SF_z}
@@ -78,6 +95,11 @@ def advection_velocity(
         SF_z_uneven = means["SF_z"].values
 
     if isotropic == True:
+        if boundary == "Periodic":
+            sep = range(int(len(x) / 2))
+        else:
+            sep = range(int(len(x)) - 1)
+
         sep_combinations = np.array(np.meshgrid(sep, sep)).T.reshape(-1, 2)
         tmp = np.zeros(np.shape(sep_combinations))
         for idx, xy in enumerate(sep_combinations):
