@@ -22,25 +22,42 @@ def advection_velocity(
     u = par_u
     v = par_v
 
-    if boundary == "Periodic":
-        sep = range(int(len(u) / 2))
-    else:
-        sep = range(int(len(u)) - 1)
+    # if boundary == "Periodic":
+    #     sep = range(int(len(u) / 2))
+    # else:
+    #     sep = range(int(len(u)) - 1)
 
-    xd = np.zeros(np.shape(sep))
-    yd = np.zeros(np.shape(sep))
+    # xd = np.zeros(np.shape(sep))
+    # yd = np.zeros(np.shape(sep))
 
-    if even == False:
-        d_uneven = np.zeros(np.shape(sep))
+    # if even == False:
+    #     d_uneven = np.zeros(np.shape(sep))
 
     if zonal == True:
-        SF_z = np.zeros(np.shape(sep))
+        if boundary == "Periodic":
+            sep_z = range(int(len(y) / 2))
+        else:
+            sep_z = range(int(len(y) - 1))
+
+        yd = np.zeros(np.shape(sep_z))
+
+        SF_z = np.zeros(np.shape(sep_z))
+
+        if even == False:
+            d_uneven = np.zeros(np.shape(sep_z))
 
     if meridional == True:
-        SF_m = np.zeros(np.shape(sep))
+        if boundary == "Periodic":
+            sep_m = range(int(len(x) / 2))
+        else:
+            sep_m = range(int(len(x) - 1))
 
-    if isotropic == True:
-        SF_iso = np.zeros(np.shape(sep))
+        xd = np.zeros(np.shape(sep_m))
+
+        SF_m = np.zeros(np.shape(sep_m))
+
+    # if isotropic == True:
+    #     SF_iso = np.zeros(np.shape(sep))
 
     if zonal == False and meridional == False and isotropic == False:
         raise SystemExit(
@@ -50,16 +67,16 @@ def advection_velocity(
     adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
     if meridional == True:
-        if boundary == "Periodic":
-            sep = range(int(len(y) / 2))
-        else:
-            sep = range(int(len(y)) - 1)
+        # if boundary == "Periodic":
+        #     sep = range(int(len(y) / 2))
+        # else:
+        #     sep = range(int(len(y)) - 1)
 
-        for i in range(len(sep)):
+        for i in range(len(sep_m)):
             xroll = np.roll(x, i, axis=0)
-            yroll = np.roll(y, i, axis=0)
-            # xd[i] = (np.abs(xroll - x))[len(sep)]
-            yd[i] = (np.abs(yroll - y))[len(sep)]
+            # yroll = np.roll(y, i, axis=0)
+            xd[i] = (np.abs(xroll - x))[len(sep_m)]
+            # yd[i] = (np.abs(yroll - y))[len(sep)]
 
             SF_m[i] = np.nanmean(
                 (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
@@ -67,16 +84,16 @@ def advection_velocity(
             )
 
     if zonal == True:
-        if boundary == "Periodic":
-            sep = range(int(len(x) / 2))
-        else:
-            sep = range(int(len(x)) - 1)
+        # if boundary == "Periodic":
+        #     sep = range(int(len(x) / 2))
+        # else:
+        #     sep = range(int(len(x)) - 1)
 
-        for i in range(len(sep)):
+        for i in range(len(sep_z)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
-            xd[i] = (np.abs(xroll - x))[len(sep)]
-            # yd[i] = (np.abs(yroll - y))[len(sep)]
+            # xd[i] = (np.abs(xroll - x))[len(sep)]
+            yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
             if zonal == True:
                 SF_z[i] = np.nanmean(
