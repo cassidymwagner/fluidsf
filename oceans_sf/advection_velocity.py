@@ -21,6 +21,7 @@ def advection_velocity(
     """
     u = par_u
     v = par_v
+    b = boundary
 
     # if boundary == "Periodic":
     #     sep = range(int(len(u) / 2))
@@ -64,7 +65,7 @@ def advection_velocity(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
-    adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
+    adv_E, adv_N = calculate_velocity_advection(u, v, x, y, b)
 
     if meridional == True:
         # if boundary == "Periodic":
@@ -77,11 +78,20 @@ def advection_velocity(
             # yroll = np.roll(y, i, axis=0)
             xd[i] = (np.abs(xroll - x))[len(sep_m)]
             # yd[i] = (np.abs(yroll - y))[len(sep)]
-
-            SF_m[i] = np.nanmean(
-                (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
-                + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
-            )
+            if boundary == "Periodic":
+                SF_m[i] = np.nanmean(
+                    (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
+                    + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
+                )
+            else:
+                SF_m[i] = np.nanmean(
+                    (
+                        (np.roll(adv_E, i, axis=0) - adv_E)
+                        * (np.roll(u[1:-1, 1:-1], i, axis=0) - u[1:-1, 1:-1])
+                        + (np.roll(adv_N, i, axis=0) - adv_N)
+                        * (np.roll(v[1:-1, 1:-1], i, axis=0) - v[1:-1, 1:-1])
+                    )[i:]
+                )
 
     if zonal == True:
         # if boundary == "Periodic":
@@ -96,10 +106,22 @@ def advection_velocity(
             yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
             if zonal == True:
-                SF_z[i] = np.nanmean(
-                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
-                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
-                )
+                if boundary == "Periodic":
+                    SF_z[i] = np.nanmean(
+                        (np.roll(adv_E, i, axis=1) - adv_E)
+                        * (np.roll(u, i, axis=1) - u)
+                        + (np.roll(adv_N, i, axis=1) - adv_N)
+                        * (np.roll(v, i, axis=1) - v)
+                    )
+                else:
+                    SF_z[i] = np.nanmean(
+                        (
+                            (np.roll(adv_E, i, axis=1) - adv_E)
+                            * (np.roll(u[1:-1, 1:-1], i, axis=1) - u[1:-1, 1:-1])
+                            + (np.roll(adv_N, i, axis=1) - adv_N)
+                            * (np.roll(v[1:-1, 1:-1], i, axis=1) - v[1:-1, 1:-1])
+                        )[:, i:]
+                    )
 
                 if even == False:
                     d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km

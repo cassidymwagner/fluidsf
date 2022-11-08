@@ -14,9 +14,9 @@ def traditional_velocity(
     v = par_v
 
     if boundary == "Periodic":
-        sep = range(int(len(u) / 2))
+        sep = range(int(len(y) / 2))
     else:
-        sep = range(int(len(u)))
+        sep = range(int(len(y) - 1))
 
     SF_z = np.zeros(np.shape(sep))
     SF_m = np.zeros(np.shape(sep))
@@ -34,10 +34,14 @@ def traditional_velocity(
 
         dm = np.roll(v, i, axis=0) - v
         dm3 = dm**order
+        if boundary == None:
+            dm3 = dm[i:] ** order
         SF_m[i] = np.nanmean(dm3)
 
         dz = np.roll(u, i, axis=1) - u
         dz3 = dz**order
+        if boundary == None:
+            dz3 = dz[:, i:] ** order
         SF_z[i] = np.nanmean(dz3)
 
         if even == False:
