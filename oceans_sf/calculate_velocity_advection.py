@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calculate_velocity_advection(par_u, par_v, x, y):
+def calculate_velocity_advection(par_u, par_v, x, y, boundary="Periodic"):
     """
     Add docstring
     """
@@ -21,12 +21,26 @@ def calculate_velocity_advection(par_u, par_v, x, y):
     u_jp1 = np.roll(u, -1, axis=0)
     u_jm1 = np.roll(u, 1, axis=0)
 
-    dudx = (u_ip1 - u_im1) / (2 * dx)
-    dvdx = (v_ip1 - v_im1) / (2 * dx)
-    dudy = (u_jp1 - u_jm1) / (2 * dy)
-    dvdy = (v_jp1 - v_jm1) / (2 * dy)
+    if boundary == "Periodic":
+        dudx = (u_ip1 - u_im1) / (2 * dx)
+        dvdx = (v_ip1 - v_im1) / (2 * dx)
+        dudy = (u_jp1 - u_jm1) / (2 * dy)
+        dvdy = (v_jp1 - v_jm1) / (2 * dy)
 
-    eastward_advection = u * dudx + v * dudy
-    northward_advection = u * dvdx + v * dvdy
+        eastward_advection = u * dudx + v * dudy
+        northward_advection = u * dvdx + v * dvdy
+
+    else:
+        # dudx = (u_ip1[:, :-1] - u_im1[:, 1:]) / (2 * dx)
+        # dvdx = (v_ip1[:, :-1] - v_im1[:, 1:]) / (2 * dx)
+        # dudy = (u_jp1[:-1] - u_jm1[1:]) / (2 * dy)
+        # dvdy = (v_jp1[:-1] - v_jm1[1:]) / (2 * dy)
+        dudx = (u_ip1 - u_im1) / (2 * dx)
+        dvdx = (v_ip1 - v_im1) / (2 * dx)
+        dudy = (u_jp1 - u_jm1) / (2 * dy)
+        dvdy = (v_jp1 - v_jm1) / (2 * dy)
+
+        eastward_advection = (u * dudx + v * dudy)[1:-1, 1:-1]
+        northward_advection = (u * dvdx + v * dvdy)[1:-1, 1:-1]
 
     return (eastward_advection, northward_advection)
