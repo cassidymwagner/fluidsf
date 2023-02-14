@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from .calculate_scalar_advection import calculate_scalar_advection
 
 
@@ -31,13 +32,13 @@ def advection_scalar(
     if zonal == True:
         SF_z = np.zeros(np.shape(sep))
 
-    elif meridional == True:
+    if meridional == True:
         SF_m = np.zeros(np.shape(sep))
 
-    elif isotropic == True:
+    if isotropic == True:
         SF_iso = np.zeros(np.shape(sep))
 
-    else:
+    if zonal == False and meridional == False and isotropic == False:
         raise Error(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
