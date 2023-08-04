@@ -10,6 +10,8 @@ def advection_scalar(
     x,
     y,
     boundary="Periodic",
+    even="True",
+    nbins=10,
     zonal=True,
     meridional=True,
     isotropic=False,
@@ -20,6 +22,7 @@ def advection_scalar(
     u = par_u
     v = par_v
     s = scalar
+    b = boundary
 
     if boundary == "Periodic":
         sep = range(int(len(u) / 2))
@@ -43,7 +46,7 @@ def advection_scalar(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
-    adv = calculate_scalar_advection(s, u, v, x, y)
+    adv = calculate_scalar_advection(s, u, v, x, y, b)
 
     for i in range(len(sep)):
         xd[i] = (np.abs(np.roll(x, i, axis=0) - x))[len(sep)]

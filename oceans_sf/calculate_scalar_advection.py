@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calculate_scalar_advection(scalar, par_u, par_v, x, y):
+def calculate_scalar_advection(scalar, par_u, par_v, x, y, boundary="Periodic"):
     """
     Add docstring
     """
@@ -20,6 +20,12 @@ def calculate_scalar_advection(scalar, par_u, par_v, x, y):
     dsdx = (s_ip1 - s_im1) / (2 * dx)
     dsdy = (s_jp1 - s_jm1) / (2 * dy)
 
-    advection = u * dsdx + v * dsdy
+    if boundary == "Periodic":
+
+        advection = u * dsdx + v * dsdy
+
+    else:
+
+        advection = (u * dsdx + v * dsdy)[1:-1, 1:-1]
 
     return (advection)

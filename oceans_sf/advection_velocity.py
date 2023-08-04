@@ -11,6 +11,7 @@ def advection_velocity(
     y,
     boundary="Periodic",
     even="True",
+    grid_type="uniform",
     nbins=10,
     zonal=True,
     meridional=True,
@@ -45,7 +46,7 @@ def advection_velocity(
         SF_z = np.zeros(np.shape(sep_z))
 
         if even == False:
-            d_uneven = np.zeros(np.shape(sep_z))
+            yd_uneven = np.zeros(np.shape(sep_z))
 
     if meridional == True:
         if boundary == "Periodic":
@@ -57,6 +58,9 @@ def advection_velocity(
 
         SF_m = np.zeros(np.shape(sep_m))
 
+        if even == False:
+            xd_uneven = np.zeros(np.shape(sep_m))
+
     # if isotropic == True:
     #     SF_iso = np.zeros(np.shape(sep))
 
@@ -67,15 +71,20 @@ def advection_velocity(
 
     adv_E, adv_N = calculate_velocity_advection(u, v, x, y, b)
 
+    if len(sep_m) < len(sep_z):
+        seps = sep_m
+    else:
+        seps = sep_z
+
     if meridional == True:
         # if boundary == "Periodic":
         #     sep = range(int(len(y) / 2))
         # else:
         #     sep = range(int(len(y)) - 1)
 
-        for i in range(len(sep_m)):
+        for i in range(len(seps)):
             xroll = np.roll(x, i, axis=0)
-            # yroll = np.roll(y, i, axis=0)
+            yroll = np.roll(y, i, axis=0)
             xd[i] = (np.abs(xroll - x))[len(sep_m)]
             # yd[i] = (np.abs(yroll - y))[len(sep)]
             if boundary == "Periodic":
@@ -93,44 +102,60 @@ def advection_velocity(
                     )[i:]
                 )
 
+            if even == False:
+
+                if grid_type == "latlon":
+
+                    xd_uneven[i] = gd.geodesic(
+                        (xroll[i], yroll[i]), (y[i], x[i])
+                    ).km  # Geopy takes lat,lon instead of lon,lat; may need to change later
+
+                else:
+                    xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+
     if zonal == True:
         # if boundary == "Periodic":
         #     sep = range(int(len(x) / 2))
         # else:
         #     sep = range(int(len(x)) - 1)
 
-        for i in range(len(sep_z)):
+        for i in range(len(seps)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
             # xd[i] = (np.abs(xroll - x))[len(sep)]
             yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
-            if zonal == True:
-                if boundary == "Periodic":
-                    SF_z[i] = np.nanmean(
+            if boundary == "Periodic":
+                SF_z[i] = np.nanmean(
+                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
+                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
+                )
+            else:
+                SF_z[i] = np.nanmean(
+                    (
                         (np.roll(adv_E, i, axis=1) - adv_E)
-                        * (np.roll(u, i, axis=1) - u)
+                        * (np.roll(u[1:-1, 1:-1], i, axis=1) - u[1:-1, 1:-1])
                         + (np.roll(adv_N, i, axis=1) - adv_N)
-                        * (np.roll(v, i, axis=1) - v)
-                    )
-                else:
-                    SF_z[i] = np.nanmean(
-                        (
-                            (np.roll(adv_E, i, axis=1) - adv_E)
-                            * (np.roll(u[1:-1, 1:-1], i, axis=1) - u[1:-1, 1:-1])
-                            + (np.roll(adv_N, i, axis=1) - adv_N)
-                            * (np.roll(v[1:-1, 1:-1], i, axis=1) - v[1:-1, 1:-1])
-                        )[:, i:]
-                    )
+                        * (np.roll(v[1:-1, 1:-1], i, axis=1) - v[1:-1, 1:-1])
+                    )[:, i:]
+                )
 
-                if even == False:
-                    d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+            if even == False:
+
+                if grid_type == "latlon":
+
+                    yd_uneven[i] = gd.geodesic(
+                        (xroll[i], yroll[i]), (y[i], x[i])
+                    ).km  # Geopy takes lat,lon instead of lon,lat; may need to change later
+
+                else:
+                    yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
 
     if even == False:
-        tmp = {"d": d_uneven, "SF_z": SF_z}
+        tmp = {"d": yd_uneven, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
-        means = df.groupby(pd.qcut(df["d"], q=nbins)).mean()
-        d_uneven = means["d"].values
+        means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
+        yd_uneven = means["d"].values
         SF_z_uneven = means["SF_z"].values
 
     if isotropic == True:
@@ -172,6 +197,11 @@ def advection_velocity(
         SF_z_uneven = None
 
     try:
+        SF_m_uneven
+    except NameError:
+        SF_m_uneven = None
+
+    try:
         SF_m
     except NameError:
         SF_m = None
@@ -197,9 +227,14 @@ def advection_velocity(
         isod = None
 
     try:
-        d_uneven
+        yd_uneven
     except NameError:
-        d_uneven = None
+        yd_uneven = None
+
+    try:
+        xd_uneven
+    except NameError:
+        xd_uneven = None
 
     data = {
         "SF_zonal": SF_z,
@@ -209,7 +244,8 @@ def advection_velocity(
         "x-diffs": xd,
         "y-diffs": yd,
         "iso-diffs": isod,
-        "x-diffs_uneven": d_uneven,
+        "x-diffs_uneven": xd_uneven,
+        "y-diffs_uneven": yd_uneven,
     }
 
     return data
