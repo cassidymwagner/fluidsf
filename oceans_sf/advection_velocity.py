@@ -69,7 +69,7 @@ def advection_velocity(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
-    adv_E, adv_N = calculate_velocity_advection(u, v, x, y, b)
+    adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
     if len(sep_m) < len(sep_z):
         seps = sep_m
@@ -82,7 +82,7 @@ def advection_velocity(
         # else:
         #     sep = range(int(len(y)) - 1)
 
-        for i in range(len(seps)):
+        for i in range(1, len(sep_m)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
             xd[i] = (np.abs(xroll - x))[len(sep_m)]
@@ -92,15 +92,49 @@ def advection_velocity(
                     (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
                     + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
                 )
-            else:
+            elif i != 0:
                 SF_m[i] = np.nanmean(
                     (
-                        (np.roll(adv_E, i, axis=0) - adv_E)
-                        * (np.roll(u[1:-1, 1:-1], i, axis=0) - u[1:-1, 1:-1])
-                        + (np.roll(adv_N, i, axis=0) - adv_N)
-                        * (np.roll(v[1:-1, 1:-1], i, axis=0) - v[1:-1, 1:-1])
-                    )[i:]
+                        (
+                            np.pad(
+                                adv_E,
+                                ((i, 0), (0, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:-i, :]
+                            - adv_E
+                        )
+                        * (
+                            np.pad(
+                                u,
+                                ((i, 0), (0, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:-i, :]
+                            - u
+                        )
+                        + (
+                            np.pad(
+                                adv_N,
+                                ((i, 0), (0, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:-i, :]
+                            - adv_N
+                        )
+                        * (
+                            np.pad(
+                                v,
+                                ((i, 0), (0, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:-i, :]
+                            - v
+                        )
+                    )
                 )
+            else:
+                pass
 
             if even == False:
 
@@ -111,7 +145,11 @@ def advection_velocity(
                     ).km  # Geopy takes lat,lon instead of lon,lat; may need to change later
 
                 else:
-                    xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+                    # xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+                    xroll = np.pad(
+                        np.float64(x), (i, 0), "constant", constant_values=np.nan
+                    )[:-i]
+                    xd_uneven[i] = np.abs(xroll - x)[i]
 
     if zonal == True:
         # if boundary == "Periodic":
@@ -119,7 +157,7 @@ def advection_velocity(
         # else:
         #     sep = range(int(len(x)) - 1)
 
-        for i in range(len(seps)):
+        for i in range(1, len(sep_z)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
             # xd[i] = (np.abs(xroll - x))[len(sep)]
@@ -130,15 +168,49 @@ def advection_velocity(
                     (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
                     + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
                 )
-            else:
+            elif i != 0:
                 SF_z[i] = np.nanmean(
                     (
-                        (np.roll(adv_E, i, axis=1) - adv_E)
-                        * (np.roll(u[1:-1, 1:-1], i, axis=1) - u[1:-1, 1:-1])
-                        + (np.roll(adv_N, i, axis=1) - adv_N)
-                        * (np.roll(v[1:-1, 1:-1], i, axis=1) - v[1:-1, 1:-1])
-                    )[:, i:]
+                        (
+                            np.pad(
+                                adv_E,
+                                ((0, 0), (i, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:, :-i]
+                            - adv_E
+                        )
+                        * (
+                            np.pad(
+                                u,
+                                ((0, 0), (i, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:, :-i]
+                            - u
+                        )
+                        + (
+                            np.pad(
+                                adv_N,
+                                ((0, 0), (i, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:, :-i]
+                            - adv_N
+                        )
+                        * (
+                            np.pad(
+                                v,
+                                ((0, 0), (i, 0)),
+                                mode="constant",
+                                constant_values=np.nan,
+                            )[:, :-i]
+                            - v
+                        )
+                    )
                 )
+            else:
+                pass
 
             if even == False:
 
@@ -149,7 +221,12 @@ def advection_velocity(
                     ).km  # Geopy takes lat,lon instead of lon,lat; may need to change later
 
                 else:
-                    yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+                    # yroll = np.roll(y, i, axis=0)
+                    yroll = np.pad(
+                        np.float64(y), (i, 0), "constant", constant_values=np.nan
+                    )[:-i]
+                    yd_uneven[i] = np.abs(yroll - y)[i]
+                    # yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
 
     if even == False:
         tmp = {"d": yd_uneven, "SF_z": SF_z}

@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-import geopy.distance as gd
+
+# import geopy.distance as gd
 
 
 def traditional_velocity(
@@ -64,47 +65,77 @@ def traditional_velocity(
 
     if meridional == True:
 
-        for i in range(len(seps)):
+        for i in range(1, len(sep_m)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
             xd[i] = (np.abs(xroll - x))[len(sep_m)]
-            dm = np.roll(v, i, axis=0) - v
 
             if boundary == "Periodic":
+                dm = np.roll(v, i, axis=0) - v
+                dm3 = dm**order
 
+            elif i != 0:
+                dm = (
+                    np.pad(
+                        v,
+                        ((0, i), (0, 0)),
+                        mode="constant",
+                        constant_values=np.nan,
+                    )[i:, :]
+                    - v
+                )
                 dm3 = dm**order
 
             else:
-                dm3 = dm[i:] ** order
+                pass
 
             SF_m[i] = np.nanmean(dm3)
 
             if even == False:
                 if grid_type == "latlon":
-                    xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (y[i], x[i])).km
+                    # xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (y[i], x[i])).km
+                    pass
                 else:
-                    xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+                    xroll = np.pad(
+                        np.float64(x), (i, 0), "constant", constant_values=np.nan
+                    )[:-i]
+                    xd_uneven[i] = np.abs(xroll - x)[i]
 
     if zonal == True:
 
-        for i in range(len(seps)):
+        for i in range(1, len(sep_z)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
             yd[i] = (np.abs(yroll - y))[len(sep_z)]
-            dz = np.roll(u, i, axis=1) - u
 
             if boundary == "Periodic":
+                dz = np.roll(u, i, axis=1) - u
+                dz3 = dz**order
+            elif i != 0:
+                dz = (
+                    np.pad(
+                        u,
+                        ((0, 0), (i, 0)),
+                        mode="constant",
+                        constant_values=np.nan,
+                    )[:, :-i]
+                    - u
+                )
                 dz3 = dz**order
             else:
-                dz3 = dz[:, i:] ** order
+                pass
 
             SF_z[i] = np.nanmean(dz3)
 
             if even == False:
                 if grid_type == "latlon":
-                    yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (y[i], x[i])).km
+                    # yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (y[i], x[i])).km
+                    pass
                 else:
-                    yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+                    yroll = np.pad(
+                        np.float64(y), (i, 0), "constant", constant_values=np.nan
+                    )[:-i]
+                    yd_uneven[i] = np.abs(yroll - y)[i]
 
     if even == False:
         tmp = {"d": yd_uneven, "SF_z": SF_z}
