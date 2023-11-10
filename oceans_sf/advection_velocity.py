@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import geopy.distance as gd
 from .calculate_velocity_advection import calculate_velocity_advection
 
 
@@ -22,18 +21,6 @@ def advection_velocity(
     """
     u = par_u
     v = par_v
-    b = boundary
-
-    # if boundary == "Periodic":
-    #     sep = range(int(len(u) / 2))
-    # else:
-    #     sep = range(int(len(u)) - 1)
-
-    # xd = np.zeros(np.shape(sep))
-    # yd = np.zeros(np.shape(sep))
-
-    # if even == False:
-    #     d_uneven = np.zeros(np.shape(sep))
 
     if zonal == True:
         if boundary == "Periodic":
@@ -61,9 +48,6 @@ def advection_velocity(
         if even == False:
             xd_uneven = np.zeros(np.shape(sep_m))
 
-    # if isotropic == True:
-    #     SF_iso = np.zeros(np.shape(sep))
-
     if zonal == False and meridional == False and isotropic == False:
         raise SystemExit(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
@@ -77,156 +61,97 @@ def advection_velocity(
         seps = sep_z
 
     if meridional == True:
-        # if boundary == "Periodic":
-        #     sep = range(int(len(y) / 2))
-        # else:
-        #     sep = range(int(len(y)) - 1)
 
         for i in range(1, len(sep_m)):
-            xroll = np.roll(x, i, axis=0)
-            yroll = np.roll(y, i, axis=0)
-            xd[i] = (np.abs(xroll - x))[len(sep_m)]
-            # yd[i] = (np.abs(yroll - y))[len(sep)]
+
+            xroll = np.full(np.shape(x), np.nan)
+            yroll = np.full(np.shape(y), np.nan)
+
+            adv_E_roll = np.full(np.shape(adv_E), np.nan)
+            adv_N_roll = np.full(np.shape(adv_N), np.nan)
+            u_roll = np.full(np.shape(u), np.nan)
+            v_roll = np.full(np.shape(v), np.nan)
+
             if boundary == "Periodic":
-                SF_m[i] = np.nanmean(
-                    (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
-                    + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
-                )
-            elif i != 0:
-                SF_m[i] = np.nanmean(
-                    (
-                        (
-                            np.pad(
-                                adv_E,
-                                ((i, 0), (0, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:-i, :]
-                            - adv_E
-                        )
-                        * (
-                            np.pad(
-                                u,
-                                ((i, 0), (0, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:-i, :]
-                            - u
-                        )
-                        + (
-                            np.pad(
-                                adv_N,
-                                ((i, 0), (0, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:-i, :]
-                            - adv_N
-                        )
-                        * (
-                            np.pad(
-                                v,
-                                ((i, 0), (0, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:-i, :]
-                            - v
-                        )
-                    )
-                )
+
+                xroll[:i] = x[-i:]
+                xroll[i:] = x[:-i]
+                yroll[:i] = y[-i:]
+                yroll[i:] = y[:-i]
+
+                adv_E_roll[:i, :] = adv_E[-i:, :]
+                adv_E_roll[i:, :] = adv_E[:-i, :]
+                adv_N_roll[:i, :] = adv_N[-i:, :]
+                adv_N_roll[i:, :] = adv_N[:-i, :]
+
+                u_roll[:i, :] = u[-i:, :]
+                u_roll[i:, :] = u[:-i, :]
+                v_roll[:i, :] = v[-i:, :]
+                v_roll[i:, :] = v[:-i, :]
+
             else:
-                pass
 
-            if even == False:
+                xroll[i:] = x[:-i]
+                yroll[i:] = y[:-i]
 
-                if grid_type == "latlon":
+                adv_E_roll[i:, :] = adv_E[:-i, :]
+                adv_N_roll[i:, :] = adv_N[:-i, :]
+                u_roll[i:, :] = u[:-i, :]
+                v_roll[i:, :] = v[:-i, :]
 
-                    xd_uneven[i] = gd.geodesic(
-                        (xroll[i], yroll[i]), (y[i], x[i])
-                    ).km  # Geopy takes lat,lon instead of lon,lat; may need to change later
+            SF_m[i] = np.nanmean(
+                (adv_E_roll - adv_E) * (u_roll - u)
+                + (adv_N_roll - adv_N) * (v_roll - v)
+            )
 
-                else:
-                    # xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
-                    xroll = np.pad(
-                        np.float64(x), (i, 0), "constant", constant_values=np.nan
-                    )[:-i]
-                    xd_uneven[i] = np.abs(xroll - x)[i]
+            xd[i] = (np.abs(xroll - x))[len(sep_m)]
+            # yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
     if zonal == True:
-        # if boundary == "Periodic":
-        #     sep = range(int(len(x) / 2))
-        # else:
-        #     sep = range(int(len(x)) - 1)
 
         for i in range(1, len(sep_z)):
-            xroll = np.roll(x, i, axis=0)
-            yroll = np.roll(y, i, axis=0)
-            # xd[i] = (np.abs(xroll - x))[len(sep)]
-            yd[i] = (np.abs(yroll - y))[len(sep_z)]
+            xroll = np.full(np.shape(x), np.nan)
+            yroll = np.full(np.shape(y), np.nan)
+
+            adv_E_roll = np.full(np.shape(adv_E), np.nan)
+            adv_N_roll = np.full(np.shape(adv_N), np.nan)
+            u_roll = np.full(np.shape(u), np.nan)
+            v_roll = np.full(np.shape(v), np.nan)
 
             if boundary == "Periodic":
-                SF_z[i] = np.nanmean(
-                    (np.roll(adv_E, i, axis=1) - adv_E) * (np.roll(u, i, axis=1) - u)
-                    + (np.roll(adv_N, i, axis=1) - adv_N) * (np.roll(v, i, axis=1) - v)
-                )
-            elif i != 0:
-                SF_z[i] = np.nanmean(
-                    (
-                        (
-                            np.pad(
-                                adv_E,
-                                ((0, 0), (i, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:, :-i]
-                            - adv_E
-                        )
-                        * (
-                            np.pad(
-                                u,
-                                ((0, 0), (i, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:, :-i]
-                            - u
-                        )
-                        + (
-                            np.pad(
-                                adv_N,
-                                ((0, 0), (i, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:, :-i]
-                            - adv_N
-                        )
-                        * (
-                            np.pad(
-                                v,
-                                ((0, 0), (i, 0)),
-                                mode="constant",
-                                constant_values=np.nan,
-                            )[:, :-i]
-                            - v
-                        )
-                    )
-                )
+
+                xroll[:i] = x[-i:]
+                xroll[i:] = x[:-i]
+                yroll[:i] = y[-i:]
+                yroll[i:] = y[:-i]
+
+                adv_E_roll[:, :i] = adv_E[:, -i:]
+                adv_E_roll[:, i:] = adv_E[:, :-i]
+                adv_N_roll[:, :i] = adv_N[:, -i:]
+                adv_N_roll[:, i:] = adv_N[:, :-i]
+
+                u_roll[:, :i] = u[:, -i:]
+                u_roll[:, i:] = u[:, :-i]
+                v_roll[:, :i] = v[:, -i:]
+                v_roll[:, i:] = v[:, :-i]
+
             else:
-                pass
 
-            if even == False:
+                xroll[i:] = x[:-i]
+                yroll[i:] = y[:-i]
 
-                if grid_type == "latlon":
+                adv_E_roll[:, i:] = adv_E[:, :-i]
+                adv_N_roll[:, i:] = adv_N[:, :-i]
+                u_roll[:, i:] = u[:, :-i]
+                v_roll[:, i:] = v[:, :-i]
 
-                    yd_uneven[i] = gd.geodesic(
-                        (xroll[i], yroll[i]), (y[i], x[i])
-                    ).km  # Geopy takes lat,lon instead of lon,lat; may need to change later
+            SF_z[i] = np.nanmean(
+                (adv_E_roll - adv_E) * (u_roll - u)
+                + (adv_N_roll - adv_N) * (v_roll - v)
+            )
 
-                else:
-                    # yroll = np.roll(y, i, axis=0)
-                    yroll = np.pad(
-                        np.float64(y), (i, 0), "constant", constant_values=np.nan
-                    )[:-i]
-                    yd_uneven[i] = np.abs(yroll - y)[i]
-                    # yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+            # xd[i] = (np.abs(xroll - x))[len(sep_m)]
+            yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
     if even == False:
         tmp = {"d": yd_uneven, "SF_z": SF_z}

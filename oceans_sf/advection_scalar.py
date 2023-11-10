@@ -22,44 +22,121 @@ def advection_scalar(
     u = par_u
     v = par_v
     s = scalar
-    b = boundary
-
-    if boundary == "Periodic":
-        sep = range(int(len(u) / 2))
-    else:
-        sep = range(int(len(u)))
-
-    xd = np.zeros(np.shape(sep))
-    yd = np.zeros(np.shape(sep))
 
     if zonal == True:
-        SF_z = np.zeros(np.shape(sep))
+        if boundary == "Periodic":
+            sep_z = range(int(len(y) / 2))
+        else:
+            sep_z = range(int(len(y) - 1))
+
+        yd = np.zeros(np.shape(sep_z))
+
+        SF_z = np.zeros(np.shape(sep_z))
+
+        if even == False:
+            yd_uneven = np.zeros(np.shape(sep_z))
 
     if meridional == True:
-        SF_m = np.zeros(np.shape(sep))
+        if boundary == "Periodic":
+            sep_m = range(int(len(x) / 2))
+        else:
+            sep_m = range(int(len(x) - 1))
+
+        xd = np.zeros(np.shape(sep_m))
+
+        SF_m = np.zeros(np.shape(sep_m))
+
+        if even == False:
+            xd_uneven = np.zeros(np.shape(sep_m))
 
     if isotropic == True:
         SF_iso = np.zeros(np.shape(sep))
 
     if zonal == False and meridional == False and isotropic == False:
-        raise Error(
+        raise SystemExit(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
-    adv = calculate_scalar_advection(s, u, v, x, y, b)
+    adv = calculate_scalar_advection(s, u, v, x, y)
 
-    for i in range(len(sep)):
-        xd[i] = (np.abs(np.roll(x, i, axis=0) - x))[len(sep)]
-        yd[i] = (np.abs(np.roll(y, i, axis=0) - y))[len(sep)]
+    if meridional == True:
 
-        if zonal == True:
-            SF_z[i] = np.nanmean(
-                (np.roll(adv, i, axis=1) - adv) * (np.roll(s, i, axis=1) - s)
-            )
-        if meridional == True:
+        for i in range(1, len(sep_m)):
+            xroll = np.full(np.shape(x), np.nan)
+            yroll = np.full(np.shape(y), np.nan)
+
+            adv_roll = np.full(np.shape(adv), np.nan)
+            s_roll = np.full(np.shape(s), np.nan)
+
+            if boundary == "Periodic":
+
+                xroll[:i] = x[-i:]
+                xroll[i:] = x[:-i]
+                yroll[:i] = y[-i:]
+                yroll[i:] = y[:-i]
+
+                adv_roll[:i, :] = adv[-i:, :]
+                adv_roll[i:, :] = adv[:-i, :]
+
+                s_roll[:i, :] = s[-i:, :]
+                s_roll[i:, :] = s[:-i, :]
+
+            else:
+
+                xroll[i:] = x[:-i]
+                yroll[i:] = y[:-i]
+
+                adv_roll[i:, :] = adv[:-i, :]
+                s_roll[i:, :] = s[:-i, :]
+
             SF_m[i] = np.nanmean(
-                (np.roll(adv, i, axis=0) - adv) * (np.roll(s, i, axis=0) - s)
+                (adv_roll - adv) * (s_roll - s)
             )
+
+            xd[i] = (np.abs(xroll - x))[len(sep_m)]
+
+    if zonal == True:
+
+        for i in range(1, len(sep_z)):
+            xroll = np.full(np.shape(x), np.nan)
+            yroll = np.full(np.shape(y), np.nan)
+
+            adv_roll = np.full(np.shape(adv), np.nan)
+            s_roll = np.full(np.shape(s), np.nan)
+
+            if boundary == "Periodic":
+
+                xroll[:i] = x[-i:]
+                xroll[i:] = x[:-i]
+                yroll[:i] = y[-i:]
+                yroll[i:] = y[:-i]
+
+                adv_roll[:, :i] = adv[:, -i:]
+                adv_roll[:, i:] = adv[:, :-i]
+
+                s_roll[:, :i] = s[:, -i:]
+                s_roll[:, i:] = s[:, :-i]
+
+            else:
+
+                xroll[i:] = x[:-i]
+                yroll[i:] = y[:-i]
+
+                adv_roll[:, i:] = adv[:, :-i]
+                s_roll[:, i:] = s[:, :-i]
+
+            SF_z[i] = np.nanmean(
+                (adv_roll - adv) * (s_roll - s)
+            )
+
+            yd[i] = (np.abs(yroll - y))[len(sep_z)]
+
+    if even == False:
+        tmp = {"d": yd_uneven, "SF_z": SF_z}
+        df = pd.DataFrame(tmp)
+        means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
+        yd_uneven = means["d"].values
+        SF_z_uneven = means["SF_z"].values
 
     if isotropic == True:
         sep_combinations = np.array(np.meshgrid(sep, sep)).T.reshape(-1, 2)
@@ -77,7 +154,7 @@ def advection_scalar(
         SF_iso = df_mean.iloc[:, 1]
 
     if zonal == False and meridional == False and isotropic == False:
-        raise Error(
+        raise SystemExit(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
@@ -85,6 +162,16 @@ def advection_scalar(
         SF_z
     except NameError:
         SF_z = None
+
+    try:
+        SF_z_uneven
+    except NameError:
+        SF_z_uneven = None
+
+    try:
+        SF_m_uneven
+    except NameError:
+        SF_m_uneven = None
 
     try:
         SF_m
@@ -111,13 +198,26 @@ def advection_scalar(
     except NameError:
         isod = None
 
+    try:
+        yd_uneven
+    except NameError:
+        yd_uneven = None
+
+    try:
+        xd_uneven
+    except NameError:
+        xd_uneven = None
+
     data = {
         "SF_zonal": SF_z,
+        "SF_zonal_uneven": SF_z_uneven,
         "SF_meridional": SF_m,
         "SF_isotropic": SF_iso,
         "x-diffs": xd,
         "y-diffs": yd,
         "iso-diffs": isod,
+        "x-diffs_uneven": xd_uneven,
+        "y-diffs_uneven": yd_uneven,
     }
 
     return data
