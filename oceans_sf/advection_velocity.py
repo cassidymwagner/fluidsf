@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from .calculate_velocity_advection import calculate_velocity_advection
+from geopy.distance import great_circle
 
 
 def advection_velocity(
@@ -8,6 +9,8 @@ def advection_velocity(
     par_v,
     x,
     y,
+    dx=None,
+    dy=None,
     boundary="Periodic",
     even="True",
     grid_type="uniform",
@@ -53,7 +56,13 @@ def advection_velocity(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
-    adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
+    if grid_type == 'latlon':
+
+        adv_E, adv_N = calculate_velocity_advection(
+            u, v, x, y, dx, dy, grid_type)
+
+    else:
+        adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
     if len(sep_m) < len(sep_z):
         seps = sep_m
@@ -61,6 +70,9 @@ def advection_velocity(
         seps = sep_z
 
     if meridional == True:
+
+        if grid_type == 'latlon':
+            sep_m = seps
 
         for i in range(1, len(sep_m)):
 
@@ -104,10 +116,16 @@ def advection_velocity(
                 + (adv_N_roll - adv_N) * (v_roll - v)
             )
 
-            xd[i] = (np.abs(xroll - x))[len(sep_m)]
-            # yd[i] = (np.abs(yroll - y))[len(sep_z)]
+            if grid_type == 'latlon':
+                xd[i] = np.abs(great_circle(
+                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+            else:
+                xd[i] = (np.abs(xroll - x))[len(sep_m)]
 
     if zonal == True:
+
+        if grid_type == 'latlon':
+            sep_z = seps
 
         for i in range(1, len(sep_z)):
             xroll = np.full(np.shape(x), np.nan)
@@ -150,11 +168,14 @@ def advection_velocity(
                 + (adv_N_roll - adv_N) * (v_roll - v)
             )
 
-            # xd[i] = (np.abs(xroll - x))[len(sep_m)]
-            yd[i] = (np.abs(yroll - y))[len(sep_z)]
+            if grid_type == 'latlon':
+                yd[i] = np.abs(great_circle(
+                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+            else:
+                yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
     if even == False:
-        tmp = {"d": yd_uneven, "SF_z": SF_z}
+        tmp = {"d": yd, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
         yd_uneven = means["d"].values

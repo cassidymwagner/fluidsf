@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from .calculate_scalar_advection import calculate_scalar_advection
+from geopy.distance import great_circle
 
 
 def advection_scalar(
@@ -9,8 +10,11 @@ def advection_scalar(
     par_v,
     x,
     y,
+    dx=None,
+    dy=None,
     boundary="Periodic",
     even="True",
+    grid_type="uniform"
     nbins=10,
     zonal=True,
     meridional=True,
@@ -57,9 +61,23 @@ def advection_scalar(
             "You must select at least one of the sampling options: meridional, zonal, or isotropic."
         )
 
-    adv = calculate_scalar_advection(s, u, v, x, y)
+    if grid_type == 'latlon':
+
+        adv = calculate_scalar_advection(s, u, v, x, y, dx, dy, grid_type)
+
+    else:
+
+        adv = calculate_scalar_advection(s, u, v, x, y)
+
+    if len(sep_m) < len(sep_z):
+        seps = sep_m
+    else:
+        seps = sep_z
 
     if meridional == True:
+
+        if grid_type == 'latlon':
+            sep_m = seps
 
         for i in range(1, len(sep_m)):
             xroll = np.full(np.shape(x), np.nan)
@@ -93,9 +111,16 @@ def advection_scalar(
                 (adv_roll - adv) * (s_roll - s)
             )
 
-            xd[i] = (np.abs(xroll - x))[len(sep_m)]
+            if grid_type == 'latlon':
+                xd[i] = np.abs(great_circle(
+                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+            else:
+                xd[i] = (np.abs(xroll - x))[len(sep_m)]
 
     if zonal == True:
+
+        if grid_type == 'latlon':
+            sep_z = seps
 
         for i in range(1, len(sep_z)):
             xroll = np.full(np.shape(x), np.nan)
@@ -129,7 +154,11 @@ def advection_scalar(
                 (adv_roll - adv) * (s_roll - s)
             )
 
-            yd[i] = (np.abs(yroll - y))[len(sep_z)]
+            if grid_type == 'latlon':
+                yd[i] = np.abs(great_circle(
+                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+            else:
+                yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
     if even == False:
         tmp = {"d": yd_uneven, "SF_z": SF_z}

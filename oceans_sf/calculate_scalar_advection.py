@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calculate_scalar_advection(scalar, par_u, par_v, x, y):
+def calculate_scalar_advection(scalar, par_u, par_v, x, y, dx=None, dy=None, grid_type='uniform'):
     """
     Add docstring
     """
@@ -9,10 +9,20 @@ def calculate_scalar_advection(scalar, par_u, par_v, x, y):
     v = par_v
     s = scalar
 
-    dx = 2 * np.abs(x[0] - x[1])
-    dy = 2 * np.abs(y[0] - y[1])
+    if grid_type == 'latlon':
 
-    dsdx, dsdy = np.gradient(s, dx, dy, axis=(1,0))
+        xcoords = dx.cumsum()
+        ycoords = dy.cumsum()
+
+        dsdx, dsdy = np.gradient(s, xcoords, ycoords, axis = (0,1))
+    
+    else:
+
+        dx = np.abs(x[0] - x[1])
+        dy = np.abs(y[0] - y[1])
+
+        dsdx, dsdy = np.gradient(s, dx, dy, axis=(0,1))
+    
     advection = u * dsdx + v * dsdy
 
     return (advection)
