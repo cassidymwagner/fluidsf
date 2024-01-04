@@ -14,7 +14,7 @@ def advection_scalar(
     dy=None,
     boundary="Periodic",
     even="True",
-    grid_type="uniform"
+    grid_type="uniform",
     nbins=10,
     zonal=True,
     meridional=True,
@@ -113,7 +113,7 @@ def advection_scalar(
 
             if grid_type == 'latlon':
                 xd[i] = np.abs(great_circle(
-                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+                    (xroll[i], y[i]), (x[i], y[i])).meters)
             else:
                 xd[i] = (np.abs(xroll - x))[len(sep_m)]
 
@@ -156,12 +156,12 @@ def advection_scalar(
 
             if grid_type == 'latlon':
                 yd[i] = np.abs(great_circle(
-                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+                    (x[i], yroll[i]), (x[i], y[i])).meters)
             else:
                 yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
     if even == False:
-        tmp = {"d": yd_uneven, "SF_z": SF_z}
+        tmp = {"d": yd, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
         yd_uneven = means["d"].values
