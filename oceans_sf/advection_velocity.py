@@ -118,7 +118,7 @@ def advection_velocity(
 
             if grid_type == 'latlon':
                 xd[i] = np.abs(great_circle(
-                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+                    (xroll[i], y[i]), (x[i], y[i])).meters)
             else:
                 xd[i] = (np.abs(xroll - x))[len(sep_m)]
 
@@ -170,7 +170,7 @@ def advection_velocity(
 
             if grid_type == 'latlon':
                 yd[i] = np.abs(great_circle(
-                    (xroll[i], yroll[i]), (x[i], y[i])).meters)
+                    (x[i], yroll[i]), (x[i], y[i])).meters)
             else:
                 yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
