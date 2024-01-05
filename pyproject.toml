@@ -17,6 +17,11 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest>=7,<8",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/cassidymwagner/oceans_sf"
 "Bug Tracker" = "https://github.com/cassidymwagner/oceans_sf/issues"
