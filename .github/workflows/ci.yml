@@ -36,6 +36,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pip install .[test]
+        pip install pytest
 
     - name: Test
       run: |
