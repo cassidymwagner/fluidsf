@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from oceans_sf.calculate_velocity_advection import calculate_velocity_advection
 
 
@@ -14,11 +15,9 @@ from oceans_sf.calculate_velocity_advection import calculate_velocity_advection
             None,
             None,
             "uniform",
-            tuple(
-                (
-                    np.array([[0] * 3 for i in range(3)]),
-                    np.array([[0] * 3 for i in range(3)]),
-                ),
+            (
+                np.array([[0] * 3 for i in range(3)]),
+                np.array([[0] * 3 for i in range(3)]),
             ),
         ),
         (
@@ -29,11 +28,9 @@ from oceans_sf.calculate_velocity_advection import calculate_velocity_advection
             None,
             None,
             "uniform",
-            tuple(
-                (
-                    np.array([[0] * 3 for i in range(3)]),
-                    np.array([[0] * 3 for i in range(3)]),
-                ),
+            (
+                np.array([[0] * 3 for i in range(3)]),
+                np.array([[0] * 3 for i in range(3)]),
             ),
         ),
         (
@@ -44,22 +41,20 @@ from oceans_sf.calculate_velocity_advection import calculate_velocity_advection
             None,
             None,
             "uniform",
-            tuple(
-                (
-                    np.array(
-                        [
-                            [2 * 2, 2 * 4, 2 * 6],
-                            [2 * 8, 2 * 10, 2 * 12],
-                            [2 * 14, 2 * 16, 2 * 18],
-                        ]
-                    ),
-                    np.array(
-                        [
-                            [2 * 2, 2 * 4, 2 * 6],
-                            [2 * 8, 2 * 10, 2 * 12],
-                            [2 * 14, 2 * 16, 2 * 18],
-                        ]
-                    ),
+            (
+                np.array(
+                    [
+                        [2 * 2, 2 * 4, 2 * 6],
+                        [2 * 8, 2 * 10, 2 * 12],
+                        [2 * 14, 2 * 16, 2 * 18],
+                    ]
+                ),
+                np.array(
+                    [
+                        [2 * 2, 2 * 4, 2 * 6],
+                        [2 * 8, 2 * 10, 2 * 12],
+                        [2 * 14, 2 * 16, 2 * 18],
+                    ]
                 ),
             ),
         ),
