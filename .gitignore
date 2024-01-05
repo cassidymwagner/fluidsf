@@ -88,3 +88,6 @@ ENV/
 env.bak/
 venv.bak/
 
+# Linting
+.mypy_cache
+.ruff_cache
