@@ -1,3 +1,5 @@
+[![CI](https://github.com/cassidymwagner/oceans_sf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cassidymwagner/oceans_sf/actions/workflows/ci.yml)
+
 # Oceans-SF
  Oceans-SF is a package used to calculate structure functions from oceanographic data. 
 
