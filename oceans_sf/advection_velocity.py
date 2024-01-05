@@ -1,40 +1,30 @@
 import numpy as np
 import pandas as pd
-import geopy.distance as gd
+from geopy.distance import great_circle
+
 from .calculate_velocity_advection import calculate_velocity_advection
 
 
-def advection_velocity(
+def advection_velocity(  # noqa: C901
     par_u,
     par_v,
     x,
     y,
+    dx=None,
+    dy=None,
     boundary="Periodic",
     even="True",
+    grid_type="uniform",
     nbins=10,
     zonal=True,
     meridional=True,
     isotropic=False,
 ):
-    """
-    Add docstring
-    """
+    """Add docstring."""
     u = par_u
     v = par_v
-    b = boundary
 
-    # if boundary == "Periodic":
-    #     sep = range(int(len(u) / 2))
-    # else:
-    #     sep = range(int(len(u)) - 1)
-
-    # xd = np.zeros(np.shape(sep))
-    # yd = np.zeros(np.shape(sep))
-
-    # if even == False:
-    #     d_uneven = np.zeros(np.shape(sep))
-
-    if zonal == True:
+    if zonal is True:
         if boundary == "Periodic":
             sep_z = range(int(len(y) / 2))
         else:
@@ -44,10 +34,10 @@ def advection_velocity(
 
         SF_z = np.zeros(np.shape(sep_z))
 
-        if even == False:
-            d_uneven = np.zeros(np.shape(sep_z))
+        if even is False:
+            yd_uneven = np.zeros(np.shape(sep_z))
 
-    if meridional == True:
+    if meridional is True:
         if boundary == "Periodic":
             sep_m = range(int(len(x) / 2))
         else:
@@ -57,83 +47,130 @@ def advection_velocity(
 
         SF_m = np.zeros(np.shape(sep_m))
 
-    # if isotropic == True:
-    #     SF_iso = np.zeros(np.shape(sep))
+        if even is False:
+            xd_uneven = np.zeros(np.shape(sep_m))
 
-    if zonal == False and meridional == False and isotropic == False:
+    if zonal is False and meridional is False and isotropic is False:
         raise SystemExit(
-            "You must select at least one of the sampling options: meridional, zonal, or isotropic."
+            "You must select at least one of the sampling options: "
+            "meridional, zonal, or isotropic."
         )
 
-    adv_E, adv_N = calculate_velocity_advection(u, v, x, y, b)
+    if grid_type == "latlon":
+        adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
 
-    if meridional == True:
-        # if boundary == "Periodic":
-        #     sep = range(int(len(y) / 2))
-        # else:
-        #     sep = range(int(len(y)) - 1)
+    else:
+        adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
 
-        for i in range(len(sep_m)):
-            xroll = np.roll(x, i, axis=0)
-            # yroll = np.roll(y, i, axis=0)
-            xd[i] = (np.abs(xroll - x))[len(sep_m)]
-            # yd[i] = (np.abs(yroll - y))[len(sep)]
+    if len(sep_m) < len(sep_z):
+        seps = sep_m
+    else:
+        seps = sep_z
+
+    if meridional is True:
+        if grid_type == "latlon":
+            sep_m = seps
+
+        for i in range(1, len(sep_m)):
+            xroll = np.full(np.shape(x), np.nan)
+            yroll = np.full(np.shape(y), np.nan)
+
+            adv_E_roll = np.full(np.shape(adv_E), np.nan)
+            adv_N_roll = np.full(np.shape(adv_N), np.nan)
+            u_roll = np.full(np.shape(u), np.nan)
+            v_roll = np.full(np.shape(v), np.nan)
+
             if boundary == "Periodic":
-                SF_m[i] = np.nanmean(
-                    (np.roll(adv_E, i, axis=0) - adv_E) * (np.roll(u, i, axis=0) - u)
-                    + (np.roll(adv_N, i, axis=0) - adv_N) * (np.roll(v, i, axis=0) - v)
-                )
+                xroll[:i] = x[-i:]
+                xroll[i:] = x[:-i]
+                yroll[:i] = y[-i:]
+                yroll[i:] = y[:-i]
+
+                adv_E_roll[:i, :] = adv_E[-i:, :]
+                adv_E_roll[i:, :] = adv_E[:-i, :]
+                adv_N_roll[:i, :] = adv_N[-i:, :]
+                adv_N_roll[i:, :] = adv_N[:-i, :]
+
+                u_roll[:i, :] = u[-i:, :]
+                u_roll[i:, :] = u[:-i, :]
+                v_roll[:i, :] = v[-i:, :]
+                v_roll[i:, :] = v[:-i, :]
+
             else:
-                SF_m[i] = np.nanmean(
-                    (
-                        (np.roll(adv_E, i, axis=0) - adv_E)
-                        * (np.roll(u[1:-1, 1:-1], i, axis=0) - u[1:-1, 1:-1])
-                        + (np.roll(adv_N, i, axis=0) - adv_N)
-                        * (np.roll(v[1:-1, 1:-1], i, axis=0) - v[1:-1, 1:-1])
-                    )[i:]
-                )
+                xroll[i:] = x[:-i]
+                yroll[i:] = y[:-i]
 
-    if zonal == True:
-        # if boundary == "Periodic":
-        #     sep = range(int(len(x) / 2))
-        # else:
-        #     sep = range(int(len(x)) - 1)
+                adv_E_roll[i:, :] = adv_E[:-i, :]
+                adv_N_roll[i:, :] = adv_N[:-i, :]
+                u_roll[i:, :] = u[:-i, :]
+                v_roll[i:, :] = v[:-i, :]
 
-        for i in range(len(sep_z)):
-            xroll = np.roll(x, i, axis=0)
-            yroll = np.roll(y, i, axis=0)
-            # xd[i] = (np.abs(xroll - x))[len(sep)]
-            yd[i] = (np.abs(yroll - y))[len(sep_z)]
+            SF_m[i] = np.nanmean(
+                (adv_E_roll - adv_E) * (u_roll - u)
+                + (adv_N_roll - adv_N) * (v_roll - v)
+            )
 
-            if zonal == True:
-                if boundary == "Periodic":
-                    SF_z[i] = np.nanmean(
-                        (np.roll(adv_E, i, axis=1) - adv_E)
-                        * (np.roll(u, i, axis=1) - u)
-                        + (np.roll(adv_N, i, axis=1) - adv_N)
-                        * (np.roll(v, i, axis=1) - v)
-                    )
-                else:
-                    SF_z[i] = np.nanmean(
-                        (
-                            (np.roll(adv_E, i, axis=1) - adv_E)
-                            * (np.roll(u[1:-1, 1:-1], i, axis=1) - u[1:-1, 1:-1])
-                            + (np.roll(adv_N, i, axis=1) - adv_N)
-                            * (np.roll(v[1:-1, 1:-1], i, axis=1) - v[1:-1, 1:-1])
-                        )[:, i:]
-                    )
+            if grid_type == "latlon":
+                xd[i] = np.abs(great_circle((xroll[i], y[i]), (x[i], y[i])).meters)
+            else:
+                xd[i] = (np.abs(xroll - x))[len(sep_m)]
 
-                if even == False:
-                    d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
+    if zonal is True:
+        if grid_type == "latlon":
+            sep_z = seps
 
-    if even == False:
-        tmp = {"d": d_uneven, "SF_z": SF_z}
+        for i in range(1, len(sep_z)):
+            xroll = np.full(np.shape(x), np.nan)
+            yroll = np.full(np.shape(y), np.nan)
+
+            adv_E_roll = np.full(np.shape(adv_E), np.nan)
+            adv_N_roll = np.full(np.shape(adv_N), np.nan)
+            u_roll = np.full(np.shape(u), np.nan)
+            v_roll = np.full(np.shape(v), np.nan)
+
+            if boundary == "Periodic":
+                xroll[:i] = x[-i:]
+                xroll[i:] = x[:-i]
+                yroll[:i] = y[-i:]
+                yroll[i:] = y[:-i]
+
+                adv_E_roll[:, :i] = adv_E[:, -i:]
+                adv_E_roll[:, i:] = adv_E[:, :-i]
+                adv_N_roll[:, :i] = adv_N[:, -i:]
+                adv_N_roll[:, i:] = adv_N[:, :-i]
+
+                u_roll[:, :i] = u[:, -i:]
+                u_roll[:, i:] = u[:, :-i]
+                v_roll[:, :i] = v[:, -i:]
+                v_roll[:, i:] = v[:, :-i]
+
+            else:
+                xroll[i:] = x[:-i]
+                yroll[i:] = y[:-i]
+
+                adv_E_roll[:, i:] = adv_E[:, :-i]
+                adv_N_roll[:, i:] = adv_N[:, :-i]
+                u_roll[:, i:] = u[:, :-i]
+                v_roll[:, i:] = v[:, :-i]
+
+            SF_z[i] = np.nanmean(
+                (adv_E_roll - adv_E) * (u_roll - u)
+                + (adv_N_roll - adv_N) * (v_roll - v)
+            )
+
+            if grid_type == "latlon":
+                yd[i] = np.abs(great_circle((x[i], yroll[i]), (x[i], y[i])).meters)
+            else:
+                yd[i] = (np.abs(yroll - y))[len(sep_z)]
+
+    if even is False:
+        tmp = {"d": yd, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
-        means = df.groupby(pd.qcut(df["d"], q=nbins)).mean()
-        d_uneven = means["d"].values
+        means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
+        yd_uneven = means["d"].values
         SF_z_uneven = means["SF_z"].values
 
-    if isotropic == True:
+    if isotropic is True:
         if boundary == "Periodic":
             sep = range(int(len(x) / 2))
         else:
@@ -156,50 +193,64 @@ def advection_velocity(
         isod = df_mean.iloc[:, 0]
         SF_iso = df_mean.iloc[:, 1]
 
-    if zonal == False and meridional == False and isotropic == False:
+    if zonal is False and meridional is False and isotropic is False:
         raise SystemExit(
-            "You must select at least one of the sampling options: meridional, zonal, or isotropic."
+            "You must select at least one of the sampling options: "
+            "meridional, zonal, or isotropic."
         )
 
     try:
-        SF_z
+        type(SF_z)
     except NameError:
         SF_z = None
 
     try:
-        SF_z_uneven
+        type(SF_z_uneven)
     except NameError:
         SF_z_uneven = None
 
+    # Commented this out for later use -- I want to add in this functionality,
+    # but I don't want to conflict with SF_z_uneven until I can test that the
+    # new version is unchanged compared to the previous.
+    # try:
+    #     type(SF_m_uneven)
+    # except NameError:
+    #     SF_m_uneven = None
+
     try:
-        SF_m
+        type(SF_m)
     except NameError:
         SF_m = None
 
     try:
-        SF_iso
+        type(SF_iso)
     except NameError:
         SF_iso = None
 
     try:
-        xd
+        type(xd)
     except NameError:
         xd = None
 
     try:
-        yd
+        type(yd)
     except NameError:
         yd = None
 
     try:
-        isod
+        type(isod)
     except NameError:
         isod = None
 
     try:
-        d_uneven
+        type(yd_uneven)
     except NameError:
-        d_uneven = None
+        yd_uneven = None
+
+    try:
+        type(xd_uneven)
+    except NameError:
+        xd_uneven = None
 
     data = {
         "SF_zonal": SF_z,
@@ -209,7 +260,8 @@ def advection_velocity(
         "x-diffs": xd,
         "y-diffs": yd,
         "iso-diffs": isod,
-        "x-diffs_uneven": d_uneven,
+        "x-diffs_uneven": xd_uneven,
+        "y-diffs_uneven": yd_uneven,
     }
 
     return data

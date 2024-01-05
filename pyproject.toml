@@ -14,6 +14,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = ["numpy>=1,<2", "pandas>=1.5.3", "geopy>=2"]
+
+[project.optional-dependencies]
+test = ["pytest>=7,<8"]
 
 [project.urls]
 "Homepage" = "https://github.com/cassidymwagner/oceans_sf"
@@ -53,4 +57,5 @@ extend-ignore = [
     "D413", # Missing blank line after last section
     "D416", # Section name should end with a colon
     "N806", # Variable in function should be lowercase
+
 ]
