@@ -1,15 +1,12 @@
+import geopy.distance as gd
 import numpy as np
 import pandas as pd
-import geopy.distance as gd
 
 
 def traditional_scalar(
     scalar, x, y, boundary="Periodic", order=3, even="True", nbins=10
 ):
-    """
-    Add docstring
-    """
-
+    """Add docstring."""
     s = scalar
 
     if boundary == "Periodic":
@@ -22,7 +19,7 @@ def traditional_scalar(
     xd = np.zeros(np.shape(sep))
     yd = np.zeros(np.shape(sep))
 
-    if even == False:
+    if even is False:
         d_uneven = np.zeros(np.shape(sep))
 
     for i in range(len(sep)):
@@ -33,20 +30,20 @@ def traditional_scalar(
 
         dm = np.roll(s, i, axis=0) - s
         dm3 = dm**order
-        if boundary == None:
+        if boundary is None:
             dm3 = dm[i:] ** order
         SF_m[i] = np.nanmean(dm3)
 
         dz = np.roll(s, i, axis=1) - s
         dz3 = dz**order
-        if boundary == None:
+        if boundary is None:
             dz3 = dz[:, i:] ** order
         SF_z[i] = np.nanmean(dz3)
 
-        if even == False:
+        if even is False:
             d_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (x[i], y[i])).km
 
-    if even == False:
+    if even is False:
         tmp = {"d": d_uneven, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins)).mean()
@@ -54,12 +51,12 @@ def traditional_scalar(
         SF_z_uneven = means["SF_z"].values
 
     try:
-        d_uneven
+        type(d_uneven)
     except NameError:
         d_uneven = None
 
     try:
-        SF_z_uneven
+        type(SF_z_uneven)
     except NameError:
         SF_z_uneven = None
 

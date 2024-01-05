@@ -1,10 +1,8 @@
 import numpy as np
 import pandas as pd
 
-# import geopy.distance as gd
 
-
-def traditional_velocity(
+def traditional_velocity(  # noqa: C901
     par_u,
     par_v,
     x,
@@ -18,14 +16,11 @@ def traditional_velocity(
     isotropic=False,
     order=3,
 ):
-    """
-    Add docstring
-    """
-
+    """Add docstring."""
     u = par_u
     v = par_v
 
-    if zonal == True:
+    if zonal is True:
         if boundary == "Periodic":
             sep_z = range(int(len(y) / 2))
         else:
@@ -35,10 +30,10 @@ def traditional_velocity(
 
         SF_z = np.zeros(np.shape(sep_z))
 
-        if even == False:
+        if even is False:
             yd_uneven = np.zeros(np.shape(sep_z))
 
-    if meridional == True:
+    if meridional is True:
         if boundary == "Periodic":
             sep_m = range(int(len(x) / 2))
         else:
@@ -48,23 +43,19 @@ def traditional_velocity(
 
         SF_m = np.zeros(np.shape(sep_m))
 
-        if even == False:
+        if even is False:
             xd_uneven = np.zeros(np.shape(sep_m))
 
     # if isotropic == True:
     #     SF_iso = np.zeros(np.shape(sep))
 
-    if zonal == False and meridional == False and isotropic == False:
+    if zonal is False and meridional is False and isotropic is False:
         raise SystemExit(
-            "You must select at least one of the sampling options: meridional, zonal, or isotropic."
+            "You must select at least one of the sampling options: "
+            "meridional, zonal, or isotropic."
         )
-    if len(sep_m) < len(sep_z):
-        seps = sep_m
-    else:
-        seps = sep_z
 
-    if meridional == True:
-
+    if meridional is True:
         for i in range(1, len(sep_m)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
@@ -91,7 +82,7 @@ def traditional_velocity(
 
             SF_m[i] = np.nanmean(dm3)
 
-            if even == False:
+            if even is False:
                 if grid_type == "latlon":
                     # xd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (y[i], x[i])).km
                     pass
@@ -101,8 +92,7 @@ def traditional_velocity(
                     )[:-i]
                     xd_uneven[i] = np.abs(xroll - x)[i]
 
-    if zonal == True:
-
+    if zonal is True:
         for i in range(1, len(sep_z)):
             xroll = np.roll(x, i, axis=0)
             yroll = np.roll(y, i, axis=0)
@@ -127,7 +117,7 @@ def traditional_velocity(
 
             SF_z[i] = np.nanmean(dz3)
 
-            if even == False:
+            if even is False:
                 if grid_type == "latlon":
                     # yd_uneven[i] = gd.geodesic((xroll[i], yroll[i]), (y[i], x[i])).km
                     pass
@@ -137,7 +127,7 @@ def traditional_velocity(
                     )[:-i]
                     yd_uneven[i] = np.abs(yroll - y)[i]
 
-    if even == False:
+    if even is False:
         tmp = {"d": yd_uneven, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
@@ -145,52 +135,55 @@ def traditional_velocity(
         SF_z_uneven = means["SF_z"].values
 
     try:
-        SF_z
+        type(SF_z)
     except NameError:
         SF_z = None
 
     try:
-        SF_z_uneven
+        type(SF_z_uneven)
     except NameError:
         SF_z_uneven = None
 
-    try:
-        SF_m_uneven
-    except NameError:
-        SF_m_uneven = None
+    # Commented this out for later use -- I want to add in this functionality,
+    # but I don't want to conflict with SF_z_uneven until I can test that the
+    # new version is unchanged compared to the previous.
+    # try:
+    #     type(SF_m_uneven)
+    # except NameError:
+    #     SF_m_uneven = None
 
     try:
-        SF_m
+        type(SF_m)
     except NameError:
         SF_m = None
 
     try:
-        SF_iso
+        type(SF_iso)
     except NameError:
         SF_iso = None
 
     try:
-        xd
+        type(xd)
     except NameError:
         xd = None
 
     try:
-        yd
+        type(yd)
     except NameError:
         yd = None
 
     try:
-        isod
+        type(isod)
     except NameError:
         isod = None
 
     try:
-        yd_uneven
+        type(yd_uneven)
     except NameError:
         yd_uneven = None
 
     try:
-        xd_uneven
+        type(xd_uneven)
     except NameError:
         xd_uneven = None
 

@@ -1,10 +1,11 @@
 import numpy as np
 import pandas as pd
-from .calculate_velocity_advection import calculate_velocity_advection
 from geopy.distance import great_circle
 
+from .calculate_velocity_advection import calculate_velocity_advection
 
-def advection_velocity(
+
+def advection_velocity(  # noqa: C901
     par_u,
     par_v,
     x,
@@ -19,13 +20,11 @@ def advection_velocity(
     meridional=True,
     isotropic=False,
 ):
-    """
-    Add docstring
-    """
+    """Add docstring."""
     u = par_u
     v = par_v
 
-    if zonal == True:
+    if zonal is True:
         if boundary == "Periodic":
             sep_z = range(int(len(y) / 2))
         else:
@@ -35,10 +34,10 @@ def advection_velocity(
 
         SF_z = np.zeros(np.shape(sep_z))
 
-        if even == False:
+        if even is False:
             yd_uneven = np.zeros(np.shape(sep_z))
 
-    if meridional == True:
+    if meridional is True:
         if boundary == "Periodic":
             sep_m = range(int(len(x) / 2))
         else:
@@ -48,18 +47,17 @@ def advection_velocity(
 
         SF_m = np.zeros(np.shape(sep_m))
 
-        if even == False:
+        if even is False:
             xd_uneven = np.zeros(np.shape(sep_m))
 
-    if zonal == False and meridional == False and isotropic == False:
+    if zonal is False and meridional is False and isotropic is False:
         raise SystemExit(
-            "You must select at least one of the sampling options: meridional, zonal, or isotropic."
+            "You must select at least one of the sampling options: "
+            "meridional, zonal, or isotropic."
         )
 
-    if grid_type == 'latlon':
-
-        adv_E, adv_N = calculate_velocity_advection(
-            u, v, x, y, dx, dy, grid_type)
+    if grid_type == "latlon":
+        adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
 
     else:
         adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
@@ -69,13 +67,11 @@ def advection_velocity(
     else:
         seps = sep_z
 
-    if meridional == True:
-
-        if grid_type == 'latlon':
+    if meridional is True:
+        if grid_type == "latlon":
             sep_m = seps
 
         for i in range(1, len(sep_m)):
-
             xroll = np.full(np.shape(x), np.nan)
             yroll = np.full(np.shape(y), np.nan)
 
@@ -85,7 +81,6 @@ def advection_velocity(
             v_roll = np.full(np.shape(v), np.nan)
 
             if boundary == "Periodic":
-
                 xroll[:i] = x[-i:]
                 xroll[i:] = x[:-i]
                 yroll[:i] = y[-i:]
@@ -102,7 +97,6 @@ def advection_velocity(
                 v_roll[i:, :] = v[:-i, :]
 
             else:
-
                 xroll[i:] = x[:-i]
                 yroll[i:] = y[:-i]
 
@@ -116,15 +110,13 @@ def advection_velocity(
                 + (adv_N_roll - adv_N) * (v_roll - v)
             )
 
-            if grid_type == 'latlon':
-                xd[i] = np.abs(great_circle(
-                    (xroll[i], y[i]), (x[i], y[i])).meters)
+            if grid_type == "latlon":
+                xd[i] = np.abs(great_circle((xroll[i], y[i]), (x[i], y[i])).meters)
             else:
                 xd[i] = (np.abs(xroll - x))[len(sep_m)]
 
-    if zonal == True:
-
-        if grid_type == 'latlon':
+    if zonal is True:
+        if grid_type == "latlon":
             sep_z = seps
 
         for i in range(1, len(sep_z)):
@@ -137,7 +129,6 @@ def advection_velocity(
             v_roll = np.full(np.shape(v), np.nan)
 
             if boundary == "Periodic":
-
                 xroll[:i] = x[-i:]
                 xroll[i:] = x[:-i]
                 yroll[:i] = y[-i:]
@@ -154,7 +145,6 @@ def advection_velocity(
                 v_roll[:, i:] = v[:, :-i]
 
             else:
-
                 xroll[i:] = x[:-i]
                 yroll[i:] = y[:-i]
 
@@ -168,20 +158,19 @@ def advection_velocity(
                 + (adv_N_roll - adv_N) * (v_roll - v)
             )
 
-            if grid_type == 'latlon':
-                yd[i] = np.abs(great_circle(
-                    (x[i], yroll[i]), (x[i], y[i])).meters)
+            if grid_type == "latlon":
+                yd[i] = np.abs(great_circle((x[i], yroll[i]), (x[i], y[i])).meters)
             else:
                 yd[i] = (np.abs(yroll - y))[len(sep_z)]
 
-    if even == False:
+    if even is False:
         tmp = {"d": yd, "SF_z": SF_z}
         df = pd.DataFrame(tmp)
         means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
         yd_uneven = means["d"].values
         SF_z_uneven = means["SF_z"].values
 
-    if isotropic == True:
+    if isotropic is True:
         if boundary == "Periodic":
             sep = range(int(len(x) / 2))
         else:
@@ -204,58 +193,62 @@ def advection_velocity(
         isod = df_mean.iloc[:, 0]
         SF_iso = df_mean.iloc[:, 1]
 
-    if zonal == False and meridional == False and isotropic == False:
+    if zonal is False and meridional is False and isotropic is False:
         raise SystemExit(
-            "You must select at least one of the sampling options: meridional, zonal, or isotropic."
+            "You must select at least one of the sampling options: "
+            "meridional, zonal, or isotropic."
         )
 
     try:
-        SF_z
+        type(SF_z)
     except NameError:
         SF_z = None
 
     try:
-        SF_z_uneven
+        type(SF_z_uneven)
     except NameError:
         SF_z_uneven = None
 
-    try:
-        SF_m_uneven
-    except NameError:
-        SF_m_uneven = None
+    # Commented this out for later use -- I want to add in this functionality,
+    # but I don't want to conflict with SF_z_uneven until I can test that the
+    # new version is unchanged compared to the previous.
+    # try:
+    #     type(SF_m_uneven)
+    # except NameError:
+    #     SF_m_uneven = None
 
     try:
-        SF_m
+        type(SF_m)
     except NameError:
         SF_m = None
 
     try:
-        SF_iso
+        type(SF_iso)
     except NameError:
         SF_iso = None
 
     try:
-        xd
+        type(xd)
     except NameError:
         xd = None
 
     try:
-        yd
+        type(yd)
     except NameError:
         yd = None
 
     try:
-        isod
+        type(isod)
     except NameError:
         isod = None
 
     try:
-        yd_uneven
+        type(yd_uneven)
     except NameError:
         yd_uneven = None
 
     try:
-        xd_uneven
+        type(xd_uneven)
     except NameError:
         xd_uneven = None
 
