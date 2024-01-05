@@ -36,6 +36,33 @@ from oceans_sf.calculate_velocity_advection import calculate_velocity_advection
                 ),
             ),
         ),
+        (
+            np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+            np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+            np.linspace(0, 2, 3),
+            np.linspace(0, 2, 3),
+            None,
+            None,
+            "uniform",
+            tuple(
+                (
+                    np.array(
+                        [
+                            [2 * 2, 2 * 4, 2 * 6],
+                            [2 * 8, 2 * 10, 2 * 12],
+                            [2 * 14, 2 * 16, 2 * 18],
+                        ]
+                    ),
+                    np.array(
+                        [
+                            [2 * 2, 2 * 4, 2 * 6],
+                            [2 * 8, 2 * 10, 2 * 12],
+                            [2 * 14, 2 * 16, 2 * 18],
+                        ]
+                    ),
+                ),
+            ),
+        ),
     ],
 )
 def test_calculate_velocity_advection_parameterized(
