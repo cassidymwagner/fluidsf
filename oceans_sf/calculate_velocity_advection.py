@@ -1,15 +1,14 @@
 import numpy as np
 
 
-def calculate_velocity_advection(par_u, par_v, x, y, dx=None, dy=None, grid_type='uniform'):
-    """
-    Add docstring
-    """
+def calculate_velocity_advection(
+    par_u, par_v, x, y, dx=None, dy=None, grid_type="uniform"
+):
+    """Add docstring."""
     u = par_u
     v = par_v
 
-    if grid_type == 'latlon':
-
+    if grid_type == "latlon":
         xcoords = dx.cumsum()
         ycoords = dy.cumsum()
 
