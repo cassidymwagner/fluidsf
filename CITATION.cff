@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Wagner"
+  given-names: "Cassidy"
+  orcid: "https://orcid.org/0000-0002-1186-2082"
+title: "oceans_sf"
+version: 0.1.0
+doi: 10.5281/zenodo.1234
+date-released: 2024-01-05
+url: "https://github.com/cassidymwagner/oceans_sf"
