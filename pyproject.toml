@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "oceans_sf"
-version = "0.0.1"
+dynamic = ["version"]
 authors = [{ name = "Cassidy Wagner", email = "wagncass@oregonstate.edu" }]
 description = "Calculate structure functions from oceanographic data"
 readme = "README.md"
@@ -59,3 +59,6 @@ extend-ignore = [
     "N806", # Variable in function should be lowercase
 
 ]
+
+[tool.hatch]
+version.path = "src/oceans_sf/_version.py"
