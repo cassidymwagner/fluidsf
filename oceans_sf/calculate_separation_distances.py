@@ -14,7 +14,7 @@ def calculate_separation_distances(x, y, x_shift, y_shift, grid_type="uniform"):
     y_shift (float): The y-coordinate of the second point.
     grid_type (str): The type of grid used for the coordinates. A uniform grid results
     in a simple distance calculation, but a latlon grid uses geopy's great_circle
-    function to estimate the distance in meters. Defaults to uniform.
+    function to estimate the distance in meters. Defaults to "uniform".
 
     Returns
     -------
