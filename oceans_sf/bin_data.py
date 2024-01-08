@@ -19,7 +19,7 @@ def bin_data(dd, sf, nbins):
     """
     tmp = {"dd": dd, "sf": sf}
     df = pd.DataFrame(tmp)
-    means = df.groupby(pd.qcut(df["dd"], q=nbins, duplicates="drop")).mean()
+    means = df.groupby(pd.cut(df["dd"], nbins, duplicates="drop"), observed=True).mean()
     dd = means["dd"].values
     sf = means["sf"].values
 
