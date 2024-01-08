@@ -1,16 +1,14 @@
 import numpy as np
 
 
-def calculate_velocity_advection(
-    par_u, par_v, x, y, dx=None, dy=None, grid_type="uniform"
-):
+def calculate_velocity_advection(u, v, x, y, dx=None, dy=None, grid_type="uniform"):
     """
     Calculate the velocity advection components (eastward and northward).
 
     Args:
     ----
-        par_u (ndarray): The u-component of velocity.
-        par_v (ndarray): The v-component of velocity.
+        u (ndarray): The u-component of velocity.
+        v (ndarray): The v-component of velocity.
         x (ndarray): The x-coordinates of the grid.
         y (ndarray): The y-coordinates of the grid.
         dx (float or ndarray, optional): The grid spacing in the x-direction.
@@ -25,9 +23,6 @@ def calculate_velocity_advection(
         components.
 
     """
-    u = par_u
-    v = par_v
-
     if grid_type == "latlon":
         xcoords = dx.cumsum()
         ycoords = dy.cumsum()
