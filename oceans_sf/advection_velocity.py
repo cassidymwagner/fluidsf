@@ -110,29 +110,6 @@ def advection_velocity(  # noqa: C901
         yd_uneven = means["d"].values
         SF_z_uneven = means["SF_z"].values
 
-    if isotropic is True:
-        if boundary == "Periodic":
-            sep = range(int(len(x) / 2))
-        else:
-            sep = range(int(len(x)) - 1)
-
-        sep_combinations = np.array(np.meshgrid(sep, sep)).T.reshape(-1, 2)
-        tmp = np.zeros(np.shape(sep_combinations))
-        for idx, xy in enumerate(sep_combinations):
-            sep_distance = np.round(np.sqrt(xy[0] ** 2 + xy[1] ** 2))
-
-            SF_iso = np.nanmean(
-                (np.roll(adv_E, xy[0]) - adv_E) * (np.roll(u, xy[0]) - u)
-                + (np.roll(adv_N, xy[1]) - adv_N) * (np.roll(v, xy[1]) - v)
-            )
-
-            tmp[idx] = [sep_distance, SF_iso]
-
-        df = pd.DataFrame(tmp)
-        df_mean = df.groupby(0).mean().reset_index()
-        isod = df_mean.iloc[:, 0]
-        SF_iso = df_mean.iloc[:, 1]
-
     if zonal is False and meridional is False and isotropic is False:
         raise SystemExit(
             "You must select at least one of the sampling options: "
