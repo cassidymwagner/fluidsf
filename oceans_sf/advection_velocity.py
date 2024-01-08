@@ -3,6 +3,8 @@ import pandas as pd
 from geopy.distance import great_circle
 
 from .calculate_velocity_advection import calculate_velocity_advection
+from .shift_array1d import shift_array1d
+from .shift_array2d import shift_array2d
 
 
 def advection_velocity(  # noqa: C901
@@ -63,101 +65,43 @@ def advection_velocity(  # noqa: C901
     else:
         seps = sep_z
 
-    if meridional is True:
+    for down, left in (range(1, len(sep_m)), range(1, len(sep_z))):
+        xroll = shift_array1d(x, shift_by=left, boundary=boundary)
+        yroll = shift_array1d(y, shift_by=down, boundary=boundary)
+
+        adv_E_roll_left, adv_E_roll_down = shift_array2d(
+            adv_E, shift_down=down, shift_left=left, boundary=boundary
+        )
+        adv_N_roll_left, adv_N_roll_down = shift_array2d(
+            adv_N, shift_down=down, shift_left=left, boundary=boundary
+        )
+        u_roll_left, u_roll_down = shift_array2d(
+            u, shift_down=down, shift_left=left, boundary=boundary
+        )
+        v_roll_left, v_roll_down = shift_array2d(
+            v, shift_down=down, shift_left=left, boundary=boundary
+        )
+
+        SF_m[down] = np.nanmean(
+            (adv_E_roll_down - adv_E) * (u_roll_down - u)
+            + (adv_N_roll_down - adv_N) * (v_roll_down - v)
+        )
+
+        SF_z[left] = np.nanmean(
+            (adv_E_roll_left - adv_E) * (u_roll_left - u)
+            + (adv_N_roll_left - adv_N) * (v_roll_left - v)
+        )
+
         if grid_type == "latlon":
-            sep_m = seps
-
-        for i in range(1, len(sep_m)):
-            xroll = np.full(np.shape(x), np.nan)
-            yroll = np.full(np.shape(y), np.nan)
-
-            adv_E_roll = np.full(np.shape(adv_E), np.nan)
-            adv_N_roll = np.full(np.shape(adv_N), np.nan)
-            u_roll = np.full(np.shape(u), np.nan)
-            v_roll = np.full(np.shape(v), np.nan)
-
-            if boundary == "Periodic":
-                xroll[:i] = x[-i:]
-                xroll[i:] = x[:-i]
-                yroll[:i] = y[-i:]
-                yroll[i:] = y[:-i]
-
-                adv_E_roll[:i, :] = adv_E[-i:, :]
-                adv_E_roll[i:, :] = adv_E[:-i, :]
-                adv_N_roll[:i, :] = adv_N[-i:, :]
-                adv_N_roll[i:, :] = adv_N[:-i, :]
-
-                u_roll[:i, :] = u[-i:, :]
-                u_roll[i:, :] = u[:-i, :]
-                v_roll[:i, :] = v[-i:, :]
-                v_roll[i:, :] = v[:-i, :]
-
-            else:
-                xroll[i:] = x[:-i]
-                yroll[i:] = y[:-i]
-
-                adv_E_roll[i:, :] = adv_E[:-i, :]
-                adv_N_roll[i:, :] = adv_N[:-i, :]
-                u_roll[i:, :] = u[:-i, :]
-                v_roll[i:, :] = v[:-i, :]
-
-            SF_m[i] = np.nanmean(
-                (adv_E_roll - adv_E) * (u_roll - u)
-                + (adv_N_roll - adv_N) * (v_roll - v)
+            xd[left] = np.abs(
+                great_circle((xroll[left], y[left]), (x[left], y[left])).meters
             )
-
-            if grid_type == "latlon":
-                xd[i] = np.abs(great_circle((xroll[i], y[i]), (x[i], y[i])).meters)
-            else:
-                xd[i] = (np.abs(xroll - x))[len(sep_m)]
-
-    if zonal is True:
-        if grid_type == "latlon":
-            sep_z = seps
-
-        for i in range(1, len(sep_z)):
-            xroll = np.full(np.shape(x), np.nan)
-            yroll = np.full(np.shape(y), np.nan)
-
-            adv_E_roll = np.full(np.shape(adv_E), np.nan)
-            adv_N_roll = np.full(np.shape(adv_N), np.nan)
-            u_roll = np.full(np.shape(u), np.nan)
-            v_roll = np.full(np.shape(v), np.nan)
-
-            if boundary == "Periodic":
-                xroll[:i] = x[-i:]
-                xroll[i:] = x[:-i]
-                yroll[:i] = y[-i:]
-                yroll[i:] = y[:-i]
-
-                adv_E_roll[:, :i] = adv_E[:, -i:]
-                adv_E_roll[:, i:] = adv_E[:, :-i]
-                adv_N_roll[:, :i] = adv_N[:, -i:]
-                adv_N_roll[:, i:] = adv_N[:, :-i]
-
-                u_roll[:, :i] = u[:, -i:]
-                u_roll[:, i:] = u[:, :-i]
-                v_roll[:, :i] = v[:, -i:]
-                v_roll[:, i:] = v[:, :-i]
-
-            else:
-                xroll[i:] = x[:-i]
-                yroll[i:] = y[:-i]
-
-                adv_E_roll[:, i:] = adv_E[:, :-i]
-                adv_N_roll[:, i:] = adv_N[:, :-i]
-                u_roll[:, i:] = u[:, :-i]
-                v_roll[:, i:] = v[:, :-i]
-
-            SF_z[i] = np.nanmean(
-                (adv_E_roll - adv_E) * (u_roll - u)
-                + (adv_N_roll - adv_N) * (v_roll - v)
+            yd[down] = np.abs(
+                great_circle((x[down], yroll[down]), (x[down], y[down])).meters
             )
-
-            if grid_type == "latlon":
-                yd[i] = np.abs(great_circle((x[i], yroll[i]), (x[i], y[i])).meters)
-            else:
-                yd[i] = (np.abs(yroll - y))[len(sep_z)]
+        else:
+            xd[left] = (np.abs(xroll - x))[len(sep_m)]
+            yd[down] = (np.abs(yroll - y))[len(sep_z)]
 
     if even is False:
         tmp = {"d": yd, "SF_z": SF_z}
