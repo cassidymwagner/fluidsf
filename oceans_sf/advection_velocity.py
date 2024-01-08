@@ -18,45 +18,34 @@ def advection_velocity(  # noqa: C901
     even="True",
     grid_type="uniform",
     nbins=10,
-    zonal=True,
-    meridional=True,
-    isotropic=False,
 ):
     """Add docstring."""
     u = par_u
     v = par_v
 
-    if zonal is True:
-        if boundary == "Periodic":
-            sep_z = range(int(len(y) / 2))
-        else:
-            sep_z = range(int(len(y) - 1))
+    if boundary == "Periodic":
+        sep_z = range(int(len(y) / 2))
+    else:
+        sep_z = range(int(len(y) - 1))
 
-        yd = np.zeros(np.shape(sep_z))
+    yd = np.zeros(np.shape(sep_z))
 
-        SF_z = np.zeros(np.shape(sep_z))
+    SF_z = np.zeros(np.shape(sep_z))
 
-        if even is False:
-            yd_uneven = np.zeros(np.shape(sep_z))
+    if even is False:
+        yd_uneven = np.zeros(np.shape(sep_z))
 
-    if meridional is True:
-        if boundary == "Periodic":
-            sep_m = range(int(len(x) / 2))
-        else:
-            sep_m = range(int(len(x) - 1))
+    if boundary == "Periodic":
+        sep_m = range(int(len(x) / 2))
+    else:
+        sep_m = range(int(len(x) - 1))
 
-        xd = np.zeros(np.shape(sep_m))
+    xd = np.zeros(np.shape(sep_m))
 
-        SF_m = np.zeros(np.shape(sep_m))
+    SF_m = np.zeros(np.shape(sep_m))
 
-        if even is False:
-            xd_uneven = np.zeros(np.shape(sep_m))
-
-    if zonal is False and meridional is False and isotropic is False:
-        raise SystemExit(
-            "You must select at least one of the sampling options: "
-            "meridional, zonal, or isotropic."
-        )
+    if even is False:
+        xd_uneven = np.zeros(np.shape(sep_m))
 
     adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
 
@@ -109,12 +98,6 @@ def advection_velocity(  # noqa: C901
         means = df.groupby(pd.qcut(df["d"], q=nbins, duplicates="drop")).mean()
         yd_uneven = means["d"].values
         SF_z_uneven = means["SF_z"].values
-
-    if zonal is False and meridional is False and isotropic is False:
-        raise SystemExit(
-            "You must select at least one of the sampling options: "
-            "meridional, zonal, or isotropic."
-        )
 
     try:
         type(SF_z)
