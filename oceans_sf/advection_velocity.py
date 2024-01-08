@@ -56,11 +56,7 @@ def advection_velocity(  # noqa: C901
             "meridional, zonal, or isotropic."
         )
 
-    if grid_type == "latlon":
-        adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
-
-    else:
-        adv_E, adv_N = calculate_velocity_advection(u, v, x, y)
+    adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
 
     if len(sep_m) < len(sep_z):
         seps = sep_m
