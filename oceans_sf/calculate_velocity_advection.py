@@ -4,7 +4,27 @@ import numpy as np
 def calculate_velocity_advection(
     par_u, par_v, x, y, dx=None, dy=None, grid_type="uniform"
 ):
-    """Add docstring."""
+    """
+    Calculate the velocity advection components (eastward and northward).
+
+    Args:
+    ----
+        par_u (ndarray): The u-component of velocity.
+        par_v (ndarray): The v-component of velocity.
+        x (ndarray): The x-coordinates of the grid.
+        y (ndarray): The y-coordinates of the grid.
+        dx (float or ndarray, optional): The grid spacing in the x-direction.
+        Defaults to None.
+        dy (float or ndarray, optional): The grid spacing in the y-direction.
+        Defaults to None.
+        grid_type (str, optional): The type of grid. Defaults to "uniform".
+
+    Returns:
+    -------
+        tuple: A tuple containing the eastward advection and northward advection
+        components.
+
+    """
     u = par_u
     v = par_v
 
