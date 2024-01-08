@@ -57,20 +57,18 @@ def advection_velocity(
         sep_m = range(1, int(len(y) - 1))
 
     # Initialize the separation distance arrays
-    xd = np.zeros(np.shape(sep_z))
-    yd = np.zeros(np.shape(sep_m))
+    xd = np.zeros(len(sep_z) + 1)
+    yd = np.zeros(len(sep_m) + 1)
 
     # Initialize the structure function arrays
-    SF_z = np.zeros(np.shape(sep_z))
-    SF_m = np.zeros(np.shape(sep_m))
-    print(sep_z, sep_m)
+    SF_z = np.zeros(len(sep_z) + 1)
+    SF_m = np.zeros(len(sep_m) + 1)
     adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
     # print(adv_E, adv_N)
     # Iterate over separations left and down
-    for down, left in zip(sep_m, sep_z):
+    for down, left in zip(sep_m, sep_z, strict=False):
         xroll = shift_array1d(x, shift_by=left, boundary=boundary)
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
-        print(xroll, yroll)
         adv_E_roll_left, adv_E_roll_down = shift_array2d(
             adv_E, shift_down=down, shift_left=left, boundary=boundary
         )
@@ -118,8 +116,6 @@ def advection_velocity(
     if even is False:
         xd, SF_z = bin_data(xd, SF_z)
         yd, SF_m = bin_data(yd, SF_m)
-
-    print(xd, yd, SF_z, SF_m)
 
     data = {
         "SF_zonal": SF_z,

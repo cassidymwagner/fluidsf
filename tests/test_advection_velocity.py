@@ -30,14 +30,24 @@ from oceans_sf.advection_velocity import advection_velocity
         # ),
         # Test case 2
         (
-            np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]),
-            np.array([[11, 12, 13, 14, 15], [16, 17, 18, 19, 20]]),
-            np.array([0, 1, 2, 3, 4]),
-            np.array([0, 1, 2, 3, 4]),
+            np.array(
+                [
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                    [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+                ]
+            ),
+            np.array(
+                [
+                    [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+                    [31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+                ]
+            ),
+            np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
+            np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
             None,
             None,
             "Periodic",
-            True,
+            False,
             "uniform",
             10,
             {
