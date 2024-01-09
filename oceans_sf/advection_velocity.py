@@ -93,7 +93,7 @@ def advection_velocity(
             adv_N_roll_down,
         )
 
-        SF_m[left] = calculate_advection_velocity_structure_function(
+        SF_z[left] = calculate_advection_velocity_structure_function(
             u,
             v,
             adv_E,
@@ -108,14 +108,14 @@ def advection_velocity(
         xd[left], tmp = calculate_separation_distances(
             x[left], y[left], xroll[left], yroll[left], grid_type
         )
-        tmp, y[down] = calculate_separation_distances(
+        tmp, yd[down] = calculate_separation_distances(
             x[down], y[down], xroll[down], yroll[down], grid_type
         )
 
     # Bin the data if the grid is uneven
     if even is False:
-        xd, SF_z = bin_data(xd, SF_z)
-        yd, SF_m = bin_data(yd, SF_m)
+        xd, SF_z = bin_data(xd, SF_z, nbins)
+        yd, SF_m = bin_data(yd, SF_m, nbins)
 
     data = {
         "SF_zonal": SF_z,
