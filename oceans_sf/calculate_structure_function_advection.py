@@ -3,7 +3,7 @@ import numpy as np
 from .shift_array2d import shift_array2d
 
 
-def calculate_advection_velocity_structure_function(
+def calculate_structure_function_advection(
     u,
     v,
     adv_e,
