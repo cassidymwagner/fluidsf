@@ -1,13 +1,13 @@
 import numpy as np
 
 from .bin_data import bin_data
-from .calculate_advection_velocity_structure_function import (
-    calculate_advection_velocity_structure_function,
-)
+from .calculate_scalar_advection import calculate_scalar_advection
 from .calculate_separation_distances import calculate_separation_distances
+from .calculate_structure_function_advection import (
+    calculate_structure_function_advection,
+)
 from .calculate_velocity_advection import calculate_velocity_advection
 from .shift_array1d import shift_array1d
-from .shift_array2d import shift_array2d
 
 
 def advection_velocity(
@@ -15,6 +15,8 @@ def advection_velocity(
     v,
     x,
     y,
+    skip_velocity_sf=False,
+    scalar=None,
     dx=None,
     dy=None,
     boundary="Periodic",
@@ -23,14 +25,21 @@ def advection_velocity(
     nbins=10,
 ):
     """
-    Calculate the advection velocity structure function for 2D u and v velocity fields.
+    Full method for calculating advective structure functions for 2D data.
+    Supports velocity-based and scalar-based structure functions.
+    Defaults to calculating the velocity-based structure functions for the x (zonal)
+    and y (meridional) directions.
 
     Args:
     ----
         u (ndarray): 2D array of u velocity components.
         v (ndarray): 2D array of v velocity components.
-        x (ndarray): 2D array of x-coordinates.
+        x (ndarray): 1D array of x-coordinates.
         y (ndarray): 1D array of y-coordinates.
+        skip_velocity_sf (bool, optional): Flag used to skip calculating the
+        velocity-based structure function if the user only wants to calculate the
+        scalar-based structure function. Defaults to False.
+        scalar (ndarray, optional): 2D array of scalar values. Defaults to None.
         dx (float, optional): Grid spacing in the x-direction. Defaults to None.
         dy (float, optional): Grid spacing in the y-direction. Defaults to None.
         boundary (str, optional): Boundary condition of the data.
@@ -44,7 +53,8 @@ def advection_velocity(
     Returns:
     -------
         dict: Dictionary containing the advection velocity structure functions
-        and separation distances for the x- and y-direction (zonal and meridional).
+        and separation distances for the x- and y-direction (zonal and meridional,
+        respectively).
 
     """
     # Define a list of separation distances to iterate over.
@@ -61,48 +71,37 @@ def advection_velocity(
     yd = np.zeros(len(sep_m) + 1)
 
     # Initialize the structure function arrays
-    SF_z = np.zeros(len(sep_z) + 1)
-    SF_m = np.zeros(len(sep_m) + 1)
-    adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
-    # print(adv_E, adv_N)
+    if skip_velocity_sf is False:
+        SF_z = np.zeros(len(sep_z) + 1)
+        SF_m = np.zeros(len(sep_m) + 1)
+        adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
+
+    if scalar is not None:
+        SF_z_scalar = np.zeros(len(sep_z) + 1)
+        SF_m_scalar = np.zeros(len(sep_m) + 1)
+        adv_scalar = calculate_scalar_advection(u, v, x, y, scalar, dx, dy, grid_type)
     # Iterate over separations left and down
     for down, left in zip(sep_m, sep_z, strict=False):
         xroll = shift_array1d(x, shift_by=left, boundary=boundary)
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
-        adv_E_roll_left, adv_E_roll_down = shift_array2d(
-            adv_E, shift_down=down, shift_left=left, boundary=boundary
-        )
-        adv_N_roll_left, adv_N_roll_down = shift_array2d(
-            adv_N, shift_down=down, shift_left=left, boundary=boundary
-        )
-        u_roll_left, u_roll_down = shift_array2d(
-            u, shift_down=down, shift_left=left, boundary=boundary
-        )
-        v_roll_left, v_roll_down = shift_array2d(
-            v, shift_down=down, shift_left=left, boundary=boundary
-        )
 
-        SF_m[down] = calculate_advection_velocity_structure_function(
+        SF_dicts = calculate_structure_function_advection(
             u,
             v,
             adv_E,
             adv_N,
-            u_roll_down,
-            v_roll_down,
-            adv_E_roll_down,
-            adv_N_roll_down,
+            down,
+            left,
+            skip_velocity_sf,
+            scalar,
+            adv_scalar,
+            boundary,
         )
 
-        SF_z[left] = calculate_advection_velocity_structure_function(
-            u,
-            v,
-            adv_E,
-            adv_N,
-            u_roll_left,
-            v_roll_left,
-            adv_E_roll_left,
-            adv_N_roll_left,
-        )
+        SF_z[left] = SF_dicts["SF_velocity_left"]
+        SF_m[down] = SF_dicts["SF_velocity_down"]
+        SF_z_scalar[left] = SF_dicts["SF_scalar_left"]
+        SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
 
         # Calculate separation distances in x and y
         xd[left], tmp = calculate_separation_distances(
