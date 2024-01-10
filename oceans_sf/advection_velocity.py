@@ -17,6 +17,7 @@ def advection_velocity(
     y,
     skip_velocity_sf=False,
     scalar=None,
+    traditional_order=0,
     dx=None,
     dy=None,
     boundary="Periodic",
@@ -40,6 +41,9 @@ def advection_velocity(
         velocity-based structure function if the user only wants to calculate the
         scalar-based structure function. Defaults to False.
         scalar (ndarray, optional): 2D array of scalar values. Defaults to None.
+        traditional_order (int, optional): Order for calculating traditional
+        non-advective structure functions. If 0, no traditional structure functions
+        are calculated. Defaults to 0.
         dx (float, optional): Grid spacing in the x-direction. Defaults to None.
         dy (float, optional): Grid spacing in the y-direction. Defaults to None.
         boundary (str, optional): Boundary condition of the data.
@@ -75,11 +79,18 @@ def advection_velocity(
         SF_z = np.zeros(len(sep_z) + 1)
         SF_m = np.zeros(len(sep_m) + 1)
         adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
+        if traditional_order > 0:
+            SF_z_trad = np.zeros(len(sep_z) + 1)
+            SF_m_trad = np.zeros(len(sep_m) + 1)
 
     if scalar is not None:
         SF_z_scalar = np.zeros(len(sep_z) + 1)
         SF_m_scalar = np.zeros(len(sep_m) + 1)
         adv_scalar = calculate_scalar_advection(u, v, x, y, scalar, dx, dy, grid_type)
+        if traditional_order > 0:
+            SF_z_scalar_trad = np.zeros(len(sep_z) + 1)
+            SF_m_scalar_trad = np.zeros(len(sep_m) + 1)
+
     # Iterate over separations left and down
     for down, left in zip(sep_m, sep_z, strict=False):
         xroll = shift_array1d(x, shift_by=left, boundary=boundary)
@@ -98,10 +109,20 @@ def advection_velocity(
             boundary,
         )
 
-        SF_z[left] = SF_dicts["SF_velocity_left"]
-        SF_m[down] = SF_dicts["SF_velocity_down"]
-        SF_z_scalar[left] = SF_dicts["SF_scalar_left"]
-        SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
+        # Maybe don't do this and just let the dict have Nones in it,
+        # probably a lot easier and less silly
+        if skip_velocity_sf is False:
+            SF_z[left] = SF_dicts["SF_velocity_left"]
+            SF_m[down] = SF_dicts["SF_velocity_down"]
+            if traditional_order > 0:
+                SF_z_trad[left] = SF_dicts["SF_trad_left"]
+                SF_m_trad[down] = SF_dicts["SF_trad_down"]
+        if scalar is not None:
+            SF_z_scalar[left] = SF_dicts["SF_scalar_left"]
+            SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
+            if traditional_order > 0:
+                SF_z_scalar_trad[left] = SF_dicts["SF_scalar_trad_left"]
+                SF_m_scalar_trad[down] = SF_dicts["SF_scalar_trad_down"]
 
         # Calculate separation distances in x and y
         xd[left], tmp = calculate_separation_distances(

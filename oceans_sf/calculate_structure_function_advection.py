@@ -3,7 +3,7 @@ import numpy as np
 from .shift_array2d import shift_array2d
 
 
-def calculate_structure_function_advection(
+def calculate_structure_function(
     u,
     v,
     adv_e,
@@ -13,11 +13,12 @@ def calculate_structure_function_advection(
     skip_velocity_sf=False,
     scalar=None,
     adv_scalar=None,
+    traditional_order=0,
     boundary="Periodic",
 ):
     """
-    Calculate the advective structure function. Supports velocity-based structure
-    functions and scalar-based structure functions.
+    Calculate structure function, either advective or traditional.
+    Supports velocity-based structure functions and scalar-based structure functions.
 
     Args:
     ----
@@ -36,6 +37,9 @@ def calculate_structure_function_advection(
         scalar (numpy.ndarray, optional): Array of scalar values. Defaults to None.
         adv_scalar (numpy.ndarray, optional): Array of scalar advection values.
         Defaults to None.
+        traditional_order (int, optional): Order for calculating traditional
+        non-advective structure functions. If 0, no traditional structure functions
+        are calculated. Defaults to 0.
         boundary (str, optional): Boundary condition for shifting arrays.
         Defaults to "Periodic".
 
