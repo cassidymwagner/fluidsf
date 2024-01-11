@@ -59,6 +59,19 @@ def generate_structure_functions(  # noqa: C901
         distances for the x- and y-direction (zonal and meridional, respectively).
 
     """
+    # Initialize variables as NoneType
+    SF_z = None
+    SF_m = None
+    SF_z_scalar = None
+    SF_m_scalar = None
+    SF_z_trad_velocity = None
+    SF_m_trad_velocity = None
+    SF_z_trad_scalar = None
+    SF_m_trad_scalar = None
+    adv_E = None
+    adv_N = None
+    adv_scalar = None
+
     # Define a list of separation distances to iterate over.
     # Periodic is half the length since the calculation will wrap the data.
     if boundary == "Periodic":
@@ -78,16 +91,16 @@ def generate_structure_functions(  # noqa: C901
         SF_m = np.zeros(len(sep_m) + 1)
         adv_E, adv_N = calculate_advection(u, v, x, y, dx, dy, grid_type)
         if traditional_order > 0:
-            SF_z_trad = np.zeros(len(sep_z) + 1)
-            SF_m_trad = np.zeros(len(sep_m) + 1)
+            SF_z_trad_velocity = np.zeros(len(sep_z) + 1)
+            SF_m_trad_velocity = np.zeros(len(sep_m) + 1)
 
     if scalar is not None:
         SF_z_scalar = np.zeros(len(sep_z) + 1)
         SF_m_scalar = np.zeros(len(sep_m) + 1)
         adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
         if traditional_order > 0:
-            SF_z_scalar_trad = np.zeros(len(sep_z) + 1)
-            SF_m_scalar_trad = np.zeros(len(sep_m) + 1)
+            SF_z_trad_scalar = np.zeros(len(sep_z) + 1)
+            SF_m_trad_scalar = np.zeros(len(sep_m) + 1)
 
     # Iterate over separations right and down
     for down, right in zip(sep_m, sep_z, strict=False):
@@ -104,6 +117,7 @@ def generate_structure_functions(  # noqa: C901
             skip_velocity_sf,
             scalar,
             adv_scalar,
+            traditional_order,
             boundary,
         )
 
@@ -113,14 +127,14 @@ def generate_structure_functions(  # noqa: C901
             SF_z[right] = SF_dicts["SF_velocity_right"]
             SF_m[down] = SF_dicts["SF_velocity_down"]
             if traditional_order > 0:
-                SF_z_trad[right] = SF_dicts["SF_trad_right"]
-                SF_m_trad[down] = SF_dicts["SF_trad_down"]
+                SF_z_trad_velocity[right] = SF_dicts["SF_trad_velocity_right"]
+                SF_m_trad_velocity[down] = SF_dicts["SF_trad_velocity_down"]
         if scalar is not None:
             SF_z_scalar[right] = SF_dicts["SF_scalar_right"]
             SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
             if traditional_order > 0:
-                SF_z_scalar_trad[right] = SF_dicts["SF_scalar_trad_right"]
-                SF_m_scalar_trad[down] = SF_dicts["SF_scalar_trad_down"]
+                SF_z_trad_scalar[right] = SF_dicts["SF_trad_scalar_right"]
+                SF_m_trad_scalar[down] = SF_dicts["SF_trad_scalar_down"]
 
         # Calculate separation distances in x and y
         xd[right], tmp = calculate_separation_distances(
@@ -133,29 +147,30 @@ def generate_structure_functions(  # noqa: C901
     # Bin the data if the grid is uneven
     if even is False:
         if skip_velocity_sf is False:
-            xd, SF_z = bin_data(xd, SF_z, nbins)
-            yd, SF_m = bin_data(yd, SF_m, nbins)
+            xd_bin, SF_z = bin_data(xd, SF_z, nbins)
+            yd_bin, SF_m = bin_data(yd, SF_m, nbins)
             if traditional_order > 0:
-                xd, SF_z_trad = bin_data(xd, SF_z_trad, nbins)
-                yd, SF_m_trad = bin_data(yd, SF_m_trad, nbins)
+                xd_bin, SF_z_trad_velocity = bin_data(xd, SF_z_trad_velocity, nbins)
+                yd_bin, SF_m_trad_velocity = bin_data(yd, SF_m_trad_velocity, nbins)
         if scalar is not None:
-            xd, SF_z_scalar = bin_data(xd, SF_z_scalar, nbins)
-            yd, SF_m_scalar = bin_data(yd, SF_m_scalar, nbins)
+            xd_bin, SF_z_scalar = bin_data(xd, SF_z_scalar, nbins)
+            yd_bin, SF_m_scalar = bin_data(yd, SF_m_scalar, nbins)
             if traditional_order > 0:
-                xd, SF_z_scalar_trad = bin_data(xd, SF_z_scalar_trad, nbins)
-                yd, SF_m_scalar_trad = bin_data(yd, SF_m_scalar_trad, nbins)
+                xd_bin, SF_z_trad_scalar = bin_data(xd, SF_z_trad_scalar, nbins)
+                yd_bin, SF_m_trad_scalar = bin_data(yd, SF_m_trad_scalar, nbins)
+        xd = xd_bin
+        yd = yd_bin
 
     data = {
         "SF_advection_velocity_zonal": SF_z,
         "SF_advection_velocity_meridional": SF_m,
         "SF_advection_scalar_zonal": SF_z_scalar,
         "SF_advection_scalar_meridional": SF_m_scalar,
-        "SF_traditional_velocity_zonal": SF_z_trad,
-        "SF_traditional_velocity_meridional": SF_m_trad,
-        "SF_traditional_scalar_zonal": SF_z_scalar_trad,
-        "SF_traditional_scalar_meridional": SF_m_scalar_trad,
+        "SF_traditional_velocity_zonal": SF_z_trad_velocity,
+        "SF_traditional_velocity_meridional": SF_m_trad_velocity,
+        "SF_traditional_scalar_zonal": SF_z_trad_scalar,
+        "SF_traditional_scalar_meridional": SF_m_trad_scalar,
         "x-diffs": xd,
         "y-diffs": yd,
     }
-
     return data
