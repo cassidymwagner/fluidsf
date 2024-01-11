@@ -66,7 +66,7 @@ def calculate_structure_function(
         "adv_scalar": adv_scalar,
     }
 
-    if skip_velocity_sf is False:
+    if skip_velocity_sf is True:
         inputs.update(
             {
                 "u": None,
@@ -76,19 +76,22 @@ def calculate_structure_function(
             }
         )
 
+    shifted_inputs = {}
+
     for key, value in inputs.items():
         if value is not None:
             right_shift, down_shift = shift_array2d(
                 inputs[key], shift_down=down, shift_right=right, boundary=boundary
             )
 
-            inputs.update(
+            shifted_inputs.update(
                 {
                     key + "_right_shift": right_shift,
                     key + "_down_shift": down_shift,
                 }
             )
 
+    inputs.update(shifted_inputs)
     SF_dict = {}
 
     for direction in ["right", "down"]:
@@ -99,11 +102,21 @@ def calculate_structure_function(
                 + (inputs["adv_n_" + direction + "_shift"] - adv_n)
                 * (inputs["v_" + direction + "_shift"] - v)
             )
+            if traditional_order > 0:
+                N = traditional_order
+                SF_dict["SF_trad_velocity_" + direction] = np.nanmean(
+                    (inputs["u_" + direction + "_shift"] - u) ** N
+                )
 
         if scalar is not None:
             SF_dict["SF_scalar_" + direction] = np.nanmean(
                 (inputs["adv_scalar_" + direction + "_shift"] - adv_scalar)
                 * (inputs["scalar_" + direction + "_shift"] - scalar)
             )
-
+            if traditional_order > 0:
+                N = traditional_order
+                SF_dict["SF_trad_scalar_" + direction] = np.nanmean(
+                    (inputs["scalar_" + direction + "_shift"] - scalar) ** N
+                )
+    print(SF_dict)
     return SF_dict
