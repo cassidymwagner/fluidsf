@@ -118,5 +118,4 @@ def calculate_structure_function(
                 SF_dict["SF_trad_scalar_" + direction] = np.nanmean(
                     (inputs["scalar_" + direction + "_shift"] - scalar) ** N
                 )
-    print(SF_dict)
     return SF_dict
