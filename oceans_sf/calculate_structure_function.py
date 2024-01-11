@@ -9,7 +9,7 @@ def calculate_structure_function(
     adv_e,
     adv_n,
     down,
-    left,
+    right,
     skip_velocity_sf=False,
     scalar=None,
     adv_scalar=None,
@@ -29,7 +29,7 @@ def calculate_structure_function(
         down (int): Shift amount for downward shift. For periodic data
         should be less than half the column length and less than the column length for
         other boundary conditions.
-        left (int): Shift amount for leftward shift. For periodic data
+        right (int): Shift amount for rightward shift. For periodic data
         should be less than half the row length and less than the row length for
         other boundary conditions.
         skip_velocity_sf (bool, optional): Whether to skip velocity-based structure
@@ -48,11 +48,11 @@ def calculate_structure_function(
         dict: A dictionary containing the advection velocity structure functions and
         scalar structure functions (if applicable).
             The dictionary has the following keys:
-            - 'SF_velocity_left': The advection velocity structure function in the left
+            - 'SF_velocity_right': The advection velocity structure function in the right
             direction.
             - 'SF_velocity_down': The advection velocity structure function in the down
             direction.
-            - 'SF_scalar_left': The scalar structure function in the left direction
+            - 'SF_scalar_right': The scalar structure function in the right direction
             (if scalar is provided).
             - 'SF_scalar_down': The scalar structure function in the down direction
             (if scalar is provided).
@@ -78,20 +78,20 @@ def calculate_structure_function(
 
     for key, value in inputs.items():
         if value is not None:
-            left_shift, down_shift = shift_array2d(
-                inputs[key], shift_down=down, shift_left=left, boundary=boundary
+            right_shift, down_shift = shift_array2d(
+                inputs[key], shift_down=down, shift_right=right, boundary=boundary
             )
 
             inputs.update(
                 {
-                    key + "_left_shift": left_shift,
+                    key + "_right_shift": right_shift,
                     key + "_down_shift": down_shift,
                 }
             )
 
     SF_dict = {}
 
-    for direction in ["left", "down"]:
+    for direction in ["right", "down"]:
         if skip_velocity_sf is False:
             SF_dict["SF_velocity_" + direction] = np.nanmean(
                 (inputs["adv_e_" + direction + "_shift"] - adv_e)

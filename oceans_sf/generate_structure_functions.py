@@ -1,16 +1,15 @@
 import numpy as np
 
 from .bin_data import bin_data
-from .calculate_scalar_advection import calculate_scalar_advection
+from .calculate_advection import calculate_advection
 from .calculate_separation_distances import calculate_separation_distances
-from .calculate_structure_function_advection import (
-    calculate_structure_function_advection,
+from .calculate_structure_function import (
+    calculate_structure_function,
 )
-from .calculate_velocity_advection import calculate_velocity_advection
 from .shift_array1d import shift_array1d
 
 
-def advection_velocity(
+def generate_structure_functions(  # noqa: C901
     u,
     v,
     x,
@@ -26,10 +25,10 @@ def advection_velocity(
     nbins=10,
 ):
     """
-    Full method for calculating advective structure functions for 2D data.
-    Supports velocity-based and scalar-based structure functions.
-    Defaults to calculating the velocity-based structure functions for the x (zonal)
-    and y (meridional) directions.
+    Full method for generating structure functions for 2D data, either advective or
+    traditional structure functions. Supports velocity-based and scalar-based structure
+    functions. Defaults to calculating the velocity-based advective structure functions
+    for the x (zonal) and y (meridional) directions.
 
     Args:
     ----
@@ -56,9 +55,8 @@ def advection_velocity(
 
     Returns:
     -------
-        dict: Dictionary containing the advection velocity structure functions
-        and separation distances for the x- and y-direction (zonal and meridional,
-        respectively).
+        dict: Dictionary containing the requested structure functions and separation
+        distances for the x- and y-direction (zonal and meridional, respectively).
 
     """
     # Define a list of separation distances to iterate over.
@@ -78,7 +76,7 @@ def advection_velocity(
     if skip_velocity_sf is False:
         SF_z = np.zeros(len(sep_z) + 1)
         SF_m = np.zeros(len(sep_m) + 1)
-        adv_E, adv_N = calculate_velocity_advection(u, v, x, y, dx, dy, grid_type)
+        adv_E, adv_N = calculate_advection(u, v, x, y, dx, dy, grid_type)
         if traditional_order > 0:
             SF_z_trad = np.zeros(len(sep_z) + 1)
             SF_m_trad = np.zeros(len(sep_m) + 1)
@@ -86,23 +84,23 @@ def advection_velocity(
     if scalar is not None:
         SF_z_scalar = np.zeros(len(sep_z) + 1)
         SF_m_scalar = np.zeros(len(sep_m) + 1)
-        adv_scalar = calculate_scalar_advection(u, v, x, y, scalar, dx, dy, grid_type)
+        adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
         if traditional_order > 0:
             SF_z_scalar_trad = np.zeros(len(sep_z) + 1)
             SF_m_scalar_trad = np.zeros(len(sep_m) + 1)
 
-    # Iterate over separations left and down
-    for down, left in zip(sep_m, sep_z, strict=False):
-        xroll = shift_array1d(x, shift_by=left, boundary=boundary)
+    # Iterate over separations right and down
+    for down, right in zip(sep_m, sep_z, strict=False):
+        xroll = shift_array1d(x, shift_by=right, boundary=boundary)
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
 
-        SF_dicts = calculate_structure_function_advection(
+        SF_dicts = calculate_structure_function(
             u,
             v,
             adv_E,
             adv_N,
             down,
-            left,
+            right,
             skip_velocity_sf,
             scalar,
             adv_scalar,
@@ -112,21 +110,21 @@ def advection_velocity(
         # Maybe don't do this and just let the dict have Nones in it,
         # probably a lot easier and less silly
         if skip_velocity_sf is False:
-            SF_z[left] = SF_dicts["SF_velocity_left"]
+            SF_z[right] = SF_dicts["SF_velocity_right"]
             SF_m[down] = SF_dicts["SF_velocity_down"]
             if traditional_order > 0:
-                SF_z_trad[left] = SF_dicts["SF_trad_left"]
+                SF_z_trad[right] = SF_dicts["SF_trad_right"]
                 SF_m_trad[down] = SF_dicts["SF_trad_down"]
         if scalar is not None:
-            SF_z_scalar[left] = SF_dicts["SF_scalar_left"]
+            SF_z_scalar[right] = SF_dicts["SF_scalar_right"]
             SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
             if traditional_order > 0:
-                SF_z_scalar_trad[left] = SF_dicts["SF_scalar_trad_left"]
+                SF_z_scalar_trad[right] = SF_dicts["SF_scalar_trad_right"]
                 SF_m_scalar_trad[down] = SF_dicts["SF_scalar_trad_down"]
 
         # Calculate separation distances in x and y
-        xd[left], tmp = calculate_separation_distances(
-            x[left], y[left], xroll[left], yroll[left], grid_type
+        xd[right], tmp = calculate_separation_distances(
+            x[right], y[right], xroll[right], yroll[right], grid_type
         )
         tmp, yd[down] = calculate_separation_distances(
             x[down], y[down], xroll[down], yroll[down], grid_type
@@ -134,12 +132,28 @@ def advection_velocity(
 
     # Bin the data if the grid is uneven
     if even is False:
-        xd, SF_z = bin_data(xd, SF_z, nbins)
-        yd, SF_m = bin_data(yd, SF_m, nbins)
+        if skip_velocity_sf is False:
+            xd, SF_z = bin_data(xd, SF_z, nbins)
+            yd, SF_m = bin_data(yd, SF_m, nbins)
+            if traditional_order > 0:
+                xd, SF_z_trad = bin_data(xd, SF_z_trad, nbins)
+                yd, SF_m_trad = bin_data(yd, SF_m_trad, nbins)
+        if scalar is not None:
+            xd, SF_z_scalar = bin_data(xd, SF_z_scalar, nbins)
+            yd, SF_m_scalar = bin_data(yd, SF_m_scalar, nbins)
+            if traditional_order > 0:
+                xd, SF_z_scalar_trad = bin_data(xd, SF_z_scalar_trad, nbins)
+                yd, SF_m_scalar_trad = bin_data(yd, SF_m_scalar_trad, nbins)
 
     data = {
-        "SF_zonal": SF_z,
-        "SF_meridional": SF_m,
+        "SF_advection_velocity_zonal": SF_z,
+        "SF_advection_velocity_meridional": SF_m,
+        "SF_advection_scalar_zonal": SF_z_scalar,
+        "SF_advection_scalar_meridional": SF_m_scalar,
+        "SF_traditional_velocity_zonal": SF_z_trad,
+        "SF_traditional_velocity_meridional": SF_m_trad,
+        "SF_traditional_scalar_zonal": SF_z_scalar_trad,
+        "SF_traditional_scalar_meridional": SF_m_scalar_trad,
         "x-diffs": xd,
         "y-diffs": yd,
     }
