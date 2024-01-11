@@ -21,7 +21,8 @@ def shift_array2d(input_array, shift_right=1, shift_down=1, boundary="Periodic")
 
     Returns:
     -------
-        shifted_right_array: 2D array shifted to the right by the specified integer amount
+        shifted_right_array: 2D array shifted to the right by the specified integer
+        amount
         shifted_down_array: 2D array shifted down by the specified integer amount
     """
     shifted_right_array = np.full(np.shape(input_array), np.nan)
