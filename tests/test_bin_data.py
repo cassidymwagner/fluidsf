@@ -52,6 +52,15 @@ from oceans_sf.bin_data import bin_data
                 np.array([9, 25, 41]),
             ),
         ),
+        (
+            np.linspace(0, 8, 9),
+            np.array([0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]),
+            3,
+            (
+                np.array([1, 4, 7]),
+                np.array([175, 1750, 5215]),
+            ),
+        ),
     ],
 )
 def test_bin_data(dd, sf, nbins, expected_result):
