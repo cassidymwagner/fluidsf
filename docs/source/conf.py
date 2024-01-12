@@ -23,10 +23,10 @@ sys.path.insert(0, os.path.abspath("../.."))
 #     sys.modules[mod_name] = mock.Mock()
 
 
-import oceans_sf
-import pandas
 import geopy
+import pandas
 
+import oceans_sf
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
