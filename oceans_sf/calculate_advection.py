@@ -20,22 +20,29 @@ def calculate_advection(
 
     Parameters
     ----------
-        u (ndarray): The u-component of velocity.
-        v (ndarray): The v-component of velocity.
-        x (ndarray): The x-coordinates of the grid.
-        y (ndarray): The y-coordinates of the grid.
-        dx (float or ndarray, optional): The grid spacing in the x-direction.
-        Defaults to None.
-        dy (float or ndarray, optional): The grid spacing in the y-direction.
-        Defaults to None.
-        grid_type (str, optional): The type of grid. Defaults to "uniform".
-        scalar (numpy.ndarray, optional): Array of scalar values. Defaults to None.
+        u: ndarray
+            The u-component of velocity.
+        v: ndarray
+            The v-component of velocity.
+        x: ndarray
+            The x-coordinates of the grid.
+        y: ndarray
+            The y-coordinates of the grid.
+        dx: float or ndarray, optional
+            The grid spacing in the x-direction. Defaults to None.
+        dy: float or ndarray, optional
+            The grid spacing in the y-direction. Defaults to None.
+        grid_type: str, optional
+            The type of grid. Defaults to "uniform".
+        scalar: ndarray, optional
+            Array of scalar values. Defaults to None.
 
     Returns
     -------
-        tuple or ndarray: A tuple of advection components (eastward_advection,
-        northward_advection) if scalar is not provided, otherwise returns an ndarray
-        of scalar advection.
+        tuple or ndarray:
+            A tuple of advection components (eastward_advection,
+            northward_advection) if scalar is not provided, otherwise returns an ndarray
+            of scalar advection.
     """
     if grid_type == "latlon":
         xcoords = dx.cumsum()

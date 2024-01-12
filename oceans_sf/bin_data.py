@@ -8,14 +8,18 @@ def bin_data(dd, sf, nbins):
 
     Parameters
     ----------
-    dd (array-like): The separation distances to be binned.
-    sf (array-like): The structure functions that will be bin-averaged.
-    nbins (int): The number of bins to create.
+    dd: array-like
+        The separation distances to be binned.
+    sf: array-like
+        The structure functions that will be bin-averaged.
+    nbins: int
+        The number of bins to create.
 
     Returns
     -------
-    tuple: A tuple containing the binned separation distances and the bin-averaged
-    structure functions.
+    tuple:
+        A tuple containing the binned separation distances and the bin-averaged
+        structure functions.
     """
     tmp = {"dd": dd, "sf": sf}
     df = pd.DataFrame(tmp)
