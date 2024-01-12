@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def shift_array2d(input_array, shift_right=1, shift_down=1, boundary="Periodic"):
+def shift_array2d(input_array, shift_right=1, shift_down=1, boundary="Periodic"):  # noqa: D417
     """
     Shifts 2D array right and down by the specified integer amounts and returns
     the shifted arrays. Either wraps the array or shifts and pads with NaNs.

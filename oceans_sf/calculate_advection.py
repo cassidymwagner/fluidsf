@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calculate_advection(
+def calculate_advection(  # noqa: D417
     u,
     v,
     x,

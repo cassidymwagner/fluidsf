@@ -9,7 +9,7 @@ from .calculate_structure_function import (
 from .shift_array1d import shift_array1d
 
 
-def generate_structure_functions(  # noqa: C901
+def generate_structure_functions(  # noqa: C901, D417
     u,
     v,
     x,
@@ -113,7 +113,7 @@ def generate_structure_functions(  # noqa: C901
             SF_m_trad_scalar = np.zeros(len(sep_m) + 1)
 
     # Iterate over separations right and down
-    for down, right in zip(sep_m, sep_z):
+    for down, right in zip(sep_m, sep_z):  # noqa: B905
         xroll = shift_array1d(x, shift_by=right, boundary=boundary)
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
 
