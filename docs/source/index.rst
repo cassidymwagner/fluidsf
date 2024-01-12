@@ -10,7 +10,9 @@ Welcome to Oceans SF's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   overview
+   installation
+   examples
 
 Indices and tables
 ==================
