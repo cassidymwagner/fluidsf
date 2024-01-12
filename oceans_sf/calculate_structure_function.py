@@ -57,22 +57,22 @@ def calculate_structure_function(
             A dictionary containing the advection velocity structure functions and
             scalar structure functions (if applicable).
             The dictionary has the following keys:
-            - 'SF_velocity_right': The advection velocity structure function in the
-            right direction.
-            - 'SF_velocity_down': The advection velocity structure function in the down
-            direction.
-            - 'SF_trad_velocity_right': The traditional velocity structure function in
-            the right direction (if traditional_order > 0).
-            - 'SF_trad_velocity_down': The traditional velocity structure function in
-            the down direction (if traditional_order > 0).
-            - 'SF_scalar_right': The scalar structure function in the right direction
-            (if scalar is provided).
-            - 'SF_scalar_down': The scalar structure function in the down direction
-            (if scalar is provided).
-            - 'SF_trad_scalar_right': The traditional scalar structure function in the
-            right direction (if scalar is provided and traditional_order > 0).
-            - 'SF_trad_scalar_down': The traditional scalar structure function in the
-            down direction (if scalar is provided and traditional_order > 0).
+                'SF_velocity_right': The advection velocity structure function in the
+                right direction.
+                'SF_velocity_down': The advection velocity structure function in the
+                down direction.
+                'SF_trad_velocity_right': The traditional velocity structure function in
+                the right direction (if traditional_order > 0).
+                'SF_trad_velocity_down': The traditional velocity structure function in
+                the down direction (if traditional_order > 0).
+                'SF_scalar_right': The scalar structure function in the right direction
+                (if scalar is provided).
+                'SF_scalar_down': The scalar structure function in the down direction
+                (if scalar is provided).
+                'SF_trad_scalar_right': The traditional scalar structure function in the
+                right direction (if scalar is provided and traditional_order > 0).
+                'SF_trad_scalar_down': The traditional scalar structure function in the
+                down direction (if scalar is provided and traditional_order > 0).
     """
     inputs = {
         "u": u,
