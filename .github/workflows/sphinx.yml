@@ -1,4 +1,4 @@
-name: "Sphinx: render docs"
+name: "Sphinx: render and deploy docs"
 
 on: push
 
@@ -39,3 +39,15 @@ jobs:
     - name: Build sphinx
       run: |
         sphinx-build -b html docs/source docs/build
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-docs
+        path: docs/build/html
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs/build/html
