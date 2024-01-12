@@ -28,6 +28,7 @@ jobs:
         pip install geopy
         pip install sphinx
         pip install nbsphinx
+        pip install numpydoc
 
     - name: Build sphinx
       run: |
