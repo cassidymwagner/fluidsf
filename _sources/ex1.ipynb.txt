@@ -19,7 +19,7 @@
     "2. Format the dataset\n",
     "3. Calculate velocity-based and scalar-based structure functions for the zonal and meridional directions as a function of separation distance\n",
     "4. Estimate energy and enstrophy cascade rates from the structure functions\n",
-    "5. Plot the cascade rates in each direction as a function of separation distnace"
+    "5. Plot the cascade rates in each direction as a function of separation distance"
    ]
   },
   {
