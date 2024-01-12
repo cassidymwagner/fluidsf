@@ -24,6 +24,9 @@ sys.path.insert(0, os.path.abspath("../.."))
 
 
 import oceans_sf
+import pandas
+import geopy
+
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
