@@ -32,4 +32,4 @@ jobs:
 
     - name: Build sphinx
       run: |
-        sphinx-build -b docs/html docs/source docs/build
+        sphinx-build -b html source build
