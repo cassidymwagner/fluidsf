@@ -170,25 +170,28 @@ If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary containing the advection velocity structure functions and
+<dd class="field-even"><p><p>A dictionary containing the advection velocity structure functions and
 scalar structure functions (if applicable).
-The dictionary has the following keys:
-- ‘SF_velocity_right’: The advection velocity structure function in the
+The dictionary has the following keys:</p>
+<blockquote>
+<div><p>’SF_velocity_right’: The advection velocity structure function in the
 right direction.
-- ‘SF_velocity_down’: The advection velocity structure function in the down
-direction.
-- ‘SF_trad_velocity_right’: The traditional velocity structure function in
+‘SF_velocity_down’: The advection velocity structure function in the
+down direction.
+‘SF_trad_velocity_right’: The traditional velocity structure function in
 the right direction (if traditional_order &gt; 0).
-- ‘SF_trad_velocity_down’: The traditional velocity structure function in
+‘SF_trad_velocity_down’: The traditional velocity structure function in
 the down direction (if traditional_order &gt; 0).
-- ‘SF_scalar_right’: The scalar structure function in the right direction
+‘SF_scalar_right’: The scalar structure function in the right direction
 (if scalar is provided).
-- ‘SF_scalar_down’: The scalar structure function in the down direction
+‘SF_scalar_down’: The scalar structure function in the down direction
 (if scalar is provided).
-- ‘SF_trad_scalar_right’: The traditional scalar structure function in the
+‘SF_trad_scalar_right’: The traditional scalar structure function in the
 right direction (if scalar is provided and traditional_order &gt; 0).
-- ‘SF_trad_scalar_down’: The traditional scalar structure function in the
+‘SF_trad_scalar_down’: The traditional scalar structure function in the
 down direction (if scalar is provided and traditional_order &gt; 0).</p>
+</div></blockquote>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
