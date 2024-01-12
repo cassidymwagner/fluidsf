@@ -23,7 +23,7 @@ jobs:
 
           - name: Install Dependencies
             run: |
-              pip install pandas numpy geopy matplotlib geopy
+              pip install pandas numpy geopy matplotlib
             
           - name: Build HTML
             uses: ammaraskar/sphinx-action@master
