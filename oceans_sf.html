@@ -101,17 +101,17 @@ structure functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> (<em>sf</em>) – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>nbins</em>) – </p></li>
+<li><p><strong>dd</strong> (<em>array-like</em>) – The separation distances to be binned.</p></li>
+<li><p><strong>sf</strong> (<em>array-like</em>) – The structure functions that will be bin-averaged.</p></li>
+<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of bins to create.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>tuple</strong> (<em>A tuple containing the binned separation distances and the bin-averaged</em>)</p></li>
-<li><p><em>structure functions.</em></p></li>
-</ul>
-</p>
+<dd class="field-even"><p>A tuple containing the binned separation distances and the bin-averaged
+structure functions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -123,22 +123,21 @@ structure functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>y_shift</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>grid_type</em>) – </p></li>
-<li><p><strong>calculation</strong> (<em>in a simple distance</em>) – </p></li>
-<li><p><strong>great_circle</strong> (<em>but a latlon grid uses geopy's</em>) – </p></li>
-<li><p><strong>&quot;uniform&quot;.</strong> (<em>function to estimate the distance in meters. Defaults to</em>) – </p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The x-coordinate of the first point.</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The y-coordinate of the first point.</p></li>
+<li><p><strong>x_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The x-coordinate of the second point.</p></li>
+<li><p><strong>y_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The y-coordinate of the second point.</p></li>
+<li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of grid used for the coordinates. A uniform grid results in a simple
+distance calculation, but a latlon grid uses geopy’s great_circle
+function to estimate the distance in meters. Defaults to “uniform”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>tuple</strong> (<em>A tuple containing the x and y separation distances. Either in meters in the</em>)</p></li>
-<li><p><em>case of a latlon grid or code units for a uniform grid</em></p></li>
-</ul>
-</p>
+<dd class="field-even"><p>A tuple containing the x and y separation distances. Either in meters in the
+case of a latlon grid or code units for a uniform grid</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -151,38 +150,29 @@ Supports velocity-based structure functions and scalar-based structure functions
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>adv_n</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>right</em>) – </p></li>
-<li><p><strong>for</strong> (<em>should be less than half the row length and less than the row length</em>) – </p></li>
-<li><p><strong>conditions.</strong> (<em>other boundary</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>for</strong> – </p></li>
-<li><p><strong>conditions.</strong> – </p></li>
-<li><p><strong>(</strong><strong>bool</strong> (<em>skip_velocity_sf</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> (<em>Boundary condition for shifting arrays.</em>) – </p></li>
-<li><p><strong>False.</strong> (<em>function calculation. Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong> (<em>adv_scalar</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong> – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>None.</strong> (<em>Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong> (<em>traditional_order</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>0</strong> (<em>non-advective structure functions. If</em>) – </p></li>
-<li><p><strong>functions</strong> (<em>no traditional structure</em>) – </p></li>
-<li><p><strong>0.</strong> (<em>are calculated. Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>str</strong> (<em>boundary</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>&quot;Periodic&quot;.</strong> (<em>Defaults to</em>) – </p></li>
+<li><p><strong>u</strong> (<em>ndarray</em>) – Array of u velocities.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em>) – Array of v velocities.</p></li>
+<li><p><strong>adv_e</strong> (<em>ndarray</em>) – Array of eastward advection values.</p></li>
+<li><p><strong>adv_n</strong> (<em>ndarray</em>) – Array of northward advection values.</p></li>
+<li><p><strong>down</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for downward shift. For periodic data should be less than half
+the column length and less than the column length for other boundary
+conditions.</p></li>
+<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for rightward shift. For periodic data should be less than
+half the row length and less than the row length for other boundary
+conditions.</p></li>
+<li><p><strong>skip_velocity_sf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to skip velocity-based structure function calculation.
+Defaults to False.</p></li>
+<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
+<li><p><strong>adv_scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar advection values. Defaults to None.</p></li>
+<li><p><strong>traditional_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Order for calculating traditional non-advective structure functions.
+If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Defaults to “Periodic”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>dict</strong> (<em>A dictionary containing the advection velocity structure functions and</em>)</p></li>
-<li><p><em>scalar structure functions (if applicable).</em> – The dictionary has the following keys:
+<dd class="field-even"><p>A dictionary containing the advection velocity structure functions and
+scalar structure functions (if applicable).
+The dictionary has the following keys:
 - ‘SF_velocity_right’: The advection velocity structure function in the
 right direction.
 - ‘SF_velocity_down’: The advection velocity structure function in the down
@@ -198,9 +188,10 @@ the down direction (if traditional_order &gt; 0).
 - ‘SF_trad_scalar_right’: The traditional scalar structure function in the
 right direction (if scalar is provided and traditional_order &gt; 0).
 - ‘SF_trad_scalar_down’: The traditional scalar structure function in the
-down direction (if scalar is provided and traditional_order &gt; 0).</p></li>
-</ul>
-</p>
+down direction (if scalar is provided and traditional_order &gt; 0).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -215,44 +206,30 @@ for the x (zonal) and y (meridional) directions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>ndarray</strong><strong>)</strong> (<em>y</em>) – </p></li>
-<li><p><strong>(</strong><strong>ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>bool</strong> (<em>even</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> (<em>Number</em><em> of </em><em>bins for binning the data. Defaults to 10.</em>) – </p></li>
-<li><p><strong>the</strong> (<em>velocity-based structure function if the user only wants to calculate</em>) – </p></li>
-<li><p><strong>False.</strong> (<em>scalar-based structure function. Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>ndarray</strong> (<em>scalar</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong> (<em>nbins</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>0</strong> (<em>non-advective structure functions. If</em>) – </p></li>
-<li><p><strong>functions</strong> (<em>no traditional structure</em>) – </p></li>
-<li><p><strong>0.</strong> (<em>are calculated. Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong> (<em>dy</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong> – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>str</strong> (<em>grid_type</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>&quot;Periodic&quot;.</strong> (<em>Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>bool</strong> – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>True.</strong> (<em>Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>str</strong> – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>&quot;uniform&quot;.</strong> (<em>Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong> – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
+<li><p><strong>u</strong> (<em>ndarray</em>) – 2D array of u velocity components.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em>) – 2D array of v velocity components.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) – 1D array of x-coordinates.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – 1D array of y-coordinates.</p></li>
+<li><p><strong>skip_velocity_sf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag used to skip calculating the velocity-based structure function if
+the user only wants to calculate the scalar-based structure function.
+Defaults to False.</p></li>
+<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 2D array of scalar values. Defaults to None.</p></li>
+<li><p><strong>traditional_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Order for calculating traditional non-advective structure functions.
+If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
+<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the x-direction. Defaults to None.</p></li>
+<li><p><strong>dy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the y-direction. Defaults to None.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition of the data. Defaults to “Periodic”.</p></li>
+<li><p><strong>even</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if the grid is evenly spaced. Defaults to True.</p></li>
+<li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Type of grid, either “uniform” or “latlon”. Defaults to “uniform”.</p></li>
+<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Number of bins for binning the data. Defaults to 10.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>dict</strong> (<em>Dictionary containing the requested structure functions and separation</em>)</p></li>
-<li><p><em>distances for the x- and y-direction (zonal and meridional, respectively).</em></p></li>
-</ul>
-</p>
+<dd class="field-even"><p>Dictionary containing the requested structure functions and separation
+distances for the x- and y-direction (zonal and meridional, respectively).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -265,23 +242,20 @@ Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>array_like</strong><strong>)</strong> (<em>input_array</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong> (<em>shift_by</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> (<em>Boundary condition for input array.</em>) – </p></li>
-<li><p><strong>boundary</strong> (<em>less than len</em><em>(</em><em>input_array</em><em>)</em><em>/2 and less than len</em><em>(</em><em>input_array</em><em>) </em><em>for other</em>) – </p></li>
-<li><p><strong>1.</strong> (<em>conditions. Defaults to</em>) – </p></li>
-<li><p><strong>(</strong><strong>str</strong> (<em>boundary</em>) – </p></li>
-<li><p><strong>optional</strong><strong>)</strong> – </p></li>
-<li><p><strong>array</strong> (<em>Periodic boundary conditions will wrap the</em>) – </p></li>
-<li><p><strong>be</strong> (<em>otherwise the array will</em>) – </p></li>
-<li><p><strong>&quot;Periodic&quot;.</strong> (<em>padded with NaNs. Defaults to</em>) – </p></li>
+<li><p><strong>input_array</strong> (<em>array_like</em>) – 1-dimensional array to be shifted.</p></li>
+<li><p><strong>shift_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Shift amount for array. For periodic data should be less than
+len(input_array)/2 and less than len(input_array) for other boundary
+conditions. Defaults to 1.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for input array. Periodic boundary conditions will wrap
+the array, otherwise the array will be padded with NaNs.
+Defaults to “Periodic”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>shifted_array</strong></p>
+<dd class="field-even"><p>1D array shifted by requested integer amount</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>1D array shifted by requested integer amount</p>
+<dd class="field-odd"><p>shifted_array</p>
 </dd>
 </dl>
 </dd></dl>
