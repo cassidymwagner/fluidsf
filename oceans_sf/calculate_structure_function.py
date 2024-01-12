@@ -20,50 +20,59 @@ def calculate_structure_function(
     Calculate structure function, either advective or traditional.
     Supports velocity-based structure functions and scalar-based structure functions.
 
-    Args:
-    ----
-        u (numpy.ndarray): Array of u velocities.
-        v (numpy.ndarray): Array of v velocities.
-        adv_e (numpy.ndarray): Array of eastward advection values.
-        adv_n (numpy.ndarray): Array of northward advection values.
-        down (int): Shift amount for downward shift. For periodic data
-        should be less than half the column length and less than the column length for
-        other boundary conditions.
-        right (int): Shift amount for rightward shift. For periodic data
-        should be less than half the row length and less than the row length for
-        other boundary conditions.
-        skip_velocity_sf (bool, optional): Whether to skip velocity-based structure
-        function calculation. Defaults to False.
-        scalar (numpy.ndarray, optional): Array of scalar values. Defaults to None.
-        adv_scalar (numpy.ndarray, optional): Array of scalar advection values.
-        Defaults to None.
-        traditional_order (int, optional): Order for calculating traditional
-        non-advective structure functions. If 0, no traditional structure functions
-        are calculated. Defaults to 0.
-        boundary (str, optional): Boundary condition for shifting arrays.
-        Defaults to "Periodic".
+    Parameters
+    ----------
+        u: ndarray
+            Array of u velocities.
+        v: ndarray
+            Array of v velocities.
+        adv_e: ndarray
+            Array of eastward advection values.
+        adv_n: ndarray
+            Array of northward advection values.
+        down: int
+            Shift amount for downward shift. For periodic data should be less than half
+            the column length and less than the column length for other boundary
+            conditions.
+        right: int
+            Shift amount for rightward shift. For periodic data should be less than
+            half the row length and less than the row length for other boundary
+            conditions.
+        skip_velocity_sf: bool, optional
+            Whether to skip velocity-based structure function calculation.
+            Defaults to False.
+        scalar: ndarray, optional
+            Array of scalar values. Defaults to None.
+        adv_scalar: ndarray, optional
+            Array of scalar advection values. Defaults to None.
+        traditional_order: int, optional
+            Order for calculating traditional non-advective structure functions.
+            If 0, no traditional structure functions are calculated. Defaults to 0.
+        boundary: str, optional
+            Boundary condition for shifting arrays. Defaults to "Periodic".
 
-    Returns:
+    Returns
     -------
-        dict: A dictionary containing the advection velocity structure functions and
-        scalar structure functions (if applicable).
+        dict:
+            A dictionary containing the advection velocity structure functions and
+            scalar structure functions (if applicable).
             The dictionary has the following keys:
-            - 'SF_velocity_right': The advection velocity structure function in the
-            right direction.
-            - 'SF_velocity_down': The advection velocity structure function in the down
-            direction.
-            - 'SF_trad_velocity_right': The traditional velocity structure function in
-            the right direction (if traditional_order > 0).
-            - 'SF_trad_velocity_down': The traditional velocity structure function in
-            the down direction (if traditional_order > 0).
-            - 'SF_scalar_right': The scalar structure function in the right direction
-            (if scalar is provided).
-            - 'SF_scalar_down': The scalar structure function in the down direction
-            (if scalar is provided).
-            - 'SF_trad_scalar_right': The traditional scalar structure function in the
-            right direction (if scalar is provided and traditional_order > 0).
-            - 'SF_trad_scalar_down': The traditional scalar structure function in the
-            down direction (if scalar is provided and traditional_order > 0).
+                'SF_velocity_right': The advection velocity structure function in the
+                right direction.
+                'SF_velocity_down': The advection velocity structure function in the
+                down direction.
+                'SF_trad_velocity_right': The traditional velocity structure function in
+                the right direction (if traditional_order > 0).
+                'SF_trad_velocity_down': The traditional velocity structure function in
+                the down direction (if traditional_order > 0).
+                'SF_scalar_right': The scalar structure function in the right direction
+                (if scalar is provided).
+                'SF_scalar_down': The scalar structure function in the down direction
+                (if scalar is provided).
+                'SF_trad_scalar_right': The traditional scalar structure function in the
+                right direction (if scalar is provided and traditional_order > 0).
+                'SF_trad_scalar_down': The traditional scalar structure function in the
+                down direction (if scalar is provided and traditional_order > 0).
     """
     inputs = {
         "u": u,

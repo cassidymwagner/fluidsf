@@ -30,33 +30,43 @@ def generate_structure_functions(  # noqa: C901
     functions. Defaults to calculating the velocity-based advective structure functions
     for the x (zonal) and y (meridional) directions.
 
-    Args:
-    ----
-        u (ndarray): 2D array of u velocity components.
-        v (ndarray): 2D array of v velocity components.
-        x (ndarray): 1D array of x-coordinates.
-        y (ndarray): 1D array of y-coordinates.
-        skip_velocity_sf (bool, optional): Flag used to skip calculating the
-        velocity-based structure function if the user only wants to calculate the
-        scalar-based structure function. Defaults to False.
-        scalar (ndarray, optional): 2D array of scalar values. Defaults to None.
-        traditional_order (int, optional): Order for calculating traditional
-        non-advective structure functions. If 0, no traditional structure functions
-        are calculated. Defaults to 0.
-        dx (float, optional): Grid spacing in the x-direction. Defaults to None.
-        dy (float, optional): Grid spacing in the y-direction. Defaults to None.
-        boundary (str, optional): Boundary condition of the data.
-        Defaults to "Periodic".
-        even (bool, optional): Flag indicating if the grid is evenly spaced.
-        Defaults to True.
-        grid_type (str, optional): Type of grid, either "uniform" or "latlon".
-        Defaults to "uniform".
-        nbins (int, optional): Number of bins for binning the data. Defaults to 10.
+    Parameters
+    ----------
+        u: ndarray
+            2D array of u velocity components.
+        v: ndarray
+            2D array of v velocity components.
+        x: ndarray
+            1D array of x-coordinates.
+        y: ndarray
+            1D array of y-coordinates.
+        skip_velocity_sf: bool, optional
+            Flag used to skip calculating the velocity-based structure function if
+            the user only wants to calculate the scalar-based structure function.
+            Defaults to False.
+        scalar: ndarray, optional
+            2D array of scalar values. Defaults to None.
+        traditional_order: int, optional
+            Order for calculating traditional non-advective structure functions.
+            If 0, no traditional structure functions are calculated. Defaults to 0.
+        dx: float, optional
+            Grid spacing in the x-direction. Defaults to None.
+        dy: float, optional
+            Grid spacing in the y-direction. Defaults to None.
+        boundary: str, optional
+            Boundary condition of the data. Defaults to "Periodic".
+        even: bool, optional
+            Flag indicating if the grid is evenly spaced. Defaults to True.
+        grid_type:str, optional
+            Type of grid, either "uniform" or "latlon". Defaults to "uniform".
+        nbins: int, optional
+            Number of bins for binning the data. Defaults to 10.
 
-    Returns:
+    Returns
     -------
-        dict: Dictionary containing the requested structure functions and separation
-        distances for the x- and y-direction (zonal and meridional, respectively).
+        dict:
+            Dictionary containing the requested structure functions and separation
+            distances for the x- and y-direction (zonal and meridional, respectively).
 
     """
     # Initialize variables as NoneType
@@ -103,7 +113,7 @@ def generate_structure_functions(  # noqa: C901
             SF_m_trad_scalar = np.zeros(len(sep_m) + 1)
 
     # Iterate over separations right and down
-    for down, right in zip(sep_m, sep_z, strict=False):
+    for down, right in zip(sep_m, sep_z):
         xroll = shift_array1d(x, shift_by=right, boundary=boundary)
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
 
