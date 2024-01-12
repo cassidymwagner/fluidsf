@@ -23,12 +23,14 @@ jobs:
     
     - name: Install Dependencies
       run: |
+        pip install --upgrade pip
         pip install numpy
         pip install pandas
         pip install geopy
         pip install sphinx
         pip install nbsphinx
         pip install numpydoc
+        pip install sphinx-rtd-theme
 
     - name: Build sphinx
       run: |
