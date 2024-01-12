@@ -109,20 +109,20 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import h5py
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
 
-f = h5py.File(&#39;sample_data/2layer_128.jld2&#39;, &#39;r&#39;)
-grid = f[&#39;grid&#39;]
-snapshots = f[&#39;snapshots&#39;]
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;sample_data/2layer_128.jld2&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;grid&#39;</span><span class="p">]</span>
+<span class="n">snapshots</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;snapshots&#39;</span><span class="p">]</span>
 
-# Initialize the grid of x and y coordinates
-x = grid[&#39;x&#39;][()]
-y = grid[&#39;y&#39;][()]
+<span class="c1"># Initialize the grid of x and y coordinates</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][()]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][()]</span>
 
-# Grab u, v, and q for all snapshots and layers (we will just use the top layer)
-u = snapshots[&#39;u&#39;]
-v = snapshots[&#39;v&#39;]
-q = snapshots[&#39;q&#39;]
+<span class="c1"># Grab u, v, and q for all snapshots and layers (we will just use the top layer)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -134,9 +134,9 @@ q = snapshots[&#39;q&#39;]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import oceans_sf as ocsf
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">oceans_sf</span> <span class="k">as</span> <span class="nn">ocsf</span>
 
-sfs_list = [ocsf.generate_structure_functions(u[d][0], v[d][0], x, y) for d in u.keys()]
+<span class="n">sfs_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">ocsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 </pre></div>
 </div>
 </div>
@@ -148,29 +148,29 @@ sfs_list = [ocsf.generate_structure_functions(u[d][0], v[d][0], x, y) for d in u
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-from scipy.stats import bootstrap
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">bootstrap</span>
 
-# Reformat single sfs_list for ease of boostrapping
-sf_z = []
-sf_m = []
+<span class="c1"># Reformat single sfs_list for ease of boostrapping</span>
+<span class="n">sf_z</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sf_m</span> <span class="o">=</span> <span class="p">[]</span>
 
-for sf in sfs_list:
-    sf_z.append(sf[&quot;SF_advection_velocity_zonal&quot;])
-    sf_m.append(sf[&quot;SF_advection_velocity_meridional&quot;])
+<span class="k">for</span> <span class="n">sf</span> <span class="ow">in</span> <span class="n">sfs_list</span><span class="p">:</span>
+    <span class="n">sf_z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_zonal&quot;</span><span class="p">])</span>
+    <span class="n">sf_m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_meridional&quot;</span><span class="p">])</span>
 
-# Bootstrap the zonal and meridional structure functions with 90% confidence levels
-boot_sf_vz = bootstrap((sf_z,), np.mean, confidence_level=0.9, axis=0)
-boot_sf_vm = bootstrap((sf_m,), np.mean, confidence_level=0.9, axis=0)
+<span class="c1"># Bootstrap the zonal and meridional structure functions with 90% confidence levels</span>
+<span class="n">boot_sf_vz</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="p">((</span><span class="n">sf_z</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">boot_sf_vm</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="p">((</span><span class="n">sf_m</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-# Generate the confidence intervals for both sets of structure functions, still at 90%
-boot_sf_vz_conf = boot_sf_vz.confidence_interval
-boot_sf_vm_conf = boot_sf_vm.confidence_interval
+<span class="c1"># Generate the confidence intervals for both sets of structure functions, still at 90%</span>
+<span class="n">boot_sf_vz_conf</span> <span class="o">=</span> <span class="n">boot_sf_vz</span><span class="o">.</span><span class="n">confidence_interval</span>
+<span class="n">boot_sf_vm_conf</span> <span class="o">=</span> <span class="n">boot_sf_vm</span><span class="o">.</span><span class="n">confidence_interval</span>
 
-# Compute the mean -- this can also be accomplished with a Python mean function
-# and will return the same result
-boot_sf_vz_mean = boot_sf_vz.bootstrap_distribution.mean(axis=1)
-boot_sf_vm_mean = boot_sf_vm.bootstrap_distribution.mean(axis=1)
+<span class="c1"># Compute the mean -- this can also be accomplished with a Python mean function</span>
+<span class="c1"># and will return the same result</span>
+<span class="n">boot_sf_vz_mean</span> <span class="o">=</span> <span class="n">boot_sf_vz</span><span class="o">.</span><span class="n">bootstrap_distribution</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">boot_sf_vm_mean</span> <span class="o">=</span> <span class="n">boot_sf_vm</span><span class="o">.</span><span class="n">bootstrap_distribution</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -181,24 +181,24 @@ boot_sf_vm_mean = boot_sf_vm.bootstrap_distribution.mean(axis=1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-fig, (ax1) = plt.subplots()
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax1.semilogx(sfs_list[0][&#39;x-diffs&#39;], boot_sf_vz_mean,label=r&#39;Zonal&#39;,color=&#39;k&#39;)
-ax1.semilogx(sfs_list[0][&#39;y-diffs&#39;], boot_sf_vm_mean, label=r&#39;Meridional&#39;,
-             color=&#39;tab:blue&#39;, linestyle=&#39;dotted&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">boot_sf_vz_mean</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">boot_sf_vm_mean</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Meridional&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
-# Shade in the confidence regions
-ax1.fill_between(sfs_list[0][&#39;x-diffs&#39;],boot_sf_vz_conf[0],boot_sf_vz_conf[1],color=&#39;k&#39;,alpha=0.3,edgecolor=None)
-ax1.fill_between(sfs_list[0][&#39;y-diffs&#39;],boot_sf_vm_conf[0],boot_sf_vm_conf[1],color=&#39;tab:blue&#39;,alpha=0.3,edgecolor=None)
+<span class="c1"># Shade in the confidence regions</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-ax1.set_ylabel(r&quot;Structure function&quot;)
-ax1.set_xlabel(r&quot;Separation distance&quot;)
-ax1.set_xlim(3e-2,3e0)
-ax1.legend()
-plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-plt.title(&#39;Advective velocity structure functions&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Advective velocity structure functions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

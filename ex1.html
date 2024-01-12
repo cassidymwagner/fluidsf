@@ -108,20 +108,20 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import h5py
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
 
-f = h5py.File(&#39;sample_data/2layer_128.jld2&#39;, &#39;r&#39;)
-grid = f[&#39;grid&#39;]
-snapshots = f[&#39;snapshots&#39;]
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;sample_data/2layer_128.jld2&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;grid&#39;</span><span class="p">]</span>
+<span class="n">snapshots</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;snapshots&#39;</span><span class="p">]</span>
 
-# Initialize the grid of x and y coordinates
-x = grid[&#39;x&#39;][()]
-y = grid[&#39;y&#39;][()]
+<span class="c1"># Initialize the grid of x and y coordinates</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][()]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][()]</span>
 
-# Grab the top layer and final snapshot of the simulation for u, v, and q
-u = snapshots[&#39;u&#39;][&#39;20050&#39;][0]
-v = snapshots[&#39;v&#39;][&#39;20050&#39;][0]
-q = snapshots[&#39;q&#39;][&#39;20050&#39;][0]
+<span class="c1"># Grab the top layer and final snapshot of the simulation for u, v, and q</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">][</span><span class="s1">&#39;20050&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">][</span><span class="s1">&#39;20050&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">][</span><span class="s1">&#39;20050&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -130,18 +130,18 @@ q = snapshots[&#39;q&#39;][&#39;20050&#39;][0]
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-fig, (ax1, ax2) = plt.subplots(1,2, sharex=True, sharey=True, figsize=(8,3))
-p1 = ax1.pcolormesh(x,y,u, cmap=&#39;RdBu&#39;,vmin=-5,vmax=5)
-p2 = ax2.pcolormesh(x,y,v, cmap=&#39;RdBu&#39;,vmin=-5,vmax=5)
-fig.colorbar(p1,label=&#39;u-velocity [m/s]&#39;)
-fig.colorbar(p2, label=&#39;v-velocity [m/s]&#39;)
-ax1.set_xlabel(&#39;x [m]&#39;)
-ax2.set_xlabel(&#39;x [m]&#39;)
-ax1.set_ylabel(&#39;y [m]&#39;)
-ax2.set_ylabel(&#39;y [m]&#39;)
-plt.tight_layout()
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">u</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;u-velocity [m/s]&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;v-velocity [m/s]&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x [m]&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x [m]&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y [m]&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y [m]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -159,9 +159,9 @@ plt.tight_layout()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import oceans_sf as ocsf
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">oceans_sf</span> <span class="k">as</span> <span class="nn">ocsf</span>
 
-sf = ocsf.generate_structure_functions(u, v, x, y)
+<span class="n">sf</span> <span class="o">=</span> <span class="n">ocsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -169,22 +169,22 @@ sf = ocsf.generate_structure_functions(u, v, x, y)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1) = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 
-ax1.semilogx(sf[&#39;x-diffs&#39;], sf[&#39;SF_advection_velocity_zonal&#39;],label=r&#39;$\delta u\cdot\delta A_u$ zonal&#39;,color=&#39;k&#39;)
-ax1.semilogx(sf[&#39;y-diffs&#39;], sf[&#39;SF_advection_velocity_meridional&#39;], label=r&#39;$\delta u\cdot\delta A_u$ meridional&#39;,
-             color=&#39;k&#39;,linestyle=&#39;dotted&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_zonal&#39;</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u\cdot\delta A_u$ zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_meridional&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u\cdot\delta A_u$ meridional&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
-ax1.set_ylabel(r&quot;Structure function [s$^{-3}$]&quot;)
-ax1.set_xlabel(r&quot;Separation distance [m]&quot;)
-ax1.set_xlim(3e-2,3e0)
-ax1.legend()
-plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-ax1.tick_params(direction=&quot;in&quot;, which=&quot;both&quot;)
-ax1.xaxis.get_ticklocs(minor=True)
-ax1.minorticks_on()
-plt.title(&#39;Advective velocity structure functions&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function [s$^{-3}$]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance [m]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Advective velocity structure functions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -209,23 +209,23 @@ Text(0.5, 1.0, &#39;Advective velocity structure functions&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1) = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax1.semilogx(sf[&#39;x-diffs&#39;], -sf[&#39;SF_advection_velocity_zonal&#39;]/2,
-             label=r&#39;$-\frac{1}{2} \delta u\cdot\delta A_u$ zonal&#39;,color=&#39;k&#39;)
-ax1.semilogx(sf[&#39;y-diffs&#39;], -sf[&#39;SF_advection_velocity_meridional&#39;]/2,
-             label=r&#39;$-\frac{1}{2} \delta u\cdot\delta A_u$ meridional&#39;,color=&#39;k&#39;,
-             linestyle=&#39;dotted&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="o">-</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_zonal&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$-\frac</span><span class="si">{1}{2}</span><span class="s1"> \delta u\cdot\delta A_u$ zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="o">-</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_meridional&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$-\frac</span><span class="si">{1}{2}</span><span class="s1"> \delta u\cdot\delta A_u$ meridional&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+             <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
-ax1.set_ylabel(r&quot;Energy flux [m$^2$ s$^{-3}$]&quot;)
-ax1.set_xlabel(r&quot;Separation distance [m]&quot;)
-ax1.set_xlim(3e-2,3e0)
-ax1.legend()
-plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-ax1.tick_params(direction=&quot;in&quot;, which=&quot;both&quot;)
-ax1.xaxis.get_ticklocs(minor=True)
-ax1.minorticks_on()
-plt.title(&#39;Advective velocity structure functions&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Energy flux [m$^2$ s$^{-3}$]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance [m]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Advective velocity structure functions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -253,7 +253,7 @@ Text(0.5, 1.0, &#39;Advective velocity structure functions&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sf_all = ocsf.generate_structure_functions(u, v, x, y, scalar=q, traditional_order=3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_all</span> <span class="o">=</span> <span class="n">ocsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">traditional_order</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -261,22 +261,22 @@ Text(0.5, 1.0, &#39;Advective velocity structure functions&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1) = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 
-ax1.semilogx(sf_all[&#39;x-diffs&#39;], sf_all[&#39;SF_advection_scalar_zonal&#39;],label=r&#39;$\delta \omega\cdot\delta A_{\omega}$ zonal&#39;,color=&#39;k&#39;)
-ax1.semilogx(sf_all[&#39;y-diffs&#39;], sf_all[&#39;SF_advection_scalar_meridional&#39;], label=r&#39;$\delta \omega\cdot\delta A_{\omega}$ meridional&#39;,
-             color=&#39;k&#39;,linestyle=&#39;dotted&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_advection_scalar_zonal&#39;</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta \omega\cdot\delta A_{\omega}$ zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_advection_scalar_meridional&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta \omega\cdot\delta A_{\omega}$ meridional&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
-ax1.set_ylabel(r&quot;Structure function [s$^{-3}$]&quot;)
-ax1.set_xlabel(r&quot;Separation distance [m]&quot;)
-ax1.set_xlim(3e-2,3e0)
-ax1.legend()
-plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-ax1.tick_params(direction=&quot;in&quot;, which=&quot;both&quot;)
-ax1.xaxis.get_ticklocs(minor=True)
-ax1.minorticks_on()
-plt.title(&#39;Advective vorticity structure functions&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function [s$^{-3}$]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance [m]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Advective vorticity structure functions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -300,22 +300,22 @@ Text(0.5, 1.0, &#39;Advective vorticity structure functions&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1) = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 
-ax1.semilogx(sf_all[&#39;x-diffs&#39;], sf_all[&#39;SF_traditional_velocity_zonal&#39;],label=r&#39;$\delta u_z \delta u_z \delta u_z$ zonal&#39;,color=&#39;k&#39;)
-ax1.semilogx(sf_all[&#39;y-diffs&#39;], sf_all[&#39;SF_traditional_velocity_meridional&#39;], label=r&#39;$\delta u_m \delta u_m \delta u_m$ meridional&#39;,
-             color=&#39;k&#39;,linestyle=&#39;dotted&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_traditional_velocity_zonal&#39;</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u_z \delta u_z \delta u_z$ zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_traditional_velocity_meridional&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u_m \delta u_m \delta u_m$ meridional&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
-ax1.set_ylabel(r&quot;Structure function [s$^{-3}$]&quot;)
-ax1.set_xlabel(r&quot;Separation distance [m]&quot;)
-ax1.set_xlim(3e-2,3e0)
-ax1.legend()
-plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-ax1.tick_params(direction=&quot;in&quot;, which=&quot;both&quot;)
-ax1.xaxis.get_ticklocs(minor=True)
-ax1.minorticks_on()
-plt.title(&#39;Traditional velocity structure functions&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function [s$^{-3}$]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance [m]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Traditional velocity structure functions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -340,22 +340,22 @@ Text(0.5, 1.0, &#39;Traditional velocity structure functions&#39;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1) = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 
-ax1.semilogx(sf_all[&#39;x-diffs&#39;], sf_all[&#39;SF_traditional_scalar_zonal&#39;],label=r&#39;$\delta \omega \delta \omega \delta \omega$ zonal&#39;,color=&#39;k&#39;)
-ax1.semilogx(sf_all[&#39;y-diffs&#39;], sf_all[&#39;SF_traditional_scalar_meridional&#39;], label=r&#39;$\delta \omega \delta \omega \delta \omega$ meridional&#39;,
-             color=&#39;k&#39;,linestyle=&#39;dotted&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_traditional_scalar_zonal&#39;</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta \omega \delta \omega \delta \omega$ zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_traditional_scalar_meridional&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta \omega \delta \omega \delta \omega$ meridional&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
-ax1.set_ylabel(r&quot;Structure function [s$^{-3}$]&quot;)
-ax1.set_xlabel(r&quot;Separation distance [m]&quot;)
-ax1.set_xlim(3e-2,3e0)
-ax1.legend()
-plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-ax1.tick_params(direction=&quot;in&quot;, which=&quot;both&quot;)
-ax1.xaxis.get_ticklocs(minor=True)
-ax1.minorticks_on()
-plt.title(&#39;Traditional vorticity structure functions&#39;)
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function [s$^{-3}$]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance [m]&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Traditional vorticity structure functions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
