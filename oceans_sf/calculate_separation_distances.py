@@ -6,8 +6,8 @@ def calculate_separation_distances(x, y, x_shift, y_shift, grid_type="uniform"):
     """
     Calculate the separation distances between two points.
 
-    Args
-    ----
+    Parameters
+    ----------
     x (float): The x-coordinate of the first point.
     y (float): The y-coordinate of the first point.
     x_shift (float): The x-coordinate of the second point.

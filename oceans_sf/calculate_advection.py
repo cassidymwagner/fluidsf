@@ -18,8 +18,8 @@ def calculate_advection(
     velocity field. If the velocity advection is skipped or a scalar field is not
     provided, the relevant dictionary key will return None.
 
-    Args:
-    ----
+    Parameters
+    ----------
         u (ndarray): The u-component of velocity.
         v (ndarray): The v-component of velocity.
         x (ndarray): The x-coordinates of the grid.
@@ -31,7 +31,7 @@ def calculate_advection(
         grid_type (str, optional): The type of grid. Defaults to "uniform".
         scalar (numpy.ndarray, optional): Array of scalar values. Defaults to None.
 
-    Returns:
+    Returns
     -------
         tuple or ndarray: A tuple of advection components (eastward_advection,
         northward_advection) if scalar is not provided, otherwise returns an ndarray

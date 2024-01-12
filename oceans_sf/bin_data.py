@@ -6,8 +6,8 @@ def bin_data(dd, sf, nbins):
     Bins the data based on the separation distances and calculates the the bin-averaged
     structure functions.
 
-    Args
-    ----
+    Parameters
+    ----------
     dd (array-like): The separation distances to be binned.
     sf (array-like): The structure functions that will be bin-averaged.
     nbins (int): The number of bins to create.

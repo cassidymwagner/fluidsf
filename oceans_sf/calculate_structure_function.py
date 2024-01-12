@@ -20,8 +20,8 @@ def calculate_structure_function(
     Calculate structure function, either advective or traditional.
     Supports velocity-based structure functions and scalar-based structure functions.
 
-    Args:
-    ----
+    Parameters
+    ----------
         u (numpy.ndarray): Array of u velocities.
         v (numpy.ndarray): Array of v velocities.
         adv_e (numpy.ndarray): Array of eastward advection values.
@@ -43,7 +43,7 @@ def calculate_structure_function(
         boundary (str, optional): Boundary condition for shifting arrays.
         Defaults to "Periodic".
 
-    Returns:
+    Returns
     -------
         dict: A dictionary containing the advection velocity structure functions and
         scalar structure functions (if applicable).

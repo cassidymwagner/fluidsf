@@ -1,4 +1,4 @@
 Installation instructions
-========================
+=========================
 
 Install instructions

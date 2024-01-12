@@ -30,8 +30,8 @@ def generate_structure_functions(  # noqa: C901
     functions. Defaults to calculating the velocity-based advective structure functions
     for the x (zonal) and y (meridional) directions.
 
-    Args:
-    ----
+    Parameters
+    ----------
         u (ndarray): 2D array of u velocity components.
         v (ndarray): 2D array of v velocity components.
         x (ndarray): 1D array of x-coordinates.
@@ -53,7 +53,7 @@ def generate_structure_functions(  # noqa: C901
         Defaults to "uniform".
         nbins (int, optional): Number of bins for binning the data. Defaults to 10.
 
-    Returns:
+    Returns
     -------
         dict: Dictionary containing the requested structure functions and separation
         distances for the x- and y-direction (zonal and meridional, respectively).
@@ -103,7 +103,7 @@ def generate_structure_functions(  # noqa: C901
             SF_m_trad_scalar = np.zeros(len(sep_m) + 1)
 
     # Iterate over separations right and down
-    for down, right in zip(sep_m, sep_z, strict=False):
+    for down, right in zip(sep_m, sep_z):
         xroll = shift_array1d(x, shift_by=right, boundary=boundary)
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
 
