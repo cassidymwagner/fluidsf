@@ -26,12 +26,15 @@ jobs:
         pip install --upgrade pip
         pip install numpy
         pip install pandas
-        pip install pandoc
         pip install geopy
         pip install sphinx
         pip install nbsphinx
         pip install numpydoc
         pip install sphinx-rtd-theme
+
+    - uses: actions/checkout@master
+    - uses: nikeee/setup-pandoc@v1
+    - run: echo "# Test" | pandoc -t html
 
     - name: Build sphinx
       run: |
