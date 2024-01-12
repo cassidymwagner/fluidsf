@@ -58,6 +58,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#Load-the-dataset-generated-with-GeophysicalFlows.jl">Load the dataset generated with GeophysicalFlows.jl</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Calculate-advective-velocity-structure-functions-for-all-snapshots">Calculate advective velocity structure functions for all snapshots</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Bootstrap-to-generate-a-mean-structure-function-and-confidence-intervals">Bootstrap to generate a mean structure function and confidence intervals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Plot-mean-structure-functions-and-confidence-intervals">Plot mean structure functions and confidence intervals</a></li>
 </ul>
 </li>
 </ul>
@@ -173,14 +174,16 @@ boot_sf_vm_mean = boot_sf_vm.bootstrap_distribution.mean(axis=1)
 </pre></div>
 </div>
 </div>
+</section>
+<section id="Plot-mean-structure-functions-and-confidence-intervals">
+<h2>Plot mean structure functions and confidence intervals<a class="headerlink" href="#Plot-mean-structure-functions-and-confidence-intervals" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 
 fig, (ax1) = plt.subplots()
-
 
 ax1.semilogx(sfs_list[0][&#39;x-diffs&#39;], boot_sf_vz_mean,label=r&#39;Zonal&#39;,color=&#39;k&#39;)
 ax1.semilogx(sfs_list[0][&#39;y-diffs&#39;], boot_sf_vm_mean, label=r&#39;Meridional&#39;,
@@ -195,15 +198,12 @@ ax1.set_xlabel(r&quot;Separation distance&quot;)
 ax1.set_xlim(3e-2,3e0)
 ax1.legend()
 plt.hlines(0,3e-2,3e0,color=&#39;k&#39;,linestyle=&#39;dashed&#39;,alpha=0.3)
-ax1.tick_params(direction=&quot;in&quot;, which=&quot;both&quot;)
-ax1.xaxis.get_ticklocs(minor=True)
-ax1.minorticks_on()
 plt.title(&#39;Advective velocity structure functions&#39;)
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -215,7 +215,7 @@ Text(0.5, 1.0, &#39;Advective velocity structure functions&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/ex2_8_1.png" src="_images/ex2_8_1.png" />
+<img alt="_images/ex2_9_1.png" src="_images/ex2_9_1.png" />
 </div>
 </div>
 <p>This same process can be repeated for the other types of structure functions as described in the previous example.</p>
