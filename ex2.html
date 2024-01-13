@@ -157,6 +157,16 @@
 <li><p>Use scipy’s bootstrapping method to estimate the mean structure functions and generate confidence intervals</p></li>
 <li><p>Plot the mean structure functions and shade the confidence intervals</p></li>
 </ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib_inline.backend_inline</span>
+
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;retina&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <section id="Load-the-dataset-generated-with-GeophysicalFlows.jl">
 <h2>Load the dataset generated with GeophysicalFlows.jl<a class="headerlink" href="#Load-the-dataset-generated-with-GeophysicalFlows.jl" title="Link to this heading">¶</a></h2>
 <p>We will use <code class="docutils literal notranslate"><span class="pre">h5py</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.jld2</span></code> file, the output from <code class="docutils literal notranslate"><span class="pre">GeophysicalFlows.jl</span></code>, a numerical ocean simulator written in Julia.</p>
@@ -245,8 +255,10 @@
              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
 <span class="c1"># Shade in the confidence regions</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                 <span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                 <span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
@@ -270,7 +282,7 @@ Text(0.5, 1.0, &#39;Advective velocity structure functions&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/ex2_9_1.png" src="_images/ex2_9_1.png" />
+<img alt="_images/ex2_10_1.png" src="_images/ex2_10_1.png" />
 </div>
 </div>
 <p>This same process can be repeated for the other types of structure functions as described in the previous example.</p>
