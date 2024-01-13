@@ -1,101 +1,151 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>oceans_sf function documentation &mdash; Oceans SF 0.1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <title>oceans_sf function documentation</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
         <script src="_static/documentation_options.js?v=01f34227"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Functions" href="modules.html" /> 
-</head>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="prev" title="Functions" href="modules.html" /> 
+  </head>
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            Oceans SF
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Oceans SF</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Functions</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">oceans_sf function documentation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#oceans_sf.bin_data"><code class="docutils literal notranslate"><span class="pre">bin_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oceans_sf.calculate_separation_distances"><code class="docutils literal notranslate"><span class="pre">calculate_separation_distances()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oceans_sf.calculate_structure_function"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oceans_sf.generate_structure_functions"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oceans_sf.shift_array1d"><code class="docutils literal notranslate"><span class="pre">shift_array1d()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oceans_sf.shift_array2d"><code class="docutils literal notranslate"><span class="pre">shift_array2d()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <span class="site-name">Oceans SF</span>
+    
+  </router-link>
 
-        </div>
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
       </div>
-    </nav>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Oceans SF</a>
-      </nav>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">Functions</a></li>
-      <li class="breadcrumb-item active">oceans_sf function documentation</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/oceans_sf.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="index.html#oceans-sf-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="overview.html" class="reference internal ">Overview of Oceans SF</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="installation.html" class="reference internal ">Installation instructions</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="modules.html" class="reference internal ">Functions</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">Functions</a> &raquo;</li>
+    
+    <li>oceans_sf function documentation</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="previous chapter">← Functions</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
   <p>oceans_sf package</p>
 <section id="module-oceans_sf">
-<span id="oceans-sf-function-documentation"></span><h1>oceans_sf function documentation<a class="headerlink" href="#module-oceans_sf" title="Link to this heading"></a></h1>
+<span id="oceans-sf-function-documentation"></span><h1>oceans_sf function documentation<a class="headerlink" href="#module-oceans_sf" title="Link to this heading">¶</a></h1>
 <p>Structure function calculation package.
 This package calculates structure functions from ocean velocity data.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.bin_data">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">bin_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.bin_data" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">bin_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.bin_data" title="Link to this definition">¶</a></dt>
 <dd><p>Bins the data based on the separation distances and calculates the the bin-averaged
 structure functions.</p>
 <dl class="field-list simple">
@@ -118,7 +168,7 @@ structure functions.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.calculate_separation_distances">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_separation_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_separation_distances" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_separation_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_separation_distances" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the separation distances between two points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -144,7 +194,7 @@ case of a latlon grid or code units for a uniform grid</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.calculate_structure_function">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_structure_function" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_structure_function" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate structure function, either advective or traditional.
 Supports velocity-based structure functions and scalar-based structure functions.</p>
 <dl class="field-list simple">
@@ -174,22 +224,32 @@ If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
 scalar structure functions (if applicable).
 The dictionary has the following keys:</p>
 <blockquote>
-<div><p>’SF_velocity_right’: The advection velocity structure function in the
-right direction.
-‘SF_velocity_down’: The advection velocity structure function in the
-down direction.
-‘SF_trad_velocity_right’: The traditional velocity structure function in
-the right direction (if traditional_order &gt; 0).
-‘SF_trad_velocity_down’: The traditional velocity structure function in
-the down direction (if traditional_order &gt; 0).
-‘SF_scalar_right’: The scalar structure function in the right direction
-(if scalar is provided).
-‘SF_scalar_down’: The scalar structure function in the down direction
-(if scalar is provided).
-‘SF_trad_scalar_right’: The traditional scalar structure function in the
-right direction (if scalar is provided and traditional_order &gt; 0).
-‘SF_trad_scalar_down’: The traditional scalar structure function in the
+<div><dl class="simple">
+<dt>’SF_velocity_right’:</dt><dd><p>The advection velocity structure function in the
+right direction.</p>
+</dd>
+<dt>’SF_velocity_down’:</dt><dd><p>The advection velocity structure function in the
+down direction.</p>
+</dd>
+<dt>’SF_trad_velocity_right’:</dt><dd><p>The traditional velocity structure function in
+the right direction (if traditional_order &gt; 0).</p>
+</dd>
+<dt>’SF_trad_velocity_down’:</dt><dd><p>The traditional velocity structure function in
+the down direction (if traditional_order &gt; 0).</p>
+</dd>
+<dt>’SF_scalar_right’:</dt><dd><p>The scalar structure function in the right direction
+(if scalar is provided).</p>
+</dd>
+<dt>’SF_scalar_down’:</dt><dd><p>The scalar structure function in the down direction
+(if scalar is provided).</p>
+</dd>
+<dt>’SF_trad_scalar_right’:</dt><dd><p>The traditional scalar structure function in the
+right direction (if scalar is provided and traditional_order &gt; 0).</p>
+</dd>
+<dt>’SF_trad_scalar_down’:</dt><dd><p>The traditional scalar structure function in the
 down direction (if scalar is provided and traditional_order &gt; 0).</p>
+</dd>
+</dl>
 </div></blockquote>
 </p>
 </dd>
@@ -201,7 +261,7 @@ down direction (if scalar is provided and traditional_order &gt; 0).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.generate_structure_functions">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">even</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'True'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.generate_structure_functions" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">even</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'True'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.generate_structure_functions" title="Link to this definition">¶</a></dt>
 <dd><p>Full method for generating structure functions for 2D data, either advective or
 traditional structure functions. Supports velocity-based and scalar-based structure
 functions. Defaults to calculating the velocity-based advective structure functions
@@ -239,7 +299,7 @@ distances for the x- and y-direction (zonal and meridional, respectively).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.shift_array1d">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array1d" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array1d" title="Link to this definition">¶</a></dt>
 <dd><p>Shifts 1D array by an integer amount and returns the shifted array.
 Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
@@ -265,7 +325,7 @@ Defaults to “Periodic”.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.shift_array2d">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_down</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array2d" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_down</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array2d" title="Link to this definition">¶</a></dt>
 <dd><p>Shifts 2D array right and down by the specified integer amounts and returns
 the shifted arrays. Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
@@ -296,33 +356,23 @@ the array, otherwise the array will be padded with NaNs. Defaults to
 </section>
 
 
-           </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2024, Cassidy Wagner.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="previous chapter">← Functions</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2024, Cassidy Wagner.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
 </html>
