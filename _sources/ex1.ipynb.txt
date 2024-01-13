@@ -26,9 +26,7 @@
    "cell_type": "code",
    "execution_count": 73,
    "metadata": {
-    "tags": [
-     "hidden"
-    ]
+    "tags": ["remove_cell", ]
    },
    "outputs": [],
    "source": [
