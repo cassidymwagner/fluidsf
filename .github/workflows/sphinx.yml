@@ -33,6 +33,7 @@ jobs:
         pip install numpydoc
         pip install sphinx-rtd-theme
         pip install sphinx-press-theme
+        pip install furo
 
     - uses: actions/checkout@master
     - uses: nikeee/setup-pandoc@v1
