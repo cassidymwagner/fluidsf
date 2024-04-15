@@ -197,13 +197,13 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                     [
                         0.0,
                         111127.34496561,
-                        222085.35856591,
-                        332772.46924562,
-                        443087.12759851,
-                        552927.80866002,
-                        662193.01584979,
-                        770781.28701475,
-                        878591.20301767,
+                        222254.67962213,
+                        333381.99365421,
+                        444509.27673393,
+                        555636.51851453,
+                        666763.70862407,
+                        777890.83665907,
+                        889017.89217812,
                     ]
                 ),
             },  # expected_dict
@@ -257,9 +257,9 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                     [
                         0.0,
                         111127.34496561,
-                        222085.35856591,
-                        332772.46924562,
-                        443087.12759851,
+                        222254.67962213,
+                        333381.99365421,
+                        444509.27673393,
                     ]
                 ),
             },  # expected_dict
@@ -304,7 +304,7 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                 "y-diffs": np.array([1, 4, 7]),
             },  # expected_dict
         ),
-        # Test 5: all with no boundary and latlon grid and binning
+        # Test 6: all with no boundary and latlon grid and binning
         (
             np.array(
                 [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
@@ -344,8 +344,48 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                     [111195.08372419, 444780.33489677, 778365.58606934]
                 ),
                 "y-diffs": np.array(
-                    [111070.90117717, 442929.13516805, 770521.83529407]
+                    [111127.34152924, 444509.26296756, 777890.81248708]
                 ),
+            },  # expected_dict
+        ),
+        # Test 7: all with no boundary and uneven x vs y
+        (
+            np.array(
+                [[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)]
+            ),  # u
+            np.array([[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)])
+            * 2,  # v
+            np.linspace(1, 5, 5),  # x
+            np.linspace(1, 10, 10),  # y
+            False,  # skip_velocity_sf
+            np.array([[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)])
+            * 3,  # scalar
+            3,  # traditional_order
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            False,  # even
+            "uniform",  # grid_type
+            5,  # nbins
+            {
+                "SF_advection_velocity_zonal": np.array([0, 55, 220, 495]),
+                "SF_advection_velocity_meridional": np.array(
+                    [687.5, 8937.5, 22000, 41937.5, 77687.5]
+                ),
+                "SF_advection_scalar_zonal": np.array([0, 99, 396, 891]),
+                "SF_advection_scalar_meridional": np.array(
+                    [1237.5, 16087.5, 39600.0, 75487.5, 139837.5]
+                ),
+                "SF_traditional_velocity_zonal": np.array([0, -1, -8, -27]),
+                "SF_traditional_velocity_meridional": np.array(
+                    [-62.5, -2187.5, -8000.0, -21312.5, -53437.5]
+                ),
+                "SF_traditional_scalar_zonal": np.array([0, -27, -216, -729]),
+                "SF_traditional_scalar_meridional": np.array(
+                    [-1687.5, -59062.5, -216000.0, -575437.5, -1442812.5]
+                ),
+                "x-diffs": np.linspace(0, 3, 4),
+                "y-diffs": np.array([0.5, 2.5, 4, 5.5, 7.5]),
             },  # expected_dict
         ),
     ],
