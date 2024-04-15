@@ -103,8 +103,8 @@ def generate_structure_functions(  # noqa: C901
             SF_m_trad_scalar = np.zeros(len(sep_m) + 1)
 
     # Iterate over separations right and down
-    for down, right in zip(sep_m, sep_z, strict=False):
-        xroll = shift_array1d(x, shift_by=right, boundary=boundary)
+    for down in sep_m:
+        right = 1
         yroll = shift_array1d(y, shift_by=down, boundary=boundary)
 
         SF_dicts = calculate_structure_function(
@@ -121,27 +121,50 @@ def generate_structure_functions(  # noqa: C901
             boundary,
         )
 
-        # Maybe don't do this and just let the dict have Nones in it,
-        # probably a lot easier and less silly
         if skip_velocity_sf is False:
-            SF_z[right] = SF_dicts["SF_velocity_right"]
             SF_m[down] = SF_dicts["SF_velocity_down"]
             if traditional_order > 0:
-                SF_z_trad_velocity[right] = SF_dicts["SF_trad_velocity_right"]
                 SF_m_trad_velocity[down] = SF_dicts["SF_trad_velocity_down"]
         if scalar is not None:
-            SF_z_scalar[right] = SF_dicts["SF_scalar_right"]
             SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
             if traditional_order > 0:
-                SF_z_trad_scalar[right] = SF_dicts["SF_trad_scalar_right"]
                 SF_m_trad_scalar[down] = SF_dicts["SF_trad_scalar_down"]
 
-        # Calculate separation distances in x and y
-        xd[right], tmp = calculate_separation_distances(
-            x[right], y[right], xroll[right], yroll[right], grid_type
-        )
+        # Calculate separation distances in y
         tmp, yd[down] = calculate_separation_distances(
-            x[down], y[down], xroll[down], yroll[down], grid_type
+            x[right], y[down], x[right], yroll[down], grid_type
+        )
+
+    for right in sep_z:
+        down = 1
+        xroll = shift_array1d(x, shift_by=right, boundary=boundary)
+
+        SF_dicts = calculate_structure_function(
+            u,
+            v,
+            adv_E,
+            adv_N,
+            down,
+            right,
+            skip_velocity_sf,
+            scalar,
+            adv_scalar,
+            traditional_order,
+            boundary,
+        )
+
+        if skip_velocity_sf is False:
+            SF_z[right] = SF_dicts["SF_velocity_right"]
+            if traditional_order > 0:
+                SF_z_trad_velocity[right] = SF_dicts["SF_trad_velocity_right"]
+        if scalar is not None:
+            SF_z_scalar[right] = SF_dicts["SF_scalar_right"]
+            if traditional_order > 0:
+                SF_z_trad_scalar[right] = SF_dicts["SF_trad_scalar_right"]
+
+        # Calculate separation distances in x
+        xd[right], tmp = calculate_separation_distances(
+            x[right], y[down], xroll[right], y[down], grid_type
         )
 
     # Bin the data if the grid is uneven

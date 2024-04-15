@@ -4,6 +4,7 @@ This package calculates structure functions from ocean velocity data.
 """
 
 from .bin_data import bin_data
+from .calculate_advection import calculate_advection
 from .calculate_separation_distances import calculate_separation_distances
 from .calculate_structure_function import (
     calculate_structure_function,
