@@ -18,6 +18,15 @@ oceans_sf is a Python package for calculating structure functions from oceanogra
 These structure functions can be used to estimate turbulence cascade rates without the constraints 
 of spectral methods. This package serves as a useful tool for analyzing turbulent dynamics in the ocean.
 
+.. _Usage:
+
+Usage
+*****
+
+.. admonition:: Look ma! A custom title.
+
+   It looks different though.
+
 .. _Development and Contributing:
 
 Development and Contributing
