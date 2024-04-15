@@ -364,56 +364,28 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             None,  # boundary
-            True,  # even
+            False,  # even
             "uniform",  # grid_type
             5,  # nbins
             {
-                "SF_advection_velocity_zonal": np.array(
-                    [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
-                ),
+                "SF_advection_velocity_zonal": np.array([0, 55, 220, 495]),
                 "SF_advection_velocity_meridional": np.array(
-                    [0, 10500, 42000, 94500, 168000, 262500, 378000, 514500, 672000]
+                    [687.5, 8937.5, 22000, 41937.5, 77687.5]
                 ),
-                "SF_advection_scalar_zonal": np.array(
-                    [0, 189, 756, 1701, 3024, 4725, 6804, 9261, 12096]
-                ),
+                "SF_advection_scalar_zonal": np.array([0, 99, 396, 891]),
                 "SF_advection_scalar_meridional": np.array(
-                    [0, 18900, 75600, 170100, 302400, 472500, 680400, 926100, 1209600]
+                    [1237.5, 16087.5, 39600.0, 75487.5, 139837.5]
                 ),
-                "SF_traditional_velocity_zonal": np.array(
-                    [0, -1, -8, -27, -64, -125, -216, -343, -512]
-                ),
+                "SF_traditional_velocity_zonal": np.array([0, -1, -8, -27]),
                 "SF_traditional_velocity_meridional": np.array(
-                    [
-                        0,
-                        -1000,
-                        -8000,
-                        -27000,
-                        -64000,
-                        -125000,
-                        -216000,
-                        -343000,
-                        -512000,
-                    ]
+                    [-62.5, -2187.5, -8000.0, -21312.5, -53437.5]
                 ),
-                "SF_traditional_scalar_zonal": np.array(
-                    [0, -27, -216, -729, -1728, -3375, -5832, -9261, -13824]
-                ),
+                "SF_traditional_scalar_zonal": np.array([0, -27, -216, -729]),
                 "SF_traditional_scalar_meridional": np.array(
-                    [
-                        0,
-                        -27000,
-                        -216000,
-                        -729000,
-                        -1728000,
-                        -3375000,
-                        -5832000,
-                        -9261000,
-                        -13824000,
-                    ]
+                    [-1687.5, -59062.5, -216000.0, -575437.5, -1442812.5]
                 ),
-                "x-diffs": np.linspace(0, 8, 9),
-                "y-diffs": np.linspace(0, 8, 9),
+                "x-diffs": np.linspace(0, 3, 4),
+                "y-diffs": np.array([0.5, 2.5, 4, 5.5, 7.5]),
             },  # expected_dict
         ),
     ],
