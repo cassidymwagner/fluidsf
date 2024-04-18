@@ -15,6 +15,7 @@
 *.tsv
 *.tsv.gz
 *.xlsx
+*.jats
 
 # Mac/OSX
 .DS_Store
