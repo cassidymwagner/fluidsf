@@ -46,9 +46,9 @@ def calculate_structure_function(  # noqa: D417
         adv_scalar: ndarray, optional
             Array of scalar advection values. Defaults to None.
         traditional_type: list, optional
-            List of traditional structure function types to calculate. Defaults to None.
-            Accepted types are: "LL", "LLL", "LTT", "LLT", "LSS". If None, no traditional
-            structure functions are calculated.
+            List of traditional structure function types to calculate.
+            Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
+            no traditional structure functions are calculated. Defaults to None.
         boundary: str, optional
             Boundary condition for shifting arrays. Defaults to "Periodic".
 
@@ -139,7 +139,7 @@ def calculate_structure_function(  # noqa: D417
                     if direction == "down":
                         SF_dict["SF_LTT_" + direction] = np.nanmean(
                             (inputs["v_" + direction + "_shift"] - v)
-                            * (-inputs["u_" + direction + "_shift"] + u) ** 2
+                            * (inputs["u_" + direction + "_shift"] - u) ** 2
                         )
 
         if scalar is not None:
