@@ -28,17 +28,16 @@ bibliography: paper.bib
 
 # Summary
 
-Fluid systems are everywhere, from small-scale engineering problems to planetary-and-larger-scale systems (atmosphere, ocean, galactic gas clouds). These systems are often turbulent, where motion is chaotic, unpredictable, and can only be characterized through statistical analyses. Spatial structure functions (SFs) are one such statistical analysis technique for turbulence, that require calculation of spatial differences of properties as a function of their separation distance. By combining and averaging these spatial differences, various types of SF can be constructed to provide different windows into different critical aspects of fluid flow. However, calculating SFs is often a cumbersome and computationally-intensive task tailored to the specific format of a given turbulence dataset.    
+Fluid systems are everywhere, from small-scale engineering problems to planetary-and-larger-scale systems (atmosphere, ocean, galactic gas clouds). These systems are often turbulent, where motion is chaotic, unpredictable, and can only be characterized through statistical analyses. Spatial structure functions (SFs) are one such statistical analysis technique for turbulence, that require calculation of spatial differences in properties as a function of their separation distance. By combining and then averaging these spatial differences, various types of SF can be constructed to measure different critical properties of fluid flow. However, calculating SFs is often a cumbersome and computationally-intensive task tailored to the specific format of a given turbulence dataset.    
 
 non-specialist summary -- accessible to oceanographers, turbulence people, fluids people
-Test citation [@pearson:2021]
 
 <!--below: flesh this out more, i took it from the paper 1 draft word for word -->
 Earth’s changing climate is driven by a small energy imbalance that makes up less than 1% of the total energy budget (CITE). Any deviations in the energy budget, no matter how small, may have a large impact on future climate prediction (CITE, maybe scenarios too). To minimize error in climate prediction it is necessary to investigate how ocean turbulence regulates the global energy budget through the transfer, or cascade, of energy across spatial scales and throughout the ocean. 
 
 # Statement of need
 
-``FluidSFs`` provides a flexible package to calculate user-defined structure functions from various data in one, two, or three spatial dimensions.
+``FluidSFs`` is a flexible ``Python`` package that can be used to calculate various spatial structure functions (SFs) in one, two, or three spatial dimensions from diverse fluid data sets. The package can construct structure functions from data on arbitrary fluid properties (e.g., velocity, temperature, magnetic field etc.)
 
 to measure the energy budget of the ocean we need to measure cascade rates 
 
