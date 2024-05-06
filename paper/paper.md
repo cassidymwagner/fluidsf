@@ -29,6 +29,7 @@ bibliography: paper.bib
 # Summary
 
 non-specialist summary -- accessible to oceanographers, turbulence people, fluids people
+Test citation [@pearsonAdvectiveStructureFunctions2021]
 
 <!--below: flesh this out more, i took it from the paper 1 draft word for word -->
 Earth’s changing climate is driven by a small energy imbalance that makes up less than 1% of the total energy budget (CITE). Any deviations in the energy budget, no matter how small, may have a large impact on future climate prediction (CITE, maybe scenarios too). To minimize error in climate prediction it is necessary to investigate how ocean turbulence regulates the global energy budget through the transfer, or cascade, of energy across spatial scales and throughout the ocean. 
