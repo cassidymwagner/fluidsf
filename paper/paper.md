@@ -37,7 +37,9 @@ Earth’s changing climate is driven by a small energy imbalance that makes up l
 
 # Statement of need
 
-``FluidSFs`` is a flexible ``Python`` package that can be used to calculate various spatial structure functions (SFs) in one, two, or three spatial dimensions from diverse fluid data sets. The package can construct structure functions from data on arbitrary fluid properties (e.g., velocity, temperature, magnetic field etc.)
+``FluidSFs`` is a flexible ``Python`` package for calculating spatial structure functions (SFs) in one, two, or three spatial dimensions from diverse fluid data sets. The package can construct user-defined SFs that utilize any fluid properties (e.g., velocity, vorticity, temperature, magnetic field etc.), including combinations of these properties. The flexibility of this package enables geophysical, astrophysical, and engineering applications.... ADD EXAMPLES OF SF UTILITY BREADTH: e.g., quantifying the energy cycles within Earth's ocean [@pearson2019; @balwada:2022], Earth's atmosphere [@lindborg:1999], and Jupiter's atmosphere [@young:2017], the intermittency of magnetohydrodynamic plasma turbulence [@Wan:2016], the anistropy of flow over rough beds [@coscarella:2020], the characteristics of ocean surface temperature [@schloesser:2016], and the scaling laws of idealized 3D turbulence [@iyer:2020].   
+
+Paragraph on package capabilities & limitations. Regularly-gridded data, Lat-lon gridded data, track/directional sampling, 1D-data, evenly-spaced, iregularly-spaced (what are limitations), binning, bootstrapping(?), local advection terms, examples of time-averaging, SWOT application. What are limitations (can it take 2D data in a vector rather than array format? Can it calculate 2D or 3D maps of SF rather than just a function of |r| magnitude?). Perhaps these don't need to be mentioned, or can be stated as future developments. 
 
 to measure the energy budget of the ocean we need to measure cascade rates 
 
