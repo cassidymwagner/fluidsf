@@ -8,7 +8,7 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
 
 @pytest.mark.parametrize(
     "u, v, adv_e, adv_n, down, right, skip_velocity_sf, scalar, "
-    "adv_scalar, traditional_order, boundary, expected_result",
+    "adv_scalar, traditional_type, boundary, expected_result",
     [
         # Test 1: velocity and scalar no traditional
         (
@@ -21,8 +21,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             False,  # skip_velocity_sf
             np.array([[1, 2], [3, 4]]),  # scalar
             np.array([[3, -2], [-3, 12]]),  # adv_scalar
-            0,  # traditional_order
-            "Periodic",  # boundary
+            None,  # traditional_type
+            "periodic-all",  # boundary
             {
                 "SF_velocity_right": 88,
                 "SF_velocity_down": 138,
@@ -42,17 +42,15 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             False,
             np.array([[1, 2], [3, 4]]),
             np.array([[3, -2], [-3, 12]]),
-            2,
-            "Periodic",
+            ["LL"],
+            "periodic-all",
             {
                 "SF_velocity_right": 88,
-                "SF_trad_velocity_right": 1,
+                "SF_LL_right": 1,
                 "SF_scalar_right": 5,
-                "SF_trad_scalar_right": 1,
                 "SF_velocity_down": 138,
-                "SF_trad_velocity_down": 4,
+                "SF_LL_down": 4,
                 "SF_scalar_down": 8,
-                "SF_trad_scalar_down": 4,
             },
         ),
         # Test 3: all but skip velocity and no traditional
@@ -66,8 +64,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             True,
             np.array([[1, 2], [3, 4]]),
             np.array([[3, -2], [-3, 12]]),
-            0,
-            "Periodic",
+            None,
+            "periodic-all",
             {
                 "SF_scalar_right": 5,
                 "SF_scalar_down": 8,
@@ -84,8 +82,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             False,
             None,
             None,
-            0,
-            "Periodic",
+            None,
+            "periodic-all",
             {
                 "SF_velocity_right": 88,
                 "SF_velocity_down": 138,
@@ -102,7 +100,7 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             False,
             np.array([[1, 2], [3, 4]]),
             np.array([[3, -2], [-3, 12]]),
-            0,
+            None,
             None,
             {
                 "SF_velocity_right": 88,
@@ -122,17 +120,15 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             False,
             np.array([[1, 2], [3, 4]]),
             np.array([[3, -2], [-3, 12]]),
-            2,
+            ["LL"],
             None,
             {
                 "SF_velocity_right": 88,
-                "SF_trad_velocity_right": 1,
+                "SF_LL_right": 1,
                 "SF_scalar_right": 5,
-                "SF_trad_scalar_right": 1,
                 "SF_velocity_down": 138,
-                "SF_trad_velocity_down": 4,
+                "SF_LL_down": 4,
                 "SF_scalar_down": 8,
-                "SF_trad_scalar_down": 4,
             },
         ),
         # Test 7: all but skip velocity and no traditional non-periodic
@@ -146,7 +142,7 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             True,
             np.array([[1, 2], [3, 4]]),
             np.array([[3, -2], [-3, 12]]),
-            0,
+            None,
             None,
             {
                 "SF_scalar_right": 5,
@@ -164,7 +160,7 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             False,
             None,
             None,
-            0,
+            None,
             None,
             {
                 "SF_velocity_right": 88,
@@ -183,7 +179,7 @@ def test_calculate_structure_function_parameterized(
     skip_velocity_sf,
     scalar,
     adv_scalar,
-    traditional_order,
+    traditional_type,
     boundary,
     expected_result,
 ):
@@ -198,7 +194,7 @@ def test_calculate_structure_function_parameterized(
         skip_velocity_sf,
         scalar,
         adv_scalar,
-        traditional_order,
+        traditional_type,
         boundary,
     )
 
