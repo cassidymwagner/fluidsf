@@ -2,7 +2,7 @@ import numpy as np
 
 
 def shift_array2d(  # noqa: D417
-    input_array, shift_right=1, shift_down=1, boundary="Periodic"
+    input_array, shift_right=1, shift_down=1, boundary="periodic-all"
 ):
     """
     Shifts 2D array right and down by the specified integer amounts and returns
@@ -22,8 +22,9 @@ def shift_array2d(  # noqa: D417
             conditions. Defaults to 1.
         boundary: str, optional
             Boundary condition for input array. Periodic boundary conditions will wrap
-            the array, otherwise the array will be padded with NaNs. Defaults to
-            "Periodic".
+            the array, otherwise the array will be padded with NaNs. Accepted strings
+            are "periodic-x", "periodic-y", and "periodic-all".
+            Defaults to "periodic-all".
 
     Returns
     -------
@@ -35,13 +36,26 @@ def shift_array2d(  # noqa: D417
     shifted_right_array = np.full(np.shape(input_array), np.nan)
     shifted_down_array = np.full(np.shape(input_array), np.nan)
 
-    if boundary == "Periodic":
+    if boundary == "periodic-all":
         shifted_right_array[:, :shift_right] = input_array[:, -shift_right:]
         shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
 
         shifted_down_array[:shift_down, :] = input_array[-shift_down:, :]
         shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
-    else:
+
+    elif boundary == "periodic-x":
+        shifted_right_array[:, :shift_right] = input_array[:, -shift_right:]
+        shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
+
+        shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
+
+    elif boundary == "periodic-y":
+        shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
+
+        shifted_down_array[:shift_down, :] = input_array[-shift_down:, :]
+        shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
+
+    elif boundary is None:
         shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
         shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
 

@@ -3,7 +3,7 @@ import numpy as np
 from .shift_array2d import shift_array2d
 
 
-def calculate_structure_function(  # noqa: D417
+def calculate_structure_function(  # noqa: D417, C901
     u,
     v,
     adv_e,
@@ -14,7 +14,7 @@ def calculate_structure_function(  # noqa: D417
     scalar=None,
     adv_scalar=None,
     traditional_type=None,
-    boundary="Periodic",
+    boundary="periodic-all",
 ):
     """
     Calculate structure function, either advective or traditional.
@@ -50,7 +50,9 @@ def calculate_structure_function(  # noqa: D417
             Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
             no traditional structure functions are calculated. Defaults to None.
         boundary: str, optional
-            Boundary condition for shifting arrays. Defaults to "Periodic".
+            Boundary condition for shifting arrays. Accepted strings
+            are "periodic-x", "periodic-y", and "periodic-all".
+            Defaults to "periodic-all".
 
     Returns
     -------

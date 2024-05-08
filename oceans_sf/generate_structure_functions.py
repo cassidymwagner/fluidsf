@@ -19,7 +19,7 @@ def generate_structure_functions(  # noqa: C901, D417
     traditional_type=None,
     dx=None,
     dy=None,
-    boundary="Periodic",
+    boundary="periodic-all",
     even="True",
     grid_type="uniform",
     nbins=10,
@@ -56,7 +56,8 @@ def generate_structure_functions(  # noqa: C901, D417
         dy: float, optional
             Grid spacing in the y-direction. Defaults to None.
         boundary: str, optional
-            Boundary condition of the data. Defaults to "Periodic".
+            Boundary condition of the data. Accepted strings are "periodic-x",
+            "periodic-y", and "periodic-all". Defaults to "periodic-all".
         even: bool, optional
             Flag indicating if the grid is evenly spaced. Defaults to True.
         grid_type:str, optional
@@ -90,10 +91,16 @@ def generate_structure_functions(  # noqa: C901, D417
 
     # Define a list of separation distances to iterate over.
     # Periodic is half the length since the calculation will wrap the data.
-    if boundary == "Periodic":
+    if boundary == "periodic-all":
         sep_z = range(1, int(len(x) / 2))
         sep_m = range(1, int(len(y) / 2))
-    else:
+    elif boundary == "periodic-x":
+        sep_z = range(1, int(len(x) / 2))
+        sep_m = range(1, int(len(y) - 1))
+    elif boundary == "periodic-y":
+        sep_z = range(1, int(len(x) - 1))
+        sep_m = range(1, int(len(y) / 2))
+    elif boundary is None:
         sep_z = range(1, int(len(x) - 1))
         sep_m = range(1, int(len(y) - 1))
 
@@ -129,7 +136,10 @@ def generate_structure_functions(  # noqa: C901, D417
     # Iterate over separations right and down
     for down in sep_m:
         right = 1
-        yroll = shift_array1d(y, shift_by=down, boundary=boundary)
+        if boundary == "periodic-all" or boundary == "periodic-y":
+            yroll = shift_array1d(y, shift_by=down, boundary="Periodic")
+        else:
+            yroll = shift_array1d(y, shift_by=down, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,
@@ -167,7 +177,10 @@ def generate_structure_functions(  # noqa: C901, D417
 
     for right in sep_z:
         down = 1
-        xroll = shift_array1d(x, shift_by=right, boundary=boundary)
+        if boundary == "periodic-all" or boundary == "periodic-x":
+            xroll = shift_array1d(x, shift_by=right, boundary="Periodic")
+        else:
+            xroll = shift_array1d(x, shift_by=right, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,
