@@ -20,7 +20,7 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             False,  # skip_velocity_sf
             np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
             * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_type
+            ["LLL", "LSS", "LTT"],  # traditional_type
             None,  # dx
             None,  # dy
             None,  # boundary
@@ -52,6 +52,22 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                         -216000,
                         -343000,
                         -512000,
+                    ]
+                ),
+                "SF_LTT_zonal": np.array(
+                    [0, -4, -32, -108, -256, -500, -864, -1372, -2048]
+                ),
+                "SF_LTT_meridional": np.array(
+                    [
+                        0,
+                        -2000,
+                        -16000,
+                        -54000,
+                        -128000,
+                        -250000,
+                        -432000,
+                        -686000,
+                        -1024000,
                     ]
                 ),
                 "SF_LSS_zonal": np.array(
@@ -86,7 +102,7 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             False,  # skip_velocity_sf
             np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
             * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            ["LLL", "LSS", "LTT"],  # traditional_order
             None,  # dx
             None,  # dy
             "periodic-all",  # boundary
@@ -104,6 +120,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                 ),
                 "SF_LLL_zonal": np.array([0, 72, 96, 84, 48]),
                 "SF_LLL_meridional": np.array([0, 72000, 96000, 84000, 48000]),
+                "SF_LTT_zonal": np.array([0, 288, 384, 336, 192]),
+                "SF_LTT_meridional": np.array([0, 144000, 192000, 168000, 96000]),
                 "SF_LSS_zonal": np.array([0, 648, 864, 756, 432]),
                 "SF_LSS_meridional": np.array([0, 648000, 864000, 756000, 432000]),
                 "x-diffs": np.linspace(0, 4, 5),
@@ -122,7 +140,7 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             False,  # skip_velocity_sf
             np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
             * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            ["LLL", "LSS", "LTT"],  # traditional_order
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
@@ -154,6 +172,22 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                         -216000,
                         -343000,
                         -512000,
+                    ]
+                ),
+                "SF_LTT_zonal": np.array(
+                    [0, -4, -32, -108, -256, -500, -864, -1372, -2048]
+                ),
+                "SF_LTT_meridional": np.array(
+                    [
+                        0,
+                        -2000,
+                        -16000,
+                        -54000,
+                        -128000,
+                        -250000,
+                        -432000,
+                        -686000,
+                        -1024000,
                     ]
                 ),
                 "SF_LSS_zonal": np.array(
@@ -364,6 +398,108 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                 ),
                 "x-diffs": np.linspace(0, 3, 4),
                 "y-diffs": np.array([0.5, 2.5, 4, 5.5, 7.5]),
+            },  # expected_dict
+        ),
+        # Test 8: all with periodic-x boundary
+        (
+            np.array(
+                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
+            ),  # u
+            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
+            * 2,  # v
+            np.linspace(1, 10, 10),  # x
+            np.linspace(1, 10, 10),  # y
+            False,  # skip_velocity_sf
+            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
+            * 3,  # scalar
+            ["LLL", "LSS"],  # traditional_order
+            None,  # dx
+            None,  # dy
+            "periodic-x",  # boundary
+            True,  # even
+            "uniform",  # grid_type
+            10,  # nbins
+            {
+                "SF_advection_velocity_zonal": np.array([0, 945, 1680, 2205, 2520]),
+                "SF_advection_velocity_meridional": np.array(
+                    [0, 10500, 42000, 94500, 168000, 262500, 378000, 514500, 672000]
+                ),
+                "SF_advection_scalar_zonal": np.array([0, 1701, 3024, 3969, 4536]),
+                "SF_advection_scalar_meridional": np.array(
+                    [0, 18900, 75600, 170100, 302400, 472500, 680400, 926100, 1209600]
+                ),
+                "SF_LLL_zonal": np.array([0, 72, 96, 84, 48]),
+                "SF_LLL_meridional": np.array(
+                    [
+                        0,
+                        -1000,
+                        -8000,
+                        -27000,
+                        -64000,
+                        -125000,
+                        -216000,
+                        -343000,
+                        -512000,
+                    ]
+                ),
+                "SF_LSS_zonal": np.array([0, 648, 864, 756, 432]),
+                "SF_LSS_meridional": np.array(
+                    [
+                        0,
+                        -9000,
+                        -72000,
+                        -243000,
+                        -576000,
+                        -1125000,
+                        -1944000,
+                        -3087000,
+                        -4608000,
+                    ]
+                ),
+                "x-diffs": np.linspace(0, 4, 5),
+                "y-diffs": np.linspace(0, 8, 9),
+            },  # expected_dict
+        ),
+        # Test 9: all with periodic-y boundary
+        (
+            np.array(
+                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
+            ),  # u
+            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
+            * 2,  # v
+            np.linspace(1, 10, 10),  # x
+            np.linspace(1, 10, 10),  # y
+            False,  # skip_velocity_sf
+            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
+            * 3,  # scalar
+            ["LLL", "LSS"],  # traditional_order
+            None,  # dx
+            None,  # dy
+            "periodic-y",  # boundary
+            True,  # even
+            "uniform",  # grid_type
+            10,  # nbins
+            {
+                "SF_advection_velocity_zonal": np.array(
+                    [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
+                ),
+                "SF_advection_velocity_meridional": np.array(
+                    [0, 94500, 168000, 220500, 252000]
+                ),
+                "SF_advection_scalar_zonal": np.array(
+                    [0, 189, 756, 1701, 3024, 4725, 6804, 9261, 12096]
+                ),
+                "SF_advection_scalar_meridional": np.array(
+                    [0, 170100, 302400, 396900, 453600]
+                ),
+                "SF_LLL_zonal": np.array([0, -1, -8, -27, -64, -125, -216, -343, -512]),
+                "SF_LLL_meridional": np.array([0, 72000, 96000, 84000, 48000]),
+                "SF_LSS_zonal": np.array(
+                    [0, -9, -72, -243, -576, -1125, -1944, -3087, -4608]
+                ),
+                "SF_LSS_meridional": np.array([0, 648000, 864000, 756000, 432000]),
+                "x-diffs": np.linspace(0, 8, 9),
+                "y-diffs": np.linspace(0, 4, 5),
             },  # expected_dict
         ),
     ],
