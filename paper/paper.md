@@ -42,13 +42,6 @@ Earth’s changing climate is driven by a small energy imbalance that makes up l
 Paragraph on package capabilities & limitations. Regularly-gridded data, Lat-lon gridded data, track/directional sampling, 1D-data, evenly-spaced, iregularly-spaced (what are limitations), binning, bootstrapping(?), local advection terms [@pearson:2021], Bessel function examples(?) [@xie:2018] examples of time-averaging, SWOT application. What are limitations (can it take 2D data in a vector rather than array format? Can it calculate 2D or 3D maps of SF rather than just a function of |r| magnitude?). Perhaps these don't need to be mentioned, or can be stated as future developments.
 
 Contextualize package within other relevant software
-
-previous and upcoming publications:
-* pearson 2021 [@pearson:2021]
-* pearson sqg paper
-* wagner paper 1
-
-related software: 
 * flowsieve
 * fuchs 2022: matlab-based GUI package that does third order structure functions among other things
 * 
