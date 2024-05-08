@@ -61,4 +61,7 @@ extend-ignore = [
 ]
 
 [tool.hatch]
-version.path = "src/oceans_sf/_version.py"
+version.path = "oceans_sf/_version.py"
+
+[tool.setuptools]
+packages = ["oceans_sf"]
