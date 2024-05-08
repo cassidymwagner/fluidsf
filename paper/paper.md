@@ -44,7 +44,7 @@ Paragraph on package capabilities & limitations. Regularly-gridded data, Lat-lon
 Contextualize package within other relevant software
 * flowsieve
 * fuchs 2022: matlab-based GUI package that does third order structure functions among other things
-* 
+
 # Acknowledgements
 
 # References
