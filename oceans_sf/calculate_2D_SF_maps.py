@@ -1,15 +1,15 @@
 import numpy as np
 
-from .shift_array2d import shift_array2d
+from .xy_shift_array import xy_shift_array
 
 
-def calculate_structure_function(  # noqa: D417, C901
+def calculate_2D_SF_maps(  # noqa: D417, C901
     u,
     v,
     adv_e,
     adv_n,
-    down,
-    right,
+    shift_in_x,
+    shift_in_y,
     skip_velocity_sf=False,
     scalar=None,
     adv_scalar=None,
@@ -100,21 +100,20 @@ def calculate_structure_function(  # noqa: D417, C901
 
     for key, value in inputs.items():
         if value is not None:
-            right_shift, down_shift = shift_array2d(
-                inputs[key], shift_down=down, shift_right=right, boundary=boundary
+            xy_shift = xy_shift_array(
+                inputs[key], x_shift=shift_in_x, y_shift=shift_in_y, boundary=boundary
             )
 
             shifted_inputs.update(
                 {
-                    key + "_right_shift": right_shift,
-                    key + "_down_shift": down_shift,
+                    key + "_xy_shift": xy_shift,
                 }
             )
 
     inputs.update(shifted_inputs)
     SF_dict = {}
 
-    for direction in ["right", "down"]:
+    for direction in ["xy"]:
         if skip_velocity_sf is False:
             SF_dict["SF_velocity_" + direction] = np.nanmean(
                 (inputs["adv_e_" + direction + "_shift"] - adv_e)
