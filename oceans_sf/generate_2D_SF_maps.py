@@ -9,7 +9,7 @@ from .calculate_structure_function import (
 from .shift_array1d import shift_array1d
 
 
-def generate_structure_functions(  # noqa: C901, D417
+def generate_2D_SF_maps(  # noqa: C901, D417
     u,
     v,
     x,
@@ -77,8 +77,8 @@ def generate_structure_functions(  # noqa: C901, D417
     SF_m = None
     SF_z_scalar = None
     SF_m_scalar = None
-    adv_E = None
-    adv_N = None
+    adv_x = None
+    adv_y = None
     adv_scalar = None
     SF_z_LL = None
     SF_m_LL = None
