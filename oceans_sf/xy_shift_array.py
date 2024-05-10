@@ -2,7 +2,7 @@ import numpy as np
 
 
 def xy_shift_array(  # noqa: D417
-    input_array, shift_right=0, shift_down=0, boundary="periodic-all"
+    input_array, x_shift=0, y_shift=0
 ):
     """
     Wraps 2D array right and down by the specified integer amounts and returns
@@ -33,11 +33,9 @@ def xy_shift_array(  # noqa: D417
     """
     xy_shifted_array = np.full(np.shape(input_array), np.nan)
 
-    if boundary == "periodic-all":
-
-        xy_shifted_array[:shift_down, :shift_right] = input_array[-shift_down:, -shift_right:]
-        xy_shifted_array[:shift_down, shift_right:] = input_array[-shift_down:, :-shift_right]
-        xy_shifted_array[shift_down:, :shift_right] = input_array[:-shift_down, -shift_right:]
-        xy_shifted_array[shift_down:, shift_right:] = input_array[:-shift_down, :-shift_right]
+    xy_shifted_array[:x_shift, :y_shift] = input_array[-x_shift:, -y_shift:]
+    xy_shifted_array[:x_shift, y_shift:] = input_array[-x_shift:, :-y_shift]
+    xy_shifted_array[x_shift:, :y_shift] = input_array[:-x_shift, -y_shift:]
+    xy_shifted_array[x_shift:, y_shift:] = input_array[:-x_shift, :-y_shift]
 
     return xy_shifted_array

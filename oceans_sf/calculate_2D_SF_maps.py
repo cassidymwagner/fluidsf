@@ -6,15 +6,10 @@ from .xy_shift_array import xy_shift_array
 def calculate_2D_SF_maps(  # noqa: D417, C901
     u,
     v,
-    adv_e,
-    adv_n,
+    adv_x,
+    adv_y,
     shift_in_x,
     shift_in_y,
-    skip_velocity_sf=False,
-    scalar=None,
-    adv_scalar=None,
-    traditional_type=None,
-    boundary="periodic-all",
 ):
     """
     Calculate structure function, either advective or traditional.
@@ -80,28 +75,16 @@ def calculate_2D_SF_maps(  # noqa: D417, C901
     inputs = {
         "u": u,
         "v": v,
-        "adv_e": adv_e,
-        "adv_n": adv_n,
-        "scalar": scalar,
-        "adv_scalar": adv_scalar,
+        "adv_x": adv_x,
+        "adv_y": adv_y,
     }
-
-    if skip_velocity_sf is True:
-        inputs.update(
-            {
-                "u": None,
-                "v": None,
-                "adv_e": None,
-                "adv_n": None,
-            }
-        )
 
     shifted_inputs = {}
 
     for key, value in inputs.items():
         if value is not None:
             xy_shift = xy_shift_array(
-                inputs[key], x_shift=shift_in_x, y_shift=shift_in_y, boundary=boundary
+                inputs[key], x_shift=shift_in_x, y_shift=shift_in_y
             )
 
             shifted_inputs.update(
@@ -113,45 +96,11 @@ def calculate_2D_SF_maps(  # noqa: D417, C901
     inputs.update(shifted_inputs)
     SF_dict = {}
 
-    for direction in ["xy"]:
-        if skip_velocity_sf is False:
-            SF_dict["SF_velocity_" + direction] = np.nanmean(
-                (inputs["adv_e_" + direction + "_shift"] - adv_e)
-                * (inputs["u_" + direction + "_shift"] - u)
-                + (inputs["adv_n_" + direction + "_shift"] - adv_n)
-                * (inputs["v_" + direction + "_shift"] - v)
-            )
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_dict["SF_LL_" + direction] = np.nanmean(
-                        (inputs["u_" + direction + "_shift"] - u) ** 2
-                    )
-                if any("LLL" in t for t in traditional_type):
-                    SF_dict["SF_LLL_" + direction] = np.nanmean(
-                        (inputs["u_" + direction + "_shift"] - u) ** 3
-                    )
-                if any("LTT" in t for t in traditional_type):
-                    if direction == "right":
-                        SF_dict["SF_LTT_" + direction] = np.nanmean(
-                            (inputs["u_" + direction + "_shift"] - u)
-                            * (inputs["v_" + direction + "_shift"] - v) ** 2
-                        )
+    SF_dict["SF_velocity_advection_xy"] = np.nanmean(
+        (inputs["adv_x_xy_shift"] - adv_x)
+        * (inputs["u_xy_shift"] - u)
+        + (inputs["adv_y_xy_shift"] - adv_y)
+        * (inputs["v_xy_shift"] - v)
+    )
 
-                    if direction == "down":
-                        SF_dict["SF_LTT_" + direction] = np.nanmean(
-                            (inputs["v_" + direction + "_shift"] - v)
-                            * (inputs["u_" + direction + "_shift"] - u) ** 2
-                        )
-
-        if scalar is not None:
-            SF_dict["SF_scalar_" + direction] = np.nanmean(
-                (inputs["adv_scalar_" + direction + "_shift"] - adv_scalar)
-                * (inputs["scalar_" + direction + "_shift"] - scalar)
-            )
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_dict["SF_LSS_" + direction] = np.nanmean(
-                        (inputs["u_" + direction + "_shift"] - u)
-                        * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
-                    )
     return SF_dict
