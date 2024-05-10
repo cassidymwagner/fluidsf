@@ -85,17 +85,17 @@ def generate_2D_SF_maps(  # noqa: C901, D417
     # Define a list of separation distances to iterate over.
     # Periodic is half the length since the calculation will wrap the data.
     x_shifts = range(0, int(len(x) / 2))
-    y_shifts = range(0, int(len(y) / 2))
+    y_shifts = range(-int(len(y) / 2, int(len(y) / 2))
 
     # Initialize the structure function arrays
     SF_adv = np.zeros([len(x_shifts), len(y_shifts)])
     adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
 
-    separation_vector = np.zeros([len(x_shifts), len(y_shifts)])
-    separation_angle = np.zeros([len(x_shifts), len(y_shifts)])
+    separation_vectors = np.zeros([len(x_shifts), len(y_shifts)])
+    separation_angles = np.zeros([len(x_shifts), len(y_shifts)])
 
-    x_separations = np.zeros(len(x_shifts))
-    y_separations = np.zeros(len(y_shifts))
+    x_separations = np.zeros([len(x_shifts), len(y_shifts)])
+    y_separations = np.zeros([len(x_shifts), len(y_shifts)])
 
     # Iterate over separations right and down
     for x_shift, y_shift in itertools.product(x_shifts, y_shifts):
@@ -114,14 +114,15 @@ def generate_2D_SF_maps(  # noqa: C901, D417
         )
 
         SF_adv[x_shift, y_shift] = SF_dicts["SF_velocity_advection_xy"]
-        separation_vector[x_shift, y_shift] = np.sqrt(x_separation**2 + y_separation**2)
-        separation_angle[x_shift, y_shift] = np.atan(y_separation/x_separation)
-        x_separations[x_shift] = x_separation
-        y_separations[y_shift] =y_separation
+        separation_vectors[x_shift, y_shift] = np.sqrt(x_separation**2 + y_separation**2)
+        separation_angles[x_shift, y_shift] = np.arctan(y_separation/x_separation)
+        x_separations[x_shift, y_shift] = x_separation
+        y_separations[x_shift, y_shift] =y_separation
 
     data = {
         "SF_velocity_advection_xy": SF_adv,
-        "Separation_vectors": separation_vector,
+        "separation_vectors": separation_vectors,
+        "separation_angles": separation_angles,
         "x_separations": x_separations,
         "y_separations": y_separations,
     }
