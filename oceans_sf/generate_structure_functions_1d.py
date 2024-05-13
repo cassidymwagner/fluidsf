@@ -158,10 +158,10 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         xd = xd_bin
 
     data = {
-        "SF_LL_zonal": SF_LL,
-        "SF_LLL_zonal": SF_LLL,
-        "SF_LTT_zonal": SF_LTT,
-        "SF_LSS_zonal": SF_LSS,
+        "SF_LL": SF_LL,
+        "SF_LLL": SF_LLL,
+        "SF_LTT": SF_LTT,
+        "SF_LSS": SF_LSS,
         "x-diffs": xd,
     }
     return data
