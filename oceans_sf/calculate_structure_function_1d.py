@@ -8,7 +8,7 @@ def calculate_structure_function_1d(  # noqa: D417
     v,
     sep_id,
     scalar=None,
-    traditional_type="LLL",
+    traditional_type=["LLL"],
     boundary="Periodic",
 ):
     """
@@ -58,20 +58,17 @@ def calculate_structure_function_1d(  # noqa: D417
     inputs.update(shifted_inputs)
     SF_dict = {}
 
-    if traditional_type is not None:
-        if any("LL" in t for t in traditional_type):
-            SF_dict["SF_LL"] = np.nanmean((inputs["u_shift"] - u) ** 2)
-        if any("LLL" in t for t in traditional_type):
-            SF_dict["SF_LLL"] = np.nanmean((inputs["u_shift"] - u) ** 3)
-        if any("LTT" in t for t in traditional_type):
-            SF_dict["SF_LTT"] = np.nanmean(
-                (inputs["u_shift"] - u) * (inputs["v_shift"] - v) ** 2
-            )
-
-        if traditional_type is not None and scalar is not None:
-            if any("LSS" in t for t in traditional_type):
-                SF_dict["SF_LSS"] = np.nanmean(
-                    (inputs["u_shift"] - u) * (inputs["scalar_shift"] - scalar) ** 2
-                )
+    if "LL" in traditional_type:
+        SF_dict["SF_LL"] = np.nanmean((inputs["u_shift"] - u) ** 2)
+    if "LLL" in traditional_type:
+        SF_dict["SF_LLL"] = np.nanmean((inputs["u_shift"] - u) ** 3)
+    if "LTT" in traditional_type:
+        SF_dict["SF_LTT"] = np.nanmean(
+            (inputs["u_shift"] - u) * (inputs["v_shift"] - v) ** 2
+        )
+    if "LSS" in traditional_type and scalar is not None:
+        SF_dict["SF_LSS"] = np.nanmean(
+            (inputs["u_shift"] - u) * (inputs["scalar_shift"] - scalar) ** 2
+        )
 
     return SF_dict

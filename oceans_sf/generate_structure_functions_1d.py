@@ -12,7 +12,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     x,
     y=None,
     scalar=None,
-    traditional_type="LLL",
+    traditional_type=["LLL"],  # noqa: B006
     dx=None,
     boundary="Periodic",
     even="True",
@@ -97,13 +97,13 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     xd = np.zeros(len(sep) + 1)
 
     # Initialize the structure function arrays
-    if any("LL" in t for t in traditional_type):
+    if "LL" in traditional_type:
         SF_LL = np.zeros(len(sep) + 1)
-    if any("LLL" in t for t in traditional_type):
+    if "LLL" in traditional_type:
         SF_LLL = np.zeros(len(sep) + 1)
-    if any("LTT" in t for t in traditional_type):
+    if "LTT" in traditional_type:
         SF_LTT = np.zeros(len(sep) + 1)
-    if any("LSS" in t for t in traditional_type) and scalar is not None:
+    if "LSS" in traditional_type:
         SF_LSS = np.zeros(len(sep) + 1)
 
     # Iterate over separations
@@ -126,34 +126,34 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             boundary,
         )
 
-        if any("LL" in t for t in traditional_type):
+        if "LL" in traditional_type:
             SF_LL[sep_id] = SF_dicts["SF_LL"]
-        if any("LLL" in t for t in traditional_type):
+        if "LLL" in traditional_type:
             SF_LLL[sep_id] = SF_dicts["SF_LLL"]
-        if any("LTT" in t for t in traditional_type):
+        if "LTT" in traditional_type:
             SF_LTT[sep_id] = SF_dicts["SF_LTT"]
-        if any("LSS" in t for t in traditional_type):
+        if "LSS" in traditional_type:
             SF_LSS[sep_id] = SF_dicts["SF_LSS"]
 
         # Calculate separation distances along track
         if y is not None:
-            xd[sep], tmp = calculate_separation_distances(
-                x[sep], y[sep], xroll[sep], yroll[sep], grid_type
+            xd[sep_id], tmp = calculate_separation_distances(
+                x[sep_id], y[sep_id], xroll[sep_id], yroll[sep_id], grid_type
             )
         else:
-            xd[sep], tmp = calculate_separation_distances(
-                x[sep], None, xroll[sep], None, grid_type
+            xd[sep_id], tmp = calculate_separation_distances(
+                x[sep_id], None, xroll[sep_id], None, grid_type
             )
 
     # Bin the data if the grid is uneven
     if even is False:
-        if any("LL" in t for t in traditional_type):
+        if "LL" in traditional_type:
             xd_bin, SF_LL = bin_data(xd, SF_LL, nbins)
-        if any("LLL" in t for t in traditional_type):
+        if "LLL" in traditional_type:
             xd_bin, SF_LLL = bin_data(xd, SF_LLL, nbins)
-        if any("LTT" in t for t in traditional_type):
+        if "LTT" in traditional_type:
             xd_bin, SF_LTT = bin_data(xd, SF_LTT, nbins)
-        if any("LSS" in t for t in traditional_type) and scalar is not None:
+        if "LSS" in traditional_type and scalar is not None:
             xd_bin, SF_LSS = bin_data(xd, SF_LSS, nbins)
         xd = xd_bin
 
