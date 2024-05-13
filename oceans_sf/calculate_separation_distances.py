@@ -32,6 +32,8 @@ def calculate_separation_distances(x, y, x_shift, y_shift, grid_type="uniform"):
         yd = np.abs(great_circle((x, y_shift), (x, y)).meters)
     else:
         xd = np.abs(x_shift - x)
-        yd = np.abs(y_shift - y)
+        yd = None
+        if y is not None and y_shift is not None:
+            yd = np.abs(y_shift - y)
 
     return (xd, yd)
