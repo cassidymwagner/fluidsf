@@ -43,7 +43,7 @@ from oceans_sf.calculate_structure_function_1d import calculate_structure_functi
         ),
     ],
 )
-def test_calculate_structure_function_1d(
+def test_calculate_structure_function_1d_parameterized(
     u, v, sep_id, scalar, traditional_type, boundary, expected_result
 ):
     output_dict = calculate_structure_function_1d(
