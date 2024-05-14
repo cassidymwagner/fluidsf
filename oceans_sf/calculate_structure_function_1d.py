@@ -8,7 +8,7 @@ def calculate_structure_function_1d(  # noqa: D417
     v,
     sep_id,
     scalar=None,
-    traditional_type=["LLL"],
+    traditional_type=["LLL"],  # noqa: B006
     boundary="Periodic",
 ):
     """
