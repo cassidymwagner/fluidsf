@@ -29,7 +29,7 @@ def generate_structure_functions(  # noqa: C901, D417
     Full method for generating structure functions for 2D data, either advective or
     traditional structure functions. Supports velocity-based and scalar-based structure
     functions. Defaults to calculating the velocity-based advective structure functions
-    for the x (zonal) and y (meridional) directions.
+    for the x and y directions.
 
     Parameters
     ----------
@@ -69,7 +69,7 @@ def generate_structure_functions(  # noqa: C901, D417
     -------
         dict:
             Dictionary containing the requested structure functions and separation
-            distances for the x- and y-direction (zonal and meridional, respectively).
+            distances for the x- and y-direction.
 
     """
     # Initialize variables as NoneType
@@ -242,18 +242,18 @@ def generate_structure_functions(  # noqa: C901, D417
         yd = yd_bin
 
     data = {
-        "SF_advection_velocity_zonal": SF_z,
-        "SF_advection_velocity_meridional": SF_m,
-        "SF_advection_scalar_zonal": SF_z_scalar,
-        "SF_advection_scalar_meridional": SF_m_scalar,
-        "SF_LL_zonal": SF_z_LL,
-        "SF_LL_meridional": SF_m_LL,
-        "SF_LLL_zonal": SF_z_LLL,
-        "SF_LLL_meridional": SF_m_LLL,
-        "SF_LTT_zonal": SF_z_LTT,
-        "SF_LTT_meridional": SF_m_LTT,
-        "SF_LSS_zonal": SF_z_LSS,
-        "SF_LSS_meridional": SF_m_LSS,
+        "SF_advection_velocity_x": SF_z,
+        "SF_advection_velocity_y": SF_m,
+        "SF_advection_scalar_x": SF_z_scalar,
+        "SF_advection_scalar_y": SF_m_scalar,
+        "SF_LL_x": SF_z_LL,
+        "SF_LL_y": SF_m_LL,
+        "SF_LLL_x": SF_z_LLL,
+        "SF_LLL_y": SF_m_LLL,
+        "SF_LTT_x": SF_z_LTT,
+        "SF_LTT_y": SF_m_LTT,
+        "SF_LSS_x": SF_z_LSS,
+        "SF_LSS_y": SF_m_LSS,
         "x-diffs": xd,
         "y-diffs": yd,
     }
