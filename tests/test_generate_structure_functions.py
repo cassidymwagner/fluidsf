@@ -111,13 +111,9 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             10,  # nbins
             {
                 "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
-                "SF_advection_velocity_y": np.array(
-                    [0, 94500, 168000, 220500, 252000]
-                ),
+                "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
                 "SF_advection_scalar_x": np.array([0, 1701, 3024, 3969, 4536]),
-                "SF_advection_scalar_y": np.array(
-                    [0, 170100, 302400, 396900, 453600]
-                ),
+                "SF_advection_scalar_y": np.array([0, 170100, 302400, 396900, 453600]),
                 "SF_LLL_x": np.array([0, 72, 96, 84, 48]),
                 "SF_LLL_y": np.array([0, 72000, 96000, 84000, 48000]),
                 "SF_LTT_x": np.array([0, 288, 384, 336, 192]),
@@ -255,13 +251,9 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             10,  # nbins
             {
                 "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
-                "SF_advection_velocity_y": np.array(
-                    [0, 94500, 168000, 220500, 252000]
-                ),
+                "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
                 "SF_advection_scalar_x": np.array([0, 1701, 3024, 3969, 4536]),
-                "SF_advection_scalar_y": np.array(
-                    [0, 170100, 302400, 396900, 453600]
-                ),
+                "SF_advection_scalar_y": np.array([0, 170100, 302400, 396900, 453600]),
                 "SF_LLL_x": np.array([0, 72, 96, 84, 48]),
                 "SF_LLL_y": np.array([0, 72000, 96000, 84000, 48000]),
                 "SF_LSS_x": np.array([0, 648, 864, 756, 432]),
@@ -389,13 +381,9 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                     [1237.5, 16087.5, 39600.0, 75487.5, 139837.5]
                 ),
                 "SF_LLL_x": np.array([0, -1, -8, -27]),
-                "SF_LLL_y": np.array(
-                    [-62.5, -2187.5, -8000.0, -21312.5, -53437.5]
-                ),
+                "SF_LLL_y": np.array([-62.5, -2187.5, -8000.0, -21312.5, -53437.5]),
                 "SF_LSS_x": np.array([0, -9, -72, -243]),
-                "SF_LSS_y": np.array(
-                    [-562.5, -19687.5, -72000, -191812.5, -480937.5]
-                ),
+                "SF_LSS_y": np.array([-562.5, -19687.5, -72000, -191812.5, -480937.5]),
                 "x-diffs": np.linspace(0, 3, 4),
                 "y-diffs": np.array([0.5, 2.5, 4, 5.5, 7.5]),
             },  # expected_dict
@@ -483,15 +471,11 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                 "SF_advection_velocity_x": np.array(
                     [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
                 ),
-                "SF_advection_velocity_y": np.array(
-                    [0, 94500, 168000, 220500, 252000]
-                ),
+                "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
                 "SF_advection_scalar_x": np.array(
                     [0, 189, 756, 1701, 3024, 4725, 6804, 9261, 12096]
                 ),
-                "SF_advection_scalar_y": np.array(
-                    [0, 170100, 302400, 396900, 453600]
-                ),
+                "SF_advection_scalar_y": np.array([0, 170100, 302400, 396900, 453600]),
                 "SF_LLL_x": np.array([0, -1, -8, -27, -64, -125, -216, -343, -512]),
                 "SF_LLL_y": np.array([0, 72000, 96000, 84000, 48000]),
                 "SF_LSS_x": np.array(
