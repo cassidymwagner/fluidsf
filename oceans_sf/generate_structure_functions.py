@@ -59,7 +59,7 @@ def generate_structure_functions(  # noqa: C901, D417
         grid_type:str, optional
             Type of grid, either "uniform" or "latlon". Defaults to "uniform".
         nbins: int, optional
-            Number of bins for binning the data. Defaults to None, i.e. does not bin 
+            Number of bins for binning the data. Defaults to None, i.e. does not bin
             data.
 
     Returns
