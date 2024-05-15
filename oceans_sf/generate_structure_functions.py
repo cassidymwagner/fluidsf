@@ -24,7 +24,6 @@ def generate_structure_functions(  # noqa: C901, D417
     nbins=None,
 ):
     """
-    TEST
     Full method for generating structure functions for 2D data, either advective or
     traditional structure functions. Supports velocity-based and scalar-based structure
     functions. Defaults to calculating the velocity-based advective structure functions
