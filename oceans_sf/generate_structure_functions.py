@@ -20,9 +20,8 @@ def generate_structure_functions(  # noqa: C901, D417
     dx=None,
     dy=None,
     boundary="periodic-all",
-    even="True",
     grid_type="uniform",
-    nbins=10,
+    nbins=None,
 ):
     """
     TEST
@@ -58,12 +57,11 @@ def generate_structure_functions(  # noqa: C901, D417
         boundary: str, optional
             Boundary condition of the data. Accepted strings are "periodic-x",
             "periodic-y", and "periodic-all". Defaults to "periodic-all".
-        even: bool, optional
-            Flag indicating if the grid is evenly spaced. Defaults to True.
         grid_type:str, optional
             Type of grid, either "uniform" or "latlon". Defaults to "uniform".
         nbins: int, optional
-            Number of bins for binning the data. Defaults to 10.
+            Number of bins for binning the data. Defaults to None, i.e. does not bin 
+            data.
 
     Returns
     -------
@@ -216,8 +214,8 @@ def generate_structure_functions(  # noqa: C901, D417
             x[right], y[down], xroll[right], y[down], grid_type
         )
 
-    # Bin the data if the grid is uneven
-    if even is False:
+    # Bin the data if requested
+    if nbins is not None:
         if skip_velocity_sf is False:
             xd_bin, SF_z = bin_data(xd, SF_z, nbins)
             yd_bin, SF_m = bin_data(yd, SF_m, nbins)
