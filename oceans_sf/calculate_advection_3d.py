@@ -46,7 +46,7 @@ def calculate_advection_3d(  # noqa: D417
     Returns
     -------
         tuple or ndarray:
-            A tuple of advection components (x, y, z) if scalar is not provided, 
+            A tuple of advection components (x, y, z) if scalar is not provided,
             otherwise returns an ndarray of scalar advection.
     """
     dx = np.abs(x[0] - x[1])
@@ -55,11 +55,11 @@ def calculate_advection_3d(  # noqa: D417
 
     if scalar is not None:
         dsdz, dsdy, dsdx = np.gradient(scalar, dx, dy, dz, axis=(0, 1, 2))
-        
+
         advection_i = v * dsdz - w * dsdy
         advection_j = w * dsdx - u * dsdz
         advection_k = u * dsdy - v * dsdx
-        advection = advection_i + advection_j + advection_k 
+        advection = advection_i + advection_j + advection_k
 
     else:
         dudz, dudy, dudx = np.gradient(u, dx, dy, dz, axis=(0, 1, 2))
