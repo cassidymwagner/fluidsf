@@ -2,7 +2,7 @@ import numpy as np
 
 
 def shift_array_3d(  # noqa: D417
-    input_array, shift_x=1, shift_y=1, shift_z=1, boundary="periodic-all"
+    input_array, shift_x=1, shift_y=1, shift_z=1, boundary=None
 ):
     """
     Shifts 3D array in x/y/z by the specified integer amounts and returns
@@ -26,7 +26,7 @@ def shift_array_3d(  # noqa: D417
             conditions. Defaults to 1.
         boundary: list, optional
             List of boundary conditions for input array. Periodic boundary conditions
-            will wrap the array, otherwise the array will be padded with NaNs. Accepted 
+            will wrap the array, otherwise the array will be padded with NaNs. Accepted
             strings are "periodic-x", "periodic-y", "periodic-z", and "periodic-all".
             Defaults to "periodic-all".
 
@@ -47,18 +47,19 @@ def shift_array_3d(  # noqa: D417
     shifted_y_array[:, :shift_y, :] = input_array[:, -shift_y:, :]
     shifted_z_array[:shift_z, :, :] = input_array[-shift_z:, :, :]
 
-    if "periodic-all" in boundary:
-        shifted_x_array[:, :, shift_x:] = input_array[:, :, :-shift_x]
-        shifted_y_array[:, shift_y:, :] = input_array[:, :-shift_y, :]
-        shifted_z_array[shift_z:, :, :] = input_array[:-shift_z, :, :]
+    if boundary is not None:
+        if "periodic-all" in boundary:
+            shifted_x_array[:, :, shift_x:] = input_array[:, :, :-shift_x]
+            shifted_y_array[:, shift_y:, :] = input_array[:, :-shift_y, :]
+            shifted_z_array[shift_z:, :, :] = input_array[:-shift_z, :, :]
 
-    if any("periodic-x" in b for b in boundary):
-        shifted_x_array[:, :, shift_x:] = input_array[:, :, :-shift_x]
+        if any("periodic-x" in b for b in boundary):
+            shifted_x_array[:, :, shift_x:] = input_array[:, :, :-shift_x]
 
-    if any("periodic-y" in b for b in boundary):
-        shifted_y_array[:, shift_y:, :] = input_array[:, :-shift_y, :]
+        if any("periodic-y" in b for b in boundary):
+            shifted_y_array[:, shift_y:, :] = input_array[:, :-shift_y, :]
 
-    if any("periodic-z" in b for b in boundary):
-        shifted_z_array[shift_z:, :, :] = input_array[:-shift_z, :, :]
+        if any("periodic-z" in b for b in boundary):
+            shifted_z_array[shift_z:, :, :] = input_array[:-shift_z, :, :]
 
     return shifted_x_array, shifted_y_array, shifted_z_array
