@@ -9,7 +9,7 @@ from .calculate_structure_function import (
 from .shift_array1d import shift_array1d
 
 
-def generate_structure_functions(  # noqa: C901, D417
+def generate_structure_functions_3d(  # noqa: C901, D417
     u,
     v,
     x,

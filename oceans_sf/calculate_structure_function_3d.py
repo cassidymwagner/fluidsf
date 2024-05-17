@@ -3,7 +3,7 @@ import numpy as np
 from .shift_array2d import shift_array2d
 
 
-def calculate_structure_function(  # noqa: D417, C901
+def calculate_structure_function_3d(  # noqa: D417, C901
     u,
     v,
     adv_e,
