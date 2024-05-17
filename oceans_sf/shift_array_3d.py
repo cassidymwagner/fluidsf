@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def shift_array3d(  # noqa: D417
+def shift_array_3d(  # noqa: D417
     input_array, shift_x=1, shift_y=1, shift_z=1, boundary="periodic-all"
 ):
     """

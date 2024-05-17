@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def shift_array1d(input_array, shift_by=1, boundary="Periodic"):  # noqa: D417
+def shift_array_1d(input_array, shift_by=1, boundary="Periodic"):  # noqa: D417
     """
     Shifts 1D array by an integer amount and returns the shifted array.
     Either wraps the array or shifts and pads with NaNs.

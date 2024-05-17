@@ -1,6 +1,6 @@
 import numpy as np
 
-from .shift_array2d import shift_array2d
+from .shift_array_3d import shift_array_3d
 
 
 def calculate_structure_function_3d(  # noqa: D417, C901
@@ -100,7 +100,7 @@ def calculate_structure_function_3d(  # noqa: D417, C901
 
     for key, value in inputs.items():
         if value is not None:
-            right_shift, down_shift = shift_array2d(
+            right_shift, down_shift = shift_array_3d(
                 inputs[key], shift_down=down, shift_right=right, boundary=boundary
             )
 

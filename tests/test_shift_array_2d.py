@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from oceans_sf.shift_array2d import shift_array2d
+from oceans_sf.shift_array_2d import shift_array_2d
 
 
 @pytest.mark.parametrize(
@@ -58,7 +58,7 @@ from oceans_sf.shift_array2d import shift_array2d
         ),
     ],
 )
-def test_shift_array2d(
+def test_shift_array_2d(
     input_array,
     shift_left,
     shift_down,
@@ -66,7 +66,7 @@ def test_shift_array2d(
     expected_shifted_left_array,
     expected_shifted_down_array,
 ):
-    shifted_left_array, shifted_down_array = shift_array2d(
+    shifted_left_array, shifted_down_array = shift_array_2d(
         input_array, shift_left, shift_down, boundary
     )
 
