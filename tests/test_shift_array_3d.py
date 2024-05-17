@@ -593,7 +593,7 @@ from oceans_sf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in x by 1, y by 2, and z by 3 with no boundary 
+        # Test shifting 3D array in x by 1, y by 2, and z by 3 with no boundary
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
