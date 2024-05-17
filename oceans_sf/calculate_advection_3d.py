@@ -1,19 +1,21 @@
 import numpy as np
 
 
-def calculate_advection(  # noqa: D417
+def calculate_advection_3d(  # noqa: D417
     u,
     v,
+    w,
     x,
     y,
+    z,
     dx=None,
     dy=None,
-    grid_type="uniform",
+    dz=None,
     scalar=None,
 ):
     """
     Calculate the advection for a velocity field or scalar field. The velocity field
-    will return advection components in the eastward and northward directions.
+    will return advection components in the x, y, and z directions.
     The scalar field will return the scalar advection. Defaults to advection for
     velocity field. If the velocity advection is skipped or a scalar field is not
     provided, the relevant dictionary key will return None.
@@ -24,51 +26,60 @@ def calculate_advection(  # noqa: D417
             The u-component of velocity.
         v: ndarray
             The v-component of velocity.
+        w: ndarray
+            The w-component of velocity.
         x: ndarray
             The x-coordinates of the grid.
         y: ndarray
             The y-coordinates of the grid.
+        z: ndarray
+            The z-coordinates of the grid.
         dx: float or ndarray, optional
             The grid spacing in the x-direction. Defaults to None.
         dy: float or ndarray, optional
             The grid spacing in the y-direction. Defaults to None.
-        grid_type: str, optional
-            The type of grid. Defaults to "uniform".
+        dz: float or ndarray, optional
+            The grid spacing in the z-direction. Defaults to None.
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
 
     Returns
     -------
         tuple or ndarray:
-            A tuple of advection components (eastward_advection,
-            northward_advection) if scalar is not provided, otherwise returns an ndarray
-            of scalar advection.
+            A tuple of advection components (x, y, z) if scalar is not provided, 
+            otherwise returns an ndarray of scalar advection.
     """
-    if grid_type == "uniform":
-        dx = np.abs(x[0] - x[1])
-        dy = np.abs(y[0] - y[1])
-
-        if scalar is not None:
-            dsdy, dsdx = np.gradient(scalar, dx, dy, axis=(0, 1))
-        else:
-            dudy, dudx = np.gradient(u, dx, dy, axis=(0, 1))
-            dvdy, dvdx = np.gradient(v, dx, dy, axis=(0, 1))
-
-    else:
-        xcoords = dx.cumsum()
-        ycoords = dy.cumsum()
-
-        if scalar is not None:
-            dsdy, dsdx = np.gradient(scalar, xcoords, ycoords, axis=(0, 1))
-        else:
-            dudy, dudx = np.gradient(u, xcoords, ycoords, axis=(0, 1))
-            dvdy, dvdx = np.gradient(v, xcoords, ycoords, axis=(0, 1))
+    dx = np.abs(x[0] - x[1])
+    dy = np.abs(y[0] - y[1])
+    dz = np.abs(z[0] - z[1])
 
     if scalar is not None:
-        advection = u * dsdx + v * dsdy
+        dsdz, dsdy, dsdx = np.gradient(scalar, dx, dy, dz, axis=(0, 1, 2))
+        
+        advection_i = v * dsdz - w * dsdy
+        advection_j = w * dsdx - u * dsdz
+        advection_k = u * dsdy - v * dsdx
+        advection = advection_i + advection_j + advection_k 
+
     else:
-        eastward_advection = u * dudx + v * dudy
-        northward_advection = u * dvdx + v * dvdy
-        advection = (eastward_advection, northward_advection)
+        dudz, dudy, dudx = np.gradient(u, dx, dy, dz, axis=(0, 1, 2))
+        dvdz, dvdy, dvdx = np.gradient(v, dx, dy, dz, axis=(0, 1, 2))
+        dwdz, dwdy, dwdx = np.gradient(w, dx, dy, dz, axis=(0, 1, 2))
+
+        east_adv_i = v * dudz - w * dudy
+        east_adv_j = w * dudx - u * dudz
+        east_adv_k = u * dudy - v * dudx
+        eastward_advection = east_adv_i + east_adv_j + east_adv_k
+
+        north_adv_i = v * dvdz - w * dvdy
+        north_adv_j = w * dvdx - u * dvdz
+        north_adv_k = u * dvdy - v * dvdx
+        northward_advection = north_adv_i + north_adv_j + north_adv_k
+
+        down_adv_i = v * dwdz - w * dwdy
+        down_adv_j = w * dwdx - u * dwdz
+        down_adv_k = u * dwdy - v * dwdx
+        downward_advection = down_adv_i + down_adv_j + down_adv_k
+        advection = (eastward_advection, northward_advection, downward_advection)
 
     return advection
