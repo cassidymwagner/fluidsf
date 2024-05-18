@@ -6,7 +6,7 @@ from .shift_array_3d import shift_array_3d
 def calculate_structure_function_3d(  # noqa: D417, C901
     u,
     v,
-    w, 
+    w,
     adv_x,
     adv_y,
     adv_z,
@@ -78,7 +78,7 @@ def calculate_structure_function_3d(  # noqa: D417, C901
                 'SF_LL_y': The traditional structure function LL in the y direction.
                 'SF_LL_z': The traditional structure function LL in the z direction.
                 'SF_LLL_x': The traditional structure function LLL in the x direction.
-                'SF_LLL_y': The traditional structure function LLL in the y direction. 
+                'SF_LLL_y': The traditional structure function LLL in the y direction.
                 'SF_LLL_z': The traditional structure function LLL in the z direction.
                 'SF_LTT_x': The traditional structure function LTT in the x direction.
                 'SF_LTT_y': The traditional structure function LTT in the y direction.
@@ -115,7 +115,11 @@ def calculate_structure_function_3d(  # noqa: D417, C901
     for key, value in inputs.items():
         if value is not None:
             x_shift, y_shift, z_shift = shift_array_3d(
-                inputs[key], shift_x=shift_x, shift_y=shift_y, shift_z=shift_z, boundary=boundary
+                inputs[key],
+                shift_x=shift_x,
+                shift_y=shift_y,
+                shift_z=shift_z,
+                boundary=boundary,
             )
 
             shifted_inputs.update(
