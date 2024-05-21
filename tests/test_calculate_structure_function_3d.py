@@ -194,6 +194,5 @@ def test_calculate_structure_function_3d_parameterized(
         traditional_type,
         boundary,
     )
-    print(output_dict)
-    print(expected_result)
+    
     TestCase().assertDictEqual(output_dict, expected_result)
