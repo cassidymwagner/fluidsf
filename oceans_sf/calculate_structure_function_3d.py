@@ -166,7 +166,10 @@ def calculate_structure_function_3d(  # noqa: D417, C901
                         )
 
                     if direction == "z":
-                        SF_dict["SF_LTT_" + direction] = None
+                        SF_dict["SF_LTT_" + direction] = np.nanmean(
+                            (inputs["w_" + direction + "_shift"] - w)
+                            * (inputs["u_" + direction + "_shift"] - u) ** 2
+                        )
 
         if scalar is not None:
             SF_dict["SF_scalar_" + direction] = np.nanmean(

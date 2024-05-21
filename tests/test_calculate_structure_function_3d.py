@@ -42,7 +42,7 @@ from oceans_sf.calculate_structure_function_3d import calculate_structure_functi
                 "SF_velocity_z": 0,
                 "SF_LL_z": 0,
                 "SF_LLL_z": 0,
-                "SF_LTT_z": None,
+                "SF_LTT_z": 0,
                 "SF_scalar_z": 0,
                 "SF_LSS_z": 0,
             },
@@ -79,7 +79,7 @@ from oceans_sf.calculate_structure_function_3d import calculate_structure_functi
                 "SF_velocity_z": 0,
                 "SF_LL_z": 0,
                 "SF_LLL_z": 0,
-                "SF_LTT_z": None,
+                "SF_LTT_z": 0,
                 "SF_scalar_z": 0,
                 "SF_LSS_z": 0,
             },
@@ -116,7 +116,7 @@ from oceans_sf.calculate_structure_function_3d import calculate_structure_functi
                 "SF_velocity_z": 972,
                 "SF_LL_z": 324,
                 "SF_LLL_z": 5832,
-                "SF_LTT_z": None,
+                "SF_LTT_z": 5832,
                 "SF_scalar_z": 324,
                 "SF_LSS_z": 5832,
             },
@@ -153,7 +153,7 @@ from oceans_sf.calculate_structure_function_3d import calculate_structure_functi
                 "SF_velocity_z": 10368,
                 "SF_LL_z": 324,
                 "SF_LLL_z": 5832,
-                "SF_LTT_z": None,
+                "SF_LTT_z": 17496,
                 "SF_scalar_z": 18144,
                 "SF_LSS_z": 285768,
             },
@@ -194,5 +194,5 @@ def test_calculate_structure_function_3d_parameterized(
         traditional_type,
         boundary,
     )
-    
+
     TestCase().assertDictEqual(output_dict, expected_result)
