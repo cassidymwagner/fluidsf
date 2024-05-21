@@ -1,10 +1,8 @@
 import numpy as np
 
-from .bin_data import bin_data
 from .calculate_advection_3d import calculate_advection_3d
 from .calculate_separation_distances_3d import calculate_separation_distances_3d
 from .calculate_structure_function_3d import calculate_structure_function_3d
-)
 from .shift_array_1d import shift_array_1d
 
 
@@ -18,15 +16,12 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     skip_velocity_sf=False,
     scalar=None,
     traditional_type=None,
-    dx=None,
-    dy=None,
-    dz=None,
     boundary="periodic-all",
 ):
     """
-    Full method for generating structure functions for uniform and even 3D data, either 
-    advective or traditional structure functions. Supports velocity-based and 
-    scalar-based structure functions. Defaults to calculating the 
+    Full method for generating structure functions for uniform and even 3D data, either
+    advective or traditional structure functions. Supports velocity-based and
+    scalar-based structure functions. Defaults to calculating the
     velocity-based advective structure functions for the x, y, and z directions.
 
     Parameters
@@ -53,12 +48,6 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             List of traditional structure function types to calculate.
             Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
             no traditional structure functions are calculated. Defaults to None.
-        dx: float, optional
-            Grid spacing in the x-direction. Defaults to None.
-        dy: float, optional
-            Grid spacing in the y-direction. Defaults to None.
-        dz: float, optional
-            Grid spacing in the z-direction. Defaults to None.
         boundary: str, optional
             Boundary condition of the data. Accepted strings are "periodic-x",
             "periodic-y", "periodic-z", and "periodic-all". Defaults to "periodic-all".
@@ -99,7 +88,7 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     sep_x = range(1, int(len(x) - 1))
     sep_y = range(1, int(len(y) - 1))
     sep_z = range(1, int(len(z) - 1))
-    
+
     if boundary is not None:
         if "periodic-all" in boundary:
             sep_x = range(1, int(len(x) / 2))
@@ -122,7 +111,7 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
         SF_adv_z = np.zeros(len(sep_z) + 1)
-        adv_x, adv_y, adv_z = calculate_advection_3d(u, v, w, x, y, z, dx, dy, dz)
+        adv_x, adv_y, adv_z = calculate_advection_3d(u, v, w, x, y, z)
         if traditional_type is not None:
             if any("LL" in t for t in traditional_type):
                 SF_x_LL = np.zeros(len(sep_x) + 1)
@@ -141,7 +130,7 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
         SF_z_scalar = np.zeros(len(sep_z) + 1)
-        adv_scalar = calculate_advection_3d(u, v, w, x, y, z, dx, dy, dz, scalar)
+        adv_scalar = calculate_advection_3d(u, v, w, x, y, z, scalar)
         if traditional_type is not None:
             if any("LSS" in t for t in traditional_type):
                 SF_x_LSS = np.zeros(len(sep_x) + 1)
@@ -152,9 +141,11 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     for x_shift in sep_x:
         y_shift = 1
         z_shift = 1
-        if any("periodic-all" in b for b in boundary) or \
-           any("periodic-x" in b for b in boundary):
-            xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
+        if boundary is not None:
+            if any("periodic-all" in b for b in boundary) or any(
+                "periodic-x" in b for b in boundary
+            ):
+                xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
         else:
             xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
 
@@ -198,9 +189,11 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     for y_shift in sep_y:
         x_shift = 1
         z_shift = 1
-        if any("periodic-all" in b for b in boundary) or \
-           any("periodic-y" in b for b in boundary):
-            yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
+        if boundary is not None:
+            if any("periodic-all" in b for b in boundary) or any(
+                "periodic-y" in b for b in boundary
+            ):
+                yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
         else:
             yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
 
@@ -238,14 +231,17 @@ def generate_structure_functions_3d(  # noqa: C901, D417
 
         # Calculate separation distances in y
         tmp, yd[y_shift], tmp = calculate_separation_distances_3d(
-            x[x_shift], y[y_shift], z[z_shift], x[x_shift], yroll[y_shift], z[z_shift])
+            x[x_shift], y[y_shift], z[z_shift], x[x_shift], yroll[y_shift], z[z_shift]
+        )
 
     for z_shift in sep_z:
         x_shift = 1
         y_shift = 1
-        if any("periodic-all" in b for b in boundary) or \
-           any("periodic-z" in b for b in boundary):
-            zroll = shift_array_1d(z, shift_by=z_shift, boundary="Periodic")
+        if boundary is not None:
+            if any("periodic-all" in b for b in boundary) or any(
+                "periodic-z" in b for b in boundary
+            ):
+                zroll = shift_array_1d(z, shift_by=z_shift, boundary="Periodic")
         else:
             zroll = shift_array_1d(z, shift_by=z_shift, boundary=None)
 
