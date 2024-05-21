@@ -8,9 +8,6 @@ def calculate_advection_3d(  # noqa: D417
     x,
     y,
     z,
-    dx=None,
-    dy=None,
-    dz=None,
     scalar=None,
 ):
     """
@@ -34,12 +31,6 @@ def calculate_advection_3d(  # noqa: D417
             The y-coordinates of the grid.
         z: ndarray
             The z-coordinates of the grid.
-        dx: float or ndarray, optional
-            The grid spacing in the x-direction. Defaults to None.
-        dy: float or ndarray, optional
-            The grid spacing in the y-direction. Defaults to None.
-        dz: float or ndarray, optional
-            The grid spacing in the z-direction. Defaults to None.
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
 
