@@ -144,9 +144,7 @@ from oceans_sf.calculate_advection_3d import calculate_advection_3d
         ),
     ],
 )
-def test_calculate_advection_3d(
-    u, v, w, x, y, z, scalar, expected_advection_result
-):
+def test_calculate_advection_3d(u, v, w, x, y, z, scalar, expected_advection_result):
     """Test that calculate_advection works correctly for multiple cases."""
     output_advection = calculate_advection_3d(u, v, w, x, y, z, scalar)
     np.testing.assert_allclose(output_advection, expected_advection_result)
