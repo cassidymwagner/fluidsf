@@ -13,7 +13,7 @@ def calculate_advection(  # noqa: D417
 ):
     """
     Calculate the advection for a velocity field or scalar field. The velocity field
-    will return advection components in the eastward and northward directions.
+    will return advection components in the x and y directions.
     The scalar field will return the scalar advection. Defaults to advection for
     velocity field. If the velocity advection is skipped or a scalar field is not
     provided, the relevant dictionary key will return None.
@@ -40,9 +40,8 @@ def calculate_advection(  # noqa: D417
     Returns
     -------
         tuple or ndarray:
-            A tuple of advection components (eastward_advection,
-            northward_advection) if scalar is not provided, otherwise returns an ndarray
-            of scalar advection.
+            A tuple of advection components (x and y) if scalar is not provided, 
+            otherwise returns an ndarray of scalar advection.
     """
     if grid_type == "uniform":
         dx = np.abs(x[0] - x[1])
@@ -67,8 +66,8 @@ def calculate_advection(  # noqa: D417
     if scalar is not None:
         advection = u * dsdx + v * dsdy
     else:
-        eastward_advection = u * dudx + v * dudy
-        northward_advection = u * dvdx + v * dvdy
-        advection = (eastward_advection, northward_advection)
+        x_advection = u * dudx + v * dudy
+        y_advection = u * dvdx + v * dvdy
+        advection = (x_advection, y_advection)
 
     return advection
