@@ -146,6 +146,9 @@ def generate_structure_functions_3d(  # noqa: C901, D417
                 "periodic-x" in b for b in boundary
             ):
                 xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
+
+            else:
+                xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
         else:
             xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
 
@@ -194,6 +197,9 @@ def generate_structure_functions_3d(  # noqa: C901, D417
                 "periodic-y" in b for b in boundary
             ):
                 yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
+            else:
+                yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
+
         else:
             yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
 
@@ -242,6 +248,9 @@ def generate_structure_functions_3d(  # noqa: C901, D417
                 "periodic-z" in b for b in boundary
             ):
                 zroll = shift_array_1d(z, shift_by=z_shift, boundary="Periodic")
+
+            else:
+                zroll = shift_array_1d(z, shift_by=z_shift, boundary=None)
         else:
             zroll = shift_array_1d(z, shift_by=z_shift, boundary=None)
 
