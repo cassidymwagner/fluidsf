@@ -111,9 +111,9 @@ def calculate_structure_function(  # noqa: D417, C901
     for direction in ["x", "y"]:
         if skip_velocity_sf is False:
             SF_dict["SF_velocity_" + direction] = np.nanmean(
-                (inputs["adv_e_" + direction + "_shift"] - adv_x)
+                (inputs["adv_x_" + direction + "_shift"] - adv_x)
                 * (inputs["u_" + direction + "_shift"] - u)
-                + (inputs["adv_n_" + direction + "_shift"] - adv_y)
+                + (inputs["adv_y_" + direction + "_shift"] - adv_y)
                 * (inputs["v_" + direction + "_shift"] - v)
             )
             if traditional_type is not None:
