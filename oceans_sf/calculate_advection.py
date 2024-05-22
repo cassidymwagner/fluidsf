@@ -40,7 +40,7 @@ def calculate_advection(  # noqa: D417
     Returns
     -------
         tuple or ndarray:
-            A tuple of advection components (x and y) if scalar is not provided, 
+            A tuple of advection components (x and y) if scalar is not provided,
             otherwise returns an ndarray of scalar advection.
     """
     if grid_type == "uniform":

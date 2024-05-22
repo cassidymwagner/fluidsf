@@ -216,8 +216,6 @@ def generate_structure_functions(  # noqa: C901, D417
             x[x_shift], y[y_shift], x[x_shift], yroll[y_shift], grid_type
         )
 
-
-
     # Bin the data if the grid is uneven
     if even is False:
         if skip_velocity_sf is False:
