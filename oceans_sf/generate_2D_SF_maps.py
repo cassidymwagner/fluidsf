@@ -32,7 +32,7 @@ def generate_2D_SF_maps(  # noqa: C901, D417
     Full method for generating structure functions for 2D data, either advective or
     traditional structure functions. Supports velocity-based and scalar-based structure
     functions. Defaults to calculating the velocity-based advective structure functions
-    for the x (zonal) and y (meridional) directions.
+    for the x and y directions.
 
     Parameters
     ----------
@@ -72,7 +72,7 @@ def generate_2D_SF_maps(  # noqa: C901, D417
     -------
         dict:
             Dictionary containing the requested structure functions and separation
-            distances for the x- and y-direction (zonal and meridional, respectively).
+            distances for the x- and y-directions.
 
     """
     # Initialize variables as NoneType
@@ -98,10 +98,10 @@ def generate_2D_SF_maps(  # noqa: C901, D417
     y_separations = np.zeros([len(x_shifts), len(y_shifts)])
 
     # Iterate over separations right and down
-    for x_shift, y_shift in itertools.product(x_shifts, y_shifts):
+    for shift_x, shift_y in itertools.product(x_shifts, y_shifts):
         
-        x_separation = x_shift * (x[1] - x[0])
-        y_separation = y_shift * (y[1] - y[0])
+        x_separation = shift_x * (x[1] - x[0])
+        y_separation = shift_y * (y[1] - y[0])
         
 
         SF_dicts = calculate_2D_SF_maps(
@@ -109,15 +109,15 @@ def generate_2D_SF_maps(  # noqa: C901, D417
             v,
             adv_x,
             adv_y,
-            x_shift,
-            y_shift,
+            shift_x,
+            shift_y,
         )
 
-        SF_adv[x_shift, y_shift] = SF_dicts["SF_velocity_advection_xy"]
-        separation_vectors[x_shift, y_shift] = np.sqrt(x_separation**2 + y_separation**2)
-        separation_angles[x_shift, y_shift] = np.arctan(y_separation/x_separation)
-        x_separations[x_shift, y_shift] = x_separation
-        y_separations[x_shift, y_shift] =y_separation
+        SF_adv[shift_x, shift_y] = SF_dicts["SF_velocity_advection_xy"]
+        separation_vectors[shift_x, shift_y] = np.sqrt(x_separation**2 + y_separation**2)
+        separation_angles[shift_x, shift_y] = np.arctan(y_separation/x_separation)
+        x_separations[shift_x, shift_y] = x_separation
+        y_separations[shift_x, shift_y] =y_separation
 
     data = {
         "SF_velocity_advection_xy": SF_adv,

@@ -21,18 +21,14 @@ def calculate_2D_SF_maps(  # noqa: D417, C901
             Array of u velocities.
         v: ndarray
             Array of v velocities.
-        adv_e: ndarray
-            Array of eastward advection values.
-        adv_n: ndarray
-            Array of northward advection values.
-        down: int
-            Shift amount for downward shift. For periodic data should be less than half
-            the column length and less than the column length for other boundary
-            conditions.
-        right: int
-            Shift amount for rightward shift. For periodic data should be less than
-            half the row length and less than the row length for other boundary
-            conditions.
+        adv_x: ndarray
+            Array of x-dir advection values.
+        adv_y: ndarray
+            Array of y-dir advection values.
+        shift_in_x: int
+            Shift amount for x shift.
+        shift_in_y: int
+            Shift amount for y shift.
         skip_velocity_sf: bool, optional
             Whether to skip velocity-based structure function calculation.
             Defaults to False.
@@ -55,22 +51,8 @@ def calculate_2D_SF_maps(  # noqa: D417, C901
             A dictionary containing the advection velocity structure functions and
             scalar structure functions (if applicable).
             The dictionary has the following keys:
-                'SF_velocity_right': The advection velocity structure function in the
-                right direction.
-                'SF_velocity_down': The advection velocity structure function in the
-                down direction.
-                'SF_trad_velocity_right': The traditional velocity structure function in
-                the right direction (if traditional_order > 0).
-                'SF_trad_velocity_down': The traditional velocity structure function in
-                the down direction (if traditional_order > 0).
-                'SF_scalar_right': The scalar structure function in the right direction
-                (if scalar is provided).
-                'SF_scalar_down': The scalar structure function in the down direction
-                (if scalar is provided).
-                'SF_trad_scalar_right': The traditional scalar structure function in the
-                right direction (if scalar is provided and traditional_order > 0).
-                'SF_trad_scalar_down': The traditional scalar structure function in the
-                down direction (if scalar is provided and traditional_order > 0).
+                'SF_velocity_advection_xy': The advection velocity structure function for separation
+                vectors in the x-y plane.
     """
     inputs = {
         "u": u,
