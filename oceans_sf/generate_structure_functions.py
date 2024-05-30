@@ -29,7 +29,7 @@ def generate_structure_functions(  # noqa: C901, D417
     Full method for generating structure functions for 2D data, either advective or
     traditional structure functions. Supports velocity-based and scalar-based structure
     functions. Defaults to calculating the velocity-based advective structure functions
-    for the x (zonal) and y (meridional) directions.
+    for the x and y directions.
 
     Parameters
     ----------
@@ -69,126 +69,85 @@ def generate_structure_functions(  # noqa: C901, D417
     -------
         dict:
             Dictionary containing the requested structure functions and separation
-            distances for the x- and y-direction (zonal and meridional, respectively).
+            distances for the x- and y-direction.
 
     """
     # Initialize variables as NoneType
-    SF_z = None
-    SF_m = None
-    SF_z_scalar = None
-    SF_m_scalar = None
-    adv_E = None
-    adv_N = None
+    SF_adv_x = None
+    SF_adv_y = None
+    SF_x_scalar = None
+    SF_y_scalar = None
+    adv_x = None
+    adv_y = None
     adv_scalar = None
-    SF_z_LL = None
-    SF_m_LL = None
-    SF_z_LLL = None
-    SF_m_LLL = None
-    SF_z_LTT = None
-    SF_m_LTT = None
-    SF_z_LSS = None
-    SF_m_LSS = None
+    SF_x_LL = None
+    SF_y_LL = None
+    SF_x_LLL = None
+    SF_y_LLL = None
+    SF_x_LTT = None
+    SF_y_LTT = None
+    SF_x_LSS = None
+    SF_y_LSS = None
 
     # Define a list of separation distances to iterate over.
     # Periodic is half the length since the calculation will wrap the data.
     if boundary == "periodic-all":
-        sep_z = range(1, int(len(x) / 2))
-        sep_m = range(1, int(len(y) / 2))
+        sep_x = range(1, int(len(x) / 2))
+        sep_y = range(1, int(len(y) / 2))
     elif boundary == "periodic-x":
-        sep_z = range(1, int(len(x) / 2))
-        sep_m = range(1, int(len(y) - 1))
+        sep_x = range(1, int(len(x) / 2))
+        sep_y = range(1, int(len(y) - 1))
     elif boundary == "periodic-y":
-        sep_z = range(1, int(len(x) - 1))
-        sep_m = range(1, int(len(y) / 2))
+        sep_x = range(1, int(len(x) - 1))
+        sep_y = range(1, int(len(y) / 2))
     elif boundary is None:
-        sep_z = range(1, int(len(x) - 1))
-        sep_m = range(1, int(len(y) - 1))
+        sep_x = range(1, int(len(x) - 1))
+        sep_y = range(1, int(len(y) - 1))
 
     # Initialize the separation distance arrays
-    xd = np.zeros(len(sep_z) + 1)
-    yd = np.zeros(len(sep_m) + 1)
+    xd = np.zeros(len(sep_x) + 1)
+    yd = np.zeros(len(sep_y) + 1)
 
     # Initialize the structure function arrays
     if skip_velocity_sf is False:
-        SF_z = np.zeros(len(sep_z) + 1)
-        SF_m = np.zeros(len(sep_m) + 1)
-        adv_E, adv_N = calculate_advection(u, v, x, y, dx, dy, grid_type)
+        SF_adv_x = np.zeros(len(sep_x) + 1)
+        SF_adv_y = np.zeros(len(sep_y) + 1)
+        adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
         if traditional_type is not None:
             if any("LL" in t for t in traditional_type):
-                SF_z_LL = np.zeros(len(sep_z) + 1)
-                SF_m_LL = np.zeros(len(sep_m) + 1)
+                SF_x_LL = np.zeros(len(sep_x) + 1)
+                SF_y_LL = np.zeros(len(sep_y) + 1)
             if any("LLL" in t for t in traditional_type):
-                SF_z_LLL = np.zeros(len(sep_z) + 1)
-                SF_m_LLL = np.zeros(len(sep_m) + 1)
+                SF_x_LLL = np.zeros(len(sep_x) + 1)
+                SF_y_LLL = np.zeros(len(sep_y) + 1)
             if any("LTT" in t for t in traditional_type):
-                SF_z_LTT = np.zeros(len(sep_z) + 1)
-                SF_m_LTT = np.zeros(len(sep_m) + 1)
+                SF_x_LTT = np.zeros(len(sep_x) + 1)
+                SF_y_LTT = np.zeros(len(sep_y) + 1)
 
     if scalar is not None:
-        SF_z_scalar = np.zeros(len(sep_z) + 1)
-        SF_m_scalar = np.zeros(len(sep_m) + 1)
+        SF_x_scalar = np.zeros(len(sep_x) + 1)
+        SF_y_scalar = np.zeros(len(sep_y) + 1)
         adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
         if traditional_type is not None:
             if any("LSS" in t for t in traditional_type):
-                SF_z_LSS = np.zeros(len(sep_z) + 1)
-                SF_m_LSS = np.zeros(len(sep_m) + 1)
+                SF_x_LSS = np.zeros(len(sep_x) + 1)
+                SF_y_LSS = np.zeros(len(sep_y) + 1)
 
-    # Iterate over separations right and down
-    for down in sep_m:
-        right = 1
-        if boundary == "periodic-all" or boundary == "periodic-y":
-            yroll = shift_array1d(y, shift_by=down, boundary="Periodic")
-        else:
-            yroll = shift_array1d(y, shift_by=down, boundary=None)
-
-        SF_dicts = calculate_structure_function(
-            u,
-            v,
-            adv_E,
-            adv_N,
-            down,
-            right,
-            skip_velocity_sf,
-            scalar,
-            adv_scalar,
-            traditional_type,
-            boundary,
-        )
-
-        if skip_velocity_sf is False:
-            SF_m[down] = SF_dicts["SF_velocity_down"]
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_m_LL[down] = SF_dicts["SF_LL_down"]
-                if any("LLL" in t for t in traditional_type):
-                    SF_m_LLL[down] = SF_dicts["SF_LLL_down"]
-                if any("LTT" in t for t in traditional_type):
-                    SF_m_LTT[down] = SF_dicts["SF_LTT_down"]
-        if scalar is not None:
-            SF_m_scalar[down] = SF_dicts["SF_scalar_down"]
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_m_LSS[down] = SF_dicts["SF_LSS_down"]
-
-        # Calculate separation distances in y
-        tmp, yd[down] = calculate_separation_distances(
-            x[right], y[down], x[right], yroll[down], grid_type
-        )
-
-    for right in sep_z:
-        down = 1
+    # Iterate over separations in x and y
+    for x_shift in sep_x:
+        y_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-x":
-            xroll = shift_array1d(x, shift_by=right, boundary="Periodic")
+            xroll = shift_array1d(x, shift_by=x_shift, boundary="Periodic")
         else:
-            xroll = shift_array1d(x, shift_by=right, boundary=None)
+            xroll = shift_array1d(x, shift_by=x_shift, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,
             v,
-            adv_E,
-            adv_N,
-            down,
-            right,
+            adv_x,
+            adv_y,
+            x_shift,
+            y_shift,
             skip_velocity_sf,
             scalar,
             adv_scalar,
@@ -197,63 +156,104 @@ def generate_structure_functions(  # noqa: C901, D417
         )
 
         if skip_velocity_sf is False:
-            SF_z[right] = SF_dicts["SF_velocity_right"]
+            SF_adv_x[x_shift] = SF_dicts["SF_velocity_x"]
             if traditional_type is not None:
                 if any("LL" in t for t in traditional_type):
-                    SF_z_LL[right] = SF_dicts["SF_LL_right"]
+                    SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
                 if any("LLL" in t for t in traditional_type):
-                    SF_z_LLL[right] = SF_dicts["SF_LLL_right"]
+                    SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
                 if any("LTT" in t for t in traditional_type):
-                    SF_z_LTT[right] = SF_dicts["SF_LTT_right"]
+                    SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
         if scalar is not None:
-            SF_z_scalar[right] = SF_dicts["SF_scalar_right"]
+            SF_x_scalar[x_shift] = SF_dicts["SF_scalar_x"]
             if traditional_type is not None:
                 if any("LSS" in t for t in traditional_type):
-                    SF_z_LSS[right] = SF_dicts["SF_LSS_right"]
+                    SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
 
         # Calculate separation distances in x
-        xd[right], tmp = calculate_separation_distances(
-            x[right], y[down], xroll[right], y[down], grid_type
+        xd[x_shift], tmp = calculate_separation_distances(
+            x[x_shift], y[y_shift], xroll[x_shift], y[y_shift], grid_type
+        )
+
+    for y_shift in sep_y:
+        x_shift = 1
+        if boundary == "periodic-all" or boundary == "periodic-y":
+            yroll = shift_array1d(y, shift_by=y_shift, boundary="Periodic")
+        else:
+            yroll = shift_array1d(y, shift_by=y_shift, boundary=None)
+
+        SF_dicts = calculate_structure_function(
+            u,
+            v,
+            adv_x,
+            adv_y,
+            x_shift,
+            y_shift,
+            skip_velocity_sf,
+            scalar,
+            adv_scalar,
+            traditional_type,
+            boundary,
+        )
+
+        if skip_velocity_sf is False:
+            SF_adv_y[y_shift] = SF_dicts["SF_velocity_y"]
+            if traditional_type is not None:
+                if any("LL" in t for t in traditional_type):
+                    SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
+                if any("LLL" in t for t in traditional_type):
+                    SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
+                if any("LTT" in t for t in traditional_type):
+                    SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
+        if scalar is not None:
+            SF_y_scalar[y_shift] = SF_dicts["SF_scalar_y"]
+            if traditional_type is not None:
+                if any("LSS" in t for t in traditional_type):
+                    SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
+
+        # Calculate separation distances in y
+        tmp, yd[y_shift] = calculate_separation_distances(
+            x[x_shift], y[y_shift], x[x_shift], yroll[y_shift], grid_type
         )
 
     # Bin the data if the grid is uneven
     if even is False:
         if skip_velocity_sf is False:
-            xd_bin, SF_z = bin_data(xd, SF_z, nbins)
-            yd_bin, SF_m = bin_data(yd, SF_m, nbins)
+            xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins)
+            yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins)
             if traditional_type is not None:
                 if any("LL" in t for t in traditional_type):
-                    xd_bin, SF_z_LL = bin_data(xd, SF_z_LL, nbins)
-                    yd_bin, SF_m_LL = bin_data(yd, SF_m_LL, nbins)
+                    xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
+                    yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
                 if any("LLL" in t for t in traditional_type):
-                    xd_bin, SF_z_LLL = bin_data(xd, SF_z_LLL, nbins)
-                    yd_bin, SF_m_LLL = bin_data(yd, SF_m_LLL, nbins)
+                    xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
+                    yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
                 if any("LTT" in t for t in traditional_type):
-                    xd_bin, SF_z_LTT = bin_data(xd, SF_z_LTT, nbins)
-                    yd_bin, SF_m_LTT = bin_data(yd, SF_m_LTT, nbins)
+                    xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins)
+                    yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins)
         if scalar is not None:
-            xd_bin, SF_z_scalar = bin_data(xd, SF_z_scalar, nbins)
-            yd_bin, SF_m_scalar = bin_data(yd, SF_m_scalar, nbins)
+            xd_bin, SF_x_scalar = bin_data(xd, SF_x_scalar, nbins)
+            yd_bin, SF_y_scalar = bin_data(yd, SF_y_scalar, nbins)
             if traditional_type is not None:
                 if any("LSS" in t for t in traditional_type):
-                    xd_bin, SF_z_LSS = bin_data(xd, SF_z_LSS, nbins)
-                    yd_bin, SF_m_LSS = bin_data(yd, SF_m_LSS, nbins)
+                    xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins)
+                    yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins)
         xd = xd_bin
         yd = yd_bin
 
     data = {
-        "SF_advection_velocity_zonal": SF_z,
-        "SF_advection_velocity_meridional": SF_m,
-        "SF_advection_scalar_zonal": SF_z_scalar,
-        "SF_advection_scalar_meridional": SF_m_scalar,
-        "SF_LL_zonal": SF_z_LL,
-        "SF_LL_meridional": SF_m_LL,
-        "SF_LLL_zonal": SF_z_LLL,
-        "SF_LLL_meridional": SF_m_LLL,
-        "SF_LTT_zonal": SF_z_LTT,
-        "SF_LTT_meridional": SF_m_LTT,
-        "SF_LSS_zonal": SF_z_LSS,
-        "SF_LSS_meridional": SF_m_LSS,
+        "SF_advection_velocity_x": SF_adv_x,
+        "SF_advection_velocity_y": SF_adv_y,
+        "SF_advection_scalar_x": SF_x_scalar,
+        "SF_advection_scalar_y": SF_y_scalar,
+        "SF_LL_x": SF_x_LL,
+        "SF_LL_y": SF_y_LL,
+        "SF_LLL_x": SF_x_LLL,
+        "SF_LLL_y": SF_y_LLL,
+        "SF_LTT_x": SF_x_LTT,
+        "SF_LTT_y": SF_y_LTT,
+        "SF_LSS_x": SF_x_LSS,
+        "SF_LSS_y": SF_y_LSS,
         "x-diffs": xd,
         "y-diffs": yd,
     }

@@ -2,22 +2,22 @@ import numpy as np
 
 
 def shift_array2d(  # noqa: D417
-    input_array, shift_right=1, shift_down=1, boundary="periodic-all"
+    input_array, shift_x=1, shift_y=1, boundary="periodic-all"
 ):
     """
-    Shifts 2D array right and down by the specified integer amounts and returns
+    Shifts 2D array in x and y by the specified integer amounts and returns
     the shifted arrays. Either wraps the array or shifts and pads with NaNs.
 
     Parameters
     ----------
         input_array: array_like
             2-dimensional array to be shifted.
-        shift_right: int, optional
-            Shift amount for rightward shift. For periodic data should be less than
+        shift_x: int, optional
+            Shift amount in x direction. For periodic data should be less than
             half the row length and less than the row length for other boundary
             conditions. Defaults to 1.
-        shift_down: int, optional
-            Shift amount for downward shift. For periodic data should be less than
+        shift_y: int, optional
+            Shift amount in y direction. For periodic data should be less than
             half the column length and less than the column length for other boundary
             conditions. Defaults to 1.
         boundary: str, optional
@@ -28,35 +28,35 @@ def shift_array2d(  # noqa: D417
 
     Returns
     -------
-        shifted_right_array
-            2D array shifted to the right by the specified integer amount
-        shifted_down_array
-            2D array shifted down by the specified integer amount
+        shifted_x_array
+            2D array shifted in x by the specified integer amount
+        shifted_y_array
+            2D array shifted in y by the specified integer amount
     """
-    shifted_right_array = np.full(np.shape(input_array), np.nan)
-    shifted_down_array = np.full(np.shape(input_array), np.nan)
+    shifted_x_array = np.full(np.shape(input_array), np.nan)
+    shifted_y_array = np.full(np.shape(input_array), np.nan)
 
     if boundary == "periodic-all":
-        shifted_right_array[:, :shift_right] = input_array[:, -shift_right:]
-        shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
+        shifted_x_array[:, :shift_x] = input_array[:, -shift_x:]
+        shifted_x_array[:, shift_x:] = input_array[:, :-shift_x]
 
-        shifted_down_array[:shift_down, :] = input_array[-shift_down:, :]
-        shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
+        shifted_y_array[:shift_y, :] = input_array[-shift_y:, :]
+        shifted_y_array[shift_y:, :] = input_array[:-shift_y, :]
 
     elif boundary == "periodic-x":
-        shifted_right_array[:, :shift_right] = input_array[:, -shift_right:]
-        shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
+        shifted_x_array[:, :shift_x] = input_array[:, -shift_x:]
+        shifted_x_array[:, shift_x:] = input_array[:, :-shift_x]
 
-        shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
+        shifted_y_array[shift_y:, :] = input_array[:-shift_y, :]
 
     elif boundary == "periodic-y":
-        shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
+        shifted_x_array[:, shift_x:] = input_array[:, :-shift_x]
 
-        shifted_down_array[:shift_down, :] = input_array[-shift_down:, :]
-        shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
+        shifted_y_array[:shift_y, :] = input_array[-shift_y:, :]
+        shifted_y_array[shift_y:, :] = input_array[:-shift_y, :]
 
     elif boundary is None:
-        shifted_right_array[:, shift_right:] = input_array[:, :-shift_right]
-        shifted_down_array[shift_down:, :] = input_array[:-shift_down, :]
+        shifted_x_array[:, shift_x:] = input_array[:, :-shift_x]
+        shifted_y_array[shift_y:, :] = input_array[:-shift_y, :]
 
-    return shifted_right_array, shifted_down_array
+    return shifted_x_array, shifted_y_array
