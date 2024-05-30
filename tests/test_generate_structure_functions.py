@@ -5,7 +5,7 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
 
 
 @pytest.mark.parametrize(
-    "u, v, x, y, skip_velocity_sf, scalar, traditional_type, dx, dy, boundary, even, "
+    "u, v, x, y, skip_velocity_sf, scalar, traditional_type, dx, dy, boundary, "
     "grid_type, nbins, expected_dict",
     [
         # Test 1: all with no boundary and uniform grid
@@ -24,9 +24,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             None,  # boundary
-            True,  # even
             "uniform",  # grid_type
-            10,  # nbins
+            None,  # nbins
             {
                 "SF_advection_velocity_x": np.array(
                     [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
@@ -106,9 +105,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             "periodic-all",  # boundary
-            True,  # even
             "uniform",  # grid_type
-            10,  # nbins
+            None,  # nbins
             {
                 "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
                 "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
@@ -140,9 +138,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
-            True,  # even
             "latlon",  # grid_type
-            10,  # nbins
+            None,  # nbins
             {
                 "SF_advection_velocity_x": np.array(
                     [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
@@ -246,9 +243,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             np.ones(10),  # dx
             np.ones(10),  # dy
             "periodic-all",  # boundary
-            True,  # even
             "latlon",  # grid_type
-            10,  # nbins
+            None,  # nbins
             {
                 "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
                 "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
@@ -294,7 +290,6 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             None,  # boundary
-            False,  # even
             "uniform",  # grid_type
             3,  # nbins
             {
@@ -326,7 +321,6 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
-            False,  # even
             "latlon",  # grid_type
             3,  # nbins
             {
@@ -352,7 +346,7 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
                 ),
             },  # expected_dict
         ),
-        # Test 7: all with no boundary and uneven x vs y
+        # Test 7: all with no boundary and 5 bins
         (
             np.array(
                 [[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)]
@@ -368,7 +362,6 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             None,  # boundary
-            False,  # even
             "uniform",  # grid_type
             5,  # nbins
             {
@@ -404,9 +397,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             "periodic-x",  # boundary
-            True,  # even
             "uniform",  # grid_type
-            10,  # nbins
+            None,  # nbins
             {
                 "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
                 "SF_advection_velocity_y": np.array(
@@ -464,9 +456,8 @@ from oceans_sf.generate_structure_functions import generate_structure_functions
             None,  # dx
             None,  # dy
             "periodic-y",  # boundary
-            True,  # even
             "uniform",  # grid_type
-            10,  # nbins
+            None,  # nbins
             {
                 "SF_advection_velocity_x": np.array(
                     [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
@@ -499,7 +490,6 @@ def test_generate_structure_functions_parameterized(
     dx,
     dy,
     boundary,
-    even,
     grid_type,
     nbins,
     expected_dict,
@@ -516,7 +506,6 @@ def test_generate_structure_functions_parameterized(
         dx,
         dy,
         boundary,
-        even,
         grid_type,
         nbins,
     )

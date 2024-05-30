@@ -20,12 +20,10 @@ def generate_structure_functions(  # noqa: C901, D417
     dx=None,
     dy=None,
     boundary="periodic-all",
-    even="True",
     grid_type="uniform",
-    nbins=10,
+    nbins=None,
 ):
     """
-    TEST
     Full method for generating structure functions for 2D data, either advective or
     traditional structure functions. Supports velocity-based and scalar-based structure
     functions. Defaults to calculating the velocity-based advective structure functions
@@ -58,12 +56,11 @@ def generate_structure_functions(  # noqa: C901, D417
         boundary: str, optional
             Boundary condition of the data. Accepted strings are "periodic-x",
             "periodic-y", and "periodic-all". Defaults to "periodic-all".
-        even: bool, optional
-            Flag indicating if the grid is evenly spaced. Defaults to True.
         grid_type:str, optional
             Type of grid, either "uniform" or "latlon". Defaults to "uniform".
         nbins: int, optional
-            Number of bins for binning the data. Defaults to 10.
+            Number of bins for binning the data. Defaults to None, i.e. does not bin
+            data.
 
     Returns
     -------
@@ -216,8 +213,8 @@ def generate_structure_functions(  # noqa: C901, D417
             x[x_shift], y[y_shift], x[x_shift], yroll[y_shift], grid_type
         )
 
-    # Bin the data if the grid is uneven
-    if even is False:
+    # Bin the data if requested
+    if nbins is not None:
         if skip_velocity_sf is False:
             xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins)
             yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins)
