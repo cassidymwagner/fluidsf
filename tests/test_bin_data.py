@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from oceans_sf.bin_data import bin_data
+from fluidsf.bin_data import bin_data
 
 
 @pytest.mark.parametrize(

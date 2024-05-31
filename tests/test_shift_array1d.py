@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from oceans_sf.shift_array1d import shift_array1d
+from fluidsf.shift_array1d import shift_array1d
 
 
 @pytest.mark.parametrize(

@@ -3,7 +3,7 @@ from unittest import TestCase
 import numpy as np
 import pytest
 
-from oceans_sf.calculate_structure_function import calculate_structure_function
+from fluidsf.calculate_structure_function import calculate_structure_function
 
 
 @pytest.mark.parametrize(
