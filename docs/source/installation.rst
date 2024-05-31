@@ -1,8 +1,8 @@
 Installation instructions
 =========================
 
-Fork or clone the `oceans_sf repository <https://github.com/cassidymwagner/oceans_sf>`_ to your local machine. 
-Install oceans_sf with pip:
+Fork or clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine. 
+Install FluidSF with pip:
 
 .. code-block:: bash
 

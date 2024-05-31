@@ -1,9 +1,9 @@
-oceans\_sf package
+FluidSF package
 
-oceans\_sf function documentation
+FluidSF function documentation
 ---------------------------------
 
-.. automodule:: oceans_sf
+.. automodule:: fluidsf
    :members:
    :undoc-members:
    :show-inheritance:

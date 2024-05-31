@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 # for mod_name in MOCK_MODULES:
 #     sys.modules[mod_name] = mock.Mock()
 
-import oceans_sf
+import fluidsf
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
