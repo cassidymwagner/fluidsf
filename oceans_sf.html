@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Functions" href="modules.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>oceans_sf function documentation - Oceans SF 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
     
     
@@ -68,7 +68,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -83,7 +83,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -91,7 +91,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -99,6 +99,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -111,6 +165,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -129,7 +185,8 @@
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -185,11 +242,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/oceans_sf.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -199,15 +262,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <p>oceans_sf package</p>
 <section id="module-oceans_sf">
-<span id="oceans-sf-function-documentation"></span><h1>oceans_sf function documentation<a class="headerlink" href="#module-oceans_sf" title="Link to this heading">#</a></h1>
+<span id="oceans-sf-function-documentation"></span><h1>oceans_sf function documentation<a class="headerlink" href="#module-oceans_sf" title="Link to this heading">¶</a></h1>
 <p>Structure function calculation package.
 This package calculates structure functions from ocean velocity data.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.bin_data">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">bin_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.bin_data" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">bin_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.bin_data" title="Link to this definition">¶</a></dt>
 <dd><p>Bins the data based on the separation distances and calculates the the bin-averaged
 structure functions.</p>
 <dl class="field-list simple">
@@ -229,8 +292,39 @@ structure functions.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="oceans_sf.calculate_advection">
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_advection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_advection" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the advection for a velocity field or scalar field. The velocity field
+will return advection components in the x and y directions.
+The scalar field will return the scalar advection. Defaults to advection for
+velocity field. If the velocity advection is skipped or a scalar field is not
+provided, the relevant dictionary key will return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>ndarray</em>) – The u-component of velocity.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em>) – The v-component of velocity.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) – The x-coordinates of the grid.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – The y-coordinates of the grid.</p></li>
+<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em> or </em><em>ndarray</em><em>, </em><em>optional</em>) – The grid spacing in the x-direction. Defaults to None.</p></li>
+<li><p><strong>dy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em> or </em><em>ndarray</em><em>, </em><em>optional</em>) – The grid spacing in the y-direction. Defaults to None.</p></li>
+<li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The type of grid. Defaults to “uniform”.</p></li>
+<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple of advection components (x and y) if scalar is not provided,
+otherwise returns an ndarray of scalar advection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a> or ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.calculate_separation_distances">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_separation_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_separation_distances" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_separation_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_separation_distances" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the separation distances between two points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -256,7 +350,7 @@ case of a latlon grid or code units for a uniform grid</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.calculate_structure_function">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">down</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_structure_function" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_structure_function" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate structure function, either advective or traditional.
 Supports velocity-based structure functions and scalar-based structure functions.</p>
 <dl class="field-list simple">
@@ -264,21 +358,20 @@ Supports velocity-based structure functions and scalar-based structure functions
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>u</strong> (<em>ndarray</em>) – Array of u velocities.</p></li>
 <li><p><strong>v</strong> (<em>ndarray</em>) – Array of v velocities.</p></li>
-<li><p><strong>adv_e</strong> (<em>ndarray</em>) – Array of eastward advection values.</p></li>
-<li><p><strong>adv_n</strong> (<em>ndarray</em>) – Array of northward advection values.</p></li>
-<li><p><strong>down</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for downward shift. For periodic data should be less than half
-the column length and less than the column length for other boundary
-conditions.</p></li>
-<li><p><strong>right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for rightward shift. For periodic data should be less than
-half the row length and less than the row length for other boundary
-conditions.</p></li>
+<li><p><strong>adv_x</strong> (<em>ndarray</em>) – Array of x-dir advection values.</p></li>
+<li><p><strong>adv_y</strong> (<em>ndarray</em>) – Array of y-dir advection values.</p></li>
+<li><p><strong>shift_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for x shift.</p></li>
+<li><p><strong>shift_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for y shift.</p></li>
 <li><p><strong>skip_velocity_sf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to skip velocity-based structure function calculation.
 Defaults to False.</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
 <li><p><strong>adv_scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar advection values. Defaults to None.</p></li>
-<li><p><strong>traditional_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Order for calculating traditional non-advective structure functions.
-If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
-<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Defaults to “Periodic”.</p></li>
+<li><p><strong>traditional_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>, </em><em>optional</em>) – List of traditional structure function types to calculate.
+Accepted types are: “LL”, “LLL”, “LTT”, “LSS”. If None,
+no traditional structure functions are calculated. Defaults to None.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Accepted strings
+are “periodic-x”, “periodic-y”, and “periodic-all”.
+Defaults to “periodic-all”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -286,32 +379,20 @@ If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
 scalar structure functions (if applicable).
 The dictionary has the following keys:</p>
 <blockquote>
-<div><dl class="simple">
-<dt>’SF_velocity_right’:</dt><dd><p>The advection velocity structure function in the
-right direction.</p>
-</dd>
-<dt>’SF_velocity_down’:</dt><dd><p>The advection velocity structure function in the
-down direction.</p>
-</dd>
-<dt>’SF_trad_velocity_right’:</dt><dd><p>The traditional velocity structure function in
-the right direction (if traditional_order &gt; 0).</p>
-</dd>
-<dt>’SF_trad_velocity_down’:</dt><dd><p>The traditional velocity structure function in
-the down direction (if traditional_order &gt; 0).</p>
-</dd>
-<dt>’SF_scalar_right’:</dt><dd><p>The scalar structure function in the right direction
-(if scalar is provided).</p>
-</dd>
-<dt>’SF_scalar_down’:</dt><dd><p>The scalar structure function in the down direction
-(if scalar is provided).</p>
-</dd>
-<dt>’SF_trad_scalar_right’:</dt><dd><p>The traditional scalar structure function in the
-right direction (if scalar is provided and traditional_order &gt; 0).</p>
-</dd>
-<dt>’SF_trad_scalar_down’:</dt><dd><p>The traditional scalar structure function in the
-down direction (if scalar is provided and traditional_order &gt; 0).</p>
-</dd>
-</dl>
+<div><p>’SF_velocity_x’: The advection velocity structure function in the
+x direction.
+‘SF_velocity_y’: The advection velocity structure function in the
+y direction.
+‘SF_scalar_x’: The scalar structure function in the x direction.
+‘SF_scalar_y’: The scalar structure function in the y direction.
+‘SF_LL_x’: The traditional structure function LL in the x direction.
+‘SF_LL_y’: The traditional structure function LL in the y direction.
+‘SF_LLL_x’: The traditional structure function LLL in the x direction.
+‘SF_LLL_y’: The traditional structure function LLL in the y direction.
+‘SF_LTT_x’: The traditional structure function LTT in the x direction.
+‘SF_LTT_y’: The traditional structure function LTT in the y direction.
+‘SF_LSS_x’: The traditional structure function LSS in the x direction.
+‘SF_LSS_y’: The traditional structure function LSS in the y direction.</p>
 </div></blockquote>
 </p>
 </dd>
@@ -323,11 +404,11 @@ down direction (if scalar is provided and traditional_order &gt; 0).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.generate_structure_functions">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">even</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'True'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.generate_structure_functions" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.generate_structure_functions" title="Link to this definition">¶</a></dt>
 <dd><p>Full method for generating structure functions for 2D data, either advective or
 traditional structure functions. Supports velocity-based and scalar-based structure
 functions. Defaults to calculating the velocity-based advective structure functions
-for the x (zonal) and y (meridional) directions.</p>
+for the x and y directions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -339,19 +420,21 @@ for the x (zonal) and y (meridional) directions.</p>
 the user only wants to calculate the scalar-based structure function.
 Defaults to False.</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 2D array of scalar values. Defaults to None.</p></li>
-<li><p><strong>traditional_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Order for calculating traditional non-advective structure functions.
-If 0, no traditional structure functions are calculated. Defaults to 0.</p></li>
+<li><p><strong>traditional_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>, </em><em>optional</em>) – List of traditional structure function types to calculate.
+Accepted types are: “LL”, “LLL”, “LTT”, “LSS”. If None,
+no traditional structure functions are calculated. Defaults to None.</p></li>
 <li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the x-direction. Defaults to None.</p></li>
 <li><p><strong>dy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the y-direction. Defaults to None.</p></li>
-<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition of the data. Defaults to “Periodic”.</p></li>
-<li><p><strong>even</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if the grid is evenly spaced. Defaults to True.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition of the data. Accepted strings are “periodic-x”,
+“periodic-y”, and “periodic-all”. Defaults to “periodic-all”.</p></li>
 <li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Type of grid, either “uniform” or “latlon”. Defaults to “uniform”.</p></li>
-<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Number of bins for binning the data. Defaults to 10.</p></li>
+<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Number of bins for binning the data. Defaults to None, i.e. does not bin
+data.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary containing the requested structure functions and separation
-distances for the x- and y-direction (zonal and meridional, respectively).</p>
+distances for the x- and y-direction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
@@ -361,7 +444,7 @@ distances for the x- and y-direction (zonal and meridional, respectively).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.shift_array1d">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array1d" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array1d" title="Link to this definition">¶</a></dt>
 <dd><p>Shifts 1D array by an integer amount and returns the shifted array.
 Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
@@ -387,28 +470,29 @@ Defaults to “Periodic”.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="oceans_sf.shift_array2d">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_down</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array2d" title="Link to this definition">#</a></dt>
-<dd><p>Shifts 2D array right and down by the specified integer amounts and returns
+<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array2d" title="Link to this definition">¶</a></dt>
+<dd><p>Shifts 2D array in x and y by the specified integer amounts and returns
 the shifted arrays. Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_array</strong> (<em>array_like</em>) – 2-dimensional array to be shifted.</p></li>
-<li><p><strong>shift_right</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Shift amount for rightward shift. For periodic data should be less than
+<li><p><strong>shift_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Shift amount in x direction. For periodic data should be less than
 half the row length and less than the row length for other boundary
 conditions. Defaults to 1.</p></li>
-<li><p><strong>shift_down</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Shift amount for downward shift. For periodic data should be less than
+<li><p><strong>shift_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Shift amount in y direction. For periodic data should be less than
 half the column length and less than the column length for other boundary
 conditions. Defaults to 1.</p></li>
 <li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for input array. Periodic boundary conditions will wrap
-the array, otherwise the array will be padded with NaNs. Defaults to
-“Periodic”.</p></li>
+the array, otherwise the array will be padded with NaNs. Accepted strings
+are “periodic-x”, “periodic-y”, and “periodic-all”.
+Defaults to “periodic-all”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>shifted_right_array</em> – 2D array shifted to the right by the specified integer amount</p></li>
-<li><p><em>shifted_down_array</em> – 2D array shifted down by the specified integer amount</p></li>
+<li><p><em>shifted_x_array</em> – 2D array shifted in x by the specified integer amount</p></li>
+<li><p><em>shifted_y_array</em> – 2D array shifted in y by the specified integer amount</p></li>
 </ul>
 </p>
 </dd>
@@ -466,6 +550,7 @@ the array, otherwise the array will be padded with NaNs. Defaults to
             <ul>
 <li><a class="reference internal" href="#">oceans_sf function documentation</a><ul>
 <li><a class="reference internal" href="#oceans_sf.bin_data"><code class="docutils literal notranslate"><span class="pre">bin_data()</span></code></a></li>
+<li><a class="reference internal" href="#oceans_sf.calculate_advection"><code class="docutils literal notranslate"><span class="pre">calculate_advection()</span></code></a></li>
 <li><a class="reference internal" href="#oceans_sf.calculate_separation_distances"><code class="docutils literal notranslate"><span class="pre">calculate_separation_distances()</span></code></a></li>
 <li><a class="reference internal" href="#oceans_sf.calculate_structure_function"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code></a></li>
 <li><a class="reference internal" href="#oceans_sf.generate_structure_functions"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code></a></li>
@@ -483,9 +568,9 @@ the array, otherwise the array will be padded with NaNs. Defaults to
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=01f34227"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
