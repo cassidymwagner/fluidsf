@@ -1,1 +1,1 @@
-"""Tests for oceans_sf."""
+"""Tests for FluidSF."""
