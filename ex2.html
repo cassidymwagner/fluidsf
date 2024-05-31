@@ -213,15 +213,14 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Oceans SF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of FluidSF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation instructions</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">Functions</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="oceans_sf.html">oceans_sf function documentation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">Functions</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -321,10 +320,10 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">oceans_sf</span> <span class="k">as</span> <span class="nn">ocsf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fluidsf</span>
 
 <span class="n">sfs_list</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">ocsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 </pre></div>
 </div>

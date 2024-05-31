@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Functions" href="modules.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
 
     <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>oceans_sf function documentation - Oceans SF 0.1.0 documentation</title>
+        <title>FluidSF function documentation - Oceans SF 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -211,16 +211,15 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Oceans SF</a></li>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of FluidSF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation instructions</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">Functions</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">oceans_sf function documentation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">Functions</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -263,14 +262,14 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <p>oceans_sf package</p>
-<section id="module-oceans_sf">
-<span id="oceans-sf-function-documentation"></span><h1>oceans_sf function documentation<a class="headerlink" href="#module-oceans_sf" title="Link to this heading">¶</a></h1>
+          <p>FluidSF package</p>
+<section id="module-fluidsf">
+<span id="fluidsf-function-documentation"></span><h1>FluidSF function documentation<a class="headerlink" href="#module-fluidsf" title="Link to this heading">¶</a></h1>
 <p>Structure function calculation package.
 This package calculates structure functions from ocean velocity data.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.bin_data">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">bin_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.bin_data" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.bin_data">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">bin_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.bin_data" title="Link to this definition">¶</a></dt>
 <dd><p>Bins the data based on the separation distances and calculates the the bin-averaged
 structure functions.</p>
 <dl class="field-list simple">
@@ -292,8 +291,8 @@ structure functions.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.calculate_advection">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_advection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_advection" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.calculate_advection">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_advection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_advection" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the advection for a velocity field or scalar field. The velocity field
 will return advection components in the x and y directions.
 The scalar field will return the scalar advection. Defaults to advection for
@@ -323,8 +322,8 @@ otherwise returns an ndarray of scalar advection.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.calculate_separation_distances">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_separation_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_separation_distances" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.calculate_separation_distances">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_separation_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_separation_distances" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the separation distances between two points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -349,8 +348,8 @@ case of a latlon grid or code units for a uniform grid</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.calculate_structure_function">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.calculate_structure_function" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.calculate_structure_function">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_structure_function" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate structure function, either advective or traditional.
 Supports velocity-based structure functions and scalar-based structure functions.</p>
 <dl class="field-list simple">
@@ -403,8 +402,8 @@ y direction.
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.generate_structure_functions">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.generate_structure_functions" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.generate_structure_functions">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_velocity_sf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traditional_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.generate_structure_functions" title="Link to this definition">¶</a></dt>
 <dd><p>Full method for generating structure functions for 2D data, either advective or
 traditional structure functions. Supports velocity-based and scalar-based structure
 functions. Defaults to calculating the velocity-based advective structure functions
@@ -443,8 +442,8 @@ distances for the x- and y-direction.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.shift_array1d">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array1d" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.shift_array1d">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">shift_array1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.shift_array1d" title="Link to this definition">¶</a></dt>
 <dd><p>Shifts 1D array by an integer amount and returns the shifted array.
 Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
@@ -469,8 +468,8 @@ Defaults to “Periodic”.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="oceans_sf.shift_array2d">
-<span class="sig-prename descclassname"><span class="pre">oceans_sf.</span></span><span class="sig-name descname"><span class="pre">shift_array2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oceans_sf.shift_array2d" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.shift_array2d">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">shift_array2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.shift_array2d" title="Link to this definition">¶</a></dt>
 <dd><p>Shifts 2D array in x and y by the specified integer amounts and returns
 the shifted arrays. Either wraps the array or shifts and pads with NaNs.</p>
 <dl class="field-list simple">
@@ -507,17 +506,7 @@ Defaults to “periodic-all”.</p></li>
         
         <div class="related-pages">
           
-          <a class="prev-page" href="modules.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">Functions</div>
-                
-              </div>
-            </a>
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -548,14 +537,14 @@ Defaults to “periodic-all”.</p></li>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">oceans_sf function documentation</a><ul>
-<li><a class="reference internal" href="#oceans_sf.bin_data"><code class="docutils literal notranslate"><span class="pre">bin_data()</span></code></a></li>
-<li><a class="reference internal" href="#oceans_sf.calculate_advection"><code class="docutils literal notranslate"><span class="pre">calculate_advection()</span></code></a></li>
-<li><a class="reference internal" href="#oceans_sf.calculate_separation_distances"><code class="docutils literal notranslate"><span class="pre">calculate_separation_distances()</span></code></a></li>
-<li><a class="reference internal" href="#oceans_sf.calculate_structure_function"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code></a></li>
-<li><a class="reference internal" href="#oceans_sf.generate_structure_functions"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code></a></li>
-<li><a class="reference internal" href="#oceans_sf.shift_array1d"><code class="docutils literal notranslate"><span class="pre">shift_array1d()</span></code></a></li>
-<li><a class="reference internal" href="#oceans_sf.shift_array2d"><code class="docutils literal notranslate"><span class="pre">shift_array2d()</span></code></a></li>
+<li><a class="reference internal" href="#">FluidSF function documentation</a><ul>
+<li><a class="reference internal" href="#fluidsf.bin_data"><code class="docutils literal notranslate"><span class="pre">bin_data()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.calculate_advection"><code class="docutils literal notranslate"><span class="pre">calculate_advection()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.calculate_separation_distances"><code class="docutils literal notranslate"><span class="pre">calculate_separation_distances()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.calculate_structure_function"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.generate_structure_functions"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.shift_array1d"><code class="docutils literal notranslate"><span class="pre">shift_array1d()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.shift_array2d"><code class="docutils literal notranslate"><span class="pre">shift_array2d()</span></code></a></li>
 </ul>
 </li>
 </ul>

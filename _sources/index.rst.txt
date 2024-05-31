@@ -1,4 +1,4 @@
-oceans_sf Documentation
+FluidSF Documentation
 =======================
 
 .. toctree::
@@ -14,7 +14,7 @@ oceans_sf Documentation
 Overview
 ********
 
-oceans_sf is a Python package for calculating structure functions from oceanographic data. 
+FluidSF is a Python package for calculating structure functions from fluid data. 
 These structure functions can be used to estimate turbulence cascade rates without the constraints 
 of spectral methods. This package serves as a useful tool for analyzing turbulent dynamics in the ocean.
 
@@ -32,8 +32,8 @@ Usage
 Development and Contributing
 ****************************
 
-The development of oceans_sf started as a Ph.D. project for Cassidy Wagner, 
+The development of FluidSF started as a Ph.D. project for Cassidy Wagner, 
 advised by Brodie Pearson. The developers welcome contributions and suggestions 
-through the `oceans_sf GitHub repository <https://github.com/cassidymwagner/oceans_sf>`_
+through the `FluidSF GitHub repository <https://github.com/cassidymwagner/FluidSF>`_
 Feel free to open an issue, submit a pull request, and/or 
 `contact the owner directly <https://github.com/cassidymwagner>`_.
