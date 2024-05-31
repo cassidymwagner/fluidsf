@@ -27,10 +27,11 @@ import fluidsf
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "Oceans SF"
+project = "FluidSF"
 copyright = "2024, Cassidy Wagner"
 author = "Cassidy Wagner"
-release = "0.1.0"
+release = "0.2.0"
+html_title = "FluidSF"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
