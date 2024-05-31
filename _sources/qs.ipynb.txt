@@ -1,0 +1,144 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Getting started\n",
+    "Once FluidSF is installed, you can load the module into Python and run some basic calculations with random data."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'fluidsf'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[1], line 1\u001b[0m\n\u001b[0;32m----> 1\u001b[0m \u001b[38;5;28;01mimport\u001b[39;00m \u001b[38;5;21;01mfluidsf\u001b[39;00m\n\u001b[1;32m      2\u001b[0m \u001b[38;5;28;01mimport\u001b[39;00m \u001b[38;5;21;01mnumpy\u001b[39;00m \u001b[38;5;28;01mas\u001b[39;00m \u001b[38;5;21;01mnp\u001b[39;00m\n",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'fluidsf'"
+     ]
+    }
+   ],
+   "source": [
+    "import fluidsf\n",
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Create a random 2D velocity field"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'np' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[2], line 2\u001b[0m\n\u001b[1;32m      1\u001b[0m nx, ny \u001b[38;5;241m=\u001b[39m \u001b[38;5;241m100\u001b[39m, \u001b[38;5;241m100\u001b[39m\n\u001b[0;32m----> 2\u001b[0m x \u001b[38;5;241m=\u001b[39m \u001b[43mnp\u001b[49m\u001b[38;5;241m.\u001b[39mlinspace(\u001b[38;5;241m0\u001b[39m, \u001b[38;5;241m1\u001b[39m, nx)\n\u001b[1;32m      3\u001b[0m y \u001b[38;5;241m=\u001b[39m np\u001b[38;5;241m.\u001b[39mlinspace(\u001b[38;5;241m0\u001b[39m, \u001b[38;5;241m1\u001b[39m, ny)\n\u001b[1;32m      4\u001b[0m U \u001b[38;5;241m=\u001b[39m np\u001b[38;5;241m.\u001b[39mrandom\u001b[38;5;241m.\u001b[39mrand(nx, ny)\n",
+      "\u001b[0;31mNameError\u001b[0m: name 'np' is not defined"
+     ]
+    }
+   ],
+   "source": [
+    "nx, ny = 100, 100\n",
+    "x = np.linspace(0, 1, nx)\n",
+    "y = np.linspace(0, 1, ny)\n",
+    "U = np.random.rand(nx, ny)\n",
+    "V = np.random.rand(nx, ny)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Generate the advective velocity structure function\n",
+    "\n",
+    "We can generate the advective structure function using the function `generate_structure_functions`. The function returns a dictionary with the all supported structure functions and separation distances in each direction. By default the advective velocity structure functions are calculated and the remaining structure functions are set to `None`. We set the boundary condition to `None` because our random data is non-periodic. If we had periodic data we could set the boundary condition based on the direction of periodicity (i.e. `boundary=\"periodic-x\"` or `boundary=\"periodic-y\"` for 2D data). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sf = fluidsf.generate_structure_functions(U, V, x, y, boundary=\"None\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The keys of the dictionary `sf` are \n",
+    "\n",
+    "- `SF_advection_velocity_dir`: Advective velocity structure function in the direction of the separation vector (`dir` = `x`, `y`, `z`).\n",
+    "- `SF_advection_scalar_dir`: Advective scalar structure function in the direction of the separation vector (`dir` = `x`, `y`, `z`).\n",
+    "- `SF_LL_dir`: Longitudinal second order velocity structure function in the direction of the separation vector (`dir` = `x`, `y`, `z`).\n",
+    "- `SF_LLL_dir`: Longitudinal third order velocity structure function in the direction of the separation vector (`dir` = `x`, `y`, `z`).\n",
+    "- `SF_LTT_dir`: Longitudinal-transverse-transverse third order velocity structure function in the direction of the separation vector (`dir` = `x`, `y`, `z`).\n",
+    "- `SF_LSS_dir`: Longitudinal-scalar-scalar third order velocity structure function in the direction of the separation vector (`dir` = `x`, `y`, `z`).\n",
+    "- `dir-diffs`: Separation distances in each direction (`dir` = `x`, `y`, `z`)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Plot the advective velocity structure functions in x and y"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "fig, ax = plt.subplots()\n",
+    "ax.plot(sf[\"x-diffs\"], sf[\"SF_advection_velocity_x\"], label=\"Advective velocity SF in x\")\n",
+    "ax.plot(sf[\"y-diffs\"], sf[\"SF_advection_velocity_y\"], label=\"Advective velocity SF in y\")\n",
+    "ax.set_xlabel(\"Separation distance\")\n",
+    "ax.set_ylabel(\"Structure function\")\n",
+    "ax.legend()\n",
+    "plt.show()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "py311",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

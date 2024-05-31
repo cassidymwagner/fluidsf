@@ -1,31 +1,41 @@
-FluidSF Documentation
-=======================
+FluidSF
+=======
 
 .. toctree::
    :hidden:
 
-   overview
-   installation
+   quickstart
    examples
    modules
 
 .. _Overview:
 
-Overview
-********
-
 FluidSF is a Python package for calculating structure functions from fluid data. 
 These structure functions can be used to estimate turbulence cascade rates without the constraints 
 of spectral methods. This package serves as a useful tool for analyzing turbulent dynamics in the ocean.
 
-.. _Usage:
+.. _Installing:
 
-Usage
-*****
+Installing
+**********
 
-.. admonition:: Look ma! A custom title.
+Fork or clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine. 
+Install FluidSF with pip:
 
-   It looks different though.
+.. code-block:: bash
+
+   pip install . --user
+
+.. _Citing:
+
+Citing
+******
+
+If you use FluidSF in your research or educational activities, we would appreciate it if you cite this work.
+
+.. .. code-block:: bibtex
+
+..    WIP
 
 .. _Development and Contributing:
 
