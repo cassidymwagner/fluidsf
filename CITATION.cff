@@ -4,8 +4,8 @@ authors:
 - family-names: "Wagner"
   given-names: "Cassidy"
   orcid: "https://orcid.org/0000-0002-1186-2082"
-title: "FluidSF"
+title: "fluidsf"
 version: 0.2.0
 doi: 10.5281/zenodo.1234
 date-released: 2024-01-05
-url: "https://github.com/cassidymwagner/FluidSF"
+url: "https://github.com/cassidymwagner/fluidsf"
