@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from oceans_sf.generate_structure_functions import generate_structure_functions
+from fluidsf.generate_structure_functions import generate_structure_functions
 
 
 @pytest.mark.parametrize(
