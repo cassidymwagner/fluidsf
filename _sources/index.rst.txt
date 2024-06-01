@@ -6,7 +6,7 @@ FluidSF
 
    qs
    examples
-   modules
+   fluidsf
 
 .. _Overview:
 
