@@ -1,6 +1,4 @@
-FluidSF package
-
-FluidSF function documentation
+API Documentation
 ---------------------------------
 
 .. automodule:: fluidsf
