@@ -4,7 +4,7 @@ FluidSF
 .. toctree::
    :hidden:
 
-   quickstart
+   qs
    examples
    modules
 
