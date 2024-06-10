@@ -37,6 +37,7 @@ jobs:
       run: |
         pip install .[test]
         pip install pytest
+        pip install coverage
 
     - name: Test
       run: |
