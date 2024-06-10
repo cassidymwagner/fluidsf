@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-  pull_request:
-    types: [assigned, opened, synchronize, reopened]
-  pull_request_review:
-    types: [edited, dismissed]
+    branches:
+      - main
+    tags:
+      - "v*"
   schedule:
     # At 17:31 every Tuesday (UTC)
     # At 9:31 every Tuesday (PST)
@@ -37,7 +37,12 @@ jobs:
 
     - name: Test
       run: |
-        pytest tests/
+        coverage run -m pytest tests/
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
   # Check linting, formating, types, etc.
   lint:
