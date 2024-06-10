@@ -4,13 +4,8 @@ on:
   push:
     branches:
       - main
-      - coverage
     tags:
       - "v*"
-  pull_request:
-    types: [assigned, opened, synchronize, reopened]
-  pull_request_review:
-    types: [edited, dismissed]
   schedule:
     # At 17:31 every Tuesday (UTC)
     # At 9:31 every Tuesday (PST)
@@ -39,7 +34,6 @@ jobs:
       run: |
         pip install .[test]
         pip install pytest
-        pip install coverage
 
     - name: Test
       run: |
