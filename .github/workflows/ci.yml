@@ -6,6 +6,9 @@ on:
       - main
     tags:
       - "v*"
+  pull_request:
+    branches:
+      - main
   schedule:
     # At 17:31 every Tuesday (UTC)
     # At 9:31 every Tuesday (PST)
