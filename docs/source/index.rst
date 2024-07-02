@@ -5,7 +5,9 @@ FluidSF
    :hidden:
 
    qs
+   sfs
    examples
+   supported_data
    fluidsf
 
 .. _Overview:
