@@ -49,20 +49,20 @@ def calculate_advection(  # noqa: D417
         dy = np.abs(y[0] - y[1])
 
         if scalar is not None:
-            dsdy, dsdx = np.gradient(scalar, dx, dy, axis=(0, 1))
+            dsdx, dsdy = np.gradient(scalar, dx, dy, axis=(1, 0))
         else:
-            dudy, dudx = np.gradient(u, dx, dy, axis=(0, 1))
-            dvdy, dvdx = np.gradient(v, dx, dy, axis=(0, 1))
+            dudx, dudy = np.gradient(u, dx, dy, axis=(1, 0))
+            dvdx, dvdy = np.gradient(v, dx, dy, axis=(1, 0))
 
     else:
         xcoords = dx.cumsum()
         ycoords = dy.cumsum()
 
         if scalar is not None:
-            dsdy, dsdx = np.gradient(scalar, xcoords, ycoords, axis=(0, 1))
+            dsdx, dsdy = np.gradient(scalar, xcoords, ycoords, axis=(1, 0))
         else:
-            dudy, dudx = np.gradient(u, xcoords, ycoords, axis=(0, 1))
-            dvdy, dvdx = np.gradient(v, xcoords, ycoords, axis=(0, 1))
+            dudx, dudy = np.gradient(u, xcoords, ycoords, axis=(1, 0))
+            dvdx, dvdy = np.gradient(v, xcoords, ycoords, axis=(1, 0))
 
     if scalar is not None:
         advection = u * dsdx + v * dsdy
