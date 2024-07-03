@@ -45,14 +45,14 @@ def calculate_advection_3d(  # noqa: D417
     dz = np.abs(z[0] - z[1])
 
     if scalar is not None:
-        dsdz, dsdy, dsdx = np.gradient(scalar, dx, dy, dz, axis=(0, 1, 2))
+        dsdx, dsdy, dsdz = np.gradient(scalar, dx, dy, dz, axis=(2, 1, 0))
 
         advection = u * dsdx + v * dsdy + w * dsdz
 
     else:
-        dudz, dudy, dudx = np.gradient(u, dx, dy, dz, axis=(0, 1, 2))
-        dvdz, dvdy, dvdx = np.gradient(v, dx, dy, dz, axis=(0, 1, 2))
-        dwdz, dwdy, dwdx = np.gradient(w, dx, dy, dz, axis=(0, 1, 2))
+        dudx, dudy, dudz = np.gradient(u, dx, dy, dz, axis=(2, 1, 0))
+        dvdx, dvdy, dvdz = np.gradient(v, dx, dy, dz, axis=(2, 1, 0))
+        dwdx, dwdy, dwdz = np.gradient(w, dx, dy, dz, axis=(2, 1, 0))
 
         u_advection = u * dudx + v * dudy + w * dudz
         v_advection = u * dvdx + v * dvdy + w * dvdz
