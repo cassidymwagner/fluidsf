@@ -61,3 +61,9 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
 }
+
+# -- Matplotlib configuration --
+nbsphinx_execute_arguments = [
+    "--InlineBackend.figure_formats={'png'}",
+    "--InlineBackend.rc={'figure.dpi': 200}",
+]
