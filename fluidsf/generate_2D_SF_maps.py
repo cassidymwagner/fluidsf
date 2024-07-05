@@ -89,7 +89,7 @@ def generate_2D_SF_maps(  # noqa: C901, D417
 
     # Initialize the structure function arrays
     SF_adv = np.zeros([len(x_shifts), len(y_shifts)])
-    SF_LLL = np.zeros([len(x_shifts), len(y_shifts)])
+    SF_uuu = np.zeros([len(x_shifts), len(y_shifts)])
     adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
 
     separation_distances = np.zeros([len(x_shifts), len(y_shifts)])
@@ -123,12 +123,14 @@ def generate_2D_SF_maps(  # noqa: C901, D417
         x_separations[shift_x, shift_y] = x_separation
         y_separations[shift_x, shift_y] = y_separation
 
+        SF_uuu[shift_x, shift_y] = SF_dicts["SF_uuu_xy"]
+
         # Diagnose the longitudinal structure function from velocity-component structure functions
-        SF_LLL[shift_x, shift_y] = ( SF_dicts["SF_uuu_xy"] * (x_separation**3) +
-                                    3 * SF_dicts["SF_uuv_xy"] * (x_separation**2) * y_separation +
-                                    3 * SF_dicts["SF_uvv_xy"] * (y_separation**2) * x_separation+
-                                    SF_dicts["SF_vvv_xy"] * (y_separation**3) 
-                                    ) / ( np.sqrt(x_separation**2 + y_separation**2)**3 )
+        #SF_LLL[shift_x, shift_y] = ( SF_dicts["SF_uuu_xy"] * (x_separation**3) +
+        #                            3 * SF_dicts["SF_uuv_xy"] * (x_separation**2) * y_separation +
+        #                            3 * SF_dicts["SF_uvv_xy"] * (y_separation**2) * x_separation+
+        #                            SF_dicts["SF_vvv_xy"] * (y_separation**3) 
+        #                            ) / ( np.sqrt(x_separation**2 + y_separation**2)**3 )
 
     # When saving data, roll y-axis so that y-values go from most negative to most positive.
     # The arrays created above run y-separations of 0, to most positive, then most negative towards zero,
@@ -136,7 +138,7 @@ def generate_2D_SF_maps(  # noqa: C901, D417
 
     data = {
         "SF_velocity_advection_xy": np.roll(SF_adv, int(len(y) / 2), axis=1),
-        "SF_LLL_xy": np.roll(SF_LLL, int(len(y) / 2), axis=1),
+        "SF_uuu_xy": np.roll(SF_uuu, int(len(y) / 2), axis=1),
         "separation_distances": np.roll(separation_distances, int(len(y) / 2), axis=1),
         "separation_angles": np.roll(separation_angles, int(len(y) / 2), axis=1),
         "x_separations": np.roll(x_separations, int(len(y) / 2), axis=1),
