@@ -85,4 +85,22 @@ def calculate_2D_SF_maps(  # noqa: D417, C901
         * (inputs["v_xy_shift"] - v)
     )
 
+    SF_dict["SF_uuu_xy"] = np.nanmean(
+        (inputs["u_xy_shift"] - u) **3 
+        )
+    
+    SF_dict["SF_vvv_xy"] = np.nanmean(
+        (inputs["v_xy_shift"] - v) **3 
+        )
+    
+    SF_dict["SF_uuv_xy"] = np.nanmean(
+        (inputs["v_xy_shift"] - v) *
+        (inputs["u_xy_shift"] - u)**2  
+        )
+    
+    SF_dict["SF_uvv_xy"] = np.nanmean(
+        (inputs["u_xy_shift"] - u) *
+        (inputs["v_xy_shift"] - v)**2  
+        )
+
     return SF_dict
