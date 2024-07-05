@@ -85,7 +85,7 @@ def generate_2D_SF_maps(  # noqa: C901, D417
     # Define a list of separation distances to iterate over.
     # Periodic is half the length since the calculation will wrap the data.
     x_shifts = range(0, int(len(x) / 2))
-    y_shifts = range(-int(len(y) / 2, int(len(y) / 2))
+    y_shifts = range(-int(len(y) / 2), int(len(y) / 2))
 
     # Initialize the structure function arrays
     SF_adv = np.zeros([len(x_shifts), len(y_shifts)])
@@ -115,15 +115,22 @@ def generate_2D_SF_maps(  # noqa: C901, D417
 
         SF_adv[shift_x, shift_y] = SF_dicts["SF_velocity_advection_xy"]
         separation_vectors[shift_x, shift_y] = np.sqrt(x_separation**2 + y_separation**2)
-        separation_angles[shift_x, shift_y] = np.arctan(y_separation/x_separation)
+        if shift_x==0:
+            separation_angles[shift_x, shift_y] = np.sign(y_separation) * np.pi / 2
+        else:
+            separation_angles[shift_x, shift_y] = np.arctan(y_separation/x_separation)
         x_separations[shift_x, shift_y] = x_separation
         y_separations[shift_x, shift_y] =y_separation
 
+    # When saving data, roll y-axis so that y'balues go from most negative to most positive.
+    # The arrays created above run y-separations of 0, to most positive, then most negative towards zero,
+    # since new_array[-n] writes to the n-th from last index
+
     data = {
-        "SF_velocity_advection_xy": SF_adv,
-        "separation_vectors": separation_vectors,
-        "separation_angles": separation_angles,
-        "x_separations": x_separations,
-        "y_separations": y_separations,
+        "SF_velocity_advection_xy": np.roll(SF_adv, int(len(y) / 2), axis=1),
+        "separation_vectors": np.roll(separation_vectors, int(len(y) / 2), axis=1),
+        "separation_angles": np.roll(separation_angles, int(len(y) / 2), axis=1),
+        "x_separations": np.roll(x_separations, int(len(y) / 2), axis=1),
+        "y_separations": np.roll(y_separations, int(len(y) / 2), axis=1),
     }
     return data
