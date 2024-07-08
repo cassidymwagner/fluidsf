@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API Documentation" href="fluidsf.html" /><link rel="prev" title="Estimating cascade rates from advective structure functions" href="ex1.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Using SWOT satellite altimetry" href="swot_ex.html" /><link rel="prev" title="Estimating cascade rates from advective structure functions" href="ex1.html" />
 
     <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
         <title>Structure functions for multiple snapshots or observations with bootstrapping - FluidSF</title>
@@ -214,11 +214,15 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">Key terms and definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported_data.html">Supported data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fluidsf.html">API Documentation</a></li>
 </ul>
 
@@ -281,7 +285,7 @@
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
 
-<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;retina&quot;</span><span class="p">)</span>
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -294,7 +298,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;sample_data/2layer_128.jld2&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;example_data/2layer_128.jld2&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="n">grid</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;grid&#39;</span><span class="p">]</span>
 <span class="n">snapshots</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;snapshots&#39;</span><span class="p">]</span>
 
@@ -329,46 +333,39 @@
 <section id="Bootstrap-to-generate-a-mean-structure-function-and-confidence-intervals">
 <h2>Bootstrap to generate a mean structure function and confidence intervals<a class="headerlink" href="#Bootstrap-to-generate-a-mean-structure-function-and-confidence-intervals" title="Link to this heading">¶</a></h2>
 <p>We are using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html">scipy’s bootstrapping method</a> here, though other methods of estimating error and variability are possible. We will use a confidence level of 90%.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">bootstrap</span>
 
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="c1"># Ignore warnings for the purpose of this tutorial</span>
+
 <span class="c1"># Reformat single sfs_list for ease of boostrapping</span>
-<span class="n">sf_z</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">sf_m</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sf_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sf_y</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">sf</span> <span class="ow">in</span> <span class="n">sfs_list</span><span class="p">:</span>
-    <span class="n">sf_z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_zonal&quot;</span><span class="p">])</span>
-    <span class="n">sf_m</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_meridional&quot;</span><span class="p">])</span>
+    <span class="n">sf_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_x&quot;</span><span class="p">])</span>
+    <span class="n">sf_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_y&quot;</span><span class="p">])</span>
 
 <span class="c1"># Bootstrap the zonal and meridional structure functions with 90% confidence levels</span>
-<span class="n">boot_sf_vz</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="p">((</span><span class="n">sf_z</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">boot_sf_vm</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="p">((</span><span class="n">sf_m</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">boot_sf_vx</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="p">((</span><span class="n">sf_x</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">boot_sf_vy</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="p">((</span><span class="n">sf_y</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Generate the confidence intervals for both sets of structure functions, still at 90%</span>
-<span class="n">boot_sf_vz_conf</span> <span class="o">=</span> <span class="n">boot_sf_vz</span><span class="o">.</span><span class="n">confidence_interval</span>
-<span class="n">boot_sf_vm_conf</span> <span class="o">=</span> <span class="n">boot_sf_vm</span><span class="o">.</span><span class="n">confidence_interval</span>
+<span class="n">boot_sf_vx_conf</span> <span class="o">=</span> <span class="n">boot_sf_vx</span><span class="o">.</span><span class="n">confidence_interval</span>
+<span class="n">boot_sf_vy_conf</span> <span class="o">=</span> <span class="n">boot_sf_vy</span><span class="o">.</span><span class="n">confidence_interval</span>
 
 <span class="c1"># Compute the mean -- this can also be accomplished with a Python mean function</span>
 <span class="c1"># and will return the same result</span>
-<span class="n">boot_sf_vz_mean</span> <span class="o">=</span> <span class="n">boot_sf_vz</span><span class="o">.</span><span class="n">bootstrap_distribution</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">boot_sf_vm_mean</span> <span class="o">=</span> <span class="n">boot_sf_vm</span><span class="o">.</span><span class="n">bootstrap_distribution</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">boot_sf_vx_mean</span> <span class="o">=</span> <span class="n">boot_sf_vx</span><span class="o">.</span><span class="n">bootstrap_distribution</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">boot_sf_vy_mean</span> <span class="o">=</span> <span class="n">boot_sf_vy</span><span class="o">.</span><span class="n">bootstrap_distribution</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/cassidywagner/miniforge3/envs/.venv/lib/python3.9/site-packages/scipy/stats/_resampling.py:147: RuntimeWarning: invalid value encountered in divide
-  a_hat = 1/6 * sum(nums) / sum(dens)**(3/2)
-/Users/cassidywagner/miniforge3/envs/.venv/lib/python3.9/site-packages/scipy/stats/_resampling.py:100: DegenerateDataWarning: The BCa confidence interval cannot be calculated. This problem is known to occur when the distribution is degenerate or the statistic is np.min.
-  warnings.warn(DegenerateDataWarning(msg))
-</pre></div></div>
 </div>
 </section>
 <section id="Plot-mean-structure-functions-and-confidence-intervals">
@@ -381,15 +378,15 @@
 
 <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">boot_sf_vz_mean</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Zonal&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">boot_sf_vm_mean</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Meridional&#39;</span><span class="p">,</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">boot_sf_vx_mean</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;x-dir&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">boot_sf_vy_mean</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;y-dir&#39;</span><span class="p">,</span>
              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
 
 <span class="c1"># Shade in the confidence regions</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                 <span class="n">boot_sf_vz_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                 <span class="n">boot_sf_vm_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vx_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                 <span class="n">boot_sf_vx_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span><span class="n">boot_sf_vy_conf</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                 <span class="n">boot_sf_vy_conf</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
@@ -404,7 +401,7 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/ex2_10_0.png" class="no-scaled-link" src="_images/ex2_10_0.png" style="width: 607px; height: 492px;" />
+<img alt="_images/ex2_10_0.png" src="_images/ex2_10_0.png" />
 </div>
 </div>
 <p>This same process can be repeated for the other types of structure functions as described in the previous example.</p>
@@ -416,12 +413,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="fluidsf.html">
+          <a class="next-page" href="swot_ex.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">API Documentation</div>
+                <div class="title">Using SWOT satellite altimetry</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

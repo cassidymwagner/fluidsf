@@ -1,0 +1,1093 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Key terms and definitions" href="terms.html" /><link rel="prev" title="Structure functions for multiple snapshots or observations with bootstrapping" href="ex2.html" />
+
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
+        <title>Using SWOT satellite altimetry - FluidSF</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">FluidSF</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">FluidSF</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Using SWOT satellite altimetry</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">Key terms and definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported_data.html">Supported data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fluidsf.html">API Documentation</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/swot_ex.ipynb.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="Using-SWOT-satellite-altimetry">
+<h1>Using SWOT satellite altimetry<a class="headerlink" href="#Using-SWOT-satellite-altimetry" title="Link to this heading">¶</a></h1>
+<p>This example will guide you through each step required to estimate energy cascade rates from a single SWOT KaRIn swath.</p>
+<p><strong>General procedure</strong></p>
+<ol class="arabic simple">
+<li><p>Load and visualize the SWOT sea surface height anomaly (SSHA) data</p></li>
+<li><p>Use SSHA to estimate geostrophic velocities</p></li>
+<li><p>Subset the data to a small region</p></li>
+<li><p>Calculate various structure functions from the geostrophic velocities in the subset region</p></li>
+<li><p>Estimate cascade rates from the structure functions</p></li>
+<li><p>Plot cascade rates</p></li>
+<li><p>Plot 2nd order structure functions</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib_inline.backend_inline</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+
+<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Load-the-SWOT-NetCDF-file-and-visualize-the-data">
+<h2>Load the SWOT NetCDF file and visualize the data<a class="headerlink" href="#Load-the-SWOT-NetCDF-file-and-visualize-the-data" title="Link to this heading">¶</a></h2>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">xarray</span></code> to load the <code class="docutils literal notranslate"><span class="pre">.nc</span></code> file. We are using the Expert version of SWOT Level-3 LR SSH v1.0, available through AVISO. This version includes estimates of geostrophic velocity along with improved data post-processing. It is possible to estimate geostrophic velocities from SSH data only, which is available in the Basic version of Level-3 and Level-2.</p>
+<p><strong>Note:</strong> The SWOT data is not provided in the FluidSF repository, so you must instead access the data through <a class="reference external" href="https://podaac.jpl.nasa.gov/SWOT?tab=mission-objectives&amp;sections=about%2Bdata">PO.DAAC</a>, <a class="reference external" href="https://www.aviso.altimetry.fr/en/data/products/sea-surface-height-products/global.html">AVISO</a>, or other methods. This example uses L3 data, accessible through AVISO.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="c1"># Provide the path to the SWOT data you have downloaded</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;example_data/SWOT_L3_LR_SSH_Expert_SAMPLE.nc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:               (num_lines: 9860, num_pixels: 69, num_nadir: 1631)
+Coordinates:
+    latitude              (num_lines, num_pixels) float64 ...
+    longitude             (num_lines, num_pixels) float64 ...
+Dimensions without coordinates: num_lines, num_pixels, num_nadir
+Data variables: (12/18)
+    time                  (num_lines) datetime64[ns] ...
+    mdt                   (num_lines, num_pixels) float64 ...
+    ssha                  (num_lines, num_pixels) float64 ...
+    ssha_noiseless        (num_lines, num_pixels) float64 ...
+    ssha_unedited         (num_lines, num_pixels) float64 ...
+    quality_flag          (num_lines, num_pixels) uint8 ...
+    ...                    ...
+    ugosa                 (num_lines, num_pixels) float64 ...
+    vgosa                 (num_lines, num_pixels) float64 ...
+    sigma0                (num_lines, num_pixels) float64 ...
+    cross_track_distance  (num_pixels) float64 ...
+    i_num_line            (num_nadir) int16 ...
+    i_num_pixel           (num_nadir) int8 ...
+Attributes: (12/42)
+    Conventions:                     CF-1.7
+    Metadata_Conventions:            Unidata Dataset Discovery v1.0
+    cdm_data_type:                   Swath
+    comment:                         Sea Surface Height measured by Altimetry
+    geospatial_lat_units:            degrees_north
+    geospatial_lon_units:            degrees_east
+    ...                              ...
+    geospatial_lat_min:              -78.272196
+    geospatial_lat_max:              78.272247
+    geospatial_lon_min:              0.000835
+    geospatial_lon_max:              359.99901
+    data_used:                       SWOT KaRIn L2_LR_SSH PGC0 (NASA/CNES). D...
+    doi:                             https://doi.org/10.24400/527896/A01-2023...</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-022c0a51-8104-4150-8b5d-07d9984a8b24' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-022c0a51-8104-4150-8b5d-07d9984a8b24' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span>num_lines</span>: 9860</li><li><span>num_pixels</span>: 69</li><li><span>num_nadir</span>: 1631</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-a1ddb6cf-0590-4ad9-b9b2-cf349b8b6e52' class='xr-section-summary-in' type='checkbox'  checked><label for='section-a1ddb6cf-0590-4ad9-b9b2-cf349b8b6e52' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>latitude</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-a4095752-691b-46f0-9a41-91816c35e85c' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-a4095752-691b-46f0-9a41-91816c35e85c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-85739f9a-2414-4538-b958-b25df7053175' class='xr-var-data-in' type='checkbox'><label for='data-85739f9a-2414-4538-b958-b25df7053175' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Latitude of measurement [-80,80]. Positive latitude is North latitude, negative latitude is South latitude.</dd><dt><span>long_name :</span></dt><dd>latitude (positive N, negative S)</dd><dt><span>standard_name :</span></dt><dd>latitude</dd><dt><span>units :</span></dt><dd>degrees_north</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>longitude</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-226a617d-0c20-4e63-a516-76a9ef988e83' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-226a617d-0c20-4e63-a516-76a9ef988e83' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-aca02119-7943-4409-bac6-f7223b64211a' class='xr-var-data-in' type='checkbox'><label for='data-aca02119-7943-4409-bac6-f7223b64211a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Longitude of measurement. East longitude relative to Greenwich meridian.</dd><dt><span>long_name :</span></dt><dd>longitude (degrees East)</dd><dt><span>standard_name :</span></dt><dd>longitude</dd><dt><span>units :</span></dt><dd>degrees_east</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-fc46c232-08ce-45a4-8429-fd569eed4774' class='xr-section-summary-in' type='checkbox'  ><label for='section-fc46c232-08ce-45a4-8429-fd569eed4774' class='xr-section-summary' >Data variables: <span>(18)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>time</span></div><div class='xr-var-dims'>(num_lines)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-4e8b31f6-822a-44a9-870e-6246a9f7b409' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4e8b31f6-822a-44a9-870e-6246a9f7b409' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7fbd82fe-062a-441a-8812-024ec6b54d16' class='xr-var-data-in' type='checkbox'><label for='data-7fbd82fe-062a-441a-8812-024ec6b54d16' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Time of measurement in seconds in the UTC time scale since 1 Jan 2000 00:00:00 UTC. [tai_utc_difference] is the difference between TAI and UTC reference time (seconds) for the first measurement of the data set. If a leap second occurs within the data set, the attribute leap_second is set to the UTC time at which the leap second occurs.</dd><dt><span>leap_second :</span></dt><dd>0000-00-00T00:00:00Z</dd><dt><span>long_name :</span></dt><dd>time in UTC</dd><dt><span>standard_name :</span></dt><dd>time</dd><dt><span>tai_utc_difference :</span></dt><dd>37.0</dd></dl></div><div class='xr-var-data'><pre>[9860 values with dtype=datetime64[ns]]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>mdt</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-0495f5dd-d8a4-498a-9dbd-2c5d8f6f39a4' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0495f5dd-d8a4-498a-9dbd-2c5d8f6f39a4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9eb5bd59-29f3-4ed8-b33d-7fefc6836ef5' class='xr-var-data-in' type='checkbox'><label for='data-9eb5bd59-29f3-4ed8-b33d-7fefc6836ef5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>The mean dynamic topography is the sea surface height above geoid; it is used to compute the absolute dynamic topography ssh=ssha+mdt</dd><dt><span>units :</span></dt><dd>m</dd><dt><span>long_name :</span></dt><dd>mean dynamic topography</dd><dt><span>standard_name :</span></dt><dd>mean_dynamic_topography_cnes_cls</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ssha</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-47d6b935-49a7-476b-a7ba-62c1ff2657fa' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-47d6b935-49a7-476b-a7ba-62c1ff2657fa' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8daa1d21-1d13-438d-8049-4ea4ed2229b9' class='xr-var-data-in' type='checkbox'><label for='data-8daa1d21-1d13-438d-8049-4ea4ed2229b9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>sea surface height anomaly</dd><dt><span>standard_name :</span></dt><dd>sea_surface_height_above_reference_ellipsoid</dd><dt><span>comment :</span></dt><dd>Height of the sea surface anomaly with all corrections applied.</dd><dt><span>units :</span></dt><dd>m</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ssha_noiseless</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-8c0c8d72-2e06-4a90-9b35-f01fa5e220ec' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-8c0c8d72-2e06-4a90-9b35-f01fa5e220ec' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1fa99d45-bea4-43af-b087-f6353d186ca8' class='xr-var-data-in' type='checkbox'><label for='data-1fa99d45-bea4-43af-b087-f6353d186ca8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Height of the sea surface anomaly with all corrections applied and denoised using Unet model and Gomez algorithm.</dd><dt><span>long_name :</span></dt><dd>sea surface height anomaly without noise</dd><dt><span>standard_name :</span></dt><dd>sea_surface_height_above_reference_ellipsoid</dd><dt><span>units :</span></dt><dd>m</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ssha_unedited</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-998796a7-e795-4821-8bac-0522a3420f6f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-998796a7-e795-4821-8bac-0522a3420f6f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2374aa38-63bd-4fcf-94fc-cdad92fd2e5e' class='xr-var-data-in' type='checkbox'><label for='data-2374aa38-63bd-4fcf-94fc-cdad92fd2e5e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Height of the sea surface anomaly with all corrections applied but without editing.</dd><dt><span>long_name :</span></dt><dd>sea surface height anomaly without editing</dd><dt><span>standard_name :</span></dt><dd>sea_surface_height_above_reference_ellipsoid</dd><dt><span>units :</span></dt><dd>m</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>quality_flag</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>uint8</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-5c581a88-731c-4d7c-80bb-4b07c4bf7351' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-5c581a88-731c-4d7c-80bb-4b07c4bf7351' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1ce4118c-2f25-4c69-81cf-2176aae4000a' class='xr-var-data-in' type='checkbox'><label for='data-1ce4118c-2f25-4c69-81cf-2176aae4000a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Deduced from L3 DUACS processing.</dd><dt><span>flag_masks :</span></dt><dd>[  0   5  10  20  30  50  70 100 101 102]</dd><dt><span>flag_meanings :</span></dt><dd>good local_outliers bad_quality_coast ice soft_outliers extremes mission_event bad_swath_extremities not_on_sea no_data</dd><dt><span>long_name :</span></dt><dd>Quality Flag</dd><dt><span>standard_name :</span></dt><dd>valid_flag_for_data</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=uint8]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ocean_tide</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-eb7d84e7-ff07-49c4-ad62-91d6b9d02e78' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-eb7d84e7-ff07-49c4-ad62-91d6b9d02e78' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-57123374-5dce-4417-bc59-eccbe2f234a6' class='xr-var-data-in' type='checkbox'><label for='data-57123374-5dce-4417-bc59-eccbe2f234a6' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Geocentric ocean tide height. Includes the total sum of the ocean tide, the corresponding load tide and equilibrium long-period ocean tide height. The ssha in this file is already corrected for the ocean_tide; the uncorrected ssha can be computed as follows: [uncorrected ssha]=[ssha from product]+[ocean_tide]; see the product user manual for details</dd><dt><span>units :</span></dt><dd>m</dd><dt><span>long_name :</span></dt><dd>geocentric ocean tide height (FES)</dd><dt><span>source :</span></dt><dd>FES2022</dd><dt><span>institution :</span></dt><dd>LEGOS/CNES</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>mss</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-046d559b-a358-444d-871e-368fdf884da7' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-046d559b-a358-444d-871e-368fdf884da7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4d80b1dc-e95c-4e5b-b69c-9d3ed14d00b3' class='xr-var-data-in' type='checkbox'><label for='data-4d80b1dc-e95c-4e5b-b69c-9d3ed14d00b3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Mean sea surface height above the reference ellipsoid. The value is referenced to the mean tide system, i.e. includes the permanent tide (zero frequency).</dd><dt><span>units :</span></dt><dd>m</dd><dt><span>long_name :</span></dt><dd>mean sea surface height (CNES/CLS)</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>dac</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-a0cc6c0f-f597-49ef-ba33-ca070aa404fe' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-a0cc6c0f-f597-49ef-ba33-ca070aa404fe' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-492e6be7-5681-497b-8a50-fd332ed39e37' class='xr-var-data-in' type='checkbox'><label for='data-492e6be7-5681-497b-8a50-fd332ed39e37' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Model estimate of the effect on sea surface topography due to high frequency air pressure and wind effects and the low-frequency height from inverted barometer effect. The ssha in this file is already corrected for the dac; the uncorrected ssha can be computed as follows: [uncorrected ssha]=[ssha from product]+[dac]; see the product user manual for details</dd><dt><span>institution :</span></dt><dd>LEGOS/CNES/CLS</dd><dt><span>long_name :</span></dt><dd>dynamic atmospheric correction</dd><dt><span>source :</span></dt><dd>MOG2D</dd><dt><span>units :</span></dt><dd>m</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float32]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>calibration</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-ae9f06be-8dd6-4e59-bc49-40b3627ce32b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-ae9f06be-8dd6-4e59-bc49-40b3627ce32b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6a4a78f5-7624-442f-a77c-473681ace0ee' class='xr-var-data-in' type='checkbox'><label for='data-6a4a78f5-7624-442f-a77c-473681ace0ee' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>satellite calibration</dd><dt><span>comment :</span></dt><dd>phase screen + phase_screen_static + phase_screen_orbit + xcal. the uncorrected ssha can be computed as follows: [uncorrected ssha]=[ssha from product] + [calibration]; see the product user manual for details</dd><dt><span>units :</span></dt><dd>m</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ugos</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-e87f6a72-36fd-45f3-a2ac-276ebbcf3639' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-e87f6a72-36fd-45f3-a2ac-276ebbcf3639' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9b042628-1a9f-459d-9f2d-86300aa4737d' class='xr-var-data-in' type='checkbox'><label for='data-9b042628-1a9f-459d-9f2d-86300aa4737d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Absolute geostrophic velocity: zonal component</dd><dt><span>standard_name :</span></dt><dd>surface_geostrophic_eastward_sea_water_velocity</dd><dt><span>units :</span></dt><dd>m/s</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>vgos</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-6432ca9d-4b52-42c7-8ada-c902a9674ed6' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-6432ca9d-4b52-42c7-8ada-c902a9674ed6' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-92a3c73f-68aa-417b-bed0-155671e5a137' class='xr-var-data-in' type='checkbox'><label for='data-92a3c73f-68aa-417b-bed0-155671e5a137' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Absolute geostrophic velocity: meridian component</dd><dt><span>standard_name :</span></dt><dd>surface_geostrophic_northward_sea_water_velocity</dd><dt><span>units :</span></dt><dd>m/s</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ugosa</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-d190c578-417b-4da6-a51f-2ee731af274b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-d190c578-417b-4da6-a51f-2ee731af274b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-01e25a65-97d4-42e8-beca-e608cb611ece' class='xr-var-data-in' type='checkbox'><label for='data-01e25a65-97d4-42e8-beca-e608cb611ece' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Geostrophic velocity anomalies: zonal component</dd><dt><span>standard_name :</span></dt><dd>surface_geostrophic_eastward_sea_water_velocity_assuming_sea_level_for_geoid</dd><dt><span>units :</span></dt><dd>m/s</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>vgosa</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-3ae4f0ce-18a0-479b-a980-a5d46a1f028f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-3ae4f0ce-18a0-479b-a980-a5d46a1f028f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0b2b0210-082f-42e4-8123-dd7af0a066fa' class='xr-var-data-in' type='checkbox'><label for='data-0b2b0210-082f-42e4-8123-dd7af0a066fa' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Geostrophic velocity anomalies: meridian component</dd><dt><span>standard_name :</span></dt><dd>surface_geostrophic_northward_sea_water_velocity_assuming_sea_level_for_geoid</dd><dt><span>units :</span></dt><dd>m/s</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>sigma0</span></div><div class='xr-var-dims'>(num_lines, num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-c2595e7d-50ac-44f5-9b2c-dfe128cbfe35' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-c2595e7d-50ac-44f5-9b2c-dfe128cbfe35' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-116def6b-df82-49dc-aa31-0b2046a16bfb' class='xr-var-data-in' type='checkbox'><label for='data-116def6b-df82-49dc-aa31-0b2046a16bfb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Normalized radar cross section (sigma0) from KaRIn in real, linear units (not decibels).  The value may be negative due to noise subtraction.  The value is corrected for instrument calibration and atmospheric attenuation. A meteorological model provides the atmospheric attenuation (sig0_cor_atmos_model).)</dd><dt><span>long_name :</span></dt><dd>normalized radar cross section (sigma0) from KaRIn)</dd><dt><span>quality_flag :</span></dt><dd>sig0_karin_2_qual</dd><dt><span>standard_name :</span></dt><dd>surface_backwards_scattering_coefficient_of_radar_wave</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>valid_max :</span></dt><dd>10000000</dd><dt><span>valid_min :</span></dt><dd>-1000</dd><dt><span>standart_name :</span></dt><dd>surface_backwards_scattering_coefficient_of_radar_wave</dd></dl></div><div class='xr-var-data'><pre>[680340 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>cross_track_distance</span></div><div class='xr-var-dims'>(num_pixels)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-bf2e441c-00fb-411f-8f28-fa7cf049e499' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-bf2e441c-00fb-411f-8f28-fa7cf049e499' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2097152d-41a0-43ca-8427-0fcca4e027e8' class='xr-var-data-in' type='checkbox'><label for='data-2097152d-41a0-43ca-8427-0fcca4e027e8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>comment :</span></dt><dd>Distance of sample from nadir. Negative values indicate the left side of the swath, and positive values indicate the right side of the swath.)</dd><dt><span>long_name :</span></dt><dd>cross track distance</dd><dt><span>units :</span></dt><dd>m</dd><dt><span>valid_max :</span></dt><dd>75000.0</dd><dt><span>valid_min :</span></dt><dd>-75000.0</dd></dl></div><div class='xr-var-data'><pre>[69 values with dtype=float64]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>i_num_line</span></div><div class='xr-var-dims'>(num_nadir)</div><div class='xr-var-dtype'>int16</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-f213cbe1-3bc7-44c2-af41-8039779a1989' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-f213cbe1-3bc7-44c2-af41-8039779a1989' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a40d890b-6626-412d-8446-d13502b6c361' class='xr-var-data-in' type='checkbox'><label for='data-a40d890b-6626-412d-8446-d13502b6c361' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>alongtrack indice of the nearest karin pixel from the nadir data</dd><dt><span>units :</span></dt><dd>count</dd><dt><span>comment :</span></dt><dd>alongtrack indice of the nearest karin pixel from the nadir data</dd></dl></div><div class='xr-var-data'><pre>[1631 values with dtype=int16]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>i_num_pixel</span></div><div class='xr-var-dims'>(num_nadir)</div><div class='xr-var-dtype'>int8</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-224d1cd8-cca9-4a4f-a9a5-59d521bf206f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-224d1cd8-cca9-4a4f-a9a5-59d521bf206f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-09eafbf7-0f95-4d68-bc05-34bcdd570678' class='xr-var-data-in' type='checkbox'><label for='data-09eafbf7-0f95-4d68-bc05-34bcdd570678' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>acrosstrack indice of the nearest karin pixel from the nadir data</dd><dt><span>units :</span></dt><dd>count</dd><dt><span>comment :</span></dt><dd>acrosstrack indice of the nearest karin pixel from the nadir data</dd></dl></div><div class='xr-var-data'><pre>[1631 values with dtype=int8]</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-0e7cb3ec-b691-4a79-8637-85cf552a2e59' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-0e7cb3ec-b691-4a79-8637-85cf552a2e59' class='xr-section-summary'  title='Expand/collapse section'>Indexes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'></ul></div></li><li class='xr-section-item'><input id='section-f73a6145-58ca-4f56-9190-d4f28ee0995f' class='xr-section-summary-in' type='checkbox'  ><label for='section-f73a6145-58ca-4f56-9190-d4f28ee0995f' class='xr-section-summary' >Attributes: <span>(42)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.7</dd><dt><span>Metadata_Conventions :</span></dt><dd>Unidata Dataset Discovery v1.0</dd><dt><span>cdm_data_type :</span></dt><dd>Swath</dd><dt><span>comment :</span></dt><dd>Sea Surface Height measured by Altimetry</dd><dt><span>geospatial_lat_units :</span></dt><dd>degrees_north</dd><dt><span>geospatial_lon_units :</span></dt><dd>degrees_east</dd><dt><span>geospatial_vertical_max :</span></dt><dd>0,</dd><dt><span>geospatial_vertical_min :</span></dt><dd>0,</dd><dt><span>geospatial_vertical_positive :</span></dt><dd>down</dd><dt><span>geospatial_vertical_resolution :</span></dt><dd>point</dd><dt><span>geospatial_vertical_units :</span></dt><dd>m</dd><dt><span>keywords :</span></dt><dd>Oceans &gt; Ocean Topography &gt; Sea Surface Height</dd><dt><span>keywords_vocabulary :</span></dt><dd>NetCDF COARDS Climate and Forecast Standard Names</dd><dt><span>processing_level :</span></dt><dd>L3</dd><dt><span>product_version :</span></dt><dd>1.0</dd><dt><span>project :</span></dt><dd>SSALTO/DUACS</dd><dt><span>source :</span></dt><dd>Altimetry measurements</dd><dt><span>ssalto_duacs_comment :</span></dt><dd>The reference mission used for the altimeter inter-calibration processing is Sentinel-6A</dd><dt><span>standard_name_vocabulary :</span></dt><dd>NetCDF Climate and Forecast (CF) Metadata Convention Standard Name Table v37</dd><dt><span>time_coverage_resolution :</span></dt><dd>P1S</dd><dt><span>title :</span></dt><dd>NRT SWOT KaRIn &amp; nadir Global Ocean swath SSALTO/DUACS Sea Surface Height L3 product</dd><dt><span>platform :</span></dt><dd>Swot</dd><dt><span>institution :</span></dt><dd>CLS, CNES</dd><dt><span>reference_altimeter :</span></dt><dd>S6</dd><dt><span>contact :</span></dt><dd>aviso@altimetry.fr</dd><dt><span>creator_email :</span></dt><dd>aviso@altimetry.fr</dd><dt><span>creator_name :</span></dt><dd>DUACS - Data Unification and Altimeter Combination System</dd><dt><span>creator_url :</span></dt><dd>https://aviso.altimetry.fr</dd><dt><span>license :</span></dt><dd>https://www.aviso.altimetry.fr/fileadmin/documents/data/License_Aviso.pdf</dd><dt><span>references :</span></dt><dd>https://aviso.altimetry.fr</dd><dt><span>history :</span></dt><dd>2024-04-10T10:40:39Z : Created by DUACS NRT</dd><dt><span>date_created :</span></dt><dd>2024-04-10T10:40:39Z</dd><dt><span>date_issued :</span></dt><dd>2024-04-10T10:40:39Z</dd><dt><span>date_modified :</span></dt><dd>2024-04-10T10:40:39Z</dd><dt><span>time_coverage_begin :</span></dt><dd>2023-04-12T00:57:30Z</dd><dt><span>time_coverage_end :</span></dt><dd>2023-04-12T01:48:36Z</dd><dt><span>geospatial_lat_min :</span></dt><dd>-78.272196</dd><dt><span>geospatial_lat_max :</span></dt><dd>78.272247</dd><dt><span>geospatial_lon_min :</span></dt><dd>0.000835</dd><dt><span>geospatial_lon_max :</span></dt><dd>359.99901</dd><dt><span>data_used :</span></dt><dd>SWOT KaRIn L2_LR_SSH PGC0 (NASA/CNES). DOI associated: https://doi.org/10.24400/527896/a01-2023.015</dd><dt><span>doi :</span></dt><dd>https://doi.org/10.24400/527896/A01-2023.018</dd></dl></div></li></ul></div></div></div>
+</div>
+</section>
+<section id="Plot-the-SSH-anomaly-data-with-and-without-noise-removal">
+<h2>Plot the SSH anomaly data with and without noise removal<a class="headerlink" href="#Plot-the-SSH-anomaly-data-with-and-without-noise-removal" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">localbox</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="n">localbox_subset</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">49</span><span class="p">,</span> <span class="o">-</span><span class="mi">41</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+                               <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">localbox</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">localbox</span><span class="p">)</span>
+<span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="s2">&quot;Spectral_r&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vmin&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;vmax&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s2">&quot;cbar_kwargs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">},}</span>
+
+<span class="c1"># Plot SSHA with and without noise removal</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">ssha</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">ssha_noiseless</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+<span class="n">gl1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">gl1</span><span class="o">.</span><span class="n">top_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl1</span><span class="o">.</span><span class="n">right_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl1</span><span class="o">.</span><span class="n">bottom_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+<span class="n">gl2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">gl2</span><span class="o">.</span><span class="n">top_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl2</span><span class="o">.</span><span class="n">right_labels</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/swot_ex_7_0.png" src="_images/swot_ex_7_0.png" />
+</div>
+</div>
+</section>
+<section id="Plot-the-zonal-geostrophic-velocity">
+<h2>Plot the zonal geostrophic velocity<a class="headerlink" href="#Plot-the-zonal-geostrophic-velocity" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+                               <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()})</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">localbox</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">localbox_subset</span><span class="p">)</span>
+<span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vmin&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;vmax&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;cbar_kwargs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">},}</span>
+
+<span class="c1"># Plot geostrophic zonal velocity in large and small domains</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+<span class="n">gl1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">gl1</span><span class="o">.</span><span class="n">top_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl1</span><span class="o">.</span><span class="n">right_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+<span class="n">gl2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">gl2</span><span class="o">.</span><span class="n">top_labels</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl2</span><span class="o">.</span><span class="n">right_labels</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/swot_ex_9_0.png" src="_images/swot_ex_9_0.png" />
+</div>
+</div>
+</section>
+<section id="Calculate-the-velocity-based-structure-functions">
+<h2>Calculate the velocity-based structure functions<a class="headerlink" href="#Calculate-the-velocity-based-structure-functions" title="Link to this heading">¶</a></h2>
+<p>We’ll calculate multiple types of structure functions here, including traditional 2nd (<code class="docutils literal notranslate"><span class="pre">SF_LL</span></code>) and 3rd (<code class="docutils literal notranslate"><span class="pre">SF_LLL</span></code>) order and advective structure functions (<code class="docutils literal notranslate"><span class="pre">SF_advection_velocity</span></code>). We calculate the structure functions in two directions, across the swath (<code class="docutils literal notranslate"><span class="pre">_x</span></code>) and along the swath (<code class="docutils literal notranslate"><span class="pre">_y</span></code>). FluidSF also calculates the separation distances in both directions (<code class="docutils literal notranslate"><span class="pre">x-diffs</span></code> and <code class="docutils literal notranslate"><span class="pre">y-diffs</span></code>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">fluidsf</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="c1"># Ignore warnings for the purpose of this tutorial</span>
+
+<span class="c1"># Subset the data to a smaller region</span>
+<span class="n">ds_cut</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&gt;</span> <span class="n">localbox_subset</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">latitude</span> <span class="o">&lt;</span> <span class="n">localbox_subset</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">longitude</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="o">+</span><span class="n">localbox_subset</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">longitude</span> <span class="o">&gt;</span> <span class="mi">360</span><span class="o">+</span><span class="n">localbox_subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<span class="c1"># Define the grid spacing in meters</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="c1"># Define x and y positions based on number of pixels and lines and dx/dy</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">num_pixels</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">num_lines</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Compute the structure functions</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">vgos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                                          <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">traditional_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">],</span>
+                                          <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Check which keys have data in the <code class="docutils literal notranslate"><span class="pre">sf</span></code> dictionary. Other keys are available but have been initialized to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">sf</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+SF_advection_velocity_x
+SF_advection_velocity_y
+SF_LL_x
+SF_LL_y
+SF_LLL_x
+SF_LLL_y
+x-diffs
+y-diffs
+</pre></div></div>
+</div>
+</section>
+<section id="Estimate-cascade-rates-with-the-structure-functions">
+<h2>Estimate cascade rates with the structure functions<a class="headerlink" href="#Estimate-cascade-rates-with-the-structure-functions" title="Link to this heading">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_LLL_x_epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_LLL_x&quot;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_LLL_y_epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_LLL_y&quot;</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_x_epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_x&quot;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_y_epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_y&quot;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Plot-the-cascade-rates">
+<h2>Plot the cascade rates<a class="headerlink" href="#Plot-the-cascade-rates" title="Link to this heading">¶</a></h2>
+<p>We computed two types of structure functions (advective and traditional 3rd order) in the across-track (<code class="docutils literal notranslate"><span class="pre">x</span></code>) and along-track (<code class="docutils literal notranslate"><span class="pre">y</span></code>) directions, so we will plot 4 different estimates of the cascade rate as a function of separation distance (in km).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot the cascade rates derived from traditional third order structure functions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_LLL_x_epsilon&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LLL across-track&quot;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_LLL_y_epsilon&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LLL along-track&quot;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the cascade rates derived from advective structure functions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_x_epsilon&#39;</span><span class="p">],</span>
+             <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ADV across-track&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_y_epsilon&#39;</span><span class="p">],</span>
+             <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ADV along-track&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">1e0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">5e-7</span><span class="p">,</span> <span class="mf">5e-7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance [km]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Inverse energy cascade rate [m$^2$s$^{-3}$]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/swot_ex_17_0.png" src="_images/swot_ex_17_0.png" />
+</div>
+</div>
+</section>
+<section id="Plot-the-2nd-order-traditional-structure-functions">
+<h2>Plot the 2nd order traditional structure functions<a class="headerlink" href="#Plot-the-2nd-order-traditional-structure-functions" title="Link to this heading">¶</a></h2>
+<p>These structure functions are related to the energy spectrum and are therefore also useful for analysis.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_LL_x&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Across-track&quot;</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_LL_y&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Along-track&quot;</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">1e0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance [km]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;LL structure function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/swot_ex_19_0.png" src="_images/swot_ex_19_0.png" />
+</div>
+</div>
+</section>
+<section id="Binned-structure-functions">
+<h2>Binned structure functions<a class="headerlink" href="#Binned-structure-functions" title="Link to this heading">¶</a></h2>
+<p>You can also provide an argument to <code class="docutils literal notranslate"><span class="pre">fluidsf.generate_structure_functions()</span></code> that bins the data. This may be useful when you have more data in one direction.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_binned</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                                                 <span class="n">v</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">vgos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                                                 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+                                                 <span class="n">traditional_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">],</span>
+                                                 <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span>
+                                                 <span class="n">nbins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_binned</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf_binned</span><span class="p">[</span><span class="s1">&#39;SF_LL_x&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Across-track&quot;</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_binned</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">]</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">sf_binned</span><span class="p">[</span><span class="s1">&#39;SF_LL_y&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Along-track&quot;</span><span class="p">,</span>
+           <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">1e0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance [km]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;LL structure function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/swot_ex_22_0.png" src="_images/swot_ex_22_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="terms.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Key terms and definitions</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="ex2.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Structure functions for multiple snapshots or observations with bootstrapping</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Cassidy Wagner
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Using SWOT satellite altimetry</a><ul>
+<li><a class="reference internal" href="#Load-the-SWOT-NetCDF-file-and-visualize-the-data">Load the SWOT NetCDF file and visualize the data</a></li>
+<li><a class="reference internal" href="#Plot-the-SSH-anomaly-data-with-and-without-noise-removal">Plot the SSH anomaly data with and without noise removal</a></li>
+<li><a class="reference internal" href="#Plot-the-zonal-geostrophic-velocity">Plot the zonal geostrophic velocity</a></li>
+<li><a class="reference internal" href="#Calculate-the-velocity-based-structure-functions">Calculate the velocity-based structure functions</a></li>
+<li><a class="reference internal" href="#Estimate-cascade-rates-with-the-structure-functions">Estimate cascade rates with the structure functions</a></li>
+<li><a class="reference internal" href="#Plot-the-cascade-rates">Plot the cascade rates</a></li>
+<li><a class="reference internal" href="#Plot-the-2nd-order-traditional-structure-functions">Plot the 2nd order traditional structure functions</a></li>
+<li><a class="reference internal" href="#Binned-structure-functions">Binned structure functions</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

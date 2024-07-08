@@ -7,3 +7,4 @@ Examples
 
    ex1
    ex2
+   swot_ex

@@ -5,7 +5,10 @@ FluidSF
    :hidden:
 
    qs
+   sfs
    examples
+   terms
+   supported_data
    fluidsf
 
 .. _Overview:

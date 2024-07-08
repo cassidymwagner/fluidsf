@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Supported data" href="supported_data.html" /><link rel="prev" title="Using SWOT satellite altimetry" href="swot_ex.html" />
 
     <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>Getting started - FluidSF</title>
+        <title>Key terms and definitions - FluidSF</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -191,7 +191,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -211,13 +211,17 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
+  <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Key terms and definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported_data.html">Supported data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fluidsf.html">API Documentation</a></li>
 </ul>
 
@@ -239,7 +243,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/quickstart.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/terms.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -253,57 +257,23 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="getting-started">
-<h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
-<p>Once FluidSF is installed, you can load the module into Python and run some basic calculations with random data.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fluidsf</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
+          <section id="key-terms-and-definitions">
+<h1>Key terms and definitions<a class="headerlink" href="#key-terms-and-definitions" title="Link to this heading">¶</a></h1>
+<p>When you generate structure functions with FluidSF, you are returned a dictionary with the keys provided below. Each key corresponds to a structure function that can be calculated from the data, except for the key <code class="code docutils literal notranslate"><span class="pre">dir-diffs</span></code>, which provides the separation distances in each direction. To learn more about the structure functions, see <a class="reference external" href="sfs.html">What are structure functions?</a></p>
+<dl class="simple glossary">
+<dt id="term-SF_advection_velocity_dir-Advective-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-."><code class="code docutils literal notranslate"><span class="pre">SF_advection_velocity_dir</span></code>: Advective velocity structure function in the direction of the separation vector <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>.<a class="headerlink" href="#term-SF_advection_velocity_dir-Advective-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-." title="Link to this term">¶</a></dt><dt id="term-SF_advection_scalar_dir-Advective-scalar-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-."><code class="code docutils literal notranslate"><span class="pre">SF_advection_scalar_dir</span></code>: Advective scalar structure function in the direction of the separation vector <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>.<a class="headerlink" href="#term-SF_advection_scalar_dir-Advective-scalar-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-." title="Link to this term">¶</a></dt><dt id="term-SF_LL_dir-Longitudinal-second-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-."><code class="code docutils literal notranslate"><span class="pre">SF_LL_dir</span></code>: Longitudinal second order velocity structure function in the direction of the separation vector <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>.<a class="headerlink" href="#term-SF_LL_dir-Longitudinal-second-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-." title="Link to this term">¶</a></dt><dt id="term-SF_LLL_dir-Longitudinal-third-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-."><code class="code docutils literal notranslate"><span class="pre">SF_LLL_dir</span></code>: Longitudinal third order velocity structure function in the direction of the separation vector <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>.<a class="headerlink" href="#term-SF_LLL_dir-Longitudinal-third-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-." title="Link to this term">¶</a></dt><dt id="term-SF_LTT_dir-Longitudinal-transverse-transverse-third-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-."><code class="code docutils literal notranslate"><span class="pre">SF_LTT_dir</span></code>: Longitudinal-transverse-transverse third order velocity structure function in the direction of the separation vector <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>.<a class="headerlink" href="#term-SF_LTT_dir-Longitudinal-transverse-transverse-third-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-." title="Link to this term">¶</a></dt><dt id="term-SF_LSS_dir-Longitudinal-scalar-scalar-third-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-."><code class="code docutils literal notranslate"><span class="pre">SF_LSS_dir</span></code>: Longitudinal-scalar-scalar third order velocity structure function in the direction of the separation vector <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>.<a class="headerlink" href="#term-SF_LSS_dir-Longitudinal-scalar-scalar-third-order-velocity-structure-function-in-the-direction-of-the-separation-vector-dir-x-y-z-." title="Link to this term">¶</a></dt><dt id="term-dir-diffs-Separation-distances-in-each-direction-dir-x-y-z-.-These-are-calculated-as-the-Euclidean-distance-between-pairs-of-data-points-in-the-flow-field.-Provided-in-the-same-units-as-the-input-data."><code class="code docutils literal notranslate"><span class="pre">dir-diffs</span></code>: Separation distances in each direction <code class="code docutils literal notranslate"><span class="pre">(dir</span> <span class="pre">=</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z)</span></code>. These are calculated as the Euclidean distance between pairs of data points in the flow field. Provided in the same units as the input data.<a class="headerlink" href="#term-dir-diffs-Separation-distances-in-each-direction-dir-x-y-z-.-These-are-calculated-as-the-Euclidean-distance-between-pairs-of-data-points-in-the-flow-field.-Provided-in-the-same-units-as-the-input-data." title="Link to this term">¶</a></dt><dd></dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All non-advective structure functions have naming conventions with the subscripts <cite>L</cite>, and <cite>T</cite> to denote the longitudinal and transverse velocities. The longitudinal direction is typically aligned with the flow direction, while the transverse direction is perpendicular to the flow direction.</p>
+<p>For <code class="code docutils literal notranslate"><span class="pre">SF_LL_x</span></code>, <code class="code docutils literal notranslate"><span class="pre">SF_LLL_x</span></code>, <code class="code docutils literal notranslate"><span class="pre">SF_LTT_x</span></code>, and <code class="code docutils literal notranslate"><span class="pre">SF_LSS_x</span></code>, <cite>L</cite> denotes the longitudinal velocity differences in the x-direction <span class="math notranslate nohighlight">\(v_x(\mathbf{x}) - v_x(\mathbf{x}+\mathbf{r})\)</span> and <cite>T</cite> denotes the transverse velocity differences in the x-direction <span class="math notranslate nohighlight">\(v_y(\mathbf{x}) - v_y(\mathbf{x}+\mathbf{r})\)</span>. <cite>S</cite> denotes the scalar differences <span class="math notranslate nohighlight">\(s(\mathbf{x}) - s(\mathbf{x}+\mathbf{r})\)</span>.</p>
 </div>
-<section id="create-a-random-2d-velocity-field">
-<h2>Create a random 2D velocity field<a class="headerlink" href="#create-a-random-2d-velocity-field" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="generate-the-advective-velocity-structure-function">
-<h2>Generate the advective velocity structure function<a class="headerlink" href="#generate-the-advective-velocity-structure-function" title="Link to this heading">¶</a></h2>
-<p>We can generate the advective structure function using the function <cite>generate_structure_functions</cite>. The function returns a dictionary with the all supported structure functions and separation distances in each direction. By default the advective velocity structure functions are calculated and the remaining structure functions are set to <cite>None</cite>. We set the boundary condition to <cite>None</cite> because our random data is non-periodic. If we had periodic data we could set the boundary condition based on the direction of periodicity (i.e. <cite>boundary=”periodic-x”</cite> or <cite>boundary=”periodic-y”</cite> for 2D data).</p>
-<p>The keys of the dictionary <cite>sf</cite> are</p>
-<ul class="simple">
-<li><p><cite>SF_advection_velocity_dir</cite>: Advective velocity structure function in the direction of the separation vector (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-<li><p><cite>SF_advection_scalar_dir</cite>: Advective scalar structure function in the direction of the separation vector (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-<li><p><cite>SF_LL_dir</cite>: Longitudinal second order velocity structure function in the direction of the separation vector (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-<li><p><cite>SF_LLL_dir</cite>: Longitudinal third order velocity structure function in the direction of the separation vector (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-<li><p><cite>SF_LTT_dir</cite>: Longitudinal-transverse-transverse third order velocity structure function in the direction of the separation vector (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-<li><p><cite>SF_LSS_dir</cite>: Longitudinal-scalar-scalar third order velocity structure function in the direction of the separation vector (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-<li><p><cite>dir-diffs</cite>: Separation distances in each direction (<cite>dir</cite> = <cite>x</cite>, <cite>y</cite>, <cite>z</cite>).</p></li>
-</ul>
-</section>
-<section id="plot-the-advective-velocity-structure-function">
-<h2>Plot the advective velocity structure function<a class="headerlink" href="#plot-the-advective-velocity-structure-function" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_x&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Advective velocity SF in x&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_y&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Advective velocity SF in y&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
 </section>
 
         </article>
@@ -311,8 +281,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="supported_data.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Supported data</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="swot_ex.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Using SWOT satellite altimetry</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -331,29 +319,8 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Getting started</a><ul>
-<li><a class="reference internal" href="#create-a-random-2d-velocity-field">Create a random 2D velocity field</a></li>
-<li><a class="reference internal" href="#generate-the-advective-velocity-structure-function">Generate the advective velocity structure function</a></li>
-<li><a class="reference internal" href="#plot-the-advective-velocity-structure-function">Plot the advective velocity structure function</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
@@ -363,5 +330,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=4e2eecee"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
