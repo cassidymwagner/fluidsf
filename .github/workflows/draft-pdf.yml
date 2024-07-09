@@ -1,13 +1,11 @@
 on:
   push:
     branches:
-      - main
       - paper
     tags:
       - "v*"
   pull_request:
     branches:
-      - main
       - paper
 jobs:
   paper:

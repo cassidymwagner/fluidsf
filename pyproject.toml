@@ -3,10 +3,10 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "oceans_sf"
+name = "fluidsf"
 dynamic = ["version"]
-authors = [{ name = "Cassidy Wagner", email = "wagncass@oregonstate.edu" }]
-description = "Calculate structure functions from oceanographic data"
+authors = [{ name = "Cassidy Wagner", email = "cassidymwagner@gmail.com" }]
+description = "Calculate structure functions from fluid data"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
@@ -20,8 +20,8 @@ dependencies = ["numpy>=1,<2", "pandas>=1.5.3", "geopy>=2"]
 test = ["pytest>=7,<8"]
 
 [project.urls]
-"Homepage" = "https://github.com/cassidymwagner/oceans_sf"
-"Bug Tracker" = "https://github.com/cassidymwagner/oceans_sf/issues"
+"Homepage" = "https://github.com/cassidymwagner/FluidSF"
+"Bug Tracker" = "https://github.com/cassidymwagner/FluidSF/issues"
 
 # tools
 [tool.black]
@@ -61,4 +61,4 @@ extend-ignore = [
 ]
 
 [tool.hatch]
-version.path = "src/oceans_sf/_version.py"
+version.path = "fluidsf/_version.py"
