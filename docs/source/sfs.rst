@@ -58,7 +58,7 @@ These structure functions have a different relationship to turbulent fluxes than
 .. _Derived relationships between various structure functions and turbulent properties:
 
 Derived relationships between various structure functions and turbulent properties
-------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 
 As mentioned earlier, fundamental fluid dynamics equations have been used to estimate a relationship between structure functions and turbulent properties. The following table shows the relationships between various velocity-based structure functions and turbulent properties, but the table is not exhaustive. For more information, see the references below.
 
