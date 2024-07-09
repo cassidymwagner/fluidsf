@@ -60,5 +60,8 @@ extend-ignore = [
 
 ]
 
-[tool.hatch]
-version.path = "fluidsf/_version.py"
+# [tool.hatch.version]
+# path = "fluidsf/__version.py"
+
+[tool.setuptools.dynamic]
+version = {attr = "fluidsf.__version__"}

@@ -91,3 +91,7 @@ venv.bak/
 # Linting
 .mypy_cache
 .ruff_cache
+
+# Big files
+*.jld2
+*.nc
