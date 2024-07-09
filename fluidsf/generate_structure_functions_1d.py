@@ -123,8 +123,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
 
         SF_dicts = calculate_structure_function_1d(
             u,
-            v,
             sep_id,
+            v,
             scalar,
             traditional_type,
             boundary,

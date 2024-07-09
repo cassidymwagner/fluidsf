@@ -1,18 +1,18 @@
 import numpy as np
 import pytest
 
-from oceans_sf.generate_structure_functions_1d import generate_structure_functions_1d
+from fluidsf.generate_structure_functions_1d import generate_structure_functions_1d
 
 
 @pytest.mark.parametrize(
-    "u, v, x, y, scalar, traditional_type, dx, boundary, even, grid_type, "
+    "u, x, v, y, scalar, traditional_type, dx, boundary, even, grid_type, "
     "nbins, expected_dict",
     [
         # Test 1: all traditional structure functions for a uniform even grid
         (
             np.array([1, 2, 3, 4]),  # u
-            np.array([2, 4, 6, 8]),  # v
             np.array([1, 2, 3, 4]),  # x
+            np.array([2, 4, 6, 8]),  # v
             None,  # y
             np.array([3, 6, 9, 12]),  # scalar
             ["LL", "LLL", "LTT", "LSS"],  # traditional_type
@@ -32,8 +32,8 @@ from oceans_sf.generate_structure_functions_1d import generate_structure_functio
         # Test 2: all traditional structure functions for a uniform uneven grid
         (
             np.array([1, 2, 3, 4]),  # u
-            np.array([2, 4, 6, 8]),  # v
             np.array([1, 2, 3, 4]),  # x
+            np.array([2, 4, 6, 8]),  # v
             None,  # y
             np.array([3, 6, 9, 12]),  # scalar
             ["LL", "LLL", "LTT", "LSS"],  # traditional_type
@@ -54,8 +54,8 @@ from oceans_sf.generate_structure_functions_1d import generate_structure_functio
 )
 def test_generate_structure_functions_1d_parameterized(
     u,
-    v,
     x,
+    v,
     y,
     scalar,
     traditional_type,
@@ -67,7 +67,7 @@ def test_generate_structure_functions_1d_parameterized(
     expected_dict,
 ):
     output_dict = generate_structure_functions_1d(
-        u, v, x, y, scalar, traditional_type, dx, boundary, even, grid_type, nbins
+        u, x, v, y, scalar, traditional_type, dx, boundary, even, grid_type, nbins
     )
 
     for key, value in expected_dict.items():
