@@ -22,13 +22,12 @@ sys.path.insert(0, os.path.abspath("../.."))
 # for mod_name in MOCK_MODULES:
 #     sys.modules[mod_name] = mock.Mock()
 
-import fluidsf
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "FluidSF"
-copyright = "2024, Cassidy Wagner"
+copyright = "2024, Cassidy Wagner"  # noqa: A001
 author = "Cassidy Wagner"
 release = "0.2.0"
 html_title = "FluidSF"
