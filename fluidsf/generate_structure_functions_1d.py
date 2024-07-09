@@ -8,8 +8,8 @@ from .shift_array1d import shift_array1d
 
 def generate_structure_functions_1d(  # noqa: C901, D417
     u,
-    v,
     x,
+    v=None,
     y=None,
     scalar=None,
     traditional_type=["LLL"],  # noqa: B006
@@ -29,11 +29,11 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     ----------
         u: ndarray
             1D array of u velocity components.
-        v: ndarray
-            1D array of v velocity components.
         x: ndarray
             1D array of coordinates. If you have lat-lon data, set x to 1D array of
             latitudes.
+        v: ndarray
+            1D array of v velocity components. Defaults to None.
         y: ndarray, optional
             1D array of coordinates orthogonal to x. Defaults to None. If you have
             lat-lon data, set y to 1D array of longitudes.
@@ -78,6 +78,10 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     if scalar is None and "LSS" in traditional_type:
         raise ValueError(
             "If you include 'LSS' in traditional_type, you must provide a scalar array."
+        )
+    if v is None and "LTT" in traditional_type:
+        raise ValueError(
+            "If you include 'LTT' in traditional_type, you must provide a v array."
         )
 
     # Initialize variables as NoneType

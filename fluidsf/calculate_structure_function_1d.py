@@ -5,8 +5,8 @@ from .shift_array1d import shift_array1d
 
 def calculate_structure_function_1d(  # noqa: D417
     u,
-    v,
     sep_id,
+    v=None,
     scalar=None,
     traditional_type=["LLL"],  # noqa: B006
     boundary="Periodic",
@@ -21,10 +21,10 @@ def calculate_structure_function_1d(  # noqa: D417
     ----------
         u: ndarray
             Array of u velocities.
-        v: ndarray
-            Array of v velocities.
         sep_id: ndarray
             Array of separation distances.
+        v: ndarray
+            Array of v velocities. Defaults to None.
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
         traditional_type: list, optional
@@ -62,7 +62,7 @@ def calculate_structure_function_1d(  # noqa: D417
         SF_dict["SF_LL"] = np.nanmean((inputs["u_shift"] - u) ** 2)
     if "LLL" in traditional_type:
         SF_dict["SF_LLL"] = np.nanmean((inputs["u_shift"] - u) ** 3)
-    if "LTT" in traditional_type:
+    if "LTT" in traditional_type and v is not None:
         SF_dict["SF_LTT"] = np.nanmean(
             (inputs["u_shift"] - u) * (inputs["v_shift"] - v) ** 2
         )
