@@ -15,9 +15,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     traditional_type=["LLL"],  # noqa: B006
     dx=None,
     boundary="Periodic",
-    even="True",
     grid_type="uniform",
-    nbins=10,
+    nbins=None,
 ):
     """
     Full method for generating traditional structure functions for 1D data.
@@ -48,12 +47,11 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         boundary: str, optional
             Boundary condition of the data. Defaults to "Periodic". Set to None if no
             boundary conditions.
-        even: bool, optional
-            Flag indicating if the grid is evenly spaced. Defaults to True.
         grid_type:str, optional
             Type of grid, either "uniform" or "latlon". Defaults to "uniform".
         nbins: int, optional
-            Number of bins for binning the data. Defaults to 10.
+            Number of bins for binning the data. Defaults to None, i.e. does not bin
+            data.
 
     Returns
     -------
@@ -149,8 +147,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
                 x[sep_id], None, xroll[sep_id], None, grid_type
             )
 
-    # Bin the data if the grid is uneven
-    if even is False:
+    # Bin the data if requested
+    if nbins is not None:
         if "LL" in traditional_type:
             xd_bin, SF_LL = bin_data(xd, SF_LL, nbins)
         if "LLL" in traditional_type:
