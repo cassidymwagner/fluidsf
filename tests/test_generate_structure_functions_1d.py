@@ -37,7 +37,7 @@ from fluidsf.generate_structure_functions_1d import generate_structure_functions
             None,  # y
             np.array([3, 6, 9, 12]),  # scalar
             ["LL", "LLL", "LTT", "LSS"],  # traditional_type
-            None, # dx
+            None,  # dx
             None,  # boundary
             False,  # even
             "uniform",  # grid_type
@@ -49,7 +49,7 @@ from fluidsf.generate_structure_functions_1d import generate_structure_functions
                 "SF_LSS": np.array([0, -9, -72]),
                 "x-diffs": np.array([0, 1, 2]),
             },
-        )
+        ),
     ],
 )
 def test_generate_structure_functions_1d_parameterized(
