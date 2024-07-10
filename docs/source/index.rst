@@ -4,8 +4,8 @@ FluidSF
 .. toctree::
    :hidden:
 
-   qs
    sfs
+   qs
    examples
    terms
    supported_data
