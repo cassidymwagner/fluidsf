@@ -221,6 +221,114 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
                 "z-diffs": np.array([0, 1]),
             },  # expected_dict
         ),
+        # Test 8: all same values with periodic-x boundary
+        (
+            np.ones((3, 3, 3)),  # u
+            np.ones((3, 3, 3)),  # v
+            np.ones((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            False,  # skip_velocity_sf
+            np.ones((3, 3, 3)),  # scalar
+            ["LL", "LLL", "LSS", "LTT"],  # traditional_order
+            "periodic-x",  # boundary
+            {
+                "SF_advection_velocity_x": np.zeros(2),
+                "SF_advection_velocity_y": np.zeros(2),
+                "SF_advection_velocity_z": np.zeros(2),
+                "SF_advection_scalar_x": np.zeros(2),
+                "SF_advection_scalar_y": np.zeros(2),
+                "SF_advection_scalar_z": np.zeros(2),
+                "SF_LL_x": np.zeros(2),
+                "SF_LL_y": np.zeros(2),
+                "SF_LL_z": np.zeros(2),
+                "SF_LLL_x": np.zeros(2),
+                "SF_LLL_y": np.zeros(2),
+                "SF_LLL_z": np.zeros(2),
+                "SF_LSS_x": np.zeros(2),
+                "SF_LSS_y": np.zeros(2),
+                "SF_LSS_z": np.zeros(2),
+                "SF_LTT_x": np.zeros(2),
+                "SF_LTT_y": np.zeros(2),
+                "SF_LTT_z": np.zeros(2),
+                "x-diffs": np.zeros(2),
+                "y-diffs": np.linspace(0, 1, 2),
+                "z-diffs": np.linspace(0, 1, 2),
+            },  # expected_dict
+        ),
+        # Test 9: all same values with periodic-y boundary
+        (
+            np.ones((3, 3, 3)),  # u
+            np.ones((3, 3, 3)),  # v
+            np.ones((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            False,  # skip_velocity_sf
+            np.ones((3, 3, 3)),  # scalar
+            ["LL", "LLL", "LSS", "LTT"],  # traditional_order
+            "periodic-y",  # boundary
+            {
+                "SF_advection_velocity_x": np.zeros(2),
+                "SF_advection_velocity_y": np.zeros(2),
+                "SF_advection_velocity_z": np.zeros(2),
+                "SF_advection_scalar_x": np.zeros(2),
+                "SF_advection_scalar_y": np.zeros(2),
+                "SF_advection_scalar_z": np.zeros(2),
+                "SF_LL_x": np.zeros(2),
+                "SF_LL_y": np.zeros(2),
+                "SF_LL_z": np.zeros(2),
+                "SF_LLL_x": np.zeros(2),
+                "SF_LLL_y": np.zeros(2),
+                "SF_LLL_z": np.zeros(2),
+                "SF_LSS_x": np.zeros(2),
+                "SF_LSS_y": np.zeros(2),
+                "SF_LSS_z": np.zeros(2),
+                "SF_LTT_x": np.zeros(2),
+                "SF_LTT_y": np.zeros(2),
+                "SF_LTT_z": np.zeros(2),
+                "x-diffs": np.linspace(0, 1, 2),
+                "y-diffs": np.zeros(2),
+                "z-diffs": np.linspace(0, 1, 2),
+            },  # expected_dict
+        ),
+        # Test 10: all same values with periodic-z boundary
+        (
+            np.ones((3, 3, 3)),  # u
+            np.ones((3, 3, 3)),  # v
+            np.ones((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            False,  # skip_velocity_sf
+            np.ones((3, 3, 3)),  # scalar
+            ["LL", "LLL", "LSS", "LTT"],  # traditional_order
+            "periodic-z",  # boundary
+            {
+                "SF_advection_velocity_x": np.zeros(2),
+                "SF_advection_velocity_y": np.zeros(2),
+                "SF_advection_velocity_z": np.zeros(2),
+                "SF_advection_scalar_x": np.zeros(2),
+                "SF_advection_scalar_y": np.zeros(2),
+                "SF_advection_scalar_z": np.zeros(2),
+                "SF_LL_x": np.zeros(2),
+                "SF_LL_y": np.zeros(2),
+                "SF_LL_z": np.zeros(2),
+                "SF_LLL_x": np.zeros(2),
+                "SF_LLL_y": np.zeros(2),
+                "SF_LLL_z": np.zeros(2),
+                "SF_LSS_x": np.zeros(2),
+                "SF_LSS_y": np.zeros(2),
+                "SF_LSS_z": np.zeros(2),
+                "SF_LTT_x": np.zeros(2),
+                "SF_LTT_y": np.zeros(2),
+                "SF_LTT_z": np.zeros(2),
+                "x-diffs": np.linspace(0, 1, 2),
+                "y-diffs": np.linspace(0, 1, 2),
+                "z-diffs": np.zeros(2),
+            },  # expected_dict
+        ),
     ],
 )
 def test_generate_structure_functions_3d_parameterized(
