@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 from geopy.distance import great_circle
 
-from oceans_sf.calculate_separation_distances import calculate_separation_distances
+from fluidsf.calculate_separation_distances import calculate_separation_distances
 
 
 @pytest.mark.parametrize(
