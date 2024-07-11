@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fluidsf"
 dynamic = ["version"]
-authors = [{ name = "Cassidy Wagner", email = "wagncass@oregonstate.edu" }]
+authors = [{ name = "Cassidy Wagner", email = "cassidymwagner@gmail.com" }]
 description = "Calculate structure functions from fluid data"
 readme = "README.md"
 requires-python = ">=3.7"

@@ -8,7 +8,7 @@
 FluidSF is a Python package for calculating structure functions from fluid data. These structure functions can be used to estimate turbulence cascade rates without the constraints of spectral methods. This package serves as a useful tool for analyzing turbulent dynamics in the ocean, atmosphere, and beyond.
 
 <p align="center">
-<img src="docs/2d_example.png" alt="Plot of multiple methods to estimate energy flux for 2D fluid simulation" width="400"/>
+<img src="https://github.com/cassidymwagner/fluidsf/blob/main/docs/2d_example.png" alt="Plot of multiple methods to estimate energy flux for 2D fluid simulation" width="400"/>
 </p>
 
 <sup>_Note: FluidSF only calculates structure functions, it does not support spectral flux calculations or coarse-graining at this point. This image is an example use-case and demonstrates that advective structure functions agree with other common methods in ocean turbulence analysis._</sup>
@@ -55,7 +55,7 @@ ax.legend()
 plt.show()
 ```
 <p align="center">
-<img src="docs/quickstart.png" alt="Advective structure function plots" width="400"/>
+<img src="https://github.com/cassidymwagner/fluidsf/blob/main/docs/quickstart.png" alt="Advective structure function plots" width="400"/>
 </p>
 
 "Can I use FluidSF with my data?"
