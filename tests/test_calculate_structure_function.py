@@ -3,31 +3,31 @@ from unittest import TestCase
 import numpy as np
 import pytest
 
-from oceans_sf.calculate_structure_function import calculate_structure_function
+from fluidsf.calculate_structure_function import calculate_structure_function
 
 
 @pytest.mark.parametrize(
-    "u, v, adv_e, adv_n, down, right, skip_velocity_sf, scalar, "
+    "u, v, adv_x, adv_y, shift_x, shift_y, skip_velocity_sf, scalar, "
     "adv_scalar, traditional_type, boundary, expected_result",
     [
         # Test 1: velocity and scalar no traditional
         (
             np.array([[1, 2], [3, 4]]),  # u
             np.array([[1, -2], [-3, 4]]),  # v
-            np.array([[3, -2], [-3, 12]]),  # adv_e
-            np.array([[-7, -18], [33, 52]]),  # adv_n
-            1,  # down
-            1,  # right
+            np.array([[3, -2], [-3, 12]]),  # adv_x
+            np.array([[-7, -18], [33, 52]]),  # adv_y
+            1,  # x_shift
+            1,  # y_shift
             False,  # skip_velocity_sf
             np.array([[1, 2], [3, 4]]),  # scalar
             np.array([[3, -2], [-3, 12]]),  # adv_scalar
             None,  # traditional_type
             "periodic-all",  # boundary
             {
-                "SF_velocity_right": 88,
-                "SF_velocity_down": 138,
-                "SF_scalar_right": 5,
-                "SF_scalar_down": 8,
+                "SF_velocity_x": 88,
+                "SF_velocity_y": 138,
+                "SF_scalar_x": 5,
+                "SF_scalar_y": 8,
             },
             # expected_result
         ),
@@ -45,12 +45,12 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             ["LL"],
             "periodic-all",
             {
-                "SF_velocity_right": 88,
-                "SF_LL_right": 1,
-                "SF_scalar_right": 5,
-                "SF_velocity_down": 138,
-                "SF_LL_down": 4,
-                "SF_scalar_down": 8,
+                "SF_velocity_x": 88,
+                "SF_LL_x": 1,
+                "SF_scalar_x": 5,
+                "SF_velocity_y": 138,
+                "SF_LL_y": 4,
+                "SF_scalar_y": 8,
             },
         ),
         # Test 3: all but skip velocity and no traditional
@@ -67,8 +67,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             None,
             "periodic-all",
             {
-                "SF_scalar_right": 5,
-                "SF_scalar_down": 8,
+                "SF_scalar_x": 5,
+                "SF_scalar_y": 8,
             },
         ),
         # Test 4: velocities with no scalar or traditional
@@ -85,8 +85,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             None,
             "periodic-all",
             {
-                "SF_velocity_right": 88,
-                "SF_velocity_down": 138,
+                "SF_velocity_x": 88,
+                "SF_velocity_y": 138,
             },
         ),
         # Test 5: velocity and scalar no traditional non-periodic
@@ -103,10 +103,10 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             None,
             None,
             {
-                "SF_velocity_right": 88,
-                "SF_velocity_down": 138,
-                "SF_scalar_right": 5,
-                "SF_scalar_down": 8,
+                "SF_velocity_x": 88,
+                "SF_velocity_y": 138,
+                "SF_scalar_x": 5,
+                "SF_scalar_y": 8,
             },
         ),
         # Test 6: all non-periodic
@@ -123,12 +123,12 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             ["LL"],
             None,
             {
-                "SF_velocity_right": 88,
-                "SF_LL_right": 1,
-                "SF_scalar_right": 5,
-                "SF_velocity_down": 138,
-                "SF_LL_down": 4,
-                "SF_scalar_down": 8,
+                "SF_velocity_x": 88,
+                "SF_LL_x": 1,
+                "SF_scalar_x": 5,
+                "SF_velocity_y": 138,
+                "SF_LL_y": 4,
+                "SF_scalar_y": 8,
             },
         ),
         # Test 7: all but skip velocity and no traditional non-periodic
@@ -145,8 +145,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             None,
             None,
             {
-                "SF_scalar_right": 5,
-                "SF_scalar_down": 8,
+                "SF_scalar_x": 5,
+                "SF_scalar_y": 8,
             },
         ),
         # Test 8: velocities with no scalar or traditional non-periodic
@@ -163,8 +163,8 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
             None,
             None,
             {
-                "SF_velocity_right": 88,
-                "SF_velocity_down": 138,
+                "SF_velocity_x": 88,
+                "SF_velocity_y": 138,
             },
         ),
     ],
@@ -172,10 +172,10 @@ from oceans_sf.calculate_structure_function import calculate_structure_function
 def test_calculate_structure_function_parameterized(
     u,
     v,
-    adv_e,
-    adv_n,
-    down,
-    right,
+    adv_x,
+    adv_y,
+    shift_x,
+    shift_y,
     skip_velocity_sf,
     scalar,
     adv_scalar,
@@ -187,10 +187,10 @@ def test_calculate_structure_function_parameterized(
     output_dict = calculate_structure_function(
         u,
         v,
-        adv_e,
-        adv_n,
-        down,
-        right,
+        adv_x,
+        adv_y,
+        shift_x,
+        shift_y,
         skip_velocity_sf,
         scalar,
         adv_scalar,

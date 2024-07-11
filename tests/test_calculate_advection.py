@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from oceans_sf.calculate_advection import calculate_advection
+from fluidsf.calculate_advection import calculate_advection
 
 
 @pytest.mark.parametrize(
