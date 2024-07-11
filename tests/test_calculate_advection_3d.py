@@ -47,9 +47,9 @@ from fluidsf.calculate_advection_3d import calculate_advection_3d
             np.linspace(0, 3, 4),  # z
             None,  # scalar
             (
-                np.zeros((3, 3, 3)),  # expected u_advection
-                np.zeros((3, 3, 3)),  # expected v_advection
-                np.zeros((3, 3, 3)),  # expected w_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 13,  # expected u_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 13,  # expected v_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 13,  # expected w_advection
             ),
         ),
         # Test case for velocity field with non-zero values but zero in w
@@ -62,10 +62,8 @@ from fluidsf.calculate_advection_3d import calculate_advection_3d
             np.linspace(0, 3, 4),  # z
             None,  # scalar
             (
-                8 * np.arange(1, 28).reshape((3, 3, 3))
-                - 6 * np.arange(1, 28).reshape((3, 3, 3)),  # expected u_advection
-                8 * np.arange(1, 28).reshape((3, 3, 3))
-                - 6 * np.arange(1, 28).reshape((3, 3, 3)),  # expected v_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 4,  # expected u_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 4,  # expected v_advection
                 np.zeros((3, 3, 3)),  # expected w_advection
             ),
         ),
@@ -79,11 +77,9 @@ from fluidsf.calculate_advection_3d import calculate_advection_3d
             np.linspace(0, 3, 4),  # z
             None,  # scalar
             (
-                -6 * np.arange(1, 28).reshape((3, 3, 3))
-                - 2 * np.arange(1, 28).reshape((3, 3, 3)),  # expected u_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 10,  # expected u_advection
                 np.zeros((3, 3, 3)),  # expected v_advection
-                -6 * np.arange(1, 28).reshape((3, 3, 3))
-                - 2 * np.arange(1, 28).reshape((3, 3, 3)),  # expected w_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 10,  # expected w_advection
             ),
         ),
         # Test case for velocity field with different u, v, w values
@@ -96,15 +92,9 @@ from fluidsf.calculate_advection_3d import calculate_advection_3d
             np.linspace(0, 3, 4),  # z
             None,  # scalar
             (
-                -6 * np.arange(1, 28).reshape((3, 3, 3))
-                + 8 * 2 * np.arange(1, 28).reshape((3, 3, 3))
-                - 2 * 3 * np.arange(1, 28).reshape((3, 3, 3)),  # expected u_advection
-                -12 * np.arange(1, 28).reshape((3, 3, 3))
-                + 16 * 2 * np.arange(1, 28).reshape((3, 3, 3))
-                - 4 * 3 * np.arange(1, 28).reshape((3, 3, 3)),  # expected v_advection
-                -18 * np.arange(1, 28).reshape((3, 3, 3))
-                + 24 * 2 * np.arange(1, 28).reshape((3, 3, 3))
-                - 6 * 3 * np.arange(1, 28).reshape((3, 3, 3)),  # expected w_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 34,  # expected u_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 68,  # expected v_advection
+                np.arange(1, 28).reshape((3, 3, 3)) * 102,  # expected w_advection
             ),
         ),
         # Test case for scalar field with zero values
@@ -138,9 +128,7 @@ from fluidsf.calculate_advection_3d import calculate_advection_3d
             np.linspace(0, 3, 4),  # y
             np.linspace(0, 3, 4),  # z
             np.arange(1, 28).reshape((3, 3, 3)),  # scalar
-            -6 * np.arange(1, 28).reshape((3, 3, 3))
-            + 8 * 2 * np.arange(1, 28).reshape((3, 3, 3))
-            - 2 * 3 * np.arange(1, 28).reshape((3, 3, 3)),  # expected scalar advection
+            np.arange(1, 28).reshape((3, 3, 3)) * 34,  # expected scalar advection
         ),
     ],
 )

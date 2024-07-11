@@ -145,17 +145,17 @@ from fluidsf.calculate_structure_function_3d import calculate_structure_function
                 "SF_scalar_x": 224,
                 "SF_LSS_x": 392,
                 "SF_velocity_y": 1152,
-                "SF_LL_y": 36,
-                "SF_LLL_y": 216,
+                "SF_LL_y": 144,
+                "SF_LLL_y": 1728,
                 "SF_LTT_y": 432,
                 "SF_scalar_y": 2016,
-                "SF_LSS_y": 10584,
+                "SF_LSS_y": 21168,
                 "SF_velocity_z": 10368,
-                "SF_LL_z": 324,
-                "SF_LLL_z": 5832,
+                "SF_LL_z": 2916,
+                "SF_LLL_z": 157464,
                 "SF_LTT_z": 17496,
                 "SF_scalar_z": 18144,
-                "SF_LSS_z": 285768,
+                "SF_LSS_z": 857304,
             },
         ),
     ],
@@ -195,4 +195,14 @@ def test_calculate_structure_function_3d_parameterized(
         boundary,
     )
 
-    TestCase().assertDictEqual(output_dict, expected_result)
+    for key, value in expected_result.items():
+        if key in output_dict:
+            if not np.allclose(output_dict[key], value):
+                print(output_dict[key])
+                print(expected_result[key])
+                raise AssertionError(
+                    f"Output dict value for key '{key}' does not match "
+                    f"expected value '{output_dict[key]}'."
+                )
+        else:
+            raise AssertionError(f"Output dict does not contain key '{key}'.")

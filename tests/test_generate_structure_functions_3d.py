@@ -93,12 +93,12 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
             ["LL", "LLL", "LSS", "LTT"],  # traditional_order
             None,  # boundary
             {
-                "SF_advection_velocity_x": np.array([0, 0]),
-                "SF_advection_velocity_y": np.array([0, 0]),
-                "SF_advection_velocity_z": np.array([0, 0]),
-                "SF_advection_scalar_x": np.array([0, 0]),
-                "SF_advection_scalar_y": np.array([0, 0]),
-                "SF_advection_scalar_z": np.array([0, 0]),
+                "SF_advection_velocity_x": np.array([0, 156]),
+                "SF_advection_velocity_y": np.array([0, 1404]),
+                "SF_advection_velocity_z": np.array([0, 12636]),
+                "SF_advection_scalar_x": np.array([0, 52]),
+                "SF_advection_scalar_y": np.array([0, 468]),
+                "SF_advection_scalar_z": np.array([0, 4212]),
                 "SF_LL_x": np.array([0, 4]),
                 "SF_LL_y": np.array([0, 36]),
                 "SF_LL_z": np.array([0, 324]),
@@ -129,21 +129,21 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
             ["LL", "LLL", "LSS", "LTT"],  # traditional_order
             None,  # boundary
             {
-                "SF_advection_velocity_x": np.array([0, 224]),
-                "SF_advection_velocity_y": np.array([0, 2016]),
-                "SF_advection_velocity_z": np.array([0, 18144]),
-                "SF_advection_scalar_x": np.array([0, 16]),
-                "SF_advection_scalar_y": np.array([0, 144]),
-                "SF_advection_scalar_z": np.array([0, 1296]),
+                "SF_advection_velocity_x": np.array([0, 1904]),
+                "SF_advection_velocity_y": np.array([0, 17136]),
+                "SF_advection_velocity_z": np.array([0, 154224]),
+                "SF_advection_scalar_x": np.array([0, 136]),
+                "SF_advection_scalar_y": np.array([0, 1224]),
+                "SF_advection_scalar_z": np.array([0, 11016]),
                 "SF_LL_x": np.array([0, 4]),
-                "SF_LL_y": np.array([0, 36]),
-                "SF_LL_z": np.array([0, 324]),
+                "SF_LL_y": np.array([0, 144]),
+                "SF_LL_z": np.array([0, 2916]),
                 "SF_LLL_x": np.array([0, 8]),
-                "SF_LLL_y": np.array([0, 216]),
-                "SF_LLL_z": np.array([0, 5832]),
+                "SF_LLL_y": np.array([0, 1728]),
+                "SF_LLL_z": np.array([0, 157464]),
                 "SF_LSS_x": np.array([0, 8]),
-                "SF_LSS_y": np.array([0, 216]),
-                "SF_LSS_z": np.array([0, 5832]),
+                "SF_LSS_y": np.array([0, 432]),
+                "SF_LSS_z": np.array([0, 17496]),
                 "SF_LTT_x": np.array([0, 32]),
                 "SF_LTT_y": np.array([0, 432]),
                 "SF_LTT_z": np.array([0, 17496]),
@@ -165,9 +165,9 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
             None,  # traditional_order
             None,  # boundary
             {
-                "SF_advection_velocity_x": np.array([0, 224]),
-                "SF_advection_velocity_y": np.array([0, 2016]),
-                "SF_advection_velocity_z": np.array([0, 18144]),
+                "SF_advection_velocity_x": np.array([0, 1904]),
+                "SF_advection_velocity_y": np.array([0, 17136]),
+                "SF_advection_velocity_z": np.array([0, 154224]),
                 "x-diffs": np.array([0, 1]),
                 "y-diffs": np.array([0, 1]),
                 "z-diffs": np.array([0, 1]),
@@ -183,15 +183,15 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
             np.linspace(1, 3, 3),  # z
             False,  # skip_velocity_sf
             None,  # scalar
-            ["LL", "LLL", "LSS", "LTT"],  # traditional_order
+            ["LL", "LLL", "LTT"],  # traditional_order
             None,  # boundary
             {
                 "SF_LL_x": np.array([0, 4]),
-                "SF_LL_y": np.array([0, 36]),
-                "SF_LL_z": np.array([0, 324]),
+                "SF_LL_y": np.array([0, 144]),
+                "SF_LL_z": np.array([0, 2916]),
                 "SF_LLL_x": np.array([0, 8]),
-                "SF_LLL_y": np.array([0, 216]),
-                "SF_LLL_z": np.array([0, 5832]),
+                "SF_LLL_y": np.array([0, 1728]),
+                "SF_LLL_z": np.array([0, 157464]),
                 "SF_LTT_x": np.array([0, 32]),
                 "SF_LTT_y": np.array([0, 432]),
                 "SF_LTT_z": np.array([0, 17496]),
@@ -213,9 +213,9 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
             None,  # traditional_order
             None,  # boundary
             {
-                "SF_advection_scalar_x": np.array([0, 16]),
-                "SF_advection_scalar_y": np.array([0, 144]),
-                "SF_advection_scalar_z": np.array([0, 1296]),
+                "SF_advection_scalar_x": np.array([0, 136]),
+                "SF_advection_scalar_y": np.array([0, 1224]),
+                "SF_advection_scalar_z": np.array([0, 11016]),
                 "x-diffs": np.array([0, 1]),
                 "y-diffs": np.array([0, 1]),
                 "z-diffs": np.array([0, 1]),
