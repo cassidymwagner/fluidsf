@@ -91,3 +91,6 @@ venv.bak/
 # Linting
 .mypy_cache
 .ruff_cache
+
+# Some data files
+*.nc
