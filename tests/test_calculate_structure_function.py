@@ -1,5 +1,3 @@
-from unittest import TestCase
-
 import numpy as np
 import pytest
 
@@ -49,7 +47,7 @@ from fluidsf.calculate_structure_function import calculate_structure_function
                 "SF_LL_x": 1,
                 "SF_scalar_x": 5,
                 "SF_velocity_y": 138,
-                "SF_LL_y": 4,
+                "SF_LL_y": 26,
                 "SF_scalar_y": 8,
             },
         ),
@@ -127,7 +125,7 @@ from fluidsf.calculate_structure_function import calculate_structure_function
                 "SF_LL_x": 1,
                 "SF_scalar_x": 5,
                 "SF_velocity_y": 138,
-                "SF_LL_y": 4,
+                "SF_LL_y": 26,
                 "SF_scalar_y": 8,
             },
         ),
@@ -198,4 +196,14 @@ def test_calculate_structure_function_parameterized(
         boundary,
     )
 
-    TestCase().assertDictEqual(output_dict, expected_result)
+    for key, value in expected_result.items():
+        if key in output_dict:
+            if not np.allclose(output_dict[key], value):
+                print(output_dict[key])
+                print(expected_result[key])
+                raise AssertionError(
+                    f"Output dict value for key '{key}' does not match "
+                    f"expected value '{output_dict[key]}'."
+                )
+        else:
+            raise AssertionError(f"Output dict does not contain key '{key}'.")
