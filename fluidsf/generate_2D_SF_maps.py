@@ -52,7 +52,7 @@ def generate_2D_SF_maps(  # noqa: C901, D417
         dy: float, optional
             Grid spacing in the y-direction. Defaults to None.
         grid_type:str, optional
-            Type of grid, either "uniform" or "latlon". Defaults to "uniform".
+            Type of grid, can only be "uniform" for these maps.
 
     Returns
     -------
@@ -122,6 +122,8 @@ def generate_2D_SF_maps(  # noqa: C901, D417
         SF_dicts = calculate_2D_SF_maps(
             u,
             v,
+            x,
+            y,
             adv_x,
             adv_y,
             x_shift,
@@ -140,13 +142,13 @@ def generate_2D_SF_maps(  # noqa: C901, D417
             SF_adv[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_velocity_advection_xy"]
             if traditional_type is not None:
                 if any("LL" in t for t in traditional_type):
-                    SF_LL[x_shift, y_shift] = SF_dicts["SF_LL_xy"]
+                    SF_LL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LL_xy"]
                 if any("LLL" in t for t in traditional_type):
-                    SF_LLL[x_shift, y_shift] = SF_dicts["SF_LLL_xy"]
+                    SF_LLL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LLL_xy"]
                 if any("LTT" in t for t in traditional_type):
-                    SF_LTT[x_shift, y_shift] = SF_dicts["SF_LTT_xy"]
+                    SF_LTT[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LTT_xy"]
         if scalar is not None:
-            SF_scalar_adv[x_shift, y_shift] = SF_dicts["SF_scalar_advection_xy"]
+            SF_scalar_adv[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_scalar_advection_xy"]
             if traditional_type is not None:
                 if any("LSS" in t for t in traditional_type):
                     SF_LSS[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LSS_xy"]

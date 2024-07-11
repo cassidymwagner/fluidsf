@@ -6,6 +6,8 @@ from .xy_shift_array import xy_shift_array
 def calculate_2D_SF_maps(  # noqa: D417, C901
     u,
     v,
+    x,
+    y,
     adv_x,
     adv_y,
     shift_in_x,
@@ -26,6 +28,10 @@ def calculate_2D_SF_maps(  # noqa: D417, C901
             Array of u velocities.
         v: ndarray
             Array of v velocities.
+        x: ndarray
+            1D array of x-coordinates.
+        y: ndarray
+            1D array of y-coordinates.
         adv_x: ndarray
             Array of x-dir advection values.
         adv_y: ndarray
