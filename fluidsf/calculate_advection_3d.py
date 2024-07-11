@@ -57,7 +57,7 @@ def calculate_advection_3d(  # noqa: D417
         u_advection = u * dudx + v * dudy + w * dudz
         v_advection = u * dvdx + v * dvdy + w * dvdz
         w_advection = u * dwdx + v * dwdy + w * dwdz
-        
+
         advection = (u_advection, v_advection, w_advection)
 
     return advection
