@@ -12,28 +12,38 @@ Structure functions and how to calculate them
 
 **Scalar Structure Functions**
 
-When a scalar parameter, such as temperature :math:`\theta\`, is measured at various locations, we can calculate second-order structure functions that describe the scalar's spatial variations: 
+When a scalar property, arbitrarily :math:`\phi`, is measured at various locations, we can calculate second-order structure functions that describe the scalar's spatial variations: 
 
 .. math:: 
-    SF_{\theta\theta}(\mathbf{r}) = \overline{{\left[\theta(\mathbf{x}+\mathbf{r}) - \theta(\mathbf{x})\right]^2}} = \overline{{\left[\delta \theta \right]^2}}
+    SF_{\phi\phi}(\mathbf{r}) = \overline{{\left[\phi(\mathbf{x}+\mathbf{r}) - \phi(\mathbf{x})\right]^2}} = \overline{{\left[\delta \phi \right]^2}}
 
-where :math:`\theta(\mathbf{x})` is the temperature at position :math:`\mathbf{x}`, and  :math:`\mathbf{r}` is the separation vector between pairs of points. The overline represents an average over all pairs of data in the flow field that are separated by :math:`\mathbf{r}`, and :math:`\delta \theta` is a short-hand notation for the spatial difference in properties. This second-order (i.e. squared) structure function can be used to characterize the spatial distribution of temperature variance, analogous to power spectra of these fields. Higher-order structure functions, that depend on larger powers of the spatial differences, can be related to the spatial intermittency of fluid properties and will be discussed below.
+where :math:`\theta(\mathbf{x})` is the scalar at position :math:`\mathbf{x}`, and  :math:`\mathbf{r}` is the separation vector between pairs of points. The overline represents an average over all pairs of data in the flow field that are separated by :math:`\mathbf{r}`, and :math:`\delta \phi` is a short-hand notation for the spatial difference in the scalar. This second-order (i.e. squared) structure function can be used to characterize the spatial distribution of scalar variance, analogous to the power spectra of the scalar field. Common scalars for fluid systems include temperature, density, and (vertical) vorticity.
 
 **Velocity Structure Functions**
 
-Since velocity is a vector, the most common velocity structure functions deompose the velocity into a longitudinal component (:math:`u_L = \mathbf{u} \cdot \mathbf{\hat{r}}`) and a transverse component (:math:`u_T = \mathbf{u} \times \mathbf{\hat{r}}`). The most several useful choices for structure functions . We can calculate the mean, the variance, the skew, among other properties, which we call moments. Structure functions are these moments, where the :math:`n`-th order velocity-based structure function can be written as
-
-.. math:: 
-    SF^n_v(\mathbf{x}) = \overline{{\left[v(\mathbf{x}) - v(\mathbf{x}+\mathbf{r})\right]^n}}
-
-where :math:`v(\mathbf{x})` is the velocity at position :math:`\mathbf{x}` and :math:`\mathbf{r}` is the separation vector between two unique data points in the field. The overline represents an average over all possible pairs of data in the flow field that are separated by :math:`\mathbf{r}`. 
-
-To illustrate this concept, consider a pair of moorings in the ocean that are separated by a distance :math:`r`, as shown in the diagram below.  
+Since velocity is a vector, structure functions often decompose a (two dimensional) velocity field into a longitudinal component (:math:`u_L = \mathbf{u} \cdot \mathbf{\hat{r}}`) and a transverse component (:math:`u_T = \mathbf{u} \times \mathbf{\hat{r}}`). These velocity components can be visualized by considering a pair of velocity observations separated by a vector :math:`r`, as illustrated below. 
 
 .. image:: images/sf_mooring_diagram.png
     :align: center
     :width: 50%
     :alt: A diagram showing two moorings in the ocean separated by a distance r.
+
+There are a variety of physically-useful velocity structure functions including second-order structure functions of both velocity components,
+
+.. math:: 
+    SF_{LL}(\mathbf{r}) = \overline{{\left[u_L(\mathbf{x}+\mathbf{r}) - u_L(\mathbf{x})\right]^2}} = \overline{{\left[\delta u_L \right]^2}}
+    SF_{TT}(\mathbf{r}) = \overline{{\left[\delta u_T \right]^2}}
+
+The spatial variations of :math: `SF_{LL}` and :math: `SF_{TT}`, and their ratio, are often used to explore the distribution of energy across scales, and the relative prevalence of rotational and divergent motions within a fluid.
+
+It is also common to utilize third-order velocity structure functions,
+
+.. math:: 
+    SF_{LLL}(\mathbf{r}) = \overline{{\left[\delta u_L \right]^3}}
+    SF_{LTT}(\mathbf{r}) = \overline{{\left[\delta u_L \right]\left[\delta u_T \right]^2}}
+    SF_{L\phi \phi}(\mathbf{r}) = \overline{{\left[\delta u_L \right]\left[\delta \phi \right]^2}}
+
+which can provide information about the inter-scale transfers of energy (:math:`SF_{LTT}` and :math:`SF_{LTT}`) or tracer variance (:math:`SF_{L\phi\phi}`) within a fluid flow. Note that :math:`SF_{LTT}` and :math:`SF_{L\phi\phi}` are blended structure functions, in that they utilize the spatial differences of multiple properties. 
 
 Now consider an array of moorings. The structure function is calculated for all pairs of moorings separated by :math:`r`, and the average is taken over all pairs. The diagram below depicts an array of moorings and highlights mooring pairs with separation vectors of :math:`r = 1`, :math:`r = 2`, and :math:`r = 3`.
 
@@ -42,17 +52,18 @@ Now consider an array of moorings. The structure function is calculated for all 
     :width: 100%
     :alt: 3 figures showing a grid of data points in a flow field. The separation vector r is shown between pairs of data points where the first panel is shows r = 1, the second panel shows r = 2, and the third panel shows r = 3.
 
-The structure function can be calculated for any order :math:`n`, but the most common are the second and third order structure functions. For a velocity field, the second-order structure function is related to the energy spectrum of the flow field, while the third-order structure function is related to the energy flux between length scales.
-
-.. tip:: 
-    Structure functions can be calculated for any scalar field, not just velocity. A common scalar field is the temperature field in the ocean, which can be used to estimate the rate of heat flux between length scales. Enstrophy flux can also be estimated from vorticity-based structure functions.
-
 .. _Advective structure functions:
 
 Advective structure functions
 -----------------------------
 
-Advective structure functions were introduced by Pearson et al. (2021) to estimate the rate of energy flux between length scales in anisotropic two-dimensional turbulence. As the name suggests, advective structure functions are based on the advection of fluid properties in the flow field. The advective structure function can be written as 
+Advective structure functions are a particular flavor of blended structure function, introduced by Pearson et al. (2021). The advective structure function for velocity and scalars can be written as 
+
+.. math:: 
+    ASF_{\mathbf{v}}(\mathbf{x}) = \overline{{\\delta \mathbf{u})\right] \cdot \left[\mathcal{A}_{\mathbf{v}}(\mathbf{x}) - \mathcal{A}_{\mathbf{v}}(\mathbf{x}+\mathbf{r})\right]}}
+    ASF_{\phi}(\mathbf{x}) = \overline{{\left[\mathbf{v}(\mathbf{x}) - \mathbf{v}(\mathbf{x}+\mathbf{r})\right] \cdot \left[\mathcal{A}_{\mathbf{v}}(\mathbf{x}) - \mathcal{A}_{\mathbf{v}}(\mathbf{x}+\mathbf{r})\right]}}
+
+As the name suggests, advective structure functions depend on the advection of scalars (:math:`\mathcal{A}_{\phi}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \phi`) or velocity (:math:`\boldsymbol{\mathcal{A}_{v}}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \mathbf{u}`) where :math:`\nabla` is the gradient operator. The advective structure function for velocity and scalars can be written as 
 
 .. math:: 
     ASF_{\mathbf{v}}(\mathbf{x}) = \overline{{\left[\mathbf{v}(\mathbf{x}) - \mathbf{v}(\mathbf{x}+\mathbf{r})\right] \cdot \left[\mathcal{A}_{\mathbf{v}}(\mathbf{x}) - \mathcal{A}_{\mathbf{v}}(\mathbf{x}+\mathbf{r})\right]}}
