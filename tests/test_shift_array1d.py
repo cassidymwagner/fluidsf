@@ -7,18 +7,23 @@ from fluidsf.shift_array1d import shift_array1d
 @pytest.mark.parametrize(
     "input_array, shift_by, boundary, expected_output",
     [
-        (np.array([1, 2, 3, 4, 5]), 1, "Periodic", np.array([5, 1, 2, 3, 4])),
-        (np.array([1, 2, 3, 4, 5]), 1, "Padded", np.array([np.nan, 1, 2, 3, 4])),
+        (np.array([1, 2, 3, 4, 5]), 1, "Periodic", np.array([2, 3, 4, 5, 1])),
+        (np.array([1, 2, 3, 4, 5]), 1, None, np.array([2, 3, 4, 5, np.nan])),
         (
             np.array([1, 2, 3, 4, 5]),
             10,
-            "Padded",
+            None,
             np.array([np.nan, np.nan, np.nan, np.nan, np.nan]),
         ),
-        (np.array([1, 2, 3, 4, 5]), -1, "Periodic", np.array([2, 3, 4, 5, 1])),
+        (
+            np.array([1, 2, 3, 4, 5]),
+            -1,
+            None,
+            np.array([5, np.nan, np.nan, np.nan, np.nan]),
+        ),
         (np.array([]), 1, "Periodic", np.array([])),
         (np.array([1]), 1, "Periodic", np.array([1])),
-        (np.array([1, 2, 3, 4, 5]), 3, "Periodic", np.array([3, 4, 5, 1, 2])),
+        (np.array([1, 2, 3, 4, 5]), 3, "Periodic", np.array([4, 5, 1, 2, 3])),
     ],
 )
 def test_shift_array1d(input_array, shift_by, boundary, expected_output):
