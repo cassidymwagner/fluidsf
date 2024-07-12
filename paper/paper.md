@@ -16,9 +16,9 @@ authors:
     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
     affiliation: 1
   - name: Ara Lee
-  - orcid:
-  - equal-contrib: false
-  - affiliation: 1
+    orcid:
+    equal-contrib: false
+    affiliation: 1
 affiliations:
  - name: Oregon State University
 date: 01 June 2024
@@ -38,28 +38,47 @@ Fluid systems are everywhere, from small-scale engineering problems to planetary
 
 # Statement of need
 
-FluidSF is a flexible ``Python`` package for calculating spatial structure functions (SFs) in one, two, or three spatial dimensions from diverse fluid data sets. The package can construct user-defined SFs that utilize any fluid properties (e.g., velocity, vorticity, temperature, magnetic field etc.), including combinations of these properties and structure functions of arbitrary order. The flexibility of this package enables geophysical, astrophysical, and engineering applications.... ADD EXAMPLES OF SF UTILITY BREADTH: e.g., quantifying the energy cycles within Earth's ocean [@pearson2019; @balwada:2022], Earth's atmosphere [@lindborg:1999], and Jupiter's atmosphere [@young:2017], the intermittency of magnetohydrodynamic plasma turbulence [@Wan:2016], the anistropy of flow over rough beds [@coscarella:2020], the characteristics of ocean surface temperature [@schloesser:2016], and the scaling laws of idealized 3D turbulence [@iyer:2020].   
+FluidSF is a flexible ``Python`` package for calculating spatial structure functions (SFs) in one, two, or three spatial dimensions from diverse fluid data sets. The package can construct user-defined SFs that utilize any fluid properties (e.g., velocity, vorticity, temperature, magnetic field etc.), including combinations of these properties and structure functions of arbitrary order. The flexibility of this package enables geophysical, astrophysical, and engineering applications.... ADD EXAMPLES OF SF UTILITY BREADTH: e.g., quantifying the energy cycles within Earth's ocean [@pearson2019; @balwada2022], Earth's atmosphere [@lindborg:1999], and Jupiter's atmosphere [@young:2017], the intermittency of magnetohydrodynamic plasma turbulence [@wan:2016], the anistropy of flow over rough beds [@coscarella:2020], the characteristics of ocean surface temperature [@schloesser:2016], and the scaling laws of idealized 3D turbulence [@iyer:2020].   
 
 Paragraph on package capabilities & limitations. Regularly-gridded data, Lat-lon gridded data, track/directional sampling, 1D-data, evenly-spaced, iregularly-spaced (what are limitations), binning, bootstrapping(?), local advection terms [@pearson:2021], Bessel function examples(?) [@xie:2018] examples of time-averaging, SWOT application. What are limitations (can it take 2D data in a vector rather than array format? Can it calculate 2D or 3D maps of SF rather than just a function of |r| magnitude?). Perhaps these don't need to be mentioned, or can be stated as future developments.
 
 # State of the field
 
-Contextualize package within other relevant software
+There are a small number of open source software available that calculate structure functions. `fastSF` is a parallelized C++ code designed to compute structure functions from Cartesian grids of data [@sadhukhan:2021]. @fuchs2022 created an open source `MATLAB` toolkit that performs a variety of turbulence analysis, including structure functions. An complimentary and alternative method to structure functions for analyzing turbulence data is coarse-graining. `FlowSieve` is a primarily C++ package that uses coarse-graining to estimate ocean and atmospheric turbulence properties from Global Climate Model data [@storer2023].
+
+<!-- Contextualize package within other relevant software
 * flowsieve
 * fuchs 2022: matlab-based GUI package that does third order structure functions among other things
 * sadhukhan 2021: fastSF C++ code for parallel computing structure functions
   * n-th order structure functions of either longitudinal, transverse, or scalar, no mixed SFs
   * only works with cartesian 2D or 3D HDF5 files
 * Dhruv's group
-* a couple of julia repos, not full packages
+* a couple of julia repos, not full packages -->
 
-FluidSF uniquely contributes to the field through:
-  * pypi installable/importable 
+# Features
+
+FluidSF uniquely contributes to the field through expanded data support, an increased variety of SF calculations, and tools for analyzing spatial variations in SFs.
+
+FluidSF calculates SFs from 1D, 2D, and 3D data with periodic and non-periodic boundary conditions. Regular Cartesian (1D, 2D, 3D) and non-uniform latitude-longitude gridding (1D, 2D) are supported. Since FluidSF is written in `Python`, any data intialized and loaded as `NumPy` arrays can be used. 
+
+FluidSF is the first software pacakage that calculates novel advective SFs, a type of SF that depends on velocity advection and does not assume an isotropic flow field [@pearson:2021]. Therefor FluidSF also computes advection for 2D and 3D data. It supports blended SFs, i.e. a combination of longitudinal and transverse velocity SFs, whereas other software only supports purely longitudinal or transverse SFs. 
+
+To explore spatial variations in SFs, FluidSF computes 2D polar maps of SFs that vary in separation distance and separation direction. 
+
+  <!-- * python
+  * pypi installable/importable
   * advective structure functions
   * mixed structure functions
   * 2d maps of structure functions
-  * 
+  * binning
+  * lat-lon grid support
+  * non-periodic data
+  * 1d structure functions -->
 
 # Acknowledgements
+
+We would like to thank ... 
+
+The development of FluidSF was financially supported by ...
 
 # References
