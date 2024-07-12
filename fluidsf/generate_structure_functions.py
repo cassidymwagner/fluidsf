@@ -169,7 +169,7 @@ def generate_structure_functions(  # noqa: C901, D417
 
         # Calculate separation distances in x
         xd[x_shift], tmp = calculate_separation_distances(
-            x[x_shift], y[y_shift], xroll[x_shift], y[y_shift], grid_type
+            x[0], y[0], xroll[0], y[0], grid_type
         )
 
     for y_shift in sep_y:
@@ -210,7 +210,7 @@ def generate_structure_functions(  # noqa: C901, D417
 
         # Calculate separation distances in y
         tmp, yd[y_shift] = calculate_separation_distances(
-            x[x_shift], y[y_shift], x[x_shift], yroll[y_shift], grid_type
+            x[0], y[0], x[0], yroll[0], grid_type
         )
 
     # Bin the data if requested
