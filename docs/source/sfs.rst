@@ -3,7 +3,7 @@ What are structure functions?
 
 .. _Overview:
 
-The structure functions calculated within this package are statistics that describe how fluid properties vary between pairs of points as a function of their separation vector ($\bf{r}$), averaged over all pairs of points with the same separation vector. There are numerous structure functions, describing different-order correlations of various variables, that can provide fundamental insights into the physical properties of dynamic fluid systems.
+The structure functions calculated within this package are statistics that describe how fluid properties vary between pairs of points as a function of their separation vector (`\mathbf{r}`), averaged over all pairs of points with the same separation vector. There are numerous structure functions, describing different-order correlations of various variables, that can provide fundamental insights into the physical properties of dynamic fluid systems.
 
 .. _Theory:
 
