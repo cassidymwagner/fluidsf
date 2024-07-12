@@ -10,7 +10,18 @@ The structure functions calculated within this package are statistics that descr
 Structure functions and how to calculate them
 ---------------------------------------------------
 
-When a parameter, such as velocity, is measured at many different positions, we can implement a range of statistics to understand these measurements. We can calculate the mean, the variance, the skew, among other properties, which we call moments. Structure functions are these moments, where the :math:`n`-th order velocity-based structure function can be written as
+**Scalar Structure Functions**
+
+When a scalar parameter, such as temperature :math:`\theta\`, is measured at various locations, we can calculate second-order structure functions that describe the scalar's spatial variations: 
+
+.. math:: 
+    SF_{\theta\theta}(\mathbf{r}) = \overline{{\left[\theta(\mathbf{x}+\mathbf{r}) - \theta(\mathbf{x})\right]^2}} = \overline{{\left[\delta \theta \right]^2}}
+
+where :math:`\theta(\mathbf{x})` is the temperature at position :math:`\mathbf{x}`, and  :math:`\mathbf{r}` is the separation vector between pairs of points. The overline represents an average over all pairs of data in the flow field that are separated by :math:`\mathbf{r}`, and :math:`\delta \theta` is a short-hand notation for the spatial difference in properties. This second-order (i.e. squared) structure function can be used to characterize the spatial distribution of temperature variance, analogous to power spectra of these fields. Higher-order structure functions, that depend on larger powers of the spatial differences, can be related to the spatial intermittency of fluid properties and will be discussed below.
+
+**Velocity Structure Functions**
+
+Since velocity is a vector, the most common velocity structure functions deompose the velocity into a longitudinal component (:math:`u_L = \mathbf{u} \cdot \mathbf{\hat{r}}`) and a transverse component (:math:`u_T = \mathbf{u} \times \mathbf{\hat{r}}`). The most several useful choices for structure functions . We can calculate the mean, the variance, the skew, among other properties, which we call moments. Structure functions are these moments, where the :math:`n`-th order velocity-based structure function can be written as
 
 .. math:: 
     SF^n_v(\mathbf{x}) = \overline{{\left[v(\mathbf{x}) - v(\mathbf{x}+\mathbf{r})\right]^n}}
