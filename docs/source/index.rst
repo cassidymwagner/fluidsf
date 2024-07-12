@@ -13,9 +13,10 @@ FluidSF
 
 .. _Overview:
 
-FluidSF is a Python package for calculating structure functions from fluid data. 
-These structure functions can be used to estimate turbulence cascade rates without the constraints 
-of spectral methods. This package serves as a useful tool for analyzing turbulent dynamics in the ocean.
+FluidSF is a Python package for calculating structure functions (SFs) from fluid data. 
+The package diagnose various SFs that utilize velocity and/or scalar fields. These SFs can then be used to quantify various physical properties of fluid systems, including the distribution of energy/variance across scales, the inter-scale transfers of this energy/variance, the intermittency of the fluid flow, and the spatial anisotropy of the flow. 
+
+This package can be applied to general fluid flow data, although our research motivation for developing this package is to analyze large-scale ocean turbulence from model output and observational (satellite) data.
 
 .. _Installing:
 
