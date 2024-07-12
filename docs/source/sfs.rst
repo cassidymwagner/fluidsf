@@ -3,11 +3,11 @@ What are structure functions?
 
 .. _Overview:
 
-Structure functions are a set of statistics that use the variance, covariance, and difference between variables in a flow field to estimate inter-scale turbulent fluxes. Fundamental fluid dynamics equations have been used to estimate a relationship between structure functions and these turbulent fluxes. For example, a third-order velocity-based structure function can be used to estimate the rate of energy flux between length scales.
+The structure functions calculated within this package are statistics that describe how fluid properties vary between pairs of points as a function of their separation vector ($\bf{r}$), averaged over all pairs of points with the same separation vector. There are numerous structure functions, describing different-order correlations of various variables, that can provide fundamental insights into the physical properties of dynamic fluid systems.
 
 .. _Theory:
 
-Structure function theory and how to calculate them
+Structure functions and how to calculate them
 ---------------------------------------------------
 
 When a parameter, such as velocity, is measured at many different positions, we can implement a range of statistics to understand these measurements. We can calculate the mean, the variance, the skew, among other properties, which we call moments. Structure functions are these moments, where the :math:`n`-th order velocity-based structure function can be written as
