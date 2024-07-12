@@ -57,25 +57,15 @@ Now consider an array of moorings. The structure function is calculated for all 
 Advective structure functions
 -----------------------------
 
-Advective structure functions are a particular flavor of blended structure function, introduced by Pearson et al. (2021). The advective structure function for velocity and scalars can be written as 
+Advective structure functions are a particular type of blended structure function, introduced by Pearson et al. (2021). The advective structure functions for velocity and scalars are,
 
 .. math:: 
-    ASF_{\mathbf{v}}(\mathbf{x}) = \overline{{\\delta \mathbf{u})\right] \cdot \left[\mathcal{A}_{\mathbf{v}}(\mathbf{x}) - \mathcal{A}_{\mathbf{v}}(\mathbf{x}+\mathbf{r})\right]}}
-    ASF_{\phi}(\mathbf{x}) = \overline{{\left[\mathbf{v}(\mathbf{x}) - \mathbf{v}(\mathbf{x}+\mathbf{r})\right] \cdot \left[\mathcal{A}_{\mathbf{v}}(\mathbf{x}) - \mathcal{A}_{\mathbf{v}}(\mathbf{x}+\mathbf{r})\right]}}
+    ASF_{velocity}(\mathbf{r}) = \overline{{\delta \mathbf{u}) \cdot \delta \boldsymbol{\mathcal{A}}_{\mathbf{u}}}
+    ASF_{\phi}(\mathbf{r}) = \overline{\delta \phi \delta \mathcal{A}_{\phi}}
 
-As the name suggests, advective structure functions depend on the advection of scalars (:math:`\mathcal{A}_{\phi}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \phi`) or velocity (:math:`\boldsymbol{\mathcal{A}_{v}}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \mathbf{u}`) where :math:`\nabla` is the gradient operator. The advective structure function for velocity and scalars can be written as 
+As the name suggests, advective structure functions depend on the advection of scalars (:math:`\mathcal{A}_{\phi}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \phi`) or velocity (:math:`\boldsymbol{\mathcal{A}}_{\mathbf{u}}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \mathbf{u}`) where :math:`\nabla` is the gradient operator.
 
-.. math:: 
-    ASF_{\mathbf{v}}(\mathbf{x}) = \overline{{\left[\mathbf{v}(\mathbf{x}) - \mathbf{v}(\mathbf{x}+\mathbf{r})\right] \cdot \left[\mathcal{A}_{\mathbf{v}}(\mathbf{x}) - \mathcal{A}_{\mathbf{v}}(\mathbf{x}+\mathbf{r})\right]}}
-
-where :math:`\mathcal{A}_{\mathbf{v}}(\mathbf{x})` is the advection of velocity at position :math:`\mathbf{x}`:
-
-.. math:: 
-    \mathcal{A}_{\mathbf{v}}(\mathbf{x}) = \left[\mathbf{v}(\mathbf{x}) \cdot \nabla\right] \mathbf{v}(\mathbf{x})
-
-and :math:`\nabla` is the gradient operator. 
-
-These structure functions have a different relationship to turbulent fluxes than traditional structure functions (above), but they can be compared to third-order structure functions.  
+Similar to the third-order structure functions above, advective structure functions can provide information about inter-scale transfers of energy, enstrophy, and tracer variance in simple/idealized flows. An advantage of advective structure functions is that can also be used to diagnose these properties to more complex flows (e.g., with strong anisotropy), and have different statisical properties.  
 
 .. _Derived relationships between various structure functions and turbulent properties:
 
