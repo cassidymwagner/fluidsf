@@ -37,6 +37,7 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             },
         ),
         # Test 2: linear velocities all SFs no scalar non-periodic latlon grid
+        # and array of dx and dy
         (
             np.meshgrid(np.arange(10), np.arange(10))[0],  # u
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
@@ -67,6 +68,91 @@ from fluidsf.generate_structure_functions import generate_structure_functions
                 ),
             },
         ),
+        # Test 3: linear velocities all SFs no scalar non-periodic latlon grid
+        # and single dx and dy raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            False,  # skip_velocity_sf
+            None,  # scalar
+            ["LLL", "LL", "LTT"],  # traditional_type
+            1,  # dx
+            1,  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 4: linear velocities all SFs no scalar non-periodic latlon grid no dx and
+        # dy
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            False,  # skip_velocity_sf
+            None,  # scalar
+            ["LLL", "LL", "LTT"],  # traditional_type
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 5: linear velocities all SFs scalar provided but no LSS in
+        # traditional_type non-periodic latlon grid
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            False,  # skip_velocity_sf
+            np.arange(10),  # scalar
+            ["LLL", "LL", "LTT"],  # traditional_type
+            np.ones(10),  # dx
+            np.ones(10),  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 6: linear velocities all SFs scalar not provided but LSS in
+        # traditional_type non-periodic latlon grid
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            False,  # skip_velocity_sf
+            None,  # scalar
+            ["LLL", "LL", "LTT", "LSS"],  # traditional_type
+            np.ones(10),  # dx
+            np.ones(10),  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 7: linear velocities skip velocity true no scalar non-periodic latlon
+        # grid
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            True,  # skip_velocity_sf
+            None,  # scalar
+            ["LLL", "LL", "LTT"],  # traditional_type
+            np.ones(10),  # dx
+            np.ones(10),  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
     ],
 )
 def test_generate_structure_functions_parameterized(
@@ -85,30 +171,49 @@ def test_generate_structure_functions_parameterized(
     expected_dict,
 ):
     """Test generate_structure_functions produces expected results."""
-    output_dict = generate_structure_functions(
-        u,
-        v,
-        x,
-        y,
-        skip_velocity_sf,
-        scalar,
-        traditional_type,
-        dx,
-        dy,
-        boundary,
-        grid_type,
-        nbins,
-    )
-    for key, value in expected_dict.items():
-        if key in output_dict:
-            if not np.allclose(output_dict[key], value, equal_nan=True):
-                print(output_dict[key])
-                print(expected_dict[key])
-                print(type(output_dict[key]), type(expected_dict[key]))
-                print(len(output_dict[key]), len(expected_dict[key]))
-                raise AssertionError(
-                    f"Output dict value for key '{key}' does not match "
-                    f"expected value '{output_dict[key]}'."
-                )
-        else:
-            raise AssertionError(f"Output dict does not contain key '{key}'.")
+    if expected_dict == ValueError:
+        with pytest.raises(ValueError):
+            generate_structure_functions(
+                u,
+                v,
+                x,
+                y,
+                skip_velocity_sf,
+                scalar,
+                traditional_type,
+                dx,
+                dy,
+                boundary,
+                grid_type,
+                nbins,
+            )
+        return
+    else:
+        output_dict = generate_structure_functions(
+            u,
+            v,
+            x,
+            y,
+            skip_velocity_sf,
+            scalar,
+            traditional_type,
+            dx,
+            dy,
+            boundary,
+            grid_type,
+            nbins,
+        )
+
+        for key, value in expected_dict.items():
+            if key in output_dict:
+                if not np.allclose(output_dict[key], value, equal_nan=True):
+                    print(output_dict[key])
+                    print(expected_dict[key])
+                    print(type(output_dict[key]), type(expected_dict[key]))
+                    print(len(output_dict[key]), len(expected_dict[key]))
+                    raise AssertionError(
+                        f"Output dict value for key '{key}' does not match "
+                        f"expected value '{output_dict[key]}'."
+                    )
+            else:
+                raise AssertionError(f"Output dict does not contain key '{key}'.")
