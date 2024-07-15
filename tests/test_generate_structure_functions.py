@@ -6,7 +6,7 @@ from fluidsf.generate_structure_functions import generate_structure_functions
 
 
 @pytest.mark.parametrize(
-    "u, v, x, y, skip_velocity_sf, scalar, traditional_type, dx, dy, boundary, "
+    "u, v, x, y, sf_type, scalar, dx, dy, boundary, "
     "grid_type, nbins, expected_dict",
     [
         # Test 1: linear velocities all SFs no scalar non-periodic
@@ -15,9 +15,8 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            False,  # skip_velocity_sf
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
-            ["LLL", "LL", "LTT"],  # traditional_type
             None,  # dx
             None,  # dy
             None,  # boundary
@@ -43,9 +42,8 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            False,  # skip_velocity_sf
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
-            ["LLL", "LL", "LTT"],  # traditional_type
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
@@ -75,9 +73,8 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            False,  # skip_velocity_sf
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
-            ["LLL", "LL", "LTT"],  # traditional_type
             1,  # dx
             1,  # dy
             None,  # boundary
@@ -92,9 +89,8 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            False,  # skip_velocity_sf
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
-            ["LLL", "LL", "LTT"],  # traditional_type
             None,  # dx
             None,  # dy
             None,  # boundary
@@ -103,15 +99,14 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             ValueError,
         ),
         # Test 5: linear velocities all SFs scalar provided but no LSS in
-        # traditional_type non-periodic latlon grid
+        # sf_type non-periodic latlon grid
         (
             np.meshgrid(np.arange(10), np.arange(10))[0],  # u
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            False,  # skip_velocity_sf
             np.arange(10),  # scalar
-            ["LLL", "LL", "LTT"],  # traditional_type
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
@@ -120,15 +115,14 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             ValueError,
         ),
         # Test 6: linear velocities all SFs scalar not provided but LSS in
-        # traditional_type non-periodic latlon grid
+        # sf_type non-periodic latlon grid
         (
             np.meshgrid(np.arange(10), np.arange(10))[0],  # u
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            False,  # skip_velocity_sf
+            ["LLL", "LL", "LTT", "LSS"],  # sf_type
             None,  # scalar
-            ["LLL", "LL", "LTT", "LSS"],  # traditional_type
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
@@ -136,23 +130,32 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             None,  # nbins
             ValueError,
         ),
-        # Test 7: linear velocities skip velocity true no scalar non-periodic latlon
-        # grid
-        (
-            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
-            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
-            np.arange(10),  # x
-            np.arange(10),  # y
-            True,  # skip_velocity_sf
-            None,  # scalar
-            ["LLL", "LL", "LTT"],  # traditional_type
-            np.ones(10),  # dx
-            np.ones(10),  # dy
-            None,  # boundary
-            "latlon",  # grid_type
-            None,  # nbins
-            ValueError,
-        ),
+        # # Test 7: linear velocities all SFs no scalar periodic uniform grid
+        # (
+        #     np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+        #     0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+        #     np.arange(10),  # x
+        #     np.arange(10),  # y
+        #     ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+        #     None,  # scalar
+        #     None,  # dx
+        #     None,  # dy
+        #     "periodic-all",  # boundary
+        #     "uniform",  # grid_type
+        #     None,  # nbins
+        #     {
+        #         "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+        #         "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+        #         "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+        #         "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+        #         "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+        #         "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+        #         "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+        #         "SF_LL_y": 0 * np.linspace(0, 8, 9),
+        #         "x-diffs": np.linspace(0, 8, 9),
+        #         "y-diffs": np.linspace(0, 8, 9),
+        #     },
+        # ),
     ],
 )
 def test_generate_structure_functions_parameterized(
@@ -160,9 +163,8 @@ def test_generate_structure_functions_parameterized(
     v,
     x,
     y,
-    skip_velocity_sf,
+    sf_type,
     scalar,
-    traditional_type,
     dx,
     dy,
     boundary,
@@ -178,9 +180,8 @@ def test_generate_structure_functions_parameterized(
                 v,
                 x,
                 y,
-                skip_velocity_sf,
+                sf_type,
                 scalar,
-                traditional_type,
                 dx,
                 dy,
                 boundary,
@@ -194,9 +195,8 @@ def test_generate_structure_functions_parameterized(
             v,
             x,
             y,
-            skip_velocity_sf,
+            sf_type,
             scalar,
-            traditional_type,
             dx,
             dy,
             boundary,

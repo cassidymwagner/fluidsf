@@ -5,8 +5,8 @@ from fluidsf.calculate_structure_function import calculate_structure_function
 
 
 @pytest.mark.parametrize(
-    "u, v, adv_x, adv_y, shift_x, shift_y, skip_velocity_sf, scalar, "
-    "adv_scalar, traditional_type, boundary, expected_result",
+    "u, v, adv_x, adv_y, shift_x, shift_y, sf_type, scalar, "
+    "adv_scalar, boundary, expected_result",
     [
         # # Test 1: velocity and scalar no traditional
         # (
@@ -189,17 +189,16 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             )[1],  # adv_y
             1,  # shift_x
             1,  # shift_y
-            False,  # skip_velocity_sf
+            ["ASF_V", "LL", "LLL", "LTT"],  # sf_type
             None,  # scalar
             None,  # adv_scalar
-            ["LL", "LLL", "LTT"],  # traditional_type
             None,  # boundary
             {
-                "SF_velocity_x": (5 / 4) * 1,
+                "SF_advection_velocity_x": (5 / 4) * 1,
                 "SF_LL_x": 1,
                 "SF_LLL_x": 1,
                 "SF_LTT_x": (1 / 4) * 1,
-                "SF_velocity_y": (5 / 4) * 0,
+                "SF_advection_velocity_y": (5 / 4) * 0,
                 "SF_LL_y": 0,
                 "SF_LLL_y": 0,
                 "SF_LTT_y": (1 / 4) * 0,
@@ -229,14 +228,13 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             )[1],  # adv_y
             1,  # shift_x
             1,  # shift_y
-            False,  # skip_velocity_sf
+            ["ASF_V"],  # sf_type
             None,  # scalar
             None,  # adv_scalar
-            None,  # traditional_type
             None,  # boundary
             {
-                "SF_velocity_x": (5 / 4) * 1,
-                "SF_velocity_y": (5 / 4) * 0,
+                "SF_advection_velocity_x": (5 / 4) * 1,
+                "SF_advection_velocity_y": (5 / 4) * 0,
             },
         ),
         # Test 11: linear velocities and scalar=v non-periodic
@@ -263,7 +261,7 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             )[1],  # adv_y
             1,  # shift_x
             1,  # shift_y
-            False,  # skip_velocity_sf
+            ["ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS"],  # sf_type
             np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
@@ -274,19 +272,18 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.gradient(
                 np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
             )[1],  # adv_scalar
-            ["LL", "LLL", "LTT", "LSS"],  # traditional_type
             None,  # boundary
             {
-                "SF_velocity_x": (5 / 4) * 1,
+                "SF_advection_velocity_x": (5 / 4) * 1,
                 "SF_LL_x": 1,
                 "SF_LLL_x": 1,
                 "SF_LTT_x": (1 / 4) * 1,
-                "SF_velocity_y": (5 / 4) * 0,
+                "SF_advection_velocity_y": (5 / 4) * 0,
                 "SF_LL_y": 0,
                 "SF_LLL_y": 0,
                 "SF_LTT_y": (1 / 4) * 0,
-                "SF_scalar_x": 1,
-                "SF_scalar_y": 0,
+                "SF_advection_scalar_x": 1,
+                "SF_advection_scalar_y": 0,
                 "SF_LSS_x": 1,
                 "SF_LSS_y": 0,
             },
@@ -300,10 +297,9 @@ def test_calculate_structure_function_parameterized(
     adv_y,
     shift_x,
     shift_y,
-    skip_velocity_sf,
+    sf_type,
     scalar,
     adv_scalar,
-    traditional_type,
     boundary,
     expected_result,
 ):
@@ -315,10 +311,9 @@ def test_calculate_structure_function_parameterized(
         adv_y,
         shift_x,
         shift_y,
-        skip_velocity_sf,
+        sf_type,
         scalar,
         adv_scalar,
-        traditional_type,
         boundary,
     )
 
