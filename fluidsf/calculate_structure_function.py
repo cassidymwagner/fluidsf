@@ -52,13 +52,13 @@ def calculate_structure_function(  # noqa: D417, C901
             A dictionary containing the advection velocity structure functions and
             scalar structure functions (if applicable).
             The dictionary has the following keys:
-                'SF_advection_velocity_x': The advection velocity structure function in 
+                'SF_advection_velocity_x': The advection velocity structure function in
                 the x direction.
-                'SF_advection_velocity_y': The advection velocity structure function in 
+                'SF_advection_velocity_y': The advection velocity structure function in
                 the y direction.
-                'SF_advection_scalar_x': The scalar structure function in the x 
+                'SF_advection_scalar_x': The scalar structure function in the x
                 direction.
-                'SF_advection_scalar_y': The scalar structure function in the y 
+                'SF_advection_scalar_y': The scalar structure function in the y
                 direction.
                 'SF_LL_x': The traditional structure function LL in the x direction.
                 'SF_LL_y': The traditional structure function LL in the y direction.

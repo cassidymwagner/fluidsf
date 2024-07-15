@@ -259,7 +259,6 @@ def generate_structure_functions(  # noqa: C901, D417
         xd = xd_bin
         yd = yd_bin
 
-
     data = {
         "SF_advection_velocity_x": SF_adv_x,
         "SF_advection_velocity_y": SF_adv_y,

@@ -6,8 +6,7 @@ from fluidsf.generate_structure_functions import generate_structure_functions
 
 
 @pytest.mark.parametrize(
-    "u, v, x, y, sf_type, scalar, dx, dy, boundary, "
-    "grid_type, nbins, expected_dict",
+    "u, v, x, y, sf_type, scalar, dx, dy, boundary, " "grid_type, nbins, expected_dict",
     [
         # Test 1: linear velocities all SFs no scalar non-periodic
         (
