@@ -1,4 +1,3 @@
-import numpy as np
 from geopy.distance import great_circle
 
 

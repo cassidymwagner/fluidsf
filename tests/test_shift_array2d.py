@@ -57,7 +57,7 @@ from fluidsf.shift_array2d import shift_array2d
             np.array([[7, 8, 9], [1, 2, 3], [4, 5, 6]]),
         ),
         (
-            np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),    
+            np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
             1,
             2,
             "periodic-x",
