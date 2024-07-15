@@ -69,6 +69,42 @@ def generate_structure_functions(  # noqa: C901, D417
             distances for the x- and y-direction.
 
     """
+    # Error handling
+    if boundary not in ["periodic-all", "periodic-x", "periodic-y", None]:
+        raise ValueError(
+            "Boundary must be 'periodic-all', 'periodic-x', 'periodic-y', or None."
+        )
+    if grid_type not in ["uniform", "latlon"]:
+        raise ValueError("Grid type must be 'uniform' or 'latlon'.")
+
+    if grid_type == "latlon" and y is None:
+        raise ValueError(
+            "If grid_type is 'latlon', y must be provided."
+            " Ensure x is latitude and y is longitude."
+        )
+
+    if grid_type == "latlon" and (
+        isinstance(dx, int | float | None) or isinstance(dy, int | float | None)
+    ):
+        raise ValueError(
+            "If grid_type is 'latlon', dx and dy must be provided as arrays."
+        )
+
+    if scalar is not None and "LSS" not in traditional_type:
+        raise ValueError(
+            "If scalar is provided, you must include 'LSS' in traditional_type."
+        )
+    if scalar is None and "LSS" in traditional_type:
+        raise ValueError(
+            "If you include 'LSS' in traditional_type, you must provide a scalar array."
+        )
+
+    if skip_velocity_sf is True and scalar is None:
+        raise ValueError(
+            "If skip_velocity_sf is True, you must provide a scalar array, "
+            "otherwise there's nothing to calculate."
+        )
+
     # Initialize variables as NoneType
     SF_adv_x = None
     SF_adv_y = None
