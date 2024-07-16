@@ -7,6 +7,7 @@ FluidSF
    sfs
    qs
    examples
+   modules
    terms
    supported_data
    fluidsf
