@@ -14,7 +14,7 @@ def generate_structure_functions(  # noqa: C901, D417
     v,
     x,
     y,
-    sf_type,
+    sf_type=["ASF_V"],
     scalar=None,
     dx=None,
     dy=None,
