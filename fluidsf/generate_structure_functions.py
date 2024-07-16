@@ -95,7 +95,7 @@ def generate_structure_functions(  # noqa: C901, D417
             "If grid_type is 'latlon', dx and dy must be provided as arrays."
         )
 
-    if scalar is not None and (("LSS" not in sf_type) or ("ASF_S" not in sf_type)):
+    if scalar is not None and (("LSS" not in sf_type) and ("ASF_S" not in sf_type)):
         raise ValueError(
             "If scalar is provided, you must include 'LSS' or 'ASF_S' " "in SF_type."
         )
