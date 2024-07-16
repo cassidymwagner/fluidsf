@@ -288,6 +288,126 @@ from fluidsf.calculate_structure_function import calculate_structure_function
                 "SF_LSS_y": 0,
             },
         ),
+        # Test 12: slanted velocities np.arange(5) no scalar only LL,LLL periodic with
+        # shift 5
+        (
+            np.tile(np.tile(np.arange(5), 5), (25, 1)),  # u
+            np.tile(np.tile(np.arange(5), 5), (25, 1)),  # v
+            None,  # adv_x
+            None,  # adv_y
+            5,  # shift_x
+            5,  # shift_y
+            ["LL", "LLL"],  # sf_type
+            None,  # scalar
+            None,  # adv_scalar
+            "periodic-all",  # boundary
+            {
+                "SF_LL_x": 0,
+                "SF_LLL_x": 0,
+                "SF_LL_y": 0,
+                "SF_LLL_y": 0,
+            },
+        ),
+        # Test 13: slanted velocities np.arange(5) tiled in y no scalar only LL,LLL
+        # periodic with shift 1
+        (
+            np.tile(np.tile(np.arange(5), 5), (25, 1)),  # u
+            np.tile(np.tile(np.arange(5), 5), (25, 1)),  # v
+            None,  # adv_x
+            None,  # adv_y
+            1,  # shift_x
+            1,  # shift_y
+            ["LL", "LLL"],  # sf_type
+            None,  # scalar
+            None,  # adv_scalar
+            "periodic-all",  # boundary
+            {
+                "SF_LL_x": 4,
+                "SF_LLL_x": -4 * 3,
+                "SF_LL_y": 0,
+                "SF_LLL_y": 0,
+            },
+        ),
+        # Test 14: slanted velocities np.arange(6) tiled in y no scalar only LL,LLL
+        # periodic with shift 1
+        (
+            np.tile(np.tile(np.arange(6), 6), (36, 1)),  # u
+            np.tile(np.tile(np.arange(6), 6), (36, 1)),  # v
+            None,  # adv_x
+            None,  # adv_y
+            1,  # shift_x
+            1,  # shift_y
+            ["LL", "LLL"],  # sf_type
+            None,  # scalar
+            None,  # adv_scalar
+            "periodic-all",  # boundary
+            {
+                "SF_LL_x": 5,
+                "SF_LLL_x": -5 * 4,
+                "SF_LL_y": 0,
+                "SF_LLL_y": 0,
+            },
+        ),
+        # Test 15: slanted velocities np.arange(5) tiled in x no scalar only LL,LLL
+        # periodic with shift 1
+        (
+            np.tile(np.tile(np.arange(5), 5), (25, 1)).T,  # u
+            np.tile(np.tile(np.arange(5), 5), (25, 1)).T,  # v
+            None,  # adv_x
+            None,  # adv_y
+            1,  # shift_x
+            1,  # shift_y
+            ["LL", "LLL"],  # sf_type
+            None,  # scalar
+            None,  # adv_scalar
+            "periodic-all",  # boundary
+            {
+                "SF_LL_x": 0,
+                "SF_LLL_x": 0,
+                "SF_LL_y": 4,
+                "SF_LLL_y": -4 * 3,
+            },
+        ),
+        # Test 16: slanted velocities np.arange(6) tiled in x no scalar only LL,LLL
+        # periodic with shift 1
+        (
+            np.tile(np.tile(np.arange(6), 6), (36, 1)).T,  # u
+            np.tile(np.tile(np.arange(6), 6), (36, 1)).T,  # v
+            None,  # adv_x
+            None,  # adv_y
+            1,  # shift_x
+            1,  # shift_y
+            ["LL", "LLL"],  # sf_type
+            None,  # scalar
+            None,  # adv_scalar
+            "periodic-all",  # boundary
+            {
+                "SF_LL_x": 0,
+                "SF_LLL_x": 0,
+                "SF_LL_y": 5,
+                "SF_LLL_y": -5 * 4,
+            },
+        ),
+        # Test 17: slanted velocities np.arange(15) tilted in y no scalar only LL,LLL
+        # periodic with shift 1
+        (
+            np.tile(np.tile(np.arange(15), 15), (225, 1)),  # u
+            np.tile(np.tile(np.arange(15), 15), (225, 1)),  # v
+            None,  # adv_x
+            None,  # adv_y
+            1,  # shift_x
+            1,  # shift_y
+            ["LL", "LLL"],  # sf_type
+            None,  # scalar
+            None,  # adv_scalar
+            "periodic-all",  # boundary
+            {
+                "SF_LL_x": 14,
+                "SF_LLL_x": -14 * 13,
+                "SF_LL_y": 0,
+                "SF_LLL_y": 0,
+            },
+        ),
     ],
 )
 def test_calculate_structure_function_parameterized(

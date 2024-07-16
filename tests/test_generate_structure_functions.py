@@ -129,32 +129,76 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             None,  # nbins
             ValueError,
         ),
-        # # Test 7: linear velocities all SFs no scalar periodic uniform grid
-        # (
-        #     np.meshgrid(np.arange(10), np.arange(10))[0],  # u
-        #     0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
-        #     np.arange(10),  # x
-        #     np.arange(10),  # y
-        #     ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
-        #     None,  # scalar
-        #     None,  # dx
-        #     None,  # dy
-        #     "periodic-all",  # boundary
-        #     "uniform",  # grid_type
-        #     None,  # nbins
-        #     {
-        #         "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
-        #         "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
-        #         "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
-        #         "SF_LLL_y": 0 * np.linspace(0, 8, 9),
-        #         "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
-        #         "SF_LTT_y": 0 * np.linspace(0, 8, 9),
-        #         "SF_LL_x": np.linspace(0, 8, 9) ** 2,
-        #         "SF_LL_y": 0 * np.linspace(0, 8, 9),
-        #         "x-diffs": np.linspace(0, 8, 9),
-        #         "y-diffs": np.linspace(0, 8, 9),
-        #     },
-        # ),
+        # Test 7: slanted velocities no scalar periodic uniform grid only LL arange(10)
+        (
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # u
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # v
+            np.linspace(0, 10**2, 10**2),  # x
+            np.linspace(0, 10**2, 10**2),  # y
+            ["LL"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            "periodic-all",  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            {
+                "SF_LL_x": np.tile(
+                    np.concatenate(
+                        (
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                ::-1
+                            ],
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                1:-1
+                            ],
+                        )
+                    ),
+                    int(10 / 2),
+                ),
+                "SF_LL_y": np.zeros(50),
+                "x-diffs": np.linspace(0, 10**2, 10**2)[:50],
+                "y-diffs": np.linspace(0, 10**2, 10**2)[:50],
+            },
+        ),
+        # Test 8: slanted velocities no scalar periodic uniform grid only LL arange(9)
+        (
+            np.tile(np.tile(np.arange(9), 9), (9**2, 1)),  # u
+            np.tile(np.tile(np.arange(9), 9), (9**2, 1)),  # v
+            np.linspace(0, 9**2, 9**2),  # x
+            np.linspace(0, 9**2, 9**2),  # y
+            ["LL"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            "periodic-all",  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            {
+                "SF_LL_x": np.tile(
+                    np.concatenate(
+                        (
+                            np.asarray(
+                                [
+                                    sum((9 - 1) - (2 * i) for i in range(j))
+                                    for j in range(int((9 + 1) / 2))
+                                ]
+                            ),
+                            np.asarray(
+                                [
+                                    sum((9 - 1) - (2 * i) for i in range(j))
+                                    for j in range(int((9 + 1) / 2))
+                                ][::-1][:-1]
+                            ),
+                        )
+                    ),
+                    int((9 + 1) / 2),
+                )[: -int((9 + 1) / 2)],
+                "SF_LL_y": np.zeros(40),
+                "x-diffs": np.linspace(0, 9**2, 9**2)[:40],
+                "y-diffs": np.linspace(0, 9**2, 9**2)[:40],
+            },
+        ),
     ],
 )
 def test_generate_structure_functions_parameterized(
