@@ -244,13 +244,43 @@ from fluidsf.generate_structure_functions import generate_structure_functions
             None,  # nbins
             ValueError,
         ),
-        # Test 12: sf_type is an integer raises ValueError
+        # Test 12: sf_type is list with integer values raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            [1],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 13: sf_type is an integer raises ValueError
         (
             np.meshgrid(np.arange(10), np.arange(10))[0],  # u
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
             1,  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 14: sf_type is a string raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            "ASF_V",  # sf_type
             None,  # scalar
             None,  # dx
             None,  # dy

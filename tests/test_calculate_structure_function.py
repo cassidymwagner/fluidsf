@@ -177,7 +177,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_x
+            )[
+                1
+            ],  # adv_x
             np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 0.5 * np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
@@ -186,7 +188,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 0.5 * np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_y
+            )[
+                1
+            ],  # adv_y
             1,  # shift_x
             1,  # shift_y
             ["ASF_V", "LL", "LLL", "LTT"],  # sf_type
@@ -216,7 +220,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_x
+            )[
+                1
+            ],  # adv_x
             np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 0.5 * np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
@@ -225,7 +231,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 0.5 * np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_y
+            )[
+                1
+            ],  # adv_y
             1,  # shift_x
             1,  # shift_y
             ["ASF_V"],  # sf_type
@@ -249,7 +257,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_x
+            )[
+                1
+            ],  # adv_x
             np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 0.5 * np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
@@ -258,7 +268,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 0.5 * np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_y
+            )[
+                1
+            ],  # adv_y
             1,  # shift_x
             1,  # shift_y
             ["ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS"],  # sf_type
@@ -271,7 +283,9 @@ from fluidsf.calculate_structure_function import calculate_structure_function
             * np.meshgrid(np.arange(10), np.arange(10))[0]
             * np.gradient(
                 np.meshgrid(np.arange(10), np.arange(10))[0], 1, 1, axis=(1, 0)
-            )[1],  # adv_scalar
+            )[
+                1
+            ],  # adv_scalar
             None,  # boundary
             {
                 "SF_advection_velocity_x": (5 / 4) * 1,

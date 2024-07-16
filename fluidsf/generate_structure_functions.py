@@ -65,18 +65,28 @@ def generate_structure_functions(  # noqa: C901, D417
 
     """
     # Error handling
+
+    if not isinstance(sf_type, list):
+        raise ValueError("sf_type must be a list of strings.")
+
+    if len(sf_type) == 0:
+        raise ValueError(
+            "sf_type cannot be an empty list. All elements in sf_type must be strings. "
+            "Accepted strings are: ASF_V, ASF_S, LL, LLL, LTT, LSS."
+        )
+
+    if not all(isinstance(t, str) for t in sf_type):
+        raise ValueError(
+            "All elements in sf_type must be strings. Accepted strings are: "
+            "ASF_V, ASF_S, LL, LLL, LTT, LSS."
+        )
+
     if boundary not in ["periodic-all", "periodic-x", "periodic-y", None]:
         raise ValueError(
             "Boundary must be 'periodic-all', 'periodic-x', 'periodic-y', or None."
         )
     if grid_type not in ["uniform", "latlon"]:
         raise ValueError("Grid type must be 'uniform' or 'latlon'.")
-
-    if grid_type == "latlon" and y is None:
-        raise ValueError(
-            "If grid_type is 'latlon', y must be provided."
-            " Ensure x is latitude and y is longitude."
-        )
 
     if grid_type == "latlon" and (
         isinstance(dx, int | float | None) or isinstance(dy, int | float | None)
@@ -93,12 +103,6 @@ def generate_structure_functions(  # noqa: C901, D417
         raise ValueError(
             "If you include 'LSS' or 'ASF_S' in SF_type, you must provide "
             "a scalar array."
-        )
-
-    if not all(isinstance(t, str) for t in sf_type):
-        raise ValueError(
-            "All elements in sf_type must be strings. Accepted strings are: "
-            "ASF_V, ASF_S, LL, LLL, LTT, LSS."
         )
 
     # Initialize variables as NoneType
