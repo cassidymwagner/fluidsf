@@ -33,6 +33,7 @@ There are a variety of physically-useful velocity structure functions including 
 .. math:: 
     SF_{LL}(\mathbf{r}) = \overline{{\left[u_L(\mathbf{x}+\mathbf{r}) - u_L(\mathbf{x})\right]^2}} = \overline{{\left[\delta u_L \right]^2}}
 
+.. math::
     SF_{TT}(\mathbf{r}) = \overline{{\left[\delta u_T \right]^2}}
 
 The spatial variations of :math:`SF_{LL}` and :math:`SF_{TT}`, and their ratio, are often used to explore the distribution of energy across scales, and the relative prevalence of rotational and divergent motions within a fluid.
@@ -42,8 +43,10 @@ It is also common to utilize third-order velocity structure functions,
 .. math:: 
     SF_{LLL}(\mathbf{r}) = \overline{{\left[\delta u_L \right]^3}}
 
+.. math::
     SF_{LTT}(\mathbf{r}) = \overline{{\left[\delta u_L \right]\left[\delta u_T \right]^2}}
 
+.. math::
     SF_{L\phi \phi}(\mathbf{r}) = \overline{{\left[\delta u_L \right]\left[\delta \phi \right]^2}}
 
 which can provide information about the inter-scale transfers of energy (:math:`SF_{LTT}` and :math:`SF_{LTT}`) or tracer variance (:math:`SF_{L\phi\phi}`) within a fluid flow. Note that :math:`SF_{LTT}` and :math:`SF_{L\phi\phi}` are blended structure functions, in that they utilize the spatial differences of multiple properties. 
@@ -66,6 +69,7 @@ Advective structure functions are a particular type of blended structure functio
 
     ASF_{velocity}(\mathbf{r}) = \overline{\delta \mathbf{u} \cdot \delta \boldsymbol{\mathcal{A}}_{\mathbf{u}}}
 
+.. math::
     ASF_{\phi}(\mathbf{r}) = \overline{\delta \phi \delta \mathcal{A}_{\phi}}
 
 As the name suggests, advective structure functions depend on the advection of scalars (:math:`\mathcal{A}_{\phi}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \phi`) or velocity (:math:`\boldsymbol{\mathcal{A}}_{\mathbf{u}}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \mathbf{u}`) where :math:`\nabla` is the gradient operator.
