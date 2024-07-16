@@ -14,9 +14,8 @@ def generate_structure_functions(  # noqa: C901, D417
     v,
     x,
     y,
-    skip_velocity_sf=False,
+    sf_type,
     scalar=None,
-    traditional_type=None,
     dx=None,
     dy=None,
     boundary="periodic-all",
@@ -39,16 +38,12 @@ def generate_structure_functions(  # noqa: C901, D417
             1D array of x-coordinates.
         y: ndarray
             1D array of y-coordinates.
-        skip_velocity_sf: bool, optional
-            Flag used to skip calculating the velocity-based structure function if
-            the user only wants to calculate the scalar-based structure function.
-            Defaults to False.
+        sf_type: list
+            List of structure function types to calculate.
+            Accepted types are: "ASF_V, "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to
+            "ASF_V".
         scalar: ndarray, optional
             2D array of scalar values. Defaults to None.
-        traditional_type: list, optional
-            List of traditional structure function types to calculate.
-            Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
-            no traditional structure functions are calculated. Defaults to None.
         dx: float, optional
             Grid spacing in the x-direction. Defaults to None.
         dy: float, optional
@@ -69,6 +64,47 @@ def generate_structure_functions(  # noqa: C901, D417
             distances for the x- and y-direction.
 
     """
+    # Error handling
+
+    if not isinstance(sf_type, list):
+        raise ValueError("sf_type must be a list of strings.")
+
+    if len(sf_type) == 0:
+        raise ValueError(
+            "sf_type cannot be an empty list. All elements in sf_type must be strings. "
+            "Accepted strings are: ASF_V, ASF_S, LL, LLL, LTT, LSS."
+        )
+
+    if not all(isinstance(t, str) for t in sf_type):
+        raise ValueError(
+            "All elements in sf_type must be strings. Accepted strings are: "
+            "ASF_V, ASF_S, LL, LLL, LTT, LSS."
+        )
+
+    if boundary not in ["periodic-all", "periodic-x", "periodic-y", None]:
+        raise ValueError(
+            "Boundary must be 'periodic-all', 'periodic-x', 'periodic-y', or None."
+        )
+    if grid_type not in ["uniform", "latlon"]:
+        raise ValueError("Grid type must be 'uniform' or 'latlon'.")
+
+    if grid_type == "latlon" and (
+        isinstance(dx, int | float | None) or isinstance(dy, int | float | None)
+    ):
+        raise ValueError(
+            "If grid_type is 'latlon', dx and dy must be provided as arrays."
+        )
+
+    if scalar is not None and (("LSS" not in sf_type) and ("ASF_S" not in sf_type)):
+        raise ValueError(
+            "If scalar is provided, you must include 'LSS' or 'ASF_S' " "in SF_type."
+        )
+    if scalar is None and (("LSS" in sf_type) or ("ASF_S" in sf_type)):
+        raise ValueError(
+            "If you include 'LSS' or 'ASF_S' in SF_type, you must provide "
+            "a scalar array."
+        )
+
     # Initialize variables as NoneType
     SF_adv_x = None
     SF_adv_y = None
@@ -105,30 +141,27 @@ def generate_structure_functions(  # noqa: C901, D417
     xd = np.zeros(len(sep_x) + 1)
     yd = np.zeros(len(sep_y) + 1)
 
-    # Initialize the structure function arrays
-    if skip_velocity_sf is False:
+    # Calculate advection if requested
+    if any("ASF_V" in t for t in sf_type):
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
         adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
-        if traditional_type is not None:
-            if any("LL" in t for t in traditional_type):
-                SF_x_LL = np.zeros(len(sep_x) + 1)
-                SF_y_LL = np.zeros(len(sep_y) + 1)
-            if any("LLL" in t for t in traditional_type):
-                SF_x_LLL = np.zeros(len(sep_x) + 1)
-                SF_y_LLL = np.zeros(len(sep_y) + 1)
-            if any("LTT" in t for t in traditional_type):
-                SF_x_LTT = np.zeros(len(sep_x) + 1)
-                SF_y_LTT = np.zeros(len(sep_y) + 1)
-
-    if scalar is not None:
+    if any("ASF_S" in t for t in sf_type):
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
         adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
-        if traditional_type is not None:
-            if any("LSS" in t for t in traditional_type):
-                SF_x_LSS = np.zeros(len(sep_x) + 1)
-                SF_y_LSS = np.zeros(len(sep_y) + 1)
+    if any("LL" in t for t in sf_type):
+        SF_x_LL = np.zeros(len(sep_x) + 1)
+        SF_y_LL = np.zeros(len(sep_y) + 1)
+    if any("LLL" in t for t in sf_type):
+        SF_x_LLL = np.zeros(len(sep_x) + 1)
+        SF_y_LLL = np.zeros(len(sep_y) + 1)
+    if any("LTT" in t for t in sf_type):
+        SF_x_LTT = np.zeros(len(sep_x) + 1)
+        SF_y_LTT = np.zeros(len(sep_y) + 1)
+    if any("LSS" in t for t in sf_type):
+        SF_x_LSS = np.zeros(len(sep_x) + 1)
+        SF_y_LSS = np.zeros(len(sep_y) + 1)
 
     # Iterate over separations in x and y
     for x_shift in sep_x:
@@ -145,31 +178,28 @@ def generate_structure_functions(  # noqa: C901, D417
             adv_y,
             x_shift,
             y_shift,
-            skip_velocity_sf,
+            sf_type,
             scalar,
             adv_scalar,
-            traditional_type,
             boundary,
         )
 
-        if skip_velocity_sf is False:
-            SF_adv_x[x_shift] = SF_dicts["SF_velocity_x"]
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
-                if any("LLL" in t for t in traditional_type):
-                    SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
-                if any("LTT" in t for t in traditional_type):
-                    SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
-        if scalar is not None:
-            SF_x_scalar[x_shift] = SF_dicts["SF_scalar_x"]
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
+        if any("ASF_V" in t for t in sf_type):
+            SF_adv_x[x_shift] = SF_dicts["SF_advection_velocity_x"]
+        if any("LL" in t for t in sf_type):
+            SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
+        if any("LLL" in t for t in sf_type):
+            SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
+        if any("LTT" in t for t in sf_type):
+            SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
+        if any("ASF_S" in t for t in sf_type):
+            SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
+        if any("LSS" in t for t in sf_type):
+            SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
 
         # Calculate separation distances in x
         xd[x_shift], tmp = calculate_separation_distances(
-            x[x_shift], y[y_shift], xroll[x_shift], y[y_shift], grid_type
+            x[0], y[0], xroll[0], y[0], grid_type
         )
 
     for y_shift in sep_y:
@@ -186,55 +216,50 @@ def generate_structure_functions(  # noqa: C901, D417
             adv_y,
             x_shift,
             y_shift,
-            skip_velocity_sf,
+            sf_type,
             scalar,
             adv_scalar,
-            traditional_type,
             boundary,
         )
 
-        if skip_velocity_sf is False:
-            SF_adv_y[y_shift] = SF_dicts["SF_velocity_y"]
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
-                if any("LLL" in t for t in traditional_type):
-                    SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
-                if any("LTT" in t for t in traditional_type):
-                    SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
-        if scalar is not None:
-            SF_y_scalar[y_shift] = SF_dicts["SF_scalar_y"]
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
+        if any("ASF_V" in t for t in sf_type):
+            SF_adv_y[y_shift] = SF_dicts["SF_advection_velocity_y"]
+        if any("LL" in t for t in sf_type):
+            SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
+        if any("LLL" in t for t in sf_type):
+            SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
+        if any("LTT" in t for t in sf_type):
+            SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
+        if any("ASF_S" in t for t in sf_type):
+            SF_y_scalar[y_shift] = SF_dicts["SF_advection_scalar_y"]
+        if any("LSS" in t for t in sf_type):
+            SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
 
         # Calculate separation distances in y
         tmp, yd[y_shift] = calculate_separation_distances(
-            x[x_shift], y[y_shift], x[x_shift], yroll[y_shift], grid_type
+            x[0], y[0], x[0], yroll[0], grid_type
         )
 
     # Bin the data if requested
     if nbins is not None:
-        if skip_velocity_sf is False:
+        if any("ASF_V" in t for t in sf_type):
             xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins)
             yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins)
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
-                    yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
-                if any("LLL" in t for t in traditional_type):
-                    xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
-                    yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
-                if any("LTT" in t for t in traditional_type):
-                    xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins)
-                    yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins)
-        if scalar is not None:
+        if any("ASF_S" in t for t in sf_type):
             xd_bin, SF_x_scalar = bin_data(xd, SF_x_scalar, nbins)
             yd_bin, SF_y_scalar = bin_data(yd, SF_y_scalar, nbins)
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins)
-                    yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins)
+        if any("LL" in t for t in sf_type):
+            xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
+            yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
+        if any("LLL" in t for t in sf_type):
+            xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
+            yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
+        if any("LTT" in t for t in sf_type):
+            xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins)
+            yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins)
+        if any("LSS" in t for t in sf_type):
+            xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins)
+            yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins)
         xd = xd_bin
         yd = yd_bin
 
@@ -254,4 +279,5 @@ def generate_structure_functions(  # noqa: C901, D417
         "x-diffs": xd,
         "y-diffs": yd,
     }
+
     return data
