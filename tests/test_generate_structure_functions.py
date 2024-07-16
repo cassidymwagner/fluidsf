@@ -199,6 +199,66 @@ from fluidsf.generate_structure_functions import generate_structure_functions
                 "y-diffs": np.linspace(0, 9**2, 9**2)[:40],
             },
         ),
+        # Test 9: boundary is 'Periodic' raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            "Periodic",  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 10: grid type is 'non-uniform' raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "non-uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 11: sf_type is empty raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            [],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 12: sf_type is an integer raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            1,  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
     ],
 )
 def test_generate_structure_functions_parameterized(
