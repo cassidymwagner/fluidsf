@@ -27,10 +27,10 @@ def shift_array_1d(input_array, shift_by=1, boundary="Periodic"):  # noqa: D417
     shifted_array = np.full(np.shape(input_array), np.nan)
 
     if boundary == "Periodic":
-        shifted_array[:shift_by] = input_array[-shift_by:]
-        shifted_array[shift_by:] = input_array[:-shift_by]
+        shifted_array[:-shift_by] = input_array[shift_by:]
+        shifted_array[-shift_by:] = input_array[:shift_by]
 
     else:
-        shifted_array[shift_by:] = input_array[:-shift_by]
+        shifted_array[:-shift_by] = input_array[shift_by:]
 
     return shifted_array
