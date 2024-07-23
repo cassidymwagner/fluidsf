@@ -9,10 +9,10 @@ from .shift_array1d import shift_array1d
 def generate_structure_functions_1d(  # noqa: C901, D417
     u,
     x,
+    sf_type=["LLL"],  # noqa: B006
     v=None,
     y=None,
     scalar=None,
-    traditional_type=["LLL"],  # noqa: B006
     dx=None,
     boundary="Periodic",
     grid_type="uniform",
@@ -31,6 +31,10 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         x: ndarray
             1D array of coordinates. If you have lat-lon data, set x to 1D array of
             latitudes.
+        sf_type: list
+            List of structure function types to calculate. Accepted types are: "LL",
+            "LLL", "LTT", "LSS". Defaults to "LLL". If you include "LSS", you must
+            provide a 1D array for scalar.
         v: ndarray
             1D array of v velocity components. Defaults to None.
         y: ndarray, optional
@@ -38,10 +42,6 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             lat-lon data, set y to 1D array of longitudes.
         scalar: ndarray, optional
             1D array of scalar values. Defaults to None.
-        traditional_type: list, optional
-            List of traditional structure function types to calculate.
-            Accepted types are: "LL", "LLL", "LTT", "LSS". Defaults to "LLL". If you
-            include "LSS", you must provide a 1D array for scalar.
         dx: float, optional
             Grid spacing along the data track. Defaults to None.
         boundary: str, optional
@@ -69,18 +69,14 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             "If grid_type is 'latlon', y must be provided."
             " Ensure x is latitude and y is longitude."
         )
-    if scalar is not None and "LSS" not in traditional_type:
+    if scalar is not None and "LSS" not in sf_type:
+        raise ValueError("If scalar is provided, you must include 'LSS' in sf_type.")
+    if scalar is None and "LSS" in sf_type:
         raise ValueError(
-            "If scalar is provided, you must include 'LSS' in traditional_type."
+            "If you include 'LSS' in sf_type, you must provide a scalar array."
         )
-    if scalar is None and "LSS" in traditional_type:
-        raise ValueError(
-            "If you include 'LSS' in traditional_type, you must provide a scalar array."
-        )
-    if v is None and "LTT" in traditional_type:
-        raise ValueError(
-            "If you include 'LTT' in traditional_type, you must provide a v array."
-        )
+    if v is None and "LTT" in sf_type:
+        raise ValueError("If you include 'LTT' in sf_type, you must provide a v array.")
 
     # Initialize variables as NoneType
     SF_LL = None
@@ -99,13 +95,13 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     xd = np.zeros(len(sep) + 1)
 
     # Initialize the structure function arrays
-    if "LL" in traditional_type:
+    if "LL" in sf_type:
         SF_LL = np.zeros(len(sep) + 1)
-    if "LLL" in traditional_type:
+    if "LLL" in sf_type:
         SF_LLL = np.zeros(len(sep) + 1)
-    if "LTT" in traditional_type:
+    if "LTT" in sf_type:
         SF_LTT = np.zeros(len(sep) + 1)
-    if "LSS" in traditional_type:
+    if "LSS" in sf_type:
         SF_LSS = np.zeros(len(sep) + 1)
 
     # Iterate over separations
@@ -113,49 +109,49 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         if boundary == "Periodic":
             xroll = shift_array1d(x, shift_by=sep_id, boundary="Periodic")
             if y is not None:
-                yroll = shift_array1d(y, shift_by=sep_id, boundary="Periodic")
+                yroll = shift_array1d(y, shift_by=1, boundary="Periodic")
         else:
             xroll = shift_array1d(x, shift_by=sep_id, boundary=None)
             if y is not None:
-                yroll = shift_array1d(y, shift_by=sep_id, boundary=None)
+                yroll = shift_array1d(y, shift_by=1, boundary=None)
 
         SF_dicts = calculate_structure_function_1d(
             u,
             sep_id,
+            sf_type,
             v,
             scalar,
-            traditional_type,
             boundary,
         )
 
-        if "LL" in traditional_type:
+        if "LL" in sf_type:
             SF_LL[sep_id] = SF_dicts["SF_LL"]
-        if "LLL" in traditional_type:
+        if "LLL" in sf_type:
             SF_LLL[sep_id] = SF_dicts["SF_LLL"]
-        if "LTT" in traditional_type:
+        if "LTT" in sf_type:
             SF_LTT[sep_id] = SF_dicts["SF_LTT"]
-        if "LSS" in traditional_type:
+        if "LSS" in sf_type:
             SF_LSS[sep_id] = SF_dicts["SF_LSS"]
 
         # Calculate separation distances along track
         if y is not None:
             xd[sep_id], tmp = calculate_separation_distances(
-                x[sep_id], y[sep_id], xroll[sep_id], yroll[sep_id], grid_type
+                x[0], y[0], xroll[0], yroll[0], grid_type
             )
         else:
             xd[sep_id], tmp = calculate_separation_distances(
-                x[sep_id], None, xroll[sep_id], None, grid_type
+                x[0], None, xroll[0], None, grid_type
             )
 
     # Bin the data if requested
     if nbins is not None:
-        if "LL" in traditional_type:
+        if "LL" in sf_type:
             xd_bin, SF_LL = bin_data(xd, SF_LL, nbins)
-        if "LLL" in traditional_type:
+        if "LLL" in sf_type:
             xd_bin, SF_LLL = bin_data(xd, SF_LLL, nbins)
-        if "LTT" in traditional_type:
+        if "LTT" in sf_type:
             xd_bin, SF_LTT = bin_data(xd, SF_LTT, nbins)
-        if "LSS" in traditional_type and scalar is not None:
+        if "LSS" in sf_type and scalar is not None:
             xd_bin, SF_LSS = bin_data(xd, SF_LSS, nbins)
         xd = xd_bin
 

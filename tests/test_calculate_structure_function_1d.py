@@ -7,21 +7,21 @@ from fluidsf.calculate_structure_function_1d import calculate_structure_function
 
 
 @pytest.mark.parametrize(
-    "u, sep_id, v, scalar, traditional_type, boundary, expected_result",
+    "u, sep_id, sf_type, v, scalar, boundary, expected_result",
     [
         # Test 1: all traditional structure functions
         (
             np.array([1, 2, 3, 4]),  # u
             1,  # sep_id
+            ["LL", "LLL", "LTT", "LSS"],  # sf_type
             np.array([2, 4, 6, 8]),  # v
             np.array([3, 6, 9, 12]),  # scalar
-            ["LL", "LLL", "LTT", "LSS"],  # traditional_type
             None,  # boundary
             {
                 "SF_LL": 1,
-                "SF_LLL": -1,
-                "SF_LTT": -4,
-                "SF_LSS": -9,
+                "SF_LLL": 1,
+                "SF_LTT": 4,
+                "SF_LSS": 9,
             },
             # expected_result
         ),
@@ -29,9 +29,9 @@ from fluidsf.calculate_structure_function_1d import calculate_structure_function
         (
             np.array([1, 2, 3, 2]),  # u
             1,  # sep_id
+            ["LL", "LLL", "LTT", "LSS"],  # sf_type
             np.array([2, 4, 6, 4]),  # v
             np.array([3, 6, 9, 6]),  # scalar
-            ["LL", "LLL", "LTT", "LSS"],  # traditional_type
             "Periodic",  # boundary
             {
                 "SF_LL": 1,
@@ -44,10 +44,10 @@ from fluidsf.calculate_structure_function_1d import calculate_structure_function
     ],
 )
 def test_calculate_structure_function_1d_parameterized(
-    u, sep_id, v, scalar, traditional_type, boundary, expected_result
+    u, sep_id, sf_type, v, scalar, boundary, expected_result
 ):
     output_dict = calculate_structure_function_1d(
-        u, sep_id, v, scalar, traditional_type, boundary
+        u, sep_id, sf_type, v, scalar, boundary
     )
 
     TestCase().assertDictEqual(output_dict, expected_result)
