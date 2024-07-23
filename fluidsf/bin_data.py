@@ -3,7 +3,7 @@ import pandas as pd
 
 def bin_data(dd, sf, nbins):
     """
-    Bins the data based on the separation distances and calculates the the bin-averaged
+    Bins the data based on the separation distances and calculates the bin-averaged
     structure functions.
 
     Parameters
