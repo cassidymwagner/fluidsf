@@ -3,7 +3,7 @@ name: "Sphinx: render and deploy docs"
 on:
   push:
     tags:
-      - '*docs'
+      - '*docs*'
 jobs:
   build:
     runs-on: ${{ matrix.os }}
