@@ -1,9 +1,7 @@
 import numpy as np
 
 
-def shift_array_xy(  # noqa: D417
-    input_array, x_shift=0, y_shift=0
-):
+def shift_array_xy(input_array, x_shift=0, y_shift=0):  # noqa: D417
     """
     Wrap 2D array in x and y by the specified integer amounts and returns
     the shifted arrays. Only works with 2D, doubly-periodic data on an even grid.

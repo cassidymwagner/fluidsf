@@ -1,4 +1,5 @@
 import itertools
+
 import numpy as np
 
 from .calculate_advection import calculate_advection
@@ -148,7 +149,7 @@ def generate_sf_maps_2d(  # noqa: C901, D417
 
     # When saving data, roll y-axis so that y-values go from most negative to most
     # positive. The arrays created above run y-separations of 0, to most positive, then
-    # most negative towards zero, since new_array[-n] writes to the n-th from last index.
+    # most negative towards zero, since new_array[-n] writes to the n-th from last index
 
     data = {
         "SF_advection_velocity_xy": SF_adv,
