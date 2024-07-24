@@ -31,6 +31,8 @@ def calculate_separation_distances(x, y, x_shift, y_shift, grid_type="uniform"):
         yd = great_circle((x, y_shift), (x, y)).meters
     else:
         xd = x_shift - x
-        yd = y_shift - y
+        yd = None
+        if y is not None and y_shift is not None:
+            yd = y_shift - y
 
     return (xd, yd)
