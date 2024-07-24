@@ -6,7 +6,7 @@ from .calculate_separation_distances import calculate_separation_distances
 from .calculate_structure_function import (
     calculate_structure_function,
 )
-from .shift_array1d import shift_array1d
+from .shift_array_1d import shift_array_1d
 
 
 def generate_structure_functions(  # noqa: C901, D417
@@ -167,9 +167,9 @@ def generate_structure_functions(  # noqa: C901, D417
     for x_shift in sep_x:
         y_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-x":
-            xroll = shift_array1d(x, shift_by=x_shift, boundary="Periodic")
+            xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
         else:
-            xroll = shift_array1d(x, shift_by=x_shift, boundary=None)
+            xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,
@@ -205,9 +205,9 @@ def generate_structure_functions(  # noqa: C901, D417
     for y_shift in sep_y:
         x_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-y":
-            yroll = shift_array1d(y, shift_by=y_shift, boundary="Periodic")
+            yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
         else:
-            yroll = shift_array1d(y, shift_by=y_shift, boundary=None)
+            yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,

@@ -3,7 +3,7 @@ import numpy as np
 from .bin_data import bin_data
 from .calculate_separation_distances import calculate_separation_distances
 from .calculate_structure_function_1d import calculate_structure_function_1d
-from .shift_array1d import shift_array1d
+from .shift_array_1d import shift_array_1d
 
 
 def generate_structure_functions_1d(  # noqa: C901, D417
@@ -107,13 +107,13 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     # Iterate over separations
     for sep_id in sep:
         if boundary == "Periodic":
-            xroll = shift_array1d(x, shift_by=sep_id, boundary="Periodic")
+            xroll = shift_array_1d(x, shift_by=sep_id, boundary="Periodic")
             if y is not None:
-                yroll = shift_array1d(y, shift_by=1, boundary="Periodic")
+                yroll = shift_array_1d(y, shift_by=1, boundary="Periodic")
         else:
-            xroll = shift_array1d(x, shift_by=sep_id, boundary=None)
+            xroll = shift_array_1d(x, shift_by=sep_id, boundary=None)
             if y is not None:
-                yroll = shift_array1d(y, shift_by=1, boundary=None)
+                yroll = shift_array_1d(y, shift_by=1, boundary=None)
 
         SF_dicts = calculate_structure_function_1d(
             u,

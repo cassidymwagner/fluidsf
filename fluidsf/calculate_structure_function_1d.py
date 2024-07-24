@@ -1,6 +1,6 @@
 import numpy as np
 
-from .shift_array1d import shift_array1d
+from .shift_array_1d import shift_array_1d
 
 
 def calculate_structure_function_1d(  # noqa: D417
@@ -52,7 +52,7 @@ def calculate_structure_function_1d(  # noqa: D417
 
     for key, value in inputs.items():
         if value is not None:
-            shift = shift_array1d(inputs[key], shift_by=sep_id, boundary=boundary)
+            shift = shift_array_1d(inputs[key], shift_by=sep_id, boundary=boundary)
             shifted_inputs.update({key + "_shift": shift})
 
     inputs.update(shifted_inputs)
