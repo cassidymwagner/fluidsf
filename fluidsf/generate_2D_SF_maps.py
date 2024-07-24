@@ -5,7 +5,7 @@ from .bin_data import bin_data
 from .calculate_advection import calculate_advection
 from .calculate_separation_distances import calculate_separation_distances
 from .calculate_2D_SF_maps import calculate_2D_SF_maps
-from .shift_array1d import shift_array1d
+from .shift_array_1d import shift_array_1d
 
 
 def generate_2D_SF_maps(  # noqa: C901, D417
