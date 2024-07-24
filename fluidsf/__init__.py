@@ -18,6 +18,9 @@ from .shift_array_1d import shift_array_1d
 from .shift_array_2d import shift_array_2d
 from .shift_array_3d import shift_array_3d
 
+from .generate_2D_SF_maps import generate_2D_SF_maps
+from .calculate_2D_SF_maps import calculate_2D_SF_maps
+
 __all__ = (
     "generate_structure_functions",
     "generate_structure_functions_1d",
