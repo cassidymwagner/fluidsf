@@ -2,8 +2,8 @@ name: "Sphinx: render and deploy docs"
 
 on:
   push:
-    branches:
-      - new_docs
+    tags:
+      - '*docs*'
 jobs:
   build:
     runs-on: ${{ matrix.os }}
