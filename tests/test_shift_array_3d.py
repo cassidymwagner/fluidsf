@@ -138,7 +138,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic boundary
+        # conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -203,7 +204,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 2 with periodic boundary conditions
+        # Test shifting 3D array in all directions by 2 with periodic boundary
+        # conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             2,
@@ -268,7 +270,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-x boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-x boundary
+        # conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -333,7 +336,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-y boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-y boundary
+        # conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -398,7 +402,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-z boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-z boundary
+        # conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -463,7 +468,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-x and periodic-y boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-x and periodic-y
+        # boundary conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -528,7 +534,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-x and periodic-z boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-x and periodic-z
+        # boundary conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -593,7 +600,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-y and periodic-z boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-y and periodic-z
+        # boundary conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
@@ -658,7 +666,8 @@ from fluidsf.shift_array_3d import shift_array_3d
                 ]
             ),
         ),
-        # Test shifting 3D array in all directions by 1 with periodic-x, periodic-y, and periodic-z boundary conditions
+        # Test shifting 3D array in all directions by 1 with periodic-x, periodic-y,
+        # and periodic-z boundary conditions
         (
             np.arange(1, 28).reshape((3, 3, 3)),
             1,
