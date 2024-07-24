@@ -164,9 +164,9 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         )
 
         if any("ASF_V" in t for t in sf_type):
-            SF_adv_x[x_shift] = SF_dicts["SF_velocity_x"]
+            SF_adv_x[x_shift] = SF_dicts["SF_advection_velocity_x"]
         if any("ASF_S" in t for t in sf_type):
-            SF_x_scalar[x_shift] = SF_dicts["SF_scalar_x"]
+            SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
         if any("LL" in t for t in sf_type):
             SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
         if any("LLL" in t for t in sf_type):
@@ -212,9 +212,9 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         )
 
         if any("ASF_V" in t for t in sf_type):
-            SF_adv_y[y_shift] = SF_dicts["SF_velocity_y"]
+            SF_adv_y[y_shift] = SF_dicts["SF_advection_velocity_y"]
         if any("ASF_S" in t for t in sf_type):
-            SF_y_scalar[y_shift] = SF_dicts["SF_scalar_y"]
+            SF_y_scalar[y_shift] = SF_dicts["SF_advection_scalar_y"]
         if any("LL" in t for t in sf_type):
             SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
         if any("LLL" in t for t in sf_type):
@@ -260,9 +260,9 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         )
 
         if any("ASF_V" in t for t in sf_type):
-            SF_adv_z[z_shift] = SF_dicts["SF_velocity_z"]
+            SF_adv_z[z_shift] = SF_dicts["SF_advection_velocity_z"]
         if any("ASF_S" in t for t in sf_type):
-            SF_z_scalar[z_shift] = SF_dicts["SF_scalar_z"]
+            SF_z_scalar[z_shift] = SF_dicts["SF_advection_scalar_z"]
         if any("LL" in t for t in sf_type):
             SF_z_LL[z_shift] = SF_dicts["SF_LL_z"]
         if any("LLL" in t for t in sf_type):
