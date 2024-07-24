@@ -25,15 +25,15 @@ def shift_array_xy(input_array, x_shift=0, y_shift=0):  # noqa: D417
     if x_shift == 0 and y_shift == 0:
         shifted_xy_array = input_array
     elif y_shift == 0:
-        shifted_xy_array[:, :x_shift] = input_array[:, -x_shift:]
-        shifted_xy_array[:, x_shift:] = input_array[:, :-x_shift]
+        shifted_xy_array[:, :-x_shift] = input_array[:, x_shift:]
+        shifted_xy_array[:, -x_shift:] = input_array[:, :x_shift]
     elif x_shift == 0:
-        shifted_xy_array[:y_shift, :] = input_array[-y_shift:, :]
-        shifted_xy_array[y_shift:, :] = input_array[:-y_shift, :]
+        shifted_xy_array[:-y_shift, :] = input_array[y_shift:, :]
+        shifted_xy_array[-y_shift:, :] = input_array[:y_shift, :]
     else:
-        shifted_xy_array[:y_shift, :x_shift] = input_array[-y_shift:, -x_shift:]
-        shifted_xy_array[:y_shift, x_shift:] = input_array[-y_shift:, :-x_shift]
-        shifted_xy_array[y_shift:, :x_shift] = input_array[:-y_shift, -x_shift:]
-        shifted_xy_array[y_shift:, x_shift:] = input_array[:-y_shift, :-x_shift]
+        shifted_xy_array[:-y_shift, :-x_shift] = input_array[y_shift:, x_shift:]
+        shifted_xy_array[:-y_shift, -x_shift:] = input_array[y_shift:, :x_shift]
+        shifted_xy_array[-y_shift:, :-x_shift] = input_array[:y_shift, x_shift:]
+        shifted_xy_array[-y_shift:, -x_shift:] = input_array[:y_shift, :x_shift]
 
     return shifted_xy_array
