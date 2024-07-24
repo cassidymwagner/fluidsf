@@ -1,5 +1,6 @@
 import numpy as np
 
+from .bin_data import bin_data
 from .calculate_advection_3d import calculate_advection_3d
 from .calculate_separation_distances_3d import calculate_separation_distances_3d
 from .calculate_structure_function_3d import calculate_structure_function_3d
@@ -16,7 +17,7 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     sf_type=["ASF_V"],  # noqa: B006
     scalar=None,
     boundary="periodic-all",
-    nbibs=None,
+    nbins=None,
 ):
     """
     Full method for generating structure functions for uniform and even 3D data, either
@@ -46,7 +47,7 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         boundary: str, optional
             Boundary condition of the data. Accepted strings are "periodic-x",
             "periodic-y", "periodic-z", and "periodic-all". Defaults to "periodic-all".
-        nbibs: int, optional
+        nbins: int, optional
             Number of bins in the structure function. Defaults to None, i.e. does
             not bin the data.
 
@@ -276,6 +277,34 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         tmp, tmp, zd[z_shift] = calculate_separation_distances_3d(
             x[0], y[0], z[0], x[0], y[0], zroll[0]
         )
+
+    if nbins is not None:
+        if any("ASF_V" in t for t in sf_type):
+            xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins)
+            yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins)
+            zd_bin, SF_adv_z = bin_data(zd, SF_adv_z, nbins)
+        if any("ASF_S" in t for t in sf_type):
+            xd_bin, SF_x_scalar = bin_data(xd, SF_x_scalar, nbins)
+            yd_bin, SF_y_scalar = bin_data(yd, SF_y_scalar, nbins)
+            zd_bin, SF_z_scalar = bin_data(zd, SF_z_scalar, nbins)
+        if any("LL" in t for t in sf_type):
+            xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
+            yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
+            zd_bin, SF_z_LL = bin_data(zd, SF_z_LL, nbins)
+        if any("LLL" in t for t in sf_type):
+            xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
+            yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
+            zd_bin, SF_z_LLL = bin_data(zd, SF_z_LLL, nbins)
+        if any("LTT" in t for t in sf_type):
+            xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins)
+            yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins)
+            zd_bin, SF_z_LTT = bin_data(zd, SF_z_LTT, nbins)
+        if any("LSS" in t for t in sf_type):
+            xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins)
+            yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins)
+            zd_bin, SF_z_LSS = bin_data(zd, SF_z_LSS, nbins)
+        xd = xd_bin
+        yd = yd_bin
 
     data = {
         "SF_advection_velocity_x": SF_adv_x,
