@@ -5,9 +5,9 @@ Examples
    :maxdepth: 1
    :caption: Contents:
 
-   ex1
-   ex2
-   ex_1d
-   langmuir_3d_ex
+   ex_1d 
+   ex_2d
+   ex_3d
    maps_2d_ex
+   ex_2d_bootstrap
    swot_ex
