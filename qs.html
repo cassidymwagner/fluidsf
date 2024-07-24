@@ -3,14 +3,14 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="What are structure functions?" href="sfs.html" /><link rel="prev" title="FluidSF" href="index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Examples" href="examples.html" /><link rel="prev" title="What are structure functions?" href="sfs.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 -->
         <title>Getting started - FluidSF</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=613ab9ff" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -89,19 +89,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -142,7 +129,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -213,14 +200,18 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules in FluidSF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">Key terms and definitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="supported_data.html">Supported data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fluidsf.html">API Documentation</a></li>
@@ -271,9 +262,13 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib_inline.backend_inline</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib_inline.backend_inline</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
@@ -282,32 +277,64 @@
 </pre></div>
 </div>
 </div>
-<section id="Create-a-random-2D-velocity-field">
-<h2>Create a random 2D velocity field<a class="headerlink" href="#Create-a-random-2D-velocity-field" title="Link to this heading">¶</a></h2>
+<section id="Create-a-2D-velocity-field">
+<h2>Create a 2D velocity field<a class="headerlink" href="#Create-a-2D-velocity-field" title="Link to this heading">¶</a></h2>
+<p>We will generate u and v velocity arrays that increase linearly in x. The v velocity will be half the magnitude of the u velocity.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">X</span>
+<span class="n">v</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">X</span>
 </pre></div>
 </div>
 </div>
-</section>
-<section id="Generate-the-advective-velocity-structure-function">
-<h2>Generate the advective velocity structure function<a class="headerlink" href="#Generate-the-advective-velocity-structure-function" title="Link to this heading">¶</a></h2>
-<p>We can generate the advective structure function using the function <code class="docutils literal notranslate"><span class="pre">generate_structure_functions</span></code>. The function returns a dictionary with the all supported structure functions and separation distances in each direction. By default the advective velocity structure functions are calculated and the remaining structure functions are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>. We set the boundary condition to <code class="docutils literal notranslate"><span class="pre">None</span></code> because our random data is non-periodic. If we had periodic data we could set the boundary condition based
-on the direction of periodicity (i.e. <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-x&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-y&quot;</span></code> for 2D data).</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;u-velocity&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;v-velocity&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/qs_4_0.png" src="_images/qs_4_0.png" />
+</div>
+</div>
+</section>
+<section id="Generate-the-velocity-structure-function">
+<h2>Generate the velocity structure function<a class="headerlink" href="#Generate-the-velocity-structure-function" title="Link to this heading">¶</a></h2>
+<p>We can generate structure function using the function <code class="docutils literal notranslate"><span class="pre">generate_structure_functions</span></code>. The function returns a dictionary with the all supported structure functions and separation distances in each direction.</p>
+<p>By default the advective velocity structure functions are calculated and the remaining structure functions are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>. To calculate all velocity structure functions we set <code class="docutils literal notranslate"><span class="pre">sf_type=[&quot;ASF_V&quot;,</span> <span class="pre">&quot;LLL&quot;,</span> <span class="pre">&quot;LL&quot;,</span> <span class="pre">&quot;LTT&quot;]</span></code>.</p>
+<p>We set the boundary condition to <code class="docutils literal notranslate"><span class="pre">None</span></code> because our random data is non-periodic. If we had periodic data we could set the boundary condition based on the direction of periodicity (i.e. <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-x&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-y&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-all&quot;</span></code> for 2D data).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fluidsf</span>
 
-<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ASF_V&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LTT&quot;</span><span class="p">],</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -325,19 +352,61 @@ on the direction of periodicity (i.e. <code class="docutils literal notranslate"
 <section id="Plot-the-advective-velocity-structure-functions-in-x-and-y">
 <h2>Plot the advective velocity structure functions in x and y<a class="headerlink" href="#Plot-the-advective-velocity-structure-functions-in-x-and-y" title="Link to this heading">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_x&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ASF_V(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_LL_x&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LL(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_LLL_x&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LLL(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_LTT_x&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LTT(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C3&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span>
+    <span class="p">(</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span>
+    <span class="mf">0.25</span> <span class="o">*</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+<span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_x&quot;</span><span class="p">],</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Advective velocity SF in x&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_velocity_y&quot;</span><span class="p">],</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Advective velocity SF in y&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$\frac</span><span class="si">{5}{4}</span><span class="s2">r^</span><span class="si">{2}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$r^</span><span class="si">{2}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$r^</span><span class="si">{3}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$\frac</span><span class="si">{1}{4}</span><span class="s2">r^</span><span class="si">{3}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance (r)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Structure function (SF(r))&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -346,38 +415,70 @@ on the direction of periodicity (i.e. <code class="docutils literal notranslate"
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/qs_8_0.png" src="_images/qs_8_0.png" />
+<img alt="_images/qs_9_0.png" src="_images/qs_9_0.png" />
 </div>
 </div>
 </section>
-<section id="Advective-scalar-structure-functions">
-<h2>Advective scalar structure functions<a class="headerlink" href="#Advective-scalar-structure-functions" title="Link to this heading">¶</a></h2>
-<p>The advective scalar structure functions can be generated by passing in an argument for a scalar field. The advective velocity structure function is still generated unless you pass the argument <code class="docutils literal notranslate"><span class="pre">skip_velocity_sf=True</span></code>.</p>
+<section id="Scalar-structure-functions">
+<h2>Scalar structure functions<a class="headerlink" href="#Scalar-structure-functions" title="Link to this heading">¶</a></h2>
+<p>The scalar structure functions can be generated by including <code class="docutils literal notranslate"><span class="pre">&quot;ASF_S&quot;</span></code> and/or <code class="docutils literal notranslate"><span class="pre">&quot;LSS&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">sf_type</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Y</span>
 
-<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                          <span class="n">skip_velocity_sf</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ASF_S&quot;</span><span class="p">,</span> <span class="s2">&quot;LSS&quot;</span><span class="p">],</span> <span class="n">scalar</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_scalar_x&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Advective scalar SF in x&quot;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;y-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_scalar_y&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Advective scalar SF in y&quot;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_advection_scalar_x&quot;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ASF_S(r)&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;SF_LSS_x&quot;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LSS(r)&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$\frac</span><span class="si">{3}{2}</span><span class="s2">r^</span><span class="si">{2}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.52</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$r^</span><span class="si">{3}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance (r)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Structure function (SF(r))&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -386,7 +487,7 @@ on the direction of periodicity (i.e. <code class="docutils literal notranslate"
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/qs_11_0.png" src="_images/qs_11_0.png" />
+<img alt="_images/qs_12_0.png" src="_images/qs_12_0.png" />
 </div>
 </div>
 </section>
@@ -397,23 +498,23 @@ on the direction of periodicity (i.e. <code class="docutils literal notranslate"
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="sfs.html">
+          <a class="next-page" href="examples.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">What are structure functions?</div>
+                <div class="title">Examples</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="sfs.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">What are structure functions?</div>
                 
               </div>
             </a>
@@ -448,10 +549,10 @@ on the direction of periodicity (i.e. <code class="docutils literal notranslate"
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Getting started</a><ul>
-<li><a class="reference internal" href="#Create-a-random-2D-velocity-field">Create a random 2D velocity field</a></li>
-<li><a class="reference internal" href="#Generate-the-advective-velocity-structure-function">Generate the advective velocity structure function</a></li>
+<li><a class="reference internal" href="#Create-a-2D-velocity-field">Create a 2D velocity field</a></li>
+<li><a class="reference internal" href="#Generate-the-velocity-structure-function">Generate the velocity structure function</a></li>
 <li><a class="reference internal" href="#Plot-the-advective-velocity-structure-functions-in-x-and-y">Plot the advective velocity structure functions in x and y</a></li>
-<li><a class="reference internal" href="#Advective-scalar-structure-functions">Advective scalar structure functions</a></li>
+<li><a class="reference internal" href="#Scalar-structure-functions">Scalar structure functions</a></li>
 </ul>
 </li>
 </ul>
@@ -466,7 +567,7 @@ on the direction of periodicity (i.e. <code class="docutils literal notranslate"
 </div><script src="_static/documentation_options.js?v=938c9ccc"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

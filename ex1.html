@@ -5,12 +5,12 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Structure functions for multiple snapshots or observations with bootstrapping" href="ex2.html" /><link rel="prev" title="Examples" href="examples.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 -->
         <title>Estimating cascade rates from advective structure functions - FluidSF</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=613ab9ff" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -89,19 +89,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -142,7 +129,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -213,14 +200,18 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules in FluidSF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">Key terms and definitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="supported_data.html">Supported data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fluidsf.html">API Documentation</a></li>
@@ -320,7 +311,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">p1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">u</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">p2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;u-velocity&#39;</span><span class="p">)</span>
@@ -361,16 +352,16 @@
 
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_x&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u\cdot\delta A_u$ x-dir&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;ASF$_V$ x-dir&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_y&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u\cdot\delta A_u$ y-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;ASF$_V$ y-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Advective velocity structure functions&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -390,17 +381,18 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="o">-</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_x&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$-\frac</span><span class="si">{1}{2}</span><span class="s1"> \delta u\cdot\delta A_u$ x-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$-\frac</span><span class="si">{1}{2}</span><span class="s1">$ASF$_V$ x-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="o">-</span><span class="n">sf</span><span class="p">[</span><span class="s1">&#39;SF_advection_velocity_y&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$-\frac</span><span class="si">{1}{2}</span><span class="s1"> \delta u\cdot\delta A_u$ y-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$-\frac</span><span class="si">{1}{2}</span><span class="s1">$ASF$_V$ y-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Energy flux&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Advective velocity structure functions&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -420,8 +412,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_all</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">q</span><span class="p">,</span>
-                                              <span class="n">traditional_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LSS&quot;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_all</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">,</span>
+    <span class="n">v</span><span class="p">,</span>
+    <span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ASF_V&quot;</span><span class="p">,</span> <span class="s2">&quot;ASF_S&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LSS&quot;</span><span class="p">],</span>
+    <span class="n">scalar</span><span class="o">=</span><span class="n">q</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -433,17 +431,17 @@
 
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_advection_scalar_x&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta \omega\cdot\delta A_{\omega}$ x-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;ASF$_{\omega}$ x-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_advection_scalar_y&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta \omega\cdot\delta A_{\omega}$ y-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;ASF$_{\omega}$ y-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
@@ -466,17 +464,17 @@
 
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_LLL_x&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u \delta u \delta u$ x-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;LLL x-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_LLL_y&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u \delta u \delta u$ y-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;LLL y-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
@@ -499,17 +497,17 @@
 
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_LSS_x&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u \delta \omega \delta \omega$ x-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;L$\omega\omega$ x-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;y-diffs&#39;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s1">&#39;SF_LSS_y&#39;</span><span class="p">],</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta u \delta \omega \delta \omega$ y-dir&#39;</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;L$\omega\omega$ y-dir&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Structure function&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3e-2</span><span class="p">,</span><span class="mf">3e0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">get_ticklocs</span><span class="p">(</span><span class="n">minor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
@@ -600,7 +598,7 @@
 </div><script src="_static/documentation_options.js?v=938c9ccc"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

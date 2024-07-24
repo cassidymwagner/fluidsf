@@ -3,13 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Key terms and definitions" href="terms.html" /><link rel="prev" title="Using SWOT satellite altimetry" href="swot_ex.html" />
 
-    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
-        <title>API Documentation - FluidSF</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 -->
+        <title>Modules in FluidSF - FluidSF</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=613ab9ff" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -88,19 +88,6 @@
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
   <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
     <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -141,7 +128,7 @@
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
       <path d="M20 21l2 -2l-2 -2" />
-      <path d="M17 17l-2 2l2 2" /
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
   <symbol id="svg-eye" viewBox="0 0 24 24">
@@ -191,7 +178,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -211,15 +198,19 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
+  <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Modules in FluidSF</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">Key terms and definitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="supported_data.html">Supported data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fluidsf.html">API Documentation</a></li>
@@ -257,16 +248,55 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="api-documentation">
-<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Link to this heading">¶</a></h1>
-<div class="toctree-wrapper compound">
+          <section id="modules-in-fluidsf">
+<h1>Modules in FluidSF<a class="headerlink" href="#modules-in-fluidsf" title="Link to this heading">¶</a></h1>
+<section id="generate-structure-functions">
+<h2>Generate Structure Functions<a class="headerlink" href="#generate-structure-functions" title="Link to this heading">¶</a></h2>
+<p>There is one primary module in FluidSF that is used to generate structure functions from fluid data. FluidSF supports 1D, 2D, and 3D data so there are 3 separate veresions of the generate module.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">generate_structure_functions_1d()</span></code></p>
+<p>This module is used to generate structure functions from 1D data. Supported structure functions include second- and third-order structure functions of velocity and scalars. Advective structure functions are not supported.</p>
+<p><cite>generate_structure_functions_2d()</cite></p>
+<p>This module is used to generate structure functions from 2D data. Supported structure functions include second- and third-order structure functions of velocity and scalars. Advective structure functions are supported.</p>
+<p><cite>generate_structure_functions_3d()</cite></p>
+<p>This module is used to generate structure functions from 3D data. Supported structure functions include second- and third-order structure functions of velocity and scalars. Advective structure functions are supported. Non-uniform grid spacing is not supported.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code> module can generate several types of structure functions as a function of separation distance. This is the only module you need to use to generate structure functions from your data. The modules described below are helper modules that are used by the <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code> modules.</p>
+<p><strong>Do not get confused between</strong> <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code> <strong>and</strong> <code class="code docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code> <strong>, which is used to calculate a single structure function value for a given separation vector, not a range of separation distances.</strong></p>
 </div>
+</section>
+<section id="calculate-structure-functions">
+<h2>Calculate Structure Functions<a class="headerlink" href="#calculate-structure-functions" title="Link to this heading">¶</a></h2>
+<p>This module calculates a single structure function value for a given separation vector.</p>
+<p><cite>calculate_structure_function_1d()</cite>, <cite>calculate_structure_function_2d()</cite>, <cite>calculate_structure_function_3d()</cite></p>
+</section>
+<section id="calculate-advection">
+<h2>Calculate Advection<a class="headerlink" href="#calculate-advection" title="Link to this heading">¶</a></h2>
+<p><cite>calculate_advection_2d()</cite>, <cite>calculate_advection_3d()</cite></p>
+<p>Describe the module</p>
+<p>Since the advective structure functions are supported in 2D and 3D, there are two versions of this module.</p>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
+<section id="shift-arrays">
+<h3>Shift Arrays<a class="headerlink" href="#shift-arrays" title="Link to this heading">¶</a></h3>
+<p>Text</p>
+</section>
+<section id="calculate-separation-distance">
+<h3>Calculate Separation distance<a class="headerlink" href="#calculate-separation-distance" title="Link to this heading">¶</a></h3>
+<p>Text</p>
+</section>
+<section id="bin-data">
+<h3>Bin Data<a class="headerlink" href="#bin-data" title="Link to this heading">¶</a></h3>
+<p>Text</p>
+</section>
+</section>
 </section>
 
         </article>
@@ -274,8 +304,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="terms.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Key terms and definitions</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="swot_ex.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Using SWOT satellite altimetry</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -294,8 +342,35 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Modules in FluidSF</a><ul>
+<li><a class="reference internal" href="#generate-structure-functions">Generate Structure Functions</a></li>
+<li><a class="reference internal" href="#calculate-structure-functions">Calculate Structure Functions</a></li>
+<li><a class="reference internal" href="#calculate-advection">Calculate Advection</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li><a class="reference internal" href="#shift-arrays">Shift Arrays</a></li>
+<li><a class="reference internal" href="#calculate-separation-distance">Calculate Separation distance</a></li>
+<li><a class="reference internal" href="#bin-data">Bin Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -303,7 +378,7 @@
 </div><script src="_static/documentation_options.js?v=938c9ccc"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
