@@ -43,23 +43,23 @@ def shift_array_3d(  # noqa: D417
     shifted_y_array = np.full(np.shape(input_array), np.nan)
     shifted_z_array = np.full(np.shape(input_array), np.nan)
 
-    shifted_x_array[:, :, :shift_x] = input_array[:, :, -shift_x:]
-    shifted_y_array[:, :shift_y, :] = input_array[:, -shift_y:, :]
-    shifted_z_array[:shift_z, :, :] = input_array[-shift_z:, :, :]
+    shifted_x_array[:, :, :-shift_x] = input_array[:, :, shift_x:]
+    shifted_y_array[:, :-shift_y, :] = input_array[:, shift_y:, :]
+    shifted_z_array[:-shift_z, :, :] = input_array[shift_z:, :, :]
 
     if boundary is not None:
         if "periodic-all" in boundary:
-            shifted_x_array[:, :, shift_x:] = input_array[:, :, :-shift_x]
-            shifted_y_array[:, shift_y:, :] = input_array[:, :-shift_y, :]
-            shifted_z_array[shift_z:, :, :] = input_array[:-shift_z, :, :]
+            shifted_x_array[:, :, -shift_x:] = input_array[:, :, :shift_x]
+            shifted_y_array[:, -shift_y:, :] = input_array[:, :shift_y, :]
+            shifted_z_array[-shift_z:, :, :] = input_array[:shift_z, :, :]
 
         if any("periodic-x" in b for b in boundary):
-            shifted_x_array[:, :, shift_x:] = input_array[:, :, :-shift_x]
+            shifted_x_array[:, :, -shift_x:] = input_array[:, :, :shift_x]
 
         if any("periodic-y" in b for b in boundary):
-            shifted_y_array[:, shift_y:, :] = input_array[:, :-shift_y, :]
+            shifted_y_array[:, -shift_y:, :] = input_array[:, :shift_y, :]
 
         if any("periodic-z" in b for b in boundary):
-            shifted_z_array[shift_z:, :, :] = input_array[:-shift_z, :, :]
+            shifted_z_array[-shift_z:, :, :] = input_array[:shift_z, :, :]
 
     return shifted_x_array, shifted_y_array, shifted_z_array

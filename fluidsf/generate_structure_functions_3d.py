@@ -13,10 +13,10 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     x,
     y,
     z,
-    skip_velocity_sf=False,
+    sf_type=["ASF_V"],  # noqa: B006
     scalar=None,
-    traditional_type=None,
     boundary="periodic-all",
+    nbibs=None,
 ):
     """
     Full method for generating structure functions for uniform and even 3D data, either
@@ -38,19 +38,17 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             1D array of y-coordinates.
         z: ndarray
             1D array of z-coordinates.
-        skip_velocity_sf: bool, optional
-            Flag used to skip calculating the velocity-based structure function if
-            the user only wants to calculate the scalar-based structure function.
-            Defaults to False.
+        sf_type: list
+            List of structure function types to calculate. Accepted types are:
+            "ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to ["ASF_V"].
         scalar: ndarray, optional
             3D array of scalar values. Defaults to None.
-        traditional_type: list, optional
-            List of traditional structure function types to calculate.
-            Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
-            no traditional structure functions are calculated. Defaults to None.
         boundary: str, optional
             Boundary condition of the data. Accepted strings are "periodic-x",
             "periodic-y", "periodic-z", and "periodic-all". Defaults to "periodic-all".
+        nbibs: int, optional
+            Number of bins in the structure function. Defaults to None, i.e. does
+            not bin the data.
 
     Returns
     -------
@@ -107,35 +105,32 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     zd = np.zeros(len(sep_z) + 1)
 
     # Initialize the structure function arrays
-    if skip_velocity_sf is False:
+    if any("ASF_V" in t for t in sf_type):
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
         SF_adv_z = np.zeros(len(sep_z) + 1)
         adv_x, adv_y, adv_z = calculate_advection_3d(u, v, w, x, y, z)
-        if traditional_type is not None:
-            if any("LL" in t for t in traditional_type):
-                SF_x_LL = np.zeros(len(sep_x) + 1)
-                SF_y_LL = np.zeros(len(sep_y) + 1)
-                SF_z_LL = np.zeros(len(sep_z) + 1)
-            if any("LLL" in t for t in traditional_type):
-                SF_x_LLL = np.zeros(len(sep_x) + 1)
-                SF_y_LLL = np.zeros(len(sep_y) + 1)
-                SF_z_LLL = np.zeros(len(sep_z) + 1)
-            if any("LTT" in t for t in traditional_type):
-                SF_x_LTT = np.zeros(len(sep_x) + 1)
-                SF_y_LTT = np.zeros(len(sep_y) + 1)
-                SF_z_LTT = np.zeros(len(sep_z) + 1)
-
-    if scalar is not None:
+    if any("ASF_S" in t for t in sf_type):
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
         SF_z_scalar = np.zeros(len(sep_z) + 1)
         adv_scalar = calculate_advection_3d(u, v, w, x, y, z, scalar)
-        if traditional_type is not None:
-            if any("LSS" in t for t in traditional_type):
-                SF_x_LSS = np.zeros(len(sep_x) + 1)
-                SF_y_LSS = np.zeros(len(sep_y) + 1)
-                SF_z_LSS = np.zeros(len(sep_z) + 1)
+    if any("LL" in t for t in sf_type):
+        SF_x_LL = np.zeros(len(sep_x) + 1)
+        SF_y_LL = np.zeros(len(sep_y) + 1)
+        SF_z_LL = np.zeros(len(sep_z) + 1)
+    if any("LLL" in t for t in sf_type):
+        SF_x_LLL = np.zeros(len(sep_x) + 1)
+        SF_y_LLL = np.zeros(len(sep_y) + 1)
+        SF_z_LLL = np.zeros(len(sep_z) + 1)
+    if any("LTT" in t for t in sf_type):
+        SF_x_LTT = np.zeros(len(sep_x) + 1)
+        SF_y_LTT = np.zeros(len(sep_y) + 1)
+        SF_z_LTT = np.zeros(len(sep_z) + 1)
+    if any("LSS" in t for t in sf_type):
+        SF_x_LSS = np.zeros(len(sep_x) + 1)
+        SF_y_LSS = np.zeros(len(sep_y) + 1)
+        SF_z_LSS = np.zeros(len(sep_z) + 1)
 
     # Iterate over separations in x, y, and z
     for x_shift in sep_x:
@@ -162,31 +157,28 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             x_shift,
             y_shift,
             z_shift,
-            skip_velocity_sf,
+            sf_type,
             scalar,
             adv_scalar,
-            traditional_type,
             boundary,
         )
 
-        if skip_velocity_sf is False:
+        if any("ASF_V" in t for t in sf_type):
             SF_adv_x[x_shift] = SF_dicts["SF_velocity_x"]
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
-                if any("LLL" in t for t in traditional_type):
-                    SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
-                if any("LTT" in t for t in traditional_type):
-                    SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
-        if scalar is not None:
+        if any("ASF_S" in t for t in sf_type):
             SF_x_scalar[x_shift] = SF_dicts["SF_scalar_x"]
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
+        if any("LL" in t for t in sf_type):
+            SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
+        if any("LLL" in t for t in sf_type):
+            SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
+        if any("LTT" in t for t in sf_type):
+            SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
+        if any("LSS" in t for t in sf_type):
+            SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
 
         # Calculate separation distances in x
         xd[x_shift], tmp, tmp = calculate_separation_distances_3d(
-            x[x_shift], y[y_shift], z[z_shift], xroll[x_shift], y[y_shift], z[z_shift]
+            x[0], y[0], z[0], xroll[0], y[0], z[0]
         )
 
     for y_shift in sep_y:
@@ -213,31 +205,28 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             x_shift,
             y_shift,
             z_shift,
-            skip_velocity_sf,
+            sf_type,
             scalar,
             adv_scalar,
-            traditional_type,
             boundary,
         )
 
-        if skip_velocity_sf is False:
+        if any("ASF_V" in t for t in sf_type):
             SF_adv_y[y_shift] = SF_dicts["SF_velocity_y"]
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
-                if any("LLL" in t for t in traditional_type):
-                    SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
-                if any("LTT" in t for t in traditional_type):
-                    SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
-        if scalar is not None:
+        if any("ASF_S" in t for t in sf_type):
             SF_y_scalar[y_shift] = SF_dicts["SF_scalar_y"]
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
+        if any("LL" in t for t in sf_type):
+            SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
+        if any("LLL" in t for t in sf_type):
+            SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
+        if any("LTT" in t for t in sf_type):
+            SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
+        if any("LSS" in t for t in sf_type):
+            SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
 
         # Calculate separation distances in y
         tmp, yd[y_shift], tmp = calculate_separation_distances_3d(
-            x[x_shift], y[y_shift], z[z_shift], x[x_shift], yroll[y_shift], z[z_shift]
+            x[0], y[0], z[0], x[0], yroll[0], z[0]
         )
 
     for z_shift in sep_z:
@@ -264,31 +253,28 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             x_shift,
             y_shift,
             z_shift,
-            skip_velocity_sf,
+            sf_type,
             scalar,
             adv_scalar,
-            traditional_type,
             boundary,
         )
 
-        if skip_velocity_sf is False:
+        if any("ASF_V" in t for t in sf_type):
             SF_adv_z[z_shift] = SF_dicts["SF_velocity_z"]
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    SF_z_LL[z_shift] = SF_dicts["SF_LL_z"]
-                if any("LLL" in t for t in traditional_type):
-                    SF_z_LLL[z_shift] = SF_dicts["SF_LLL_z"]
-                if any("LTT" in t for t in traditional_type):
-                    SF_z_LTT[z_shift] = SF_dicts["SF_LTT_z"]
-        if scalar is not None:
+        if any("ASF_S" in t for t in sf_type):
             SF_z_scalar[z_shift] = SF_dicts["SF_scalar_z"]
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    SF_z_LSS[z_shift] = SF_dicts["SF_LSS_z"]
+        if any("LL" in t for t in sf_type):
+            SF_z_LL[z_shift] = SF_dicts["SF_LL_z"]
+        if any("LLL" in t for t in sf_type):
+            SF_z_LLL[z_shift] = SF_dicts["SF_LLL_z"]
+        if any("LTT" in t for t in sf_type):
+            SF_z_LTT[z_shift] = SF_dicts["SF_LTT_z"]
+        if any("LSS" in t for t in sf_type):
+            SF_z_LSS[z_shift] = SF_dicts["SF_LSS_z"]
 
         # Calculate separation distances in z
         tmp, tmp, zd[z_shift] = calculate_separation_distances_3d(
-            x[x_shift], y[y_shift], z[z_shift], x[x_shift], y[y_shift], zroll[z_shift]
+            x[0], y[0], z[0], x[0], y[0], zroll[0]
         )
 
     data = {

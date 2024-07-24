@@ -13,10 +13,9 @@ def calculate_structure_function_3d(  # noqa: D417, C901
     shift_x,
     shift_y,
     shift_z,
-    skip_velocity_sf=False,
+    sf_type,
     scalar=None,
     adv_scalar=None,
-    traditional_type=None,
     boundary="periodic-all",
 ):
     """
@@ -43,17 +42,14 @@ def calculate_structure_function_3d(  # noqa: D417, C901
             Shift amount for y shift.
         shift_z: int
             Shift amount for z shift.
-        skip_velocity_sf: bool, optional
-            Whether to skip velocity-based structure function calculation.
-            Defaults to False.
+        sf_type: list
+            List of structure function types to calculate.
+            Accepted types are: "ASF_V, "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to
+            "ASF_V".
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
         adv_scalar: ndarray, optional
             Array of scalar advection values. Defaults to None.
-        traditional_type: list, optional
-            List of traditional structure function types to calculate.
-            Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
-            no traditional structure functions are calculated. Defaults to None.
         boundary: str, optional
             Boundary condition for shifting arrays. Accepted strings
             are "periodic-x", "periodic-y", "periodic-z" and "periodic-all".
@@ -62,18 +58,21 @@ def calculate_structure_function_3d(  # noqa: D417, C901
     Returns
     -------
         dict:
-            A dictionary containing the advection velocity structure functions and
+            A dictionary containing the velocity-based advective structure functions and
             scalar structure functions (if applicable).
             The dictionary has the following keys:
-                'SF_velocity_x': The advection velocity structure function in the
+                'SF_velocity_x': The velocity-based advective structure function in the
                 x direction.
-                'SF_velocity_y': The advection velocity structure function in the
+                'SF_velocity_y': The velocity-based advective structure function in the
                 y direction.
-                'SF_velocity_z': The advection velocity structure function in the
+                'SF_velocity_z': The velocity-based advective structure function in the
                 z direction.
-                'SF_scalar_x': The scalar structure function in the x direction.
-                'SF_scalar_y': The scalar structure function in the y direction.
-                'SF_scalar_z': The scalar structure function in the z direction.
+                'SF_scalar_x': The scalar-based advective structure function in the x
+                direction.
+                'SF_scalar_y': The scalar-based advective structure function in the y
+                direction.
+                'SF_scalar_z': The scalar-based advective structure function in the z
+                direction.
                 'SF_LL_x': The traditional structure function LL in the x direction.
                 'SF_LL_y': The traditional structure function LL in the y direction.
                 'SF_LL_z': The traditional structure function LL in the z direction.
@@ -97,18 +96,6 @@ def calculate_structure_function_3d(  # noqa: D417, C901
         "scalar": scalar,
         "adv_scalar": adv_scalar,
     }
-
-    if skip_velocity_sf is True:
-        inputs.update(
-            {
-                "u": None,
-                "v": None,
-                "w": None,
-                "adv_x": None,
-                "adv_y": None,
-                "adv_z": None,
-            }
-        )
 
     shifted_inputs = {}
 
@@ -134,8 +121,8 @@ def calculate_structure_function_3d(  # noqa: D417, C901
     SF_dict = {}
 
     for direction in ["x", "y", "z"]:
-        if skip_velocity_sf is False:
-            SF_dict["SF_velocity_" + direction] = np.nanmean(
+        if any("ASF_V" in t for t in sf_type):
+            SF_dict["SF_advection_velocity_" + direction] = np.nanmean(
                 (inputs["adv_x_" + direction + "_shift"] - adv_x)
                 * (inputs["u_" + direction + "_shift"] - u)
                 + (inputs["adv_y_" + direction + "_shift"] - adv_y)
@@ -143,80 +130,70 @@ def calculate_structure_function_3d(  # noqa: D417, C901
                 + (inputs["adv_z_" + direction + "_shift"] - adv_z)
                 * (inputs["w_" + direction + "_shift"] - w)
             )
-            if traditional_type is not None:
-                if any("LL" in t for t in traditional_type):
-                    if direction == "x":
-                        SF_dict["SF_LL_" + direction] = np.nanmean(
-                            (inputs["u_" + direction + "_shift"] - u) ** 2
-                        )
-
-                    if direction == "y":
-                        SF_dict["SF_LL_" + direction] = np.nanmean(
-                            (inputs["v_" + direction + "_shift"] - v) ** 2
-                        )
-
-                    if direction == "z":
-                        SF_dict["SF_LL_" + direction] = np.nanmean(
-                            (inputs["w_" + direction + "_shift"] - w) ** 2
-                        )
-
-                if any("LLL" in t for t in traditional_type):
-                    if direction == "x":
-                        SF_dict["SF_LLL_" + direction] = np.nanmean(
-                            (inputs["u_" + direction + "_shift"] - u) ** 3
-                        )
-
-                    if direction == "y":
-                        SF_dict["SF_LLL_" + direction] = np.nanmean(
-                            (inputs["v_" + direction + "_shift"] - v) ** 3
-                        )
-
-                    if direction == "z":
-                        SF_dict["SF_LLL_" + direction] = np.nanmean(
-                            (inputs["w_" + direction + "_shift"] - w) ** 3
-                        )
-
-                if any("LTT" in t for t in traditional_type):
-                    if direction == "x":
-                        SF_dict["SF_LTT_" + direction] = np.nanmean(
-                            (inputs["u_" + direction + "_shift"] - u)
-                            * (inputs["v_" + direction + "_shift"] - v) ** 2
-                        )
-
-                    if direction == "y":
-                        SF_dict["SF_LTT_" + direction] = np.nanmean(
-                            (inputs["v_" + direction + "_shift"] - v)
-                            * (inputs["u_" + direction + "_shift"] - u) ** 2
-                        )
-
-                    if direction == "z":
-                        SF_dict["SF_LTT_" + direction] = np.nanmean(
-                            (inputs["w_" + direction + "_shift"] - w)
-                            * (inputs["u_" + direction + "_shift"] - u) ** 2
-                        )
-
-        if scalar is not None:
-            SF_dict["SF_scalar_" + direction] = np.nanmean(
+        if any("ASF_S" in t for t in sf_type):
+            SF_dict["SF_advection_scalar_" + direction] = np.nanmean(
                 (inputs["adv_scalar_" + direction + "_shift"] - adv_scalar)
                 * (inputs["scalar_" + direction + "_shift"] - scalar)
             )
-            if traditional_type is not None:
-                if any("LSS" in t for t in traditional_type):
-                    if direction == "x":
-                        SF_dict["SF_LSS_" + direction] = np.nanmean(
-                            (inputs["u_" + direction + "_shift"] - u)
-                            * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
-                        )
 
-                    if direction == "y":
-                        SF_dict["SF_LSS_" + direction] = np.nanmean(
-                            (inputs["v_" + direction + "_shift"] - v)
-                            * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
-                        )
+        if direction == "x":
+            if any("LL" in t for t in sf_type):
+                SF_dict["SF_LL_" + direction] = np.nanmean(
+                    (inputs["u_" + direction + "_shift"] - u) ** 2
+                )
+            if any("LLL" in t for t in sf_type):
+                SF_dict["SF_LLL_" + direction] = np.nanmean(
+                    (inputs["u_" + direction + "_shift"] - u) ** 3
+                )
+            if any("LTT" in t for t in sf_type):
+                SF_dict["SF_LTT_" + direction] = np.nanmean(
+                    (inputs["u_" + direction + "_shift"] - u)
+                    * (inputs["v_" + direction + "_shift"] - v) ** 2
+                )
+            if any("LSS" in t for t in sf_type):
+                SF_dict["SF_LSS_" + direction] = np.nanmean(
+                    (inputs["u_" + direction + "_shift"] - u)
+                    * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
+                )
 
-                    if direction == "z":
-                        SF_dict["SF_LSS_" + direction] = np.nanmean(
-                            (inputs["w_" + direction + "_shift"] - w)
-                            * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
-                        )
+        elif direction == "y":
+            if any("LL" in t for t in sf_type):
+                SF_dict["SF_LL_" + direction] = np.nanmean(
+                    (inputs["v_" + direction + "_shift"] - v) ** 2
+                )
+            if any("LLL" in t for t in sf_type):
+                SF_dict["SF_LLL_" + direction] = np.nanmean(
+                    (inputs["v_" + direction + "_shift"] - v) ** 3
+                )
+            if any("LTT" in t for t in sf_type):
+                SF_dict["SF_LTT_" + direction] = np.nanmean(
+                    (inputs["v_" + direction + "_shift"] - v)
+                    * (inputs["u_" + direction + "_shift"] - u) ** 2
+                )
+            if any("LSS" in t for t in sf_type):
+                SF_dict["SF_LSS_" + direction] = np.nanmean(
+                    (inputs["v_" + direction + "_shift"] - v)
+                    * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
+                )
+
+        elif direction == "z":
+            if any("LL" in t for t in sf_type):
+                SF_dict["SF_LL_" + direction] = np.nanmean(
+                    (inputs["w_" + direction + "_shift"] - w) ** 2
+                )
+            if any("LLL" in t for t in sf_type):
+                SF_dict["SF_LLL_" + direction] = np.nanmean(
+                    (inputs["w_" + direction + "_shift"] - w) ** 3
+                )
+            if any("LTT" in t for t in sf_type):
+                SF_dict["SF_LTT_" + direction] = np.nanmean(
+                    (inputs["w_" + direction + "_shift"] - w)
+                    * (inputs["u_" + direction + "_shift"] - u) ** 2
+                )
+            if any("LSS" in t for t in sf_type):
+                SF_dict["SF_LSS_" + direction] = np.nanmean(
+                    (inputs["w_" + direction + "_shift"] - w)
+                    * (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
+                )
+
     return SF_dict

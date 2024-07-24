@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def calculate_separation_distances_3d(x, y, z, x_shift, y_shift, z_shift):
     """
     Calculate the separation distances between two points.
@@ -26,8 +23,8 @@ def calculate_separation_distances_3d(x, y, z, x_shift, y_shift, z_shift):
         A tuple containing the x, y, and z separation distances. In code units for a
         uniform grid.
     """
-    xd = np.abs(x_shift - x)
-    yd = np.abs(y_shift - y)
-    zd = np.abs(z_shift - z)
+    xd = x_shift - x
+    yd = y_shift - y
+    zd = z_shift - z
 
     return (xd, yd, zd)
