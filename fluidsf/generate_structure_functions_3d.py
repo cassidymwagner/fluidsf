@@ -305,6 +305,7 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             zd_bin, SF_z_LSS = bin_data(zd, SF_z_LSS, nbins)
         xd = xd_bin
         yd = yd_bin
+        zd = zd_bin
 
     data = {
         "SF_advection_velocity_x": SF_adv_x,
