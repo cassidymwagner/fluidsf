@@ -1,0 +1,165 @@
+import numpy as np
+
+from .xy_shift_array import xy_shift_array
+
+
+def calculate_2D_SF_maps(  # noqa: D417, C901
+    u,
+    v,
+    x,
+    y,
+    adv_x,
+    adv_y,
+    shift_in_x,
+    shift_in_y,
+    skip_velocity_sf=False,
+    scalar=None,
+    adv_scalar=None,
+    traditional_type=None,
+):
+    """
+    Calculate structure function, either advective or traditional.
+    Supports velocity-based structure functions and scalar-based structure functions.
+    Can only be used with periodic, evenly-spaced data
+
+    Parameters
+    ----------
+        u: ndarray
+            Array of u velocities.
+        v: ndarray
+            Array of v velocities.
+        x: ndarray
+            1D array of x-coordinates.
+        y: ndarray
+            1D array of y-coordinates.
+        adv_x: ndarray
+            Array of x-dir advection values.
+        adv_y: ndarray
+            Array of y-dir advection values.
+        shift_in_x: int
+            Shift amount for x shift.
+        shift_in_y: int
+            Shift amount for y shift.
+        skip_velocity_sf: bool, optional
+            Whether to skip velocity-based structure function calculation.
+            Defaults to False.
+        scalar: ndarray, optional
+            Array of scalar values. Defaults to None.
+        adv_scalar: ndarray, optional
+            Array of scalar advection values. Defaults to None.
+        traditional_type: list, optional
+            List of traditional structure function types to calculate.
+            Accepted types are: "LL", "LLL", "LTT", "LSS". If None,
+            no traditional structure functions are calculated. Defaults to None.
+
+    Returns
+    -------
+        dict:
+            A dictionary containing the advection velocity structure functions and
+            scalar structure functions (if applicable).
+            The dictionary has the following keys:
+                'SF_velocity_advection_xy': The advection velocity structure function for separation
+                vectors in the x-y plane.
+                'SF_scalar_advection_xy': The scalar advective structure function for separation
+                vectors in the x-y plane.
+                'SF_LL_xy': The traditional structure function LL for separation
+                vectors in the x-y plane.
+                'SF_TT_xy': The traditional structure function TT for separation
+                vectors in the x-y plane.
+                'SF_LLL_xy': The traditional structure function LLL for separation
+                vectors in the x-y plane..
+                'SF_LTT_xy': The traditional structure function LTT for separation
+                vectors in the x-y plane.
+                'SF_LSS_xy': The traditional structure function LSS for separation
+                vectors in the x-y plane.
+
+    """
+    inputs = {
+        "u": u,
+        "v": v,
+        "adv_x": adv_x,
+        "adv_y": adv_y,
+        "scalar": scalar,
+        "adv_scalar": adv_scalar,
+    }
+
+    if skip_velocity_sf is True:
+        inputs.update(
+            {
+                "u": None,
+                "v": None,
+                "adv_x": None,
+                "adv_y": None,
+            }
+        )
+
+    shifted_inputs = {}
+
+    for key, value in inputs.items():
+        if value is not None:
+            xy_shift = xy_shift_array(
+                inputs[key], x_shift=shift_in_x, y_shift=shift_in_y
+            )
+
+            shifted_inputs.update(
+                {
+                    key + "_xy_shift": xy_shift,
+                }
+            )
+
+    inputs.update(shifted_inputs)
+    SF_dict = {}
+
+    if skip_velocity_sf is False:
+
+        SF_dict["SF_velocity_advection_xy"] = np.nanmean(
+            (inputs["adv_x_xy_shift"] - adv_x)
+            * (inputs["u_xy_shift"] - u)
+            + (inputs["adv_y_xy_shift"] - adv_y)
+            * (inputs["v_xy_shift"] - v)
+        )
+        if traditional_type is not None:
+            x_separation = shift_in_x * (x[1] - x[0])
+            y_separation = shift_in_y * (y[1] - y[0])
+            cosine_angle = x_separation / np.sqrt(x_separation**2 + y_separation**2)
+            sine_angle = y_separation / np.sqrt(x_separation**2 + y_separation**2) 
+
+            if any("LL" in t for t in traditional_type):
+                SF_dict["SF_LL_xy"] = np.nanmean(
+                    ( (inputs["u_xy_shift"] - u) * cosine_angle +
+                      (inputs["v_xy_shift"] - v) * sine_angle ) ** 2
+                )
+            if any("TT" in t for t in traditional_type):
+                SF_dict["SF_TT_xy"] = np.nanmean(
+                    ( (inputs["v_xy_shift"] - v) * cosine_angle -
+                      (inputs["u_xy_shift"] - u) * sine_angle ) ** 2
+                )
+            if any("LLL" in t for t in traditional_type):
+                SF_dict["SF_LLL_xy"] = np.nanmean(
+                    ( (inputs["u_xy_shift"] - u) * cosine_angle +
+                      (inputs["v_xy_shift"] - v) * sine_angle ) ** 3
+                )
+            if any("LTT" in t for t in traditional_type):
+                if direction == "x":
+                    SF_dict["SF_LTT_xy"] = np.nanmean(
+                        ( (inputs["u_xy_shift"] - u) * cosine_angle +
+                        (inputs["v_xy_shift"] - v) * sine_angle ) *
+                        ( (inputs["v_xy_shift"] - v) * cosine_angle -
+                        (inputs["u_xy_shift"] - u) * sine_angle ) ** 2
+                    )
+    if scalar is not None:
+        SF_dict["SF_scalar_advection_xy"] = np.nanmean(
+            (inputs["adv_scalar_xy_shift"] - adv_scalar)
+            * (inputs["scalar_xy_shift"] - scalar)
+        )
+        if traditional_type is not None:
+            if any("LSS" in t for t in traditional_type):
+                SF_dict["SF_LSS_xy"] = np.nanmean(
+                    ( (inputs["u_xy_shift"] - u) * cosine_angle +
+                      (inputs["v_xy_shift"] - v) * sine_angle )
+                    * (inputs["scalar_xy_shift"] - scalar) ** 2
+                )
+
+    
+
+    return SF_dict

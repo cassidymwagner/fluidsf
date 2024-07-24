@@ -8,7 +8,7 @@ from fluidsf.calculate_separation_distances import calculate_separation_distance
 @pytest.mark.parametrize(
     "x, y, x_shift, y_shift, grid_type, expected_distances",
     [
-        (0, 0, 1, 1, "uniform", (1, 1)),
+        (0, 0, 1, 1, None, (1, 1)),
         (
             0,
             0,
@@ -17,8 +17,8 @@ from fluidsf.calculate_separation_distances import calculate_separation_distance
             "latlon",
             (great_circle((1, 0), (0, 0)).meters, great_circle((0, 1), (0, 0)).meters),
         ),
-        (0, 0, 0, 0, "uniform", (0, 0)),
-        (1, 2, 3, 4, "uniform", (2, 2)),
+        (0, 0, 0, 0, None, (0, 0)),
+        (1, 2, 3, 4, None, (2, 2)),
         (
             1,
             2,
@@ -26,6 +26,17 @@ from fluidsf.calculate_separation_distances import calculate_separation_distance
             4,
             "latlon",
             (great_circle((3, 2), (1, 2)).meters, great_circle((1, 4), (1, 2)).meters),
+        ),
+        (1, 2, 1, 2, None, (0, 0)),
+        (1, 2, 1, 2, "latlon", (0, 0)),
+        (1, 1, 0, 0, None, (-1, -1)),
+        (
+            1,
+            1,
+            0,
+            0,
+            "latlon",
+            (great_circle((0, 1), (1, 1)).meters, great_circle((1, 0), (1, 1)).meters),
         ),
     ],
 )

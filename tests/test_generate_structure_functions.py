@@ -1,475 +1,494 @@
 import numpy as np
 import pytest
+from geopy.distance import great_circle
 
 from fluidsf.generate_structure_functions import generate_structure_functions
 
 
 @pytest.mark.parametrize(
-    "u, v, x, y, skip_velocity_sf, scalar, traditional_type, dx, dy, boundary, "
-    "grid_type, nbins, expected_dict",
+    "u, v, x, y, sf_type, scalar, dx, dy, boundary, " "grid_type, nbins, expected_dict",
     [
-        # Test 1: all with no boundary and uniform grid
+        # Test 1: linear velocities all SFs no scalar non-periodic
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS", "LTT"],  # traditional_type
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
             None,  # dx
             None,  # dy
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
             {
-                "SF_advection_velocity_x": np.array(
-                    [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
-                ),
-                "SF_advection_velocity_y": np.array(
-                    [0, 10500, 42000, 94500, 168000, 262500, 378000, 514500, 672000]
-                ),
-                "SF_advection_scalar_x": np.array(
-                    [0, 189, 756, 1701, 3024, 4725, 6804, 9261, 12096]
-                ),
-                "SF_advection_scalar_y": np.array(
-                    [0, 18900, 75600, 170100, 302400, 472500, 680400, 926100, 1209600]
-                ),
-                "SF_LLL_x": np.array([0, -1, -8, -27, -64, -125, -216, -343, -512]),
-                "SF_LLL_y": np.array(
-                    [
-                        0,
-                        -8000,
-                        -64000,
-                        -216000,
-                        -512000,
-                        -1000000,
-                        -1728000,
-                        -2744000,
-                        -4096000,
-                    ]
-                ),
-                "SF_LTT_x": np.array(
-                    [0, -4, -32, -108, -256, -500, -864, -1372, -2048]
-                ),
-                "SF_LTT_y": np.array(
-                    [
-                        0,
-                        -2000,
-                        -16000,
-                        -54000,
-                        -128000,
-                        -250000,
-                        -432000,
-                        -686000,
-                        -1024000,
-                    ]
-                ),
-                "SF_LSS_x": np.array(
-                    [0, -9, -72, -243, -576, -1125, -1944, -3087, -4608]
-                ),
-                "SF_LSS_y": np.array(
-                    [
-                        0,
-                        -18000,
-                        -144000,
-                        -486000,
-                        -1152000,
-                        -2250000,
-                        -3888000,
-                        -6174000,
-                        -9216000,
-                    ]
-                ),
+                "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+                "SF_LL_y": 0 * np.linspace(0, 8, 9),
                 "x-diffs": np.linspace(0, 8, 9),
                 "y-diffs": np.linspace(0, 8, 9),
-            },  # expected_dict
+            },
         ),
-        # Test 2: all with Periodic boundary and uniform grid
+        # Test 2: linear velocities all SFs no scalar non-periodic latlon grid
+        # and array of dx and dy
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS", "LTT"],  # traditional_order
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            np.ones(10),  # dx
+            np.ones(10),  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            {
+                "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+                "SF_LL_y": 0 * np.linspace(0, 8, 9),
+                "x-diffs": np.array(
+                    [great_circle((i, 0), (0, 0)).meters for i in range(9)]
+                ),
+                "y-diffs": np.array(
+                    [great_circle((0, i), (0, 0)).meters for i in range(9)]
+                ),
+            },
+        ),
+        # Test 3: linear velocities all SFs no scalar non-periodic latlon grid
+        # and single dx and dy raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            1,  # dx
+            1,  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 4: linear velocities all SFs no scalar non-periodic latlon grid no dx and
+        # dy
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 5: linear velocities all SFs scalar provided but no LSS in
+        # sf_type non-periodic latlon grid
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            np.arange(10),  # scalar
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            np.ones(10),  # dx
+            np.ones(10),  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 6: linear velocities all SFs scalar not provided but LSS in
+        # sf_type non-periodic latlon grid
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["LLL", "LL", "LTT", "LSS"],  # sf_type
+            None,  # scalar
+            np.ones(10),  # dx
+            np.ones(10),  # dy
+            None,  # boundary
+            "latlon",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 7: slanted velocities no scalar periodic uniform grid only LL arange(10)
+        (
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # u
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # v
+            np.linspace(0, 10**2, 10**2),  # x
+            np.linspace(0, 10**2, 10**2),  # y
+            ["LL"],  # sf_type
+            None,  # scalar
             None,  # dx
             None,  # dy
             "periodic-all",  # boundary
             "uniform",  # grid_type
             None,  # nbins
             {
-                "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
-                "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
-                "SF_advection_scalar_x": np.array([0, 1701, 3024, 3969, 4536]),
-                "SF_advection_scalar_y": np.array([0, 170100, 302400, 396900, 453600]),
-                "SF_LLL_x": np.array([0, 72, 96, 84, 48]),
-                "SF_LLL_y": np.array([0, 576000, 768000, 672000, 384000]),
-                "SF_LTT_x": np.array([0, 288, 384, 336, 192]),
-                "SF_LTT_y": np.array([0, 144000, 192000, 168000, 96000]),
-                "SF_LSS_x": np.array([0, 648, 864, 756, 432]),
-                "SF_LSS_y": np.array([0, 1296000, 1728000, 1512000, 864000]),
-                "x-diffs": np.linspace(0, 4, 5),
-                "y-diffs": np.linspace(0, 4, 5),
-            },  # expected_dict
+                "SF_LL_x": np.tile(
+                    np.concatenate(
+                        (
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                ::-1
+                            ],
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                1:-1
+                            ],
+                        )
+                    ),
+                    int(10 / 2),
+                ),
+                "SF_LL_y": np.zeros(50),
+                "x-diffs": np.linspace(0, 10**2, 10**2)[:50],
+                "y-diffs": np.linspace(0, 10**2, 10**2)[:50],
+            },
         ),
-        # Test 3: all with no boundary and latlon grid
+        # Test 8: slanted velocities no scalar periodic uniform grid only LL arange(9)
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS", "LTT"],  # traditional_order
-            np.ones(10),  # dx
-            np.ones(10),  # dy
-            None,  # boundary
-            "latlon",  # grid_type
-            None,  # nbins
-            {
-                "SF_advection_velocity_x": np.array(
-                    [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
-                ),
-                "SF_advection_velocity_y": np.array(
-                    [0, 10500, 42000, 94500, 168000, 262500, 378000, 514500, 672000]
-                ),
-                "SF_advection_scalar_x": np.array(
-                    [0, 189, 756, 1701, 3024, 4725, 6804, 9261, 12096]
-                ),
-                "SF_advection_scalar_y": np.array(
-                    [0, 18900, 75600, 170100, 302400, 472500, 680400, 926100, 1209600]
-                ),
-                "SF_LLL_x": np.array([0, -1, -8, -27, -64, -125, -216, -343, -512]),
-                "SF_LLL_y": np.array(
-                    [
-                        0,
-                        -8000,
-                        -64000,
-                        -216000,
-                        -512000,
-                        -1000000,
-                        -1728000,
-                        -2744000,
-                        -4096000,
-                    ]
-                ),
-                "SF_LTT_x": np.array(
-                    [0, -4, -32, -108, -256, -500, -864, -1372, -2048]
-                ),
-                "SF_LTT_y": np.array(
-                    [
-                        0,
-                        -2000,
-                        -16000,
-                        -54000,
-                        -128000,
-                        -250000,
-                        -432000,
-                        -686000,
-                        -1024000,
-                    ]
-                ),
-                "SF_LSS_x": np.array(
-                    [0, -9, -72, -243, -576, -1125, -1944, -3087, -4608]
-                ),
-                "SF_LSS_y": np.array(
-                    [
-                        0,
-                        -18000,
-                        -144000,
-                        -486000,
-                        -1152000,
-                        -2250000,
-                        -3888000,
-                        -6174000,
-                        -9216000,
-                    ]
-                ),
-                "x-diffs": np.array(
-                    [
-                        0.0,
-                        111195.08372419,
-                        222390.16744838,
-                        333585.25117257,
-                        444780.33489677,
-                        555975.41862096,
-                        667170.50234515,
-                        778365.58606934,
-                        889560.66979353,
-                    ]
-                ),
-                "y-diffs": np.array(
-                    [
-                        0.0,
-                        111127.34496561,
-                        222254.67962213,
-                        333381.99365421,
-                        444509.27673393,
-                        555636.51851453,
-                        666763.70862407,
-                        777890.83665907,
-                        889017.89217812,
-                    ]
-                ),
-            },  # expected_dict
-        ),
-        # Test 4: all with Periodic boundary and latlon grid
-        (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
-            np.ones(10),  # dx
-            np.ones(10),  # dy
+            np.tile(np.tile(np.arange(9), 9), (9**2, 1)),  # u
+            np.tile(np.tile(np.arange(9), 9), (9**2, 1)),  # v
+            np.linspace(0, 9**2, 9**2),  # x
+            np.linspace(0, 9**2, 9**2),  # y
+            ["LL"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
             "periodic-all",  # boundary
-            "latlon",  # grid_type
+            "uniform",  # grid_type
             None,  # nbins
             {
-                "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
-                "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
-                "SF_advection_scalar_x": np.array([0, 1701, 3024, 3969, 4536]),
-                "SF_advection_scalar_y": np.array([0, 170100, 302400, 396900, 453600]),
-                "SF_LLL_x": np.array([0, 72, 96, 84, 48]),
-                "SF_LLL_y": np.array([0, 576000, 768000, 672000, 384000]),
-                "SF_LSS_x": np.array([0, 648, 864, 756, 432]),
-                "SF_LSS_y": np.array([0, 1296000, 1728000, 1512000, 864000]),
-                "x-diffs": np.array(
-                    [
-                        0.0,
-                        111195.08372419,
-                        222390.16744838,
-                        333585.25117257,
-                        444780.33489677,
-                    ]
-                ),
-                "y-diffs": np.array(
-                    [
-                        0.0,
-                        111127.34496561,
-                        222254.67962213,
-                        333381.99365421,
-                        444509.27673393,
-                    ]
-                ),
-            },  # expected_dict
+                "SF_LL_x": np.tile(
+                    np.concatenate(
+                        (
+                            np.asarray(
+                                [
+                                    sum((9 - 1) - (2 * i) for i in range(j))
+                                    for j in range(int((9 + 1) / 2))
+                                ]
+                            ),
+                            np.asarray(
+                                [
+                                    sum((9 - 1) - (2 * i) for i in range(j))
+                                    for j in range(int((9 + 1) / 2))
+                                ][::-1][:-1]
+                            ),
+                        )
+                    ),
+                    int((9 + 1) / 2),
+                )[: -int((9 + 1) / 2)],
+                "SF_LL_y": np.zeros(40),
+                "x-diffs": np.linspace(0, 9**2, 9**2)[:40],
+                "y-diffs": np.linspace(0, 9**2, 9**2)[:40],
+            },
         ),
-        # Test 5: all with no boundary and uniform grid and binning
+        # Test 9: boundary is 'Periodic' raises ValueError
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            "Periodic",  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 10: grid type is 'non-uniform' raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "non-uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 11: sf_type is empty raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            [],  # sf_type
+            None,  # scalar
             None,  # dx
             None,  # dy
             None,  # boundary
             "uniform",  # grid_type
-            3,  # nbins
-            {
-                "SF_advection_velocity_x": np.array([175, 1750, 5215]),
-                "SF_advection_velocity_y": np.array([17500, 175000, 521500]),
-                "SF_advection_scalar_x": np.array([315, 3150, 9387]),
-                "SF_advection_scalar_y": np.array([31500, 315000, 938700]),
-                "SF_LLL_x": np.array([-3, -72, -357]),
-                "SF_LLL_y": np.array([-24000, -576000, -2856000]),
-                "SF_LSS_x": np.array([-27, -648, -3213]),
-                "SF_LSS_y": np.array([-54000, -1296000, -6426000]),
-                "x-diffs": np.array([1, 4, 7]),
-                "y-diffs": np.array([1, 4, 7]),
-            },  # expected_dict
+            None,  # nbins
+            ValueError,
         ),
-        # Test 6: all with no boundary and latlon grid and binning
+        # Test 12: sf_type is list with integer values raises ValueError
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            [1],  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 13: sf_type is an integer raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            1,  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 14: sf_type is a string raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            "ASF_V",  # sf_type
+            None,  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
+        ),
+        # Test 15: scalar is not None and sf_type does not include "LSS" or "ASF_S"
+        # raises ValueError
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            np.arange(10),  # scalar
+            ["LLL", "LL", "LTT"],  # sf_type
             np.ones(10),  # dx
             np.ones(10),  # dy
             None,  # boundary
-            "latlon",  # grid_type
-            3,  # nbins
-            {
-                "SF_advection_velocity_x": np.array([175, 1750, 5215]),
-                "SF_advection_velocity_y": np.array([17500, 175000, 521500]),
-                "SF_advection_scalar_x": np.array([315, 3150, 9387]),
-                "SF_advection_scalar_y": np.array([31500, 315000, 938700]),
-                "SF_LLL_x": np.array([-3, -72, -357]),
-                "SF_LLL_y": np.array([-24000, -576000, -2856000]),
-                "SF_LSS_x": np.array([-27, -648, -3213]),
-                "SF_LSS_y": np.array([-54000, -1296000, -6426000]),
-                "x-diffs": np.array(
-                    [111195.08372419, 444780.33489677, 778365.58606934]
-                ),
-                "y-diffs": np.array(
-                    [111127.34152924, 444509.26296756, 777890.81248708]
-                ),
-            },  # expected_dict
+            "uniform",  # grid_type
+            None,  # nbins
+            ValueError,
         ),
-        # Test 7: all with no boundary and 5 bins
+        # Test 16: linear velocities all SFs yes scalar non-periodic uniform grid
         (
-            np.array(
-                [[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 5, 5),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 5, (j + 1) * 5)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "ASF_S", "LLL", "LL", "LTT", "LSS"],  # sf_type
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             None,  # dx
             None,  # dy
             None,  # boundary
             "uniform",  # grid_type
-            5,  # nbins
+            None,  # nbins
             {
-                "SF_advection_velocity_x": np.array([0, 55, 220, 495]),
-                "SF_advection_velocity_y": np.array(
-                    [687.5, 8937.5, 22000, 41937.5, 77687.5]
-                ),
-                "SF_advection_scalar_x": np.array([0, 99, 396, 891]),
-                "SF_advection_scalar_y": np.array(
-                    [1237.5, 16087.5, 39600.0, 75487.5, 139837.5]
-                ),
-                "SF_LLL_x": np.array([0, -1, -8, -27]),
-                "SF_LLL_y": np.array([-500, -17500, -64000, -170500, -427500]),
-                "SF_LSS_x": np.array([0, -9, -72, -243]),
-                "SF_LSS_y": np.array([-1125, -39375, -144000, -383625, -961875]),
-                "x-diffs": np.linspace(0, 3, 4),
-                "y-diffs": np.array([0.5, 2.5, 4, 5.5, 7.5]),
-            },  # expected_dict
+                "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+                "SF_advection_scalar_x": (1 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_scalar_y": 0 * np.linspace(0, 8, 9),
+                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+                "SF_LL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LSS_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LSS_y": 0 * np.linspace(0, 8, 9),
+                "x-diffs": np.linspace(0, 8, 9),
+                "y-diffs": np.linspace(0, 8, 9),
+            },
         ),
-        # Test 8: all with periodic-x boundary
+        # Test 17: linear velocities all SFs yes scalar non-periodic uniform grid with
+        # nbins 1
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "ASF_S", "LLL", "LL", "LTT", "LSS"],  # sf_type
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            1,  # nbins
+            {
+                "SF_advection_velocity_x": np.mean((5 / 4) * np.linspace(0, 8, 9) ** 2),
+                "SF_advection_velocity_y": np.mean(0 * np.linspace(0, 8, 9)),
+                "SF_advection_scalar_x": np.mean((1 / 4) * np.linspace(0, 8, 9) ** 2),
+                "SF_advection_scalar_y": np.mean(0 * np.linspace(0, 8, 9)),
+                "SF_LLL_x": np.mean(np.linspace(0, 8, 9) ** 3),
+                "SF_LLL_y": np.mean(0 * np.linspace(0, 8, 9)),
+                "SF_LTT_x": np.mean((1 / 4) * np.linspace(0, 8, 9) ** 3),
+                "SF_LTT_y": np.mean(0 * np.linspace(0, 8, 9)),
+                "SF_LL_x": np.mean(np.linspace(0, 8, 9) ** 2),
+                "SF_LL_y": np.mean(0 * np.linspace(0, 8, 9)),
+                "SF_LSS_x": np.mean((1 / 4) * np.linspace(0, 8, 9) ** 3),
+                "SF_LSS_y": np.mean(0 * np.linspace(0, 8, 9)),
+                "x-diffs": np.mean(np.linspace(0, 8, 9)),
+                "y-diffs": np.mean(np.linspace(0, 8, 9)),
+            },
+        ),
+        # Test 18: slanted velocities no scalar periodic-x uniform grid only LL
+        # arange(10)
+        (
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # u
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # v
+            np.linspace(0, 10**2, 10**2),  # x
+            np.linspace(0, 10**2, 10**2),  # y
+            ["LL"],  # sf_type
+            None,  # scalar
             None,  # dx
             None,  # dy
             "periodic-x",  # boundary
             "uniform",  # grid_type
             None,  # nbins
             {
-                "SF_advection_velocity_x": np.array([0, 945, 1680, 2205, 2520]),
-                "SF_advection_velocity_y": np.array(
-                    [0, 10500, 42000, 94500, 168000, 262500, 378000, 514500, 672000]
+                "SF_LL_x": np.tile(
+                    np.concatenate(
+                        (
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                ::-1
+                            ],
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                1:-1
+                            ],
+                        )
+                    ),
+                    int(10 / 2),
                 ),
-                "SF_advection_scalar_x": np.array([0, 1701, 3024, 3969, 4536]),
-                "SF_advection_scalar_y": np.array(
-                    [0, 18900, 75600, 170100, 302400, 472500, 680400, 926100, 1209600]
-                ),
-                "SF_LLL_x": np.array([0, 72, 96, 84, 48]),
-                "SF_LLL_y": np.array(
-                    [
-                        0,
-                        -8000,
-                        -64000,
-                        -216000,
-                        -512000,
-                        -1000000,
-                        -1728000,
-                        -2744000,
-                        -4096000,
-                    ]
-                ),
-                "SF_LSS_x": np.array([0, 648, 864, 756, 432]),
-                "SF_LSS_y": np.array(
-                    [
-                        0,
-                        -18000,
-                        -144000,
-                        -486000,
-                        -1152000,
-                        -2250000,
-                        -3888000,
-                        -6174000,
-                        -9216000,
-                    ]
-                ),
-                "x-diffs": np.linspace(0, 4, 5),
-                "y-diffs": np.linspace(0, 8, 9),
-            },  # expected_dict
+                "SF_LL_y": np.zeros(99),
+                "x-diffs": np.linspace(0, 10**2, 10**2)[:50],
+                "y-diffs": np.linspace(0, 10**2, 10**2)[:99],
+            },
         ),
-        # Test 9: all with periodic-y boundary
+        # Test 19: slanted velocities no scalar periodic-y uniform grid only LL
+        # arange(10) tilted in x
         (
-            np.array(
-                [[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)]
-            ),  # u
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 2,  # v
-            np.linspace(1, 10, 10),  # x
-            np.linspace(1, 10, 10),  # y
-            False,  # skip_velocity_sf
-            np.array([[i + 1 for i in range(j * 10, (j + 1) * 10)] for j in range(10)])
-            * 3,  # scalar
-            ["LLL", "LSS"],  # traditional_order
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)).T,  # u
+            np.tile(np.tile(np.arange(10), 10), (10**2, 1)).T,  # v
+            np.linspace(0, 10**2, 10**2),  # x
+            np.linspace(0, 10**2, 10**2),  # y
+            ["LL"],  # sf_type
+            None,  # scalar
             None,  # dx
             None,  # dy
             "periodic-y",  # boundary
             "uniform",  # grid_type
             None,  # nbins
             {
-                "SF_advection_velocity_x": np.array(
-                    [0, 105, 420, 945, 1680, 2625, 3780, 5145, 6720]
+                "SF_LL_y": np.tile(
+                    np.concatenate(
+                        (
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                ::-1
+                            ],
+                            np.asarray((10 / 2) ** 2 - np.arange(int(10 / 2) + 1) ** 2)[
+                                1:-1
+                            ],
+                        )
+                    ),
+                    int(10 / 2),
                 ),
-                "SF_advection_velocity_y": np.array([0, 94500, 168000, 220500, 252000]),
-                "SF_advection_scalar_x": np.array(
-                    [0, 189, 756, 1701, 3024, 4725, 6804, 9261, 12096]
-                ),
-                "SF_advection_scalar_y": np.array([0, 170100, 302400, 396900, 453600]),
-                "SF_LLL_x": np.array([0, -1, -8, -27, -64, -125, -216, -343, -512]),
-                "SF_LLL_y": np.array([0, 576000, 768000, 672000, 384000]),
-                "SF_LSS_x": np.array(
-                    [0, -9, -72, -243, -576, -1125, -1944, -3087, -4608]
-                ),
-                "SF_LSS_y": np.array([0, 1296000, 1728000, 1512000, 864000]),
+                "SF_LL_x": np.zeros(99),
+                "x-diffs": np.linspace(0, 10**2, 10**2)[:99],
+                "y-diffs": np.linspace(0, 10**2, 10**2)[:50],
+            },
+        ),
+        # Test 20: linear velocities all SFs yes scalar non-periodic uniform grid and
+        # only ASF_S for scalar SFs
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "ASF_S", "LLL", "LL", "LTT"],  # sf_type
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            {
+                "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+                "SF_advection_scalar_x": (1 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_scalar_y": 0 * np.linspace(0, 8, 9),
+                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+                "SF_LL_y": 0 * np.linspace(0, 8, 9),
                 "x-diffs": np.linspace(0, 8, 9),
-                "y-diffs": np.linspace(0, 4, 5),
-            },  # expected_dict
+                "y-diffs": np.linspace(0, 8, 9),
+            },
+        ),
+        # Test 21: linear velocities all SFs yes scalar non-periodic uniform grid and
+        # only LSS for scalar SFs
+        (
+            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+            np.arange(10),  # x
+            np.arange(10),  # y
+            ["ASF_V", "LLL", "LL", "LTT", "LSS"],  # sf_type
+            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
+            None,  # dx
+            None,  # dy
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            {
+                "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+                "SF_LL_y": 0 * np.linspace(0, 8, 9),
+                "SF_LSS_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+                "SF_LSS_y": 0 * np.linspace(0, 8, 9),
+                "x-diffs": np.linspace(0, 8, 9),
+                "y-diffs": np.linspace(0, 8, 9),
+            },
         ),
     ],
 )
@@ -478,9 +497,8 @@ def test_generate_structure_functions_parameterized(
     v,
     x,
     y,
-    skip_velocity_sf,
+    sf_type,
     scalar,
-    traditional_type,
     dx,
     dy,
     boundary,
@@ -489,28 +507,45 @@ def test_generate_structure_functions_parameterized(
     expected_dict,
 ):
     """Test generate_structure_functions produces expected results."""
-    output_dict = generate_structure_functions(
-        u,
-        v,
-        x,
-        y,
-        skip_velocity_sf,
-        scalar,
-        traditional_type,
-        dx,
-        dy,
-        boundary,
-        grid_type,
-        nbins,
-    )
-    for key, value in expected_dict.items():
-        if key in output_dict:
-            if not np.allclose(output_dict[key], value):
-                print(output_dict[key])
-                print(expected_dict[key])
-                raise AssertionError(
-                    f"Output dict value for key '{key}' does not match "
-                    f"expected value '{output_dict[key]}'."
-                )
-        else:
-            raise AssertionError(f"Output dict does not contain key '{key}'.")
+    if expected_dict == ValueError:
+        with pytest.raises(ValueError):
+            generate_structure_functions(
+                u,
+                v,
+                x,
+                y,
+                sf_type,
+                scalar,
+                dx,
+                dy,
+                boundary,
+                grid_type,
+                nbins,
+            )
+        return
+    else:
+        output_dict = generate_structure_functions(
+            u,
+            v,
+            x,
+            y,
+            sf_type,
+            scalar,
+            dx,
+            dy,
+            boundary,
+            grid_type,
+            nbins,
+        )
+
+        for key, value in expected_dict.items():
+            if key in output_dict:
+                if not np.allclose(output_dict[key], value, equal_nan=True):
+                    print(output_dict[key])
+                    print(expected_dict[key])
+                    raise AssertionError(
+                        f"Output dict value for key '{key}' does not match "
+                        f"expected value '{output_dict[key]}'."
+                    )
+            else:
+                raise AssertionError(f"Output dict does not contain key '{key}'.")
