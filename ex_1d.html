@@ -258,14 +258,23 @@
           <section id="Structure-functions-with-1D-data">
 <h1>Structure functions with 1D data<a class="headerlink" href="#Structure-functions-with-1D-data" title="Link to this heading">¶</a></h1>
 <p>This example will guide you through calculating structure functions with 1D velocity data.</p>
-<p><strong>General procedure</strong>: 1. Generate a random 1D velocity field 2. Calculate different types of structure functions 3. Plot the structure functions as a function of separation distance</p>
+<p><strong>General procedure</strong>:</p>
+<ol class="arabic simple">
+<li><p>Generate a 1D velocity field</p></li>
+<li><p>Calculate different types of structure functions</p></li>
+<li><p>Plot the structure functions as a function of separation distance</p></li>
+</ol>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib_inline.backend_inline</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib_inline.backend_inline</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>  <span class="c1"># Ignore warnings for the purpose of this tutorial</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
@@ -274,39 +283,63 @@
 </pre></div>
 </div>
 </div>
-<section id="Create-a-random-1D-velocity-field">
-<h2>Create a random 1D velocity field<a class="headerlink" href="#Create-a-random-1D-velocity-field" title="Link to this heading">¶</a></h2>
+<section id="Create-1D-data">
+<h2>Create 1D data<a class="headerlink" href="#Create-1D-data" title="Link to this heading">¶</a></h2>
+<p>We will generate u and v velocity arrays that increase linearly. The v velocity will be half the magnitude of the u velocity. We will also create an arbitrary scalar array at half the magnitude of the v velocity.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span>
-<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nx</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">x</span>
+<span class="n">v</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">scalar</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">x</span>
 </pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;scalar&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/ex_1d_4_0.png" src="_images/ex_1d_4_0.png" />
 </div>
 </div>
 </section>
 <section id="Calculate-various-velocity-based-structure-functions">
 <h2>Calculate various velocity-based structure functions<a class="headerlink" href="#Calculate-various-velocity-based-structure-functions" title="Link to this heading">¶</a></h2>
-<p>We will calculate two different structure functions at the same time with this step. You can choose different structure functions by changing the argument <code class="docutils literal notranslate"><span class="pre">traditional_type</span></code>. Accepted strings are <code class="docutils literal notranslate"><span class="pre">LL</span></code>, <code class="docutils literal notranslate"><span class="pre">LLL</span></code>, <code class="docutils literal notranslate"><span class="pre">LTT</span></code>, and <code class="docutils literal notranslate"><span class="pre">LSS</span></code>.</p>
+<p>We will calculate two different structure functions at the same time with this step. You can choose different structure functions by changing the argument <code class="docutils literal notranslate"><span class="pre">sf_type</span></code>. Accepted strings are <code class="docutils literal notranslate"><span class="pre">LL</span></code>, <code class="docutils literal notranslate"><span class="pre">LLL</span></code>, <code class="docutils literal notranslate"><span class="pre">LTT</span></code>, and <code class="docutils literal notranslate"><span class="pre">LSS</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fluidsf</span>
 
-<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_1d</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
-                                             <span class="n">traditional_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">],</span>
-                                             <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_1d</span><span class="p">(</span>
+    <span class="n">u</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">],</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p>Check which keys have data in the <code class="docutils literal notranslate"><span class="pre">sf</span></code> dictionary. Other keys are available but have been initialized to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -326,52 +359,14 @@ x-diffs
 </pre></div></div>
 </div>
 <p><strong>Note</strong>: if you include <code class="docutils literal notranslate"><span class="pre">LTT</span></code> and/or <code class="docutils literal notranslate"><span class="pre">LSS</span></code> you must provide arguments for <code class="docutils literal notranslate"><span class="pre">v</span></code> and <code class="docutils literal notranslate"><span class="pre">scalar</span></code>, respectively. Otherwise FluidSF will raise an error.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bad_sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_1d</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
-                                             <span class="n">traditional_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LTT&quot;</span><span class="p">],</span>
-                                             <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[5], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> bad_sf <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fluidsf</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">generate_structure_functions_1d</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">U</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-yellow-bg">                                             </span><span class="ansi-yellow-bg">traditional_type</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">LL</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">LLL</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">LTT</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-yellow-bg">                                             </span><span class="ansi-yellow-bg">boundary</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">None</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">~/miniconda3/envs/py311/lib/python3.11/site-packages/fluidsf/generate_structure_functions_1d.py:81</span>, in <span class="ansi-cyan-fg">generate_structure_functions_1d</span><span class="ansi-blue-fg">(u, x, v, y, scalar, traditional_type, dx, boundary, grid_type, nbins)</span>
-<span class="ansi-green-intense-fg ansi-bold">     77</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
-<span class="ansi-green-intense-fg ansi-bold">     78</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">If you include </span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">LSS</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)"> in traditional_type, you must provide a scalar array.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">     79</span>     )
-<span class="ansi-green-intense-fg ansi-bold">     80</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> v <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">LTT</span><span style="color: rgb(175,0,0)">&#34;</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> traditional_type:
-<span class="ansi-green-fg">---&gt; 81</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
-<span class="ansi-green-intense-fg ansi-bold">     82</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">If you include </span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">LTT</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)"> in traditional_type, you must provide a v array.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">     83</span>     )
-<span class="ansi-green-intense-fg ansi-bold">     85</span> <span style="color: rgb(95,135,135)"># Initialize variables as NoneType</span>
-<span class="ansi-green-intense-fg ansi-bold">     86</span> SF_LL <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
-
-<span class="ansi-red-fg">ValueError</span>: If you include &#39;LTT&#39; in traditional_type, you must provide a v array.
-</pre></div></div>
-</div>
 <p>Now let’s calculate all the possible structure functions.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_all</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_1d</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="n">U</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
-                                                 <span class="n">traditional_type</span><span class="o">=</span><span class="p">[</span>
-                                                     <span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LTT&quot;</span><span class="p">,</span> <span class="s2">&quot;LSS&quot;</span>
-                                                     <span class="p">],</span>
-                                                 <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_all</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_1d</span><span class="p">(</span>
+    <span class="n">u</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">scalar</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LTT&quot;</span><span class="p">,</span> <span class="s2">&quot;LSS&quot;</span><span class="p">],</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -397,39 +392,52 @@ SF_LSS
 x-diffs
 </pre></div></div>
 </div>
+</section>
+<section id="Plot-structure-functions-and-compare">
+<h2>Plot structure functions and compare<a class="headerlink" href="#Plot-structure-functions-and-compare" title="Link to this heading">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LL&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LL(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LLL&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LLL(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LTT&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LTT(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LSS&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LSS(r)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C3&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span>
+    <span class="mf">0.25</span> <span class="o">*</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+    <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span>
+    <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span> <span class="o">*</span> <span class="n">sf</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+<span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$r^</span><span class="si">{2}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.56</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LL&quot;</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;LL&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e0</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$r^</span><span class="si">{3}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.37</span><span class="p">),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LLL&quot;</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;LLL&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1e-1</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LTT&quot;</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;LTT&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1e-1</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;x-diffs&quot;</span><span class="p">],</span> <span class="n">sf_all</span><span class="p">[</span><span class="s2">&quot;SF_LSS&quot;</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;LSS&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1e-1</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Separation distance (r)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Structure function (SF(r))&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -499,8 +507,9 @@ x-diffs
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Structure functions with 1D data</a><ul>
-<li><a class="reference internal" href="#Create-a-random-1D-velocity-field">Create a random 1D velocity field</a></li>
+<li><a class="reference internal" href="#Create-1D-data">Create 1D data</a></li>
 <li><a class="reference internal" href="#Calculate-various-velocity-based-structure-functions">Calculate various velocity-based structure functions</a></li>
+<li><a class="reference internal" href="#Plot-structure-functions-and-compare">Plot structure functions and compare</a></li>
 </ul>
 </li>
 </ul>
