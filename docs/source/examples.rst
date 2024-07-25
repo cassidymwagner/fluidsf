@@ -10,4 +10,6 @@ Examples
    ex_3d
    maps_2d_ex
    ex_2d_bootstrap
+   ex_cascade
    swot_ex
+   ex_mitgcm
