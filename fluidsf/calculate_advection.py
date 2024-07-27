@@ -4,8 +4,10 @@ import numpy as np
 def calculate_advection(  # noqa: D417
     u,
     v,
-    x,
-    y,
+    x=None,
+    y=None,
+    lats=None,
+    lons=None,
     dx=None,
     dy=None,
     grid_type="uniform",
@@ -15,8 +17,7 @@ def calculate_advection(  # noqa: D417
     Calculate the advection for a velocity field or scalar field. The velocity field
     will return advection components in the x and y directions.
     The scalar field will return the scalar advection. Defaults to advection for
-    velocity field. If the velocity advection is skipped or a scalar field is not
-    provided, the relevant dictionary key will return None.
+    velocity field.
 
     Parameters
     ----------
@@ -24,10 +25,18 @@ def calculate_advection(  # noqa: D417
             The u-component of velocity.
         v: ndarray
             The v-component of velocity.
-        x: ndarray
-            The x-coordinates of the grid.
+        x: ndarray, optional
+            The x-coordinates of the grid. Defaults to None, but required if grid_type
+            is not "latlon".
         y: ndarray
-            The y-coordinates of the grid.
+            The y-coordinates of the grid. Defaults to None, but required if grid_type
+            is not "latlon".
+        lats: ndarray, optional
+            The 2D latitude coordinates of the grid. Defaults to None, but required if
+            grid_type is "latlon".
+        lons: ndarray, optional
+            The 2D longitude coordinates of the grid. Defaults to None, but required if
+            grid_type is "latlon".
         dx: float or ndarray, optional
             The grid spacing in the x-direction. Defaults to None.
         dy: float or ndarray, optional
@@ -52,6 +61,16 @@ def calculate_advection(  # noqa: D417
         else:
             dudx, dudy = np.gradient(u, dx, dy, axis=(1, 0))
             dvdx, dvdy = np.gradient(v, dx, dy, axis=(1, 0))
+
+    elif grid_type == "latlon":
+        lat_meters = lats[:, 0] * 111000
+        lon_meters = lons[0, :] * 111000 * np.cos(np.deg2rad(lats[0, :]))
+
+        if scalar is not None:
+            dsdx, dsdy = np.gradient(scalar, lon_meters, lat_meters, axis=(1, 0))
+        else:
+            dudx, dudy = np.gradient(u, lon_meters, lat_meters, axis=(1, 0))
+            dvdx, dvdy = np.gradient(v, lon_meters, lat_meters, axis=(1, 0))
 
     else:
         xcoords = dx.cumsum()

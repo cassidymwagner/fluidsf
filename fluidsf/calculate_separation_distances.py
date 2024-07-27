@@ -27,8 +27,8 @@ def calculate_separation_distances(x, y, x_shift, y_shift, grid_type="uniform"):
         case of a latlon grid or code units for a uniform grid
     """
     if grid_type == "latlon":
-        xd = great_circle((x_shift, y), (x, y)).meters
-        yd = great_circle((x, y_shift), (x, y)).meters
+        xd = great_circle((y, x_shift), (y, x)).meters
+        yd = great_circle((y_shift, x), (y, x)).meters
     else:
         xd = x_shift - x
         yd = None
