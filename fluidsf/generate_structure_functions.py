@@ -23,6 +23,8 @@ def generate_structure_functions(  # noqa: C901, D417
     boundary="periodic-all",
     grid_type="uniform",
     nbins=None,
+    radius=None,
+    sphere_circumference=40075,
 ):
     """
     Full method for generating structure functions for 2D data, either advective or
@@ -66,6 +68,13 @@ def generate_structure_functions(  # noqa: C901, D417
         nbins: int, optional
             Number of bins for binning the data. Defaults to None, i.e. does not bin
             data.
+        radius: float, optional
+            The radius of the sphere for latlon grids. Defaults to None, which will use
+            the default value of the Earth's radius. Must be in units of kilometers if
+            provided.
+        sphere_circumference: float, optional
+            The circumference of the sphere for latlon grids in kilometers.
+            Defaults to 40075 km for Earth.
 
     Returns
     -------
@@ -186,12 +195,14 @@ def generate_structure_functions(  # noqa: C901, D417
     if any("ASF_V" in t for t in sf_type):
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
-        adv_x, adv_y = calculate_advection(u, v, x, y, lats, lons, dx, dy, grid_type)
+        adv_x, adv_y = calculate_advection(
+            u, v, x, y, lats, lons, dx, dy, grid_type, scalar, sphere_circumference
+        )
     if any("ASF_S" in t for t in sf_type):
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
         adv_scalar = calculate_advection(
-            u, v, x, y, lats, lons, dx, dy, grid_type, scalar
+            u, v, x, y, lats, lons, dx, dy, grid_type, scalar, sphere_circumference
         )
     if any("LL" in t for t in sf_type):
         SF_x_LL = np.zeros(len(sep_x) + 1)
@@ -210,9 +221,17 @@ def generate_structure_functions(  # noqa: C901, D417
     for x_shift in sep_x:
         y_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-x":
-            xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
+            if grid_type == "latlon":
+                lonroll = shift_array_1d(
+                    lons[0, :], shift_by=x_shift, boundary="Periodic"
+                )
+            else:
+                xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
         else:
-            xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
+            if grid_type == "latlon":
+                lonroll = shift_array_1d(lons[0, :], shift_by=x_shift, boundary=None)
+            else:
+                xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,
@@ -244,7 +263,12 @@ def generate_structure_functions(  # noqa: C901, D417
         if grid_type == "latlon":
             for lat in range(len(lats[:, 0]) - 1):
                 xd[x_shift][lat], tmp = calculate_separation_distances(
-                    x[0], y[lat], xroll[0], y[lat], grid_type
+                    lons[0, 0],
+                    lats[lat, 0],
+                    lonroll[0],
+                    lats[lat, 0],
+                    grid_type,
+                    radius,
                 )
 
         else:
@@ -255,9 +279,17 @@ def generate_structure_functions(  # noqa: C901, D417
     for y_shift in sep_y:
         x_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-y":
-            yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
+            if grid_type == "latlon":
+                latroll = shift_array_1d(
+                    lats[:, 0], shift_by=y_shift, boundary="Periodic"
+                )
+            else:
+                yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
         else:
-            yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
+            if grid_type == "latlon":
+                latroll = shift_array_1d(lats[:, 0], shift_by=y_shift, boundary=None)
+            else:
+                yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
 
         SF_dicts = calculate_structure_function(
             u,
@@ -290,7 +322,12 @@ def generate_structure_functions(  # noqa: C901, D417
             for start_lat in range(len(lats[:, 0]) - 1):
                 try:
                     tmp, yd[y_shift][start_lat] = calculate_separation_distances(
-                        x[0], y[start_lat], x[0], yroll[start_lat], grid_type
+                        lons[0, 0],
+                        lats[start_lat, 0],
+                        lons[0, 0],
+                        latroll[start_lat],
+                        grid_type,
+                        radius,
                     )
 
                 except ValueError:
