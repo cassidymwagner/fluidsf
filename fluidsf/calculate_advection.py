@@ -12,6 +12,7 @@ def calculate_advection(  # noqa: D417
     dy=None,
     grid_type="uniform",
     scalar=None,
+    sphere_circumference=40075,
 ):
     """
     Calculate the advection for a velocity field or scalar field. The velocity field
@@ -45,6 +46,9 @@ def calculate_advection(  # noqa: D417
             The type of grid. Defaults to "uniform".
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
+        sphere_circumference: float, optional
+            The circumference of the sphere for latlon grids in kilometers.
+            Defaults to 40075 km for Earth.
 
     Returns
     -------
@@ -63,8 +67,21 @@ def calculate_advection(  # noqa: D417
             dvdx, dvdy = np.gradient(v, dx, dy, axis=(1, 0))
 
     elif grid_type == "latlon":
-        lat_meters = lats[:, 0] * 111000
-        lon_meters = lons[0, :] * 111000 * np.cos(np.deg2rad(lats[0, :]))
+        lat_meters = lats[:, 0] * (1e3 * sphere_circumference / 360)
+
+        if np.shape(lons[0, :]) != np.shape(lats[0, :]):
+            lats_interp = np.linspace(lats.min(), lats.max(), lons[0, :].size)
+            lon_meters = (
+                lons[0, :]
+                * (1e3 * sphere_circumference / 360)
+                * np.cos(np.deg2rad(lats_interp))
+            )
+        else:
+            lon_meters = (
+                lons[0, :]
+                * (1e3 * sphere_circumference / 360)
+                * np.cos(np.deg2rad(lats[0, :]))
+            )
 
         if scalar is not None:
             dsdx, dsdy = np.gradient(scalar, lon_meters, lat_meters, axis=(1, 0))
