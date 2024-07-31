@@ -11,13 +11,13 @@ authors:
     corresponding: true
     equal-contrib: true
     affiliation: 1
-  - name: Brodie Pearson
-    orcid: 0000-0002-0202-0481
-    equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
-    affiliation: 1
   - name: Ara Lee
     orcid:
     equal-contrib: false
+    affiliation: 1
+  - name: Brodie Pearson
+    orcid: 0000-0002-0202-0481
+    equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
     affiliation: 1
 affiliations:
  - name: Oregon State University
