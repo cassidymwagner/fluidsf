@@ -46,11 +46,11 @@ Spatial SFs are constructed by averaging the correlations between spatial differ
 $$ SF_{\phi \phi}(\mathbf{r}) = \overline{\delta\phi \delta \phi} = \overline{\left[ \phi(\mathbf{x} + \mathbf{r}) - \phi(\mathbf{x})\right] \left[ \phi(\mathbf{x} + \mathbf{r}) - \phi(\mathbf{x})\right] }$$
 where $\mathbf{x}$ denotes the position of a data point, $\delta \phi$ denotes the spatial variation of $\phi$, and the overline denotes an average over all positions ($\mathbf{x}$). Structure functions depend on the separation vector ($\mathbf{r}$), and are often analyzed with an assumption of isotropic flow statistics [$SF(\mathbf{r})\rightarrow SF(r=|\mathbf{r}|)$]. There are many types of physically-useful structure functions. The example above is a second-order scalar SF (i.e., it contains 2 delta terms of the scalar $\phi$), but additional physical insight can be gained from third-order SFs (3 deltas), SFs that depend on other scalar or vector fields, and SFs that blend information from various scalar/vector fields. 
 
-![Figure 1 - Some basic structure functions from a simulation of anisotropic 2D or QG turbulence: (a) Snapshot of the vorticity field used for SF calculations, (b) various Zonally- and meridionally-separated SFs, including third-order velocity, advective, and vorticity SFs from 2D turbulence simulation, (c) Inter-scale fluxes inferred from structure functions and diagnosed directly from the simulation](path/to/image.png)
+![Some basic structure functions from a simulation of anisotropic 2D or QG turbulence: (a) Snapshot of the vorticity field used for SF calculations, (b) various Zonally- and meridionally-separated SFs, including third-order velocity, advective, and vorticity SFs from 2D turbulence simulation, (c) Inter-scale fluxes inferred from structure functions and diagnosed directly from the simulation](path/to/image.png)
 
-![Figure 2 - Structure functions calculated from satellite observations of the ocean surface: ](path/to/image.png)
+![Structure functions calculated from satellite observations of the ocean surface: ](path/to/image.png)
 
-![Figure 3 - Map of the 2D spatial variation of the (a) 3rd-order longitudinal and (b) advective velocity SFs from the same data set as Figure 1: ](path/to/image.png)
+![Map of the 2D spatial variation of the (a) 3rd-order longitudinal and (b) advective velocity SFs from the same data set as Figure 1: ](path/to/image.png)
 
 `FluidSF` calculates SFs from 1D-, 2D-, and 3D-data with periodic and non-periodic boundary conditions. Regular Cartesian (1D, 2D, 3D) and non-uniform latitude-longitude gridding (1D, 2D) are supported. Since FluidSF is written in `Python`, any data intialized and loaded as `NumPy` arrays can be used. 
 
