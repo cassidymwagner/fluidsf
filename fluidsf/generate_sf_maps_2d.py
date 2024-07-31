@@ -80,21 +80,21 @@ def generate_sf_maps_2d(  # noqa: C901, D417
     x_separations = np.zeros([len(x_shifts), len(y_shifts)])
     y_separations = np.zeros([len(x_shifts), len(y_shifts)])
 
-    if any("ASF_V" in t for t in sf_type):
+    if "ASF_V" in sf_type:
         SF_adv = np.zeros([len(x_shifts), len(y_shifts)])
         adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
-    if any("ASF_S" in t for t in sf_type):
+    if "ASF_S" in sf_type:
         SF_scalar_adv = np.zeros([len(x_shifts), len(y_shifts)])
         adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
-    if any("LL" in t for t in sf_type):
+    if "LL" in sf_type:
         SF_LL = np.zeros([len(x_shifts), len(y_shifts)])
-    if any("TT" in t for t in sf_type):
+    if "TT" in sf_type:
         SF_TT = np.zeros([len(x_shifts), len(y_shifts)])
-    if any("LLL" in t for t in sf_type):
+    if "LLL" in sf_type:
         SF_LLL = np.zeros([len(x_shifts), len(y_shifts)])
-    if any("LTT" in t for t in sf_type):
+    if "LTT" in sf_type:
         SF_LTT = np.zeros([len(x_shifts), len(y_shifts)])
-    if any("LSS" in t for t in sf_type):
+    if "LSS" in sf_type:
         SF_LSS = np.zeros([len(x_shifts), len(y_shifts)])
 
     # Iterate over separations right and down
@@ -130,21 +130,21 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         x_separations[x_shift, y_shift + int(len(y) / 2)] = x_separation
         y_separations[x_shift, y_shift + int(len(y) / 2)] = y_separation
 
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             SF_adv[x_shift, y_shift + int(len(y) / 2)] = SF_dicts[
                 "SF_advection_velocity_xy"
             ]
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             SF_scalar_adv[x_shift, y_shift + int(len(y) / 2)] = SF_dicts[
                 "SF_advection_velocity_xy"
             ]
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             SF_LL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LL_xy"]
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             SF_LLL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LLL_xy"]
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             SF_LTT[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LTT_xy"]
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             SF_LSS[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LSS_xy"]
 
     # When saving data, roll y-axis so that y-values go from most negative to most
