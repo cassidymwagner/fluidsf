@@ -36,7 +36,7 @@ def generate_sf_maps_2d(  # noqa: C901, D417
             1D array of y-coordinates.
         sf_type: list
             List of structure function types to calculate. Accepted types are:
-            "ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to ["ASF_V"].
+            "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to ["ASF_V"].
         scalar: ndarray, optional
             2D array of scalar values. Defaults to None.
         dx: float, optional
@@ -61,6 +61,7 @@ def generate_sf_maps_2d(  # noqa: C901, D417
     adv_scalar = None
     SF_LL = None
     SF_TT = None
+    SF_SS = None
     SF_LLL = None
     SF_LTT = None
     SF_LSS = None
@@ -90,6 +91,8 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         SF_LL = np.zeros([len(x_shifts), len(y_shifts)])
     if any("TT" in t for t in sf_type):
         SF_TT = np.zeros([len(x_shifts), len(y_shifts)])
+    if any("SS" in t for t in sf_type):
+        SF_SS = np.zeros([len(x_shifts), len(y_shifts)])
     if any("LLL" in t for t in sf_type):
         SF_LLL = np.zeros([len(x_shifts), len(y_shifts)])
     if any("LTT" in t for t in sf_type):
@@ -140,6 +143,10 @@ def generate_sf_maps_2d(  # noqa: C901, D417
             ]
         if any("LL" in t for t in sf_type):
             SF_LL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LL_xy"]
+        if any("TT" in t for t in sf_type):
+            SF_TT[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_TT_xy"]
+        if any("SS" in t for t in sf_type):
+            SF_SS[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_SS_xy"]
         if any("LLL" in t for t in sf_type):
             SF_LLL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LLL_xy"]
         if any("LTT" in t for t in sf_type):
@@ -156,6 +163,7 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         "SF_advection_scalar_xy": SF_scalar_adv,
         "SF_LL_xy": SF_LL,
         "SF_TT_xy": SF_TT,
+        "SF_SS_xy": SF_SS,
         "SF_LLL_xy": SF_LLL,
         "SF_LTT_xy": SF_LTT,
         "SF_LSS_xy": SF_LSS,

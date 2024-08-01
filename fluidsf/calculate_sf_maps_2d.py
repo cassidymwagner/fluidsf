@@ -41,7 +41,7 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
             Shift amount for y shift.
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS".
+            Accepted types are: "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
         adv_scalar: ndarray, optional
@@ -60,6 +60,8 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
                 'SF_LL_xy': The traditional structure function LL for separation
                 vectors in the x-y plane.
                 'SF_TT_xy': The traditional structure function TT for separation
+                vectors in the x-y plane.
+                'SF_SS_xy': The traditional structure function SS for separation
                 vectors in the x-y plane.
                 'SF_LLL_xy': The traditional structure function LLL for separation
                 vectors in the x-y plane..
@@ -113,14 +115,14 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
         cosine_angle = x_separation / np.sqrt(x_separation**2 + y_separation**2)
         sine_angle = y_separation / np.sqrt(x_separation**2 + y_separation**2)
 
-    if any("LL" in t for t in sf_type):
-        SF_dict["SF_LL_xy"] = np.nanmean(
-            (
-                (inputs["u_xy_shift"] - u) * cosine_angle
-                + (inputs["v_xy_shift"] - v) * sine_angle
+        if any("LL" in t for t in sf_type):
+            SF_dict["SF_LL_xy"] = np.nanmean(
+                (
+                    (inputs["u_xy_shift"] - u) * cosine_angle
+                    + (inputs["v_xy_shift"] - v) * sine_angle
+                )
+                ** 2
             )
-            ** 2
-        )
         if any("TT" in t for t in sf_type):
             SF_dict["SF_TT_xy"] = np.nanmean(
                 (
@@ -129,6 +131,10 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
                 )
                 ** 2
             )
+        if any("SS" in t for t in sf_type):
+            SF_dict["SF_SS_xy"] = np.nanmean(
+                (inputs["scalar_xy_shift"] - scalar) ** 2 )
+            
         if any("LLL" in t for t in sf_type):
             SF_dict["SF_LLL_xy"] = np.nanmean(
                 (
