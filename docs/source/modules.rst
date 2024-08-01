@@ -67,6 +67,6 @@ Text
 Calculate Advection
 -------------------
 
-`calculate_advection_2d()`, `calculate_advection_3d()`
+:code:`calculate_advection_2d()`, :code:`calculate_advection_3d()`
 
 These modules process the provided velocity fields and grid information to diagnose the advection (vector) field required to calculate advective structure functions. Since the advective structure functions are supported in 2D and 3D, there are two versions of this module.
