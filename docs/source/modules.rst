@@ -28,9 +28,9 @@ There is also a module that calculates the 2D spatial variations of structure fu
 
 
 .. important:: 
-    Any :code:`generate_structure_functions()` module can generate several types of structure functions as a function of separation distance. This is the only module you need to use to generate structure functions from your data. The modules described below are helper modules that are used by the :code:`generate_structure_functions()` modules. 
+    All the above modules can generate several types of structure functions as a function of separation distance. These are the primary modules that users will interact with. The modules described below are helper modules used by the above modules. 
     
-    **Do not get confused between** :code:`generate_structure_functions()` **and** :code:`calculate_structure_function()` **, which is used to calculate a single structure function value for a given separation vector, not a range of separation distances.**
+    **Do not get confused between** :code:`generate_()` **and** :code:`calculate_()` ** modules. The latter are used to calculate a single structure function value for a given separation vector, :code:`generate_()` modules then accumulate this information for a range of separation distances.**
 
 
 Calculate Structure Functions
