@@ -1,5 +1,5 @@
 ---
-title: 'FluidSF: A Python package for calculating turbulent fluid statistics'
+title: 'FluidSF: A Python package for calculating turbulent flow statistics'
 tags:
   - Python
   - fluid dynamics
@@ -32,7 +32,7 @@ bibliography: paper.bib
 
 # Summary
 
-Fluid systems are everywhere, from small-scale engineering problems to planetary-and-larger-scale systems (atmosphere, ocean, galactic gas clouds). These systems are often turbulent, where motion is chaotic, unpredictable, and can only be characterized through statistical analyses. Spatial structure functions (SFs) are one such statistical analysis technique for turbulence, that require calculation of spatial differences in properties as a function of their separation distance. By combining and then averaging these spatial differences, various types of SF can be constructed to measure physical properties of fluid flow, such as heat and energy transfers, energy density, intermittency etc. However, calculating SFs is often a cumbersome and computationally-intensive task tailored to the specific format of a given fluid dataset.    
+Fluid systems are everywhere, from small-scale engineering problems to planetary-and-larger-scale systems (atmosphere, ocean, galactic gas clouds). These systems are often turbulent, where motion is chaotic, unpredictable, and can only be characterized through statistical analyses. Spatial structure functions (SFs) are one such statistical analysis technique for turbulence, that require calculation of spatial differences in properties as a function of their separation distance. By combining and then averaging these spatial differences, various types of SF can be constructed to measure physical properties of fluid flow, such as heat and energy transfers, energy density, intermittency etc. However, calculating SFs is often a cumbersome and computationally-intensive task tailored to the specific format of a given fluid dataset. `FluidSF` is a flexible software package that can be used to diagnose and analyze various physically-informative SFs from 1-, 2-, or 3-dimensional fluid data sets.    
 
 
 
