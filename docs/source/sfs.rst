@@ -81,7 +81,7 @@ Similar to the third-order structure functions above, advective structure functi
 Example relations between various structure functions and turbulent properties
 ----------------------------------------------------------------------------------
 
-As mentioned earlier, structure functions have been used to estimate to infer physical properties of turbulent properties. The following table shows the relationships between various velocity-based structure functions and turbulent properties, but the table is not exhaustive. For more information, see the references below.
+As mentioned earlier, structure functions have been used to estimate to infer physical properties of turbulent properties. For example, in 2D turbulence, the following table shows several SF relationships that can be used to diagnose the inverse (upscale) cascade rate of energy (after some assumptions about flow properties):
 
 .. list-table:: 
    :header-rows: 1
