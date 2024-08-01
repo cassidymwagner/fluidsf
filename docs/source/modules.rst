@@ -46,7 +46,13 @@ Utilities
 Shift Arrays
 ^^^^^^^^^^^^
 
-Text
+:code:`shift_array_1d()`, :code:`shift_array_2d()`, and :code:`shift_array_3d()`
+
+- These modules shift data arrays in a specific direction (x, y or z) and by specific number of array elements, to efficiently calculate structure functions. The modules are used for 1D, 2D and 3D data respectively. The :code:`generate_()` modules iterate over the approprite number of dimensions and element-shifts.
+
+:code:`shift_array_xy()`
+
+- This module shifts 2D data arrays in two simultaneous directions (x and y) by a module-specified number of array elements that can differ between the two directions. This module is utilized by :code:`generate_sf_maps_2d()`.
 
 Calculate Separation Distance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -63,4 +69,4 @@ Calculate Advection
 
 `calculate_advection_2d()`, `calculate_advection_3d()`
 
-These modules process the input velocity fields and grid information to diagnose the advection (vector) field required to calculate advective structure functions. Since the advective structure functions are supported in 2D and 3D, there are two versions of this module.
+These modules process the provided velocity fields and grid information to diagnose the advection (vector) field required to calculate advective structure functions. Since the advective structure functions are supported in 2D and 3D, there are two versions of this module.
