@@ -9,7 +9,7 @@ authors:
   - name: Cassidy M. Wagner
     orcid: 0000-0002-1186-2082
     corresponding: true
-    equal-contrib: true
+    equal-contrib: false
     affiliation: 1
   - name: Ara Lee
     orcid:
@@ -17,7 +17,7 @@ authors:
     affiliation: 1
   - name: Brodie Pearson
     orcid: 0000-0002-0202-0481
-    equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
+    equal-contrib: false # (This is how you can denote equal contributions between multiple authors)
     affiliation: 1
 affiliations:
  - name: Oregon State University
