@@ -132,9 +132,8 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
                 ** 2
             )
         if any("SS" in t for t in sf_type):
-            SF_dict["SF_SS_xy"] = np.nanmean(
-                (inputs["scalar_xy_shift"] - scalar) ** 2 )
-            
+            SF_dict["SF_SS_xy"] = np.nanmean((inputs["scalar_xy_shift"] - scalar) ** 2)
+
         if any("LLL" in t for t in sf_type):
             SF_dict["SF_LLL_xy"] = np.nanmean(
                 (

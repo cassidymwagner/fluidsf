@@ -41,7 +41,8 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             1D array of z-coordinates.
         sf_type: list
             List of structure function types to calculate. Accepted types are:
-            "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to ["ASF_V"].
+            "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            ["ASF_V"].
         scalar: ndarray, optional
             3D array of scalar values. Defaults to None.
         boundary: str, optional

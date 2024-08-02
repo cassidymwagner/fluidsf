@@ -32,9 +32,9 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             1D array of coordinates. If you have lat-lon data, set x to 1D array of
             latitudes.
         sf_type: list
-            List of structure function types to calculate. Accepted types are: "LL", "TT",
-            "SS", "LLL", "LTT", "LSS". Defaults to "LLL". If you include "SS" or "LSS", you must
-            provide a 1D array for scalar.
+            List of structure function types to calculate. Accepted types are: "LL",
+            "TT", "SS", "LLL", "LTT", "LSS". Defaults to "LLL". If you include "SS" or
+            "LSS", you must provide a 1D array for scalar.
         v: ndarray
             1D array of v velocity components. Defaults to None.
         y: ndarray, optional
@@ -70,13 +70,17 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             " Ensure x is latitude and y is longitude."
         )
     if scalar is not None and "SS" not in sf_type and "LSS" not in sf_type:
-        raise ValueError("If scalar is provided, you must include 'SS' and/or 'LSS' in sf_type.")
-    if scalar is None and "SS" in sf_type:
+        raise ValueError(
+            "If scalar is provided, you must include 'SS' and/or 'LSS' in sf_type."
+        )
+    if scalar is None and ("SS" in sf_type or "LSS" in sf_type):
         raise ValueError(
             "If you include 'SS' or 'LSS' in sf_type, you must provide a scalar array."
         )
-    if v is None and "TT" in sf_type:
-        raise ValueError("If you include 'TT' or 'LTT' in sf_type, you must provide a v array.")
+    if v is None and ("TT" in sf_type or "LTT" in sf_type):
+        raise ValueError(
+            "If you include 'TT' or 'LTT' in sf_type, you must provide a v array."
+        )
 
     # Initialize variables as NoneType
     SF_LL = None

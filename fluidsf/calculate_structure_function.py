@@ -35,8 +35,8 @@ def calculate_structure_function(  # noqa: D417, C901
             Shift amount for y shift.
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
-            "ASF_V".
+            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
+            Defaults to "ASF_V".
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
         adv_scalar: ndarray, optional
@@ -117,7 +117,7 @@ def calculate_structure_function(  # noqa: D417, C901
             SF_dict["SF_SS_" + direction] = np.nanmean(
                 (inputs["scalar_" + direction + "_shift"] - scalar) ** 2
             )
-                
+
         if direction == "x":
             if any("LL" in t for t in sf_type):
                 SF_dict["SF_LL_" + direction] = np.nanmean(

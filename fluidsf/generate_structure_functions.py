@@ -40,7 +40,7 @@ def generate_structure_functions(  # noqa: C901, D417
             1D array of y-coordinates.
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". 
+            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
             Defaults to "ASF_V".
         scalar: ndarray, optional
             2D array of scalar values. Defaults to None.
@@ -95,12 +95,16 @@ def generate_structure_functions(  # noqa: C901, D417
             "If grid_type is 'latlon', dx and dy must be provided as arrays."
         )
 
-    if scalar is not None and (("SS" not in sf_type) and ("LSS" not in sf_type) 
-                               and ("ASF_S" not in sf_type)):
+    if scalar is not None and (
+        ("SS" not in sf_type) and ("LSS" not in sf_type) and ("ASF_S" not in sf_type)
+    ):
         raise ValueError(
-            "If scalar is provided, you must include 'SS', 'LSS' or 'ASF_S' " "in SF_type."
+            "If scalar is provided, you must include 'SS', 'LSS' or 'ASF_S' "
+            "in SF_type."
         )
-    if scalar is None and (("SS" in sf_type) or ("LSS" in sf_type) or ("ASF_S" in sf_type)):
+    if scalar is None and (
+        ("SS" in sf_type) or ("LSS" in sf_type) or ("ASF_S" in sf_type)
+    ):
         raise ValueError(
             "If you include 'SS', 'LSS' or 'ASF_S' in SF_type, you must provide "
             "a scalar array."

@@ -25,8 +25,8 @@ def calculate_structure_function_1d(  # noqa: D417
             Array of separation distances.
         sf_type: list
             List of traditional structure function types to calculate.
-            Accepted types are: "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to "LLL". If you
-            include "SS" or "LSS", you must provide a 1D array for scalar.
+            Accepted types are: "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            "LLL". If you include "SS" or "LSS", you must provide a 1D array for scalar.
         v: ndarray
             Array of v velocities. Defaults to None.
         scalar: ndarray, optional
