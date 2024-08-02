@@ -40,8 +40,8 @@ def generate_structure_functions(  # noqa: C901, D417
             1D array of y-coordinates.
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V, "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to
-            "ASF_V".
+            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
+            Defaults to "ASF_V".
         scalar: ndarray, optional
             2D array of scalar values. Defaults to None.
         dx: float, optional
@@ -72,13 +72,13 @@ def generate_structure_functions(  # noqa: C901, D417
     if len(sf_type) == 0:
         raise ValueError(
             "sf_type cannot be an empty list. All elements in sf_type must be strings. "
-            "Accepted strings are: ASF_V, ASF_S, LL, LLL, LTT, LSS."
+            "Accepted strings are: ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
         )
 
     if not all(isinstance(t, str) for t in sf_type):
         raise ValueError(
             "All elements in sf_type must be strings. Accepted strings are: "
-            "ASF_V, ASF_S, LL, LLL, LTT, LSS."
+            "ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
         )
 
     if boundary not in ["periodic-all", "periodic-x", "periodic-y", None]:
@@ -95,13 +95,18 @@ def generate_structure_functions(  # noqa: C901, D417
             "If grid_type is 'latlon', dx and dy must be provided as arrays."
         )
 
-    if scalar is not None and (("LSS" not in sf_type) and ("ASF_S" not in sf_type)):
+    if scalar is not None and (
+        ("SS" not in sf_type) and ("LSS" not in sf_type) and ("ASF_S" not in sf_type)
+    ):
         raise ValueError(
-            "If scalar is provided, you must include 'LSS' or 'ASF_S' " "in SF_type."
+            "If scalar is provided, you must include 'SS', 'LSS' or 'ASF_S' "
+            "in SF_type."
         )
-    if scalar is None and (("LSS" in sf_type) or ("ASF_S" in sf_type)):
+    if scalar is None and (
+        ("SS" in sf_type) or ("LSS" in sf_type) or ("ASF_S" in sf_type)
+    ):
         raise ValueError(
-            "If you include 'LSS' or 'ASF_S' in SF_type, you must provide "
+            "If you include 'SS', 'LSS' or 'ASF_S' in SF_type, you must provide "
             "a scalar array."
         )
 
@@ -115,6 +120,10 @@ def generate_structure_functions(  # noqa: C901, D417
     adv_scalar = None
     SF_x_LL = None
     SF_y_LL = None
+    SF_x_TT = None
+    SF_y_TT = None
+    SF_x_SS = None
+    SF_y_SS = None
     SF_x_LLL = None
     SF_y_LLL = None
     SF_x_LTT = None
@@ -153,6 +162,12 @@ def generate_structure_functions(  # noqa: C901, D417
     if any("LL" in t for t in sf_type):
         SF_x_LL = np.zeros(len(sep_x) + 1)
         SF_y_LL = np.zeros(len(sep_y) + 1)
+    if any("TT" in t for t in sf_type):
+        SF_x_TT = np.zeros(len(sep_x) + 1)
+        SF_y_TT = np.zeros(len(sep_y) + 1)
+    if any("SS" in t for t in sf_type):
+        SF_x_SS = np.zeros(len(sep_x) + 1)
+        SF_y_SS = np.zeros(len(sep_y) + 1)
     if any("LLL" in t for t in sf_type):
         SF_x_LLL = np.zeros(len(sep_x) + 1)
         SF_y_LLL = np.zeros(len(sep_y) + 1)
@@ -188,6 +203,10 @@ def generate_structure_functions(  # noqa: C901, D417
             SF_adv_x[x_shift] = SF_dicts["SF_advection_velocity_x"]
         if any("LL" in t for t in sf_type):
             SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
+        if any("TT" in t for t in sf_type):
+            SF_x_TT[x_shift] = SF_dicts["SF_TT_x"]
+        if any("SS" in t for t in sf_type):
+            SF_x_SS[x_shift] = SF_dicts["SF_SS_x"]
         if any("LLL" in t for t in sf_type):
             SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
         if any("LTT" in t for t in sf_type):
@@ -226,6 +245,10 @@ def generate_structure_functions(  # noqa: C901, D417
             SF_adv_y[y_shift] = SF_dicts["SF_advection_velocity_y"]
         if any("LL" in t for t in sf_type):
             SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
+        if any("TT" in t for t in sf_type):
+            SF_y_TT[y_shift] = SF_dicts["SF_TT_y"]
+        if any("SS" in t for t in sf_type):
+            SF_y_SS[y_shift] = SF_dicts["SF_SS_y"]
         if any("LLL" in t for t in sf_type):
             SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
         if any("LTT" in t for t in sf_type):
@@ -251,6 +274,12 @@ def generate_structure_functions(  # noqa: C901, D417
         if any("LL" in t for t in sf_type):
             xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
             yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
+        if any("TT" in t for t in sf_type):
+            xd_bin, SF_x_TT = bin_data(xd, SF_x_TT, nbins)
+            yd_bin, SF_y_TT = bin_data(yd, SF_y_TT, nbins)
+        if any("SS" in t for t in sf_type):
+            xd_bin, SF_x_SS = bin_data(xd, SF_x_SS, nbins)
+            yd_bin, SF_y_SS = bin_data(yd, SF_y_SS, nbins)
         if any("LLL" in t for t in sf_type):
             xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
             yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
@@ -270,6 +299,10 @@ def generate_structure_functions(  # noqa: C901, D417
         "SF_advection_scalar_y": SF_y_scalar,
         "SF_LL_x": SF_x_LL,
         "SF_LL_y": SF_y_LL,
+        "SF_TT_x": SF_x_TT,
+        "SF_TT_y": SF_y_TT,
+        "SF_SS_x": SF_x_SS,
+        "SF_SS_y": SF_y_SS,
         "SF_LLL_x": SF_x_LLL,
         "SF_LLL_y": SF_y_LLL,
         "SF_LTT_x": SF_x_LTT,
