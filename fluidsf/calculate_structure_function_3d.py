@@ -148,8 +148,10 @@ def calculate_structure_function_3d(  # noqa: D417, C901
             if any("LTT" in t for t in sf_type):
                 SF_dict["SF_LTT_" + direction] = np.nanmean(
                     (inputs["u_" + direction + "_shift"] - u)
-                    * ( (inputs["v_" + direction + "_shift"] - v) ** 2
-                       + (inputs["w_" + direction + "_shift"] - w) ** 2)
+                    * (
+                        (inputs["v_" + direction + "_shift"] - v) ** 2
+                        + (inputs["w_" + direction + "_shift"] - w) ** 2
+                    )
                 )
             if any("LSS" in t for t in sf_type):
                 SF_dict["SF_LSS_" + direction] = np.nanmean(
@@ -169,8 +171,10 @@ def calculate_structure_function_3d(  # noqa: D417, C901
             if any("LTT" in t for t in sf_type):
                 SF_dict["SF_LTT_" + direction] = np.nanmean(
                     (inputs["v_" + direction + "_shift"] - v)
-                    * ((inputs["u_" + direction + "_shift"] - u) ** 2
-                       + (inputs["w_" + direction + "_shift"] - w) ** 2)
+                    * (
+                        (inputs["u_" + direction + "_shift"] - u) ** 2
+                        + (inputs["w_" + direction + "_shift"] - w) ** 2
+                    )
                 )
             if any("LSS" in t for t in sf_type):
                 SF_dict["SF_LSS_" + direction] = np.nanmean(
@@ -190,8 +194,10 @@ def calculate_structure_function_3d(  # noqa: D417, C901
             if any("LTT" in t for t in sf_type):
                 SF_dict["SF_LTT_" + direction] = np.nanmean(
                     (inputs["w_" + direction + "_shift"] - w)
-                    * ((inputs["u_" + direction + "_shift"] - u) ** 2
-                       + (inputs["v_" + direction + "_shift"] - v) ** 2)
+                    * (
+                        (inputs["u_" + direction + "_shift"] - u) ** 2
+                        + (inputs["v_" + direction + "_shift"] - v) ** 2
+                    )
                 )
             if any("LSS" in t for t in sf_type):
                 SF_dict["SF_LSS_" + direction] = np.nanmean(
