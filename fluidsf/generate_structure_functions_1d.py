@@ -69,7 +69,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             "If grid_type is 'latlon', y must be provided."
             " Ensure x is latitude and y is longitude."
         )
-    if scalar is not None and "SS" not in sf_type:
+    if scalar is not None and "SS" not in sf_type and "LSS" not in sf_type:
         raise ValueError("If scalar is provided, you must include 'SS' and/or 'LSS' in sf_type.")
     if scalar is None and "SS" in sf_type:
         raise ValueError(
