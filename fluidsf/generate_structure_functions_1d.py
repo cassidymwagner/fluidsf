@@ -140,7 +140,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             SF_LLL[sep_id] = SF_dicts["SF_LLL"]
         if "LTT" in sf_type:
             SF_LTT[sep_id] = SF_dicts["SF_LTT"]
-        if "LSS" in sf_type:
+        if "LSS" in sf_type and scalar is not None:
             SF_LSS[sep_id] = SF_dicts["SF_LSS"]
 
         # Calculate separation distances along track
