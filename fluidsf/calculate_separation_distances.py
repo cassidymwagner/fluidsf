@@ -1,4 +1,3 @@
-import numpy as np
 from geopy.distance import great_circle
 
 
@@ -28,10 +27,12 @@ def calculate_separation_distances(x, y, x_shift, y_shift, grid_type="uniform"):
         case of a latlon grid or code units for a uniform grid
     """
     if grid_type == "latlon":
-        xd = np.abs(great_circle((x_shift, y), (x, y)).meters)
-        yd = np.abs(great_circle((x, y_shift), (x, y)).meters)
+        xd = great_circle((x_shift, y), (x, y)).meters
+        yd = great_circle((x, y_shift), (x, y)).meters
     else:
-        xd = np.abs(x_shift - x)
-        yd = np.abs(y_shift - y)
+        xd = x_shift - x
+        yd = None
+        if y is not None and y_shift is not None:
+            yd = y_shift - y
 
     return (xd, yd)
