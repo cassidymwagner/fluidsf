@@ -12,4 +12,3 @@ Examples
    ex_2d_bootstrap
    ex_cascade
    swot_ex
-   ex_mitgcm
