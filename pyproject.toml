@@ -64,4 +64,4 @@ extend-ignore = [
 version.path = "fluidsf/_version.py"
 
 [tool.setuptools]
-packages = ["oceans_sf"]
+packages = ["fluidsf"]
