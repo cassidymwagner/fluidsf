@@ -90,14 +90,14 @@ As mentioned earlier, structure functions have been used to estimate to infer ph
      - Relation to 2D upscale energy transfer (:math:`\epsilon>0`)
      - Reference
    * - :math:`SF_{LLL}`
-     - :math:`\frac{3}{2}\epsilon r `
-     - Lindborg (1999)
+     - :math:`\frac{3}{2}\epsilon r`
+     - `Lindborg (1999) <https://doi.org/10.1017/S0022112099004851>`_
    * - :math:`SF_{L\mathbf{u}\mathbf{u}}=SF_{LLL}+SF_{LTT}`
-     - :math:`2\epsilon r `
-     - Lindborg (1999)
+     - :math:`2\epsilon r`
+     - `Lindborg (1999) <https://doi.org/10.1017/S0022112099004851>`_
    * - :math:`ASF_{velocity}`
      - :math:`2\epsilon`
-     - Pearson et al. (2021)
+     - `Pearson et al. (2021) <https://doi.org/10.1017/jfm.2021.247>`_
 
 
 .. _References:
