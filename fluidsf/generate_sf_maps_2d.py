@@ -2,7 +2,7 @@ import itertools
 
 import numpy as np
 
-from .calculate_advection import calculate_advection
+from .calculate_advection_2d import calculate_advection_2d
 from .calculate_sf_maps_2d import calculate_sf_maps_2d
 
 
@@ -84,10 +84,10 @@ def generate_sf_maps_2d(  # noqa: C901, D417
 
     if any("ASF_V" in t for t in sf_type):
         SF_adv = np.zeros([len(x_shifts), len(y_shifts)])
-        adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
+        adv_x, adv_y = calculate_advection_2d(u, v, x, y, dx, dy, grid_type)
     if any("ASF_S" in t for t in sf_type):
         SF_scalar_adv = np.zeros([len(x_shifts), len(y_shifts)])
-        adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
+        adv_scalar = calculate_advection_2d(u, v, x, y, dx, dy, grid_type, scalar)
     if any("LL" in t for t in sf_type):
         SF_LL = np.zeros([len(x_shifts), len(y_shifts)])
     if any("TT" in t for t in sf_type):
