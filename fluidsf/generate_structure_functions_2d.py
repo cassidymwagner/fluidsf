@@ -1,15 +1,15 @@
 import numpy as np
 
 from .bin_data import bin_data
-from .calculate_advection import calculate_advection
+from .calculate_advection_2d import calculate_advection_2d
 from .calculate_separation_distances import calculate_separation_distances
-from .calculate_structure_function import (
-    calculate_structure_function,
+from .calculate_structure_function_2d import (
+    calculate_structure_function_2d,
 )
 from .shift_array_1d import shift_array_1d
 
 
-def generate_structure_functions(  # noqa: C901, D417
+def generate_structure_functions_2d(  # noqa: C901, D417
     u,
     v,
     x,
@@ -154,11 +154,11 @@ def generate_structure_functions(  # noqa: C901, D417
     if any("ASF_V" in t for t in sf_type):
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
-        adv_x, adv_y = calculate_advection(u, v, x, y, dx, dy, grid_type)
+        adv_x, adv_y = calculate_advection_2d(u, v, x, y, dx, dy, grid_type)
     if any("ASF_S" in t for t in sf_type):
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
-        adv_scalar = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
+        adv_scalar = calculate_advection_2d(u, v, x, y, dx, dy, grid_type, scalar)
     if any("LL" in t for t in sf_type):
         SF_x_LL = np.zeros(len(sep_x) + 1)
         SF_y_LL = np.zeros(len(sep_y) + 1)
@@ -186,7 +186,7 @@ def generate_structure_functions(  # noqa: C901, D417
         else:
             xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
 
-        SF_dicts = calculate_structure_function(
+        SF_dicts = calculate_structure_function_2d(
             u,
             v,
             adv_x,
@@ -228,7 +228,7 @@ def generate_structure_functions(  # noqa: C901, D417
         else:
             yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
 
-        SF_dicts = calculate_structure_function(
+        SF_dicts = calculate_structure_function_2d(
             u,
             v,
             adv_x,
