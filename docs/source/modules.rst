@@ -36,9 +36,12 @@ There is also a module that calculates the 2D spatial variations of structure fu
 Calculate Structure Functions
 -----------------------------
 
-This module calculates a single structure function value for a given separation vector.
+:code:`calculate_structure_function_1d()`, 
+:code:`calculate_structure_function_2d()`, 
+:code:`calculate_structure_function_3d()`, 
+:code:`calculate_sf_maps_2d()`
 
-`calculate_structure_function_1d()`, `calculate_structure_function_2d()`, `calculate_structure_function_3d()`, `calculate_sf_maps_2d()`
+These modules calculate the average structure functions for a given separation vector and flow field snapshot. They are called by their respective :code:`generate_structure_function_` modules, and calculate all the structure functions that are requested by the user. These modules utilize the *shift array* utilities discussed below.  
 
 Utilities
 ---------
@@ -57,12 +60,20 @@ Shift Arrays
 Calculate Separation Distance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Text
+:code:`calculate_separation_distances()`
+
+- This module calculates the separation distance between pairs of points in a 1D dataset, or in a 2D Cartesian or latitude-longitude grid. For latitude-longitude grids, the module utilizes a Great Circle function to calculate the separation distance. 
+
+:code:`calculate_separation_distances_3d()`
+
+- This module calculates the separation distance between pairs of points in a 3D Cartseian grid. 
 
 Bin Data
 ^^^^^^^^
 
-Text
+:code:`bin_data()`
+
+- This module bins structure function data based on separation distances, and calculates the *bin-averaged* structure functions. 
 
 Calculate Advection
 -------------------
