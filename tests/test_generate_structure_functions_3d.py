@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from fluidsf.generate_structure_functions_3d import generate_structure_functions_3d
 
 

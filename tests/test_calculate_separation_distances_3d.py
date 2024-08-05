@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from fluidsf.calculate_separation_distances_3d import (
     calculate_separation_distances_3d,
 )

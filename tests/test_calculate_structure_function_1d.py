@@ -2,7 +2,6 @@ from unittest import TestCase
 
 import numpy as np
 import pytest
-
 from fluidsf.calculate_structure_function_1d import calculate_structure_function_1d
 
 
