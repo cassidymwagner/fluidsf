@@ -108,7 +108,7 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
                 "SF_LSS_y": 1 * np.linspace(0, 8, 9) ** 3,
                 "SF_LSS_z": 0 * np.linspace(0, 8, 9),
                 "SF_LTT_x": 0 * np.linspace(0, 8, 9),
-                "SF_LTT_y": 1 * np.linspace(0, 8, 9) ** 3,
+                "SF_LTT_y": 2 * np.linspace(0, 8, 9) ** 3,
                 "SF_LTT_z": 0 * np.linspace(0, 8, 9),
                 "x-diffs": np.linspace(0, 8, 9),
                 "y-diffs": np.linspace(0, 8, 9),

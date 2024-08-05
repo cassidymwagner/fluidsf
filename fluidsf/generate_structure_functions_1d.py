@@ -33,8 +33,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             latitudes.
         sf_type: list
             List of structure function types to calculate. Accepted types are: "LL",
-            "LLL", "LTT", "LSS". Defaults to "LLL". If you include "LSS", you must
-            provide a 1D array for scalar.
+            "TT", "SS", "LLL", "LTT", "LSS". Defaults to "LLL". If you include "SS" or
+            "LSS", you must provide a 1D array for scalar.
         v: ndarray
             1D array of v velocity components. Defaults to None.
         y: ndarray, optional
@@ -69,17 +69,23 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             "If grid_type is 'latlon', y must be provided."
             " Ensure x is latitude and y is longitude."
         )
-    if scalar is not None and "LSS" not in sf_type:
-        raise ValueError("If scalar is provided, you must include 'LSS' in sf_type.")
-    if scalar is None and "LSS" in sf_type:
+    if scalar is not None and "SS" not in sf_type and "LSS" not in sf_type:
         raise ValueError(
-            "If you include 'LSS' in sf_type, you must provide a scalar array."
+            "If scalar is provided, you must include 'SS' and/or 'LSS' in sf_type."
         )
-    if v is None and "LTT" in sf_type:
-        raise ValueError("If you include 'LTT' in sf_type, you must provide a v array.")
+    if scalar is None and ("SS" in sf_type or "LSS" in sf_type):
+        raise ValueError(
+            "If you include 'SS' or 'LSS' in sf_type, you must provide a scalar array."
+        )
+    if v is None and ("TT" in sf_type or "LTT" in sf_type):
+        raise ValueError(
+            "If you include 'TT' or 'LTT' in sf_type, you must provide a v array."
+        )
 
     # Initialize variables as NoneType
     SF_LL = None
+    SF_TT = None
+    SF_SS = None
     SF_LLL = None
     SF_LTT = None
     SF_LSS = None
@@ -97,6 +103,10 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     # Initialize the structure function arrays
     if "LL" in sf_type:
         SF_LL = np.zeros(len(sep) + 1)
+    if "TT" in sf_type:
+        SF_TT = np.zeros(len(sep) + 1)
+    if "SS" in sf_type:
+        SF_SS = np.zeros(len(sep) + 1)
     if "LLL" in sf_type:
         SF_LLL = np.zeros(len(sep) + 1)
     if "LTT" in sf_type:
@@ -126,11 +136,15 @@ def generate_structure_functions_1d(  # noqa: C901, D417
 
         if "LL" in sf_type:
             SF_LL[sep_id] = SF_dicts["SF_LL"]
+        if "TT" in sf_type:
+            SF_TT[sep_id] = SF_dicts["SF_TT"]
+        if "SS" in sf_type:
+            SF_SS[sep_id] = SF_dicts["SF_SS"]
         if "LLL" in sf_type:
             SF_LLL[sep_id] = SF_dicts["SF_LLL"]
         if "LTT" in sf_type:
             SF_LTT[sep_id] = SF_dicts["SF_LTT"]
-        if "LSS" in sf_type:
+        if "LSS" in sf_type and scalar is not None:
             SF_LSS[sep_id] = SF_dicts["SF_LSS"]
 
         # Calculate separation distances along track
@@ -147,6 +161,10 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     if nbins is not None:
         if "LL" in sf_type:
             xd_bin, SF_LL = bin_data(xd, SF_LL, nbins)
+        if "TT" in sf_type:
+            xd_bin, SF_TT = bin_data(xd, SF_TT, nbins)
+        if "SS" in sf_type:
+            xd_bin, SF_SS = bin_data(xd, SF_SS, nbins)
         if "LLL" in sf_type:
             xd_bin, SF_LLL = bin_data(xd, SF_LLL, nbins)
         if "LTT" in sf_type:
@@ -157,6 +175,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
 
     data = {
         "SF_LL": SF_LL,
+        "SF_TT": SF_TT,
+        "SF_SS": SF_SS,
         "SF_LLL": SF_LLL,
         "SF_LTT": SF_LTT,
         "SF_LSS": SF_LSS,

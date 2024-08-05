@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from fluidsf.calculate_structure_function import calculate_structure_function
+from fluidsf.calculate_structure_function_2d import calculate_structure_function_2d
 
 
 @pytest.mark.parametrize(
@@ -438,7 +438,7 @@ def test_calculate_structure_function_parameterized(
     expected_result,
 ):
     """Test that calculate_structure_function works correctly for multiple cases."""
-    output_dict = calculate_structure_function(
+    output_dict = calculate_structure_function_2d(
         u,
         v,
         adv_x,
