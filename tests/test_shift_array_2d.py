@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from fluidsf.shift_array_2d import shift_array_2d
 
 

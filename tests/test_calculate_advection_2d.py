@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from fluidsf.calculate_advection_2d import calculate_advection_2d
 
 

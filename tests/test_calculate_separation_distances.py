@@ -1,8 +1,7 @@
 import numpy as np
 import pytest
-from geopy.distance import great_circle
-
 from fluidsf.calculate_separation_distances import calculate_separation_distances
+from geopy.distance import great_circle
 
 
 @pytest.mark.parametrize(

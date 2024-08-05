@@ -1,8 +1,7 @@
 import numpy as np
 import pytest
-from geopy.distance import great_circle
-
 from fluidsf.generate_structure_functions_2d import generate_structure_functions_2d
+from geopy.distance import great_circle
 
 
 @pytest.mark.parametrize(

@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from fluidsf.bin_data import bin_data
 
 
