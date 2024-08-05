@@ -202,11 +202,12 @@
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d.html">Structure functions with 2D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_3d.html">Structure functions with 3D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">2D maps of structure functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d_bootstrap.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_cascade.html">Estimate cascade rates from structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
@@ -282,8 +283,8 @@ structure functions.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="fluidsf.calculate_advection">
-<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_advection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_advection" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluidsf.calculate_advection_2d">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_advection_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_advection_2d" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the advection for a velocity field or scalar field. The velocity field
 will return advection components in the x and y directions.
 The scalar field will return the scalar advection. Defaults to advection for
@@ -411,7 +412,7 @@ Can only be used with periodic, evenly-spaced data.</p>
 <li><p><strong>shift_in_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for x shift.</p></li>
 <li><p><strong>shift_in_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for y shift.</p></li>
 <li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate.
-Accepted types are: “ASF_V”, “ASF_S”, “LL”, “LLL”, “LTT”, “LSS”.</p></li>
+Accepted types are: “ASF_V”, “ASF_S”, “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”.</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
 <li><p><strong>adv_scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar advection values. Defaults to None.</p></li>
 </ul>
@@ -429,66 +430,14 @@ for separation vectors in the x-y plane.
 vectors in the x-y plane.
 ‘SF_TT_xy’: The traditional structure function TT for separation
 vectors in the x-y plane.
+‘SF_SS_xy’: The traditional structure function SS for separation
+vectors in the x-y plane.
 ‘SF_LLL_xy’: The traditional structure function LLL for separation
 vectors in the x-y plane..
 ‘SF_LTT_xy’: The traditional structure function LTT for separation
 vectors in the x-y plane.
 ‘SF_LSS_xy’: The traditional structure function LSS for separation
 vectors in the x-y plane.</p>
-</div></blockquote>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="fluidsf.calculate_structure_function">
-<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_structure_function" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate structure function, either advective or traditional.
-Supports velocity-based structure functions and scalar-based structure functions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<em>ndarray</em>) – Array of u velocities.</p></li>
-<li><p><strong>v</strong> (<em>ndarray</em>) – Array of v velocities.</p></li>
-<li><p><strong>adv_x</strong> (<em>ndarray</em>) – Array of x-dir advection values.</p></li>
-<li><p><strong>adv_y</strong> (<em>ndarray</em>) – Array of y-dir advection values.</p></li>
-<li><p><strong>shift_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for x shift.</p></li>
-<li><p><strong>shift_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for y shift.</p></li>
-<li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate.
-Accepted types are: “ASF_V, “ASF_S”, “LL”, “LLL”, “LTT”, “LSS”. Defaults to
-“ASF_V”.</p></li>
-<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
-<li><p><strong>adv_scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar advection values. Defaults to None.</p></li>
-<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Accepted strings
-are “periodic-x”, “periodic-y”, and “periodic-all”.
-Defaults to “periodic-all”.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>A dictionary containing the advection velocity structure functions and
-scalar structure functions (if applicable).
-The dictionary has the following keys:</p>
-<blockquote>
-<div><p>’SF_advection_velocity_x’: The advection velocity structure function in
-the x direction.
-‘SF_advection_velocity_y’: The advection velocity structure function in
-the y direction.
-‘SF_advection_scalar_x’: The scalar structure function in the x
-direction.
-‘SF_advection_scalar_y’: The scalar structure function in the y
-direction.
-‘SF_LL_x’: The traditional structure function LL in the x direction.
-‘SF_LL_y’: The traditional structure function LL in the y direction.
-‘SF_LLL_x’: The traditional structure function LLL in the x direction.
-‘SF_LLL_y’: The traditional structure function LLL in the y direction.
-‘SF_LTT_x’: The traditional structure function LTT in the x direction.
-‘SF_LTT_y’: The traditional structure function LTT in the y direction.
-‘SF_LSS_x’: The traditional structure function LSS in the x direction.
-‘SF_LSS_y’: The traditional structure function LSS in the y direction.</p>
 </div></blockquote>
 </p>
 </dd>
@@ -511,8 +460,8 @@ Defaults to calculating the third-order longitudinal velocity structure function
 <li><p><strong>u</strong> (<em>ndarray</em>) – Array of u velocities.</p></li>
 <li><p><strong>sep_id</strong> (<em>ndarray</em>) – Array of separation distances.</p></li>
 <li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of traditional structure function types to calculate.
-Accepted types are: “LL”, “LLL”, “LTT”, “LSS”. Defaults to “LLL”. If you
-include “LSS”, you must provide a 1D array for scalar.</p></li>
+Accepted types are: “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”. Defaults to
+“LLL”. If you include “SS” or “LSS”, you must provide a 1D array for scalar.</p></li>
 <li><p><strong>v</strong> (<em>ndarray</em>) – Array of v velocities. Defaults to None.</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
 <li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Defaults to “Periodic”. Set to None
@@ -525,9 +474,69 @@ scalar structure functions (if applicable).
 The dictionary has the following keys:</p>
 <blockquote>
 <div><p>’SF_LL’: The second-order longitudinal velocity structure function.
+‘SF_TT’: The second-order transverse velocity structure function.
+‘SF_SS’: The second-order scalar structure function.
 ‘SF_LLL’: The third-order longitudinal velocity structure function.
 ‘SF_LTT’: The longitudinal-transverse velocity structure function.
 ‘SF_LSS’: The longitudinal-scalar structure function.</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fluidsf.calculate_structure_function_2d">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">calculate_structure_function_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adv_scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.calculate_structure_function_2d" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate structure function, either advective or traditional.
+Supports velocity-based structure functions and scalar-based structure functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>ndarray</em>) – Array of u velocities.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em>) – Array of v velocities.</p></li>
+<li><p><strong>adv_x</strong> (<em>ndarray</em>) – Array of x-dir advection values.</p></li>
+<li><p><strong>adv_y</strong> (<em>ndarray</em>) – Array of y-dir advection values.</p></li>
+<li><p><strong>shift_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for x shift.</p></li>
+<li><p><strong>shift_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for y shift.</p></li>
+<li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate.
+Accepted types are: “ASF_V, “ASF_S”, “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”.
+Defaults to “ASF_V”.</p></li>
+<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
+<li><p><strong>adv_scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar advection values. Defaults to None.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Accepted strings
+are “periodic-x”, “periodic-y”, and “periodic-all”.
+Defaults to “periodic-all”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A dictionary containing the advection velocity structure functions and
+scalar structure functions (if applicable).
+The dictionary has the following keys:</p>
+<blockquote>
+<div><p>’SF_advection_velocity_x’: The advection velocity structure function in
+the x direction.
+‘SF_advection_velocity_y’: The advection velocity structure function in
+the y direction.
+‘SF_advection_scalar_x’: The scalar structure function in the x
+direction.
+‘SF_advection_scalar_y’: The scalar structure function in the y
+direction.
+‘SF_LL_x’: The traditional structure function LL in the x direction.
+‘SF_LL_y’: The traditional structure function LL in the y direction.
+‘SF_TT_x’: The traditional structure function TT in the x direction.
+‘SF_TT_y’: The traditional structure function TT in the y direction.
+‘SF_SS_x’: The traditional structure function SS in the x direction.
+‘SF_SS_y’: The traditional structure function SS in the y direction.
+‘SF_LLL_x’: The traditional structure function LLL in the x direction.
+‘SF_LLL_y’: The traditional structure function LLL in the y direction.
+‘SF_LTT_x’: The traditional structure function LTT in the x direction.
+‘SF_LTT_y’: The traditional structure function LTT in the y direction.
+‘SF_LSS_x’: The traditional structure function LSS in the x direction.
+‘SF_LSS_y’: The traditional structure function LSS in the y direction.</p>
 </div></blockquote>
 </p>
 </dd>
@@ -555,8 +564,8 @@ Supports velocity-based structure functions and scalar-based structure functions
 <li><p><strong>shift_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for y shift.</p></li>
 <li><p><strong>shift_z</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Shift amount for z shift.</p></li>
 <li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate.
-Accepted types are: “ASF_V, “ASF_S”, “LL”, “LLL”, “LTT”, “LSS”. Defaults to
-“ASF_V”.</p></li>
+Accepted types are: “ASF_V, “ASF_S”, “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”.
+Defaults to “ASF_V”.</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar values. Defaults to None.</p></li>
 <li><p><strong>adv_scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Array of scalar advection values. Defaults to None.</p></li>
 <li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition for shifting arrays. Accepted strings
@@ -584,6 +593,12 @@ direction.
 ‘SF_LL_x’: The traditional structure function LL in the x direction.
 ‘SF_LL_y’: The traditional structure function LL in the y direction.
 ‘SF_LL_z’: The traditional structure function LL in the z direction.
+‘SF_TT_x’: The traditional structure function TT in the x direction.
+‘SF_TT_y’: The traditional structure function TT in the y direction.
+‘SF_TT_z’: The traditional structure function TT in the z direction.
+‘SF_SS_x’: The traditional structure function SS in the x direction.
+‘SF_SS_y’: The traditional structure function SS in the y direction.
+‘SF_SS_z’: The traditional structure function SS in the z direction.
 ‘SF_LLL_x’: The traditional structure function LLL in the x direction.
 ‘SF_LLL_y’: The traditional structure function LLL in the y direction.
 ‘SF_LLL_z’: The traditional structure function LLL in the z direction.
@@ -618,7 +633,8 @@ evenly-spaced and periodic data.</p>
 <li><p><strong>x</strong> (<em>ndarray</em>) – 1D array of x-coordinates.</p></li>
 <li><p><strong>y</strong> (<em>ndarray</em>) – 1D array of y-coordinates.</p></li>
 <li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate. Accepted types are:
-“ASF_V”, “ASF_S”, “LL”, “LLL”, “LTT”, “LSS”. Defaults to [“ASF_V”].</p></li>
+“ASF_V”, “ASF_S”, “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”. Defaults to
+[“ASF_V”].</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 2D array of scalar values. Defaults to None.</p></li>
 <li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the x-direction. Defaults to None.</p></li>
 <li><p><strong>dy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the y-direction. Defaults to None.</p></li>
@@ -628,43 +644,6 @@ evenly-spaced and periodic data.</p>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary containing the requested structure functions and separation
 distances for the x- and y-directions.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="fluidsf.generate_structure_functions">
-<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['ASF_V']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.generate_structure_functions" title="Link to this definition">¶</a></dt>
-<dd><p>Full method for generating structure functions for 2D data, either advective or
-traditional structure functions. Supports velocity-based and scalar-based structure
-functions. Defaults to calculating the velocity-based advective structure functions
-for the x and y directions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<em>ndarray</em>) – 2D array of u velocity components.</p></li>
-<li><p><strong>v</strong> (<em>ndarray</em>) – 2D array of v velocity components.</p></li>
-<li><p><strong>x</strong> (<em>ndarray</em>) – 1D array of x-coordinates.</p></li>
-<li><p><strong>y</strong> (<em>ndarray</em>) – 1D array of y-coordinates.</p></li>
-<li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate.
-Accepted types are: “ASF_V, “ASF_S”, “LL”, “LLL”, “LTT”, “LSS”. Defaults to
-“ASF_V”.</p></li>
-<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 2D array of scalar values. Defaults to None.</p></li>
-<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the x-direction. Defaults to None.</p></li>
-<li><p><strong>dy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the y-direction. Defaults to None.</p></li>
-<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition of the data. Accepted strings are “periodic-x”,
-“periodic-y”, and “periodic-all”. Defaults to “periodic-all”.</p></li>
-<li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Type of grid, either “uniform” or “latlon”. Defaults to “uniform”.</p></li>
-<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Number of bins for binning the data. Defaults to None, i.e. does not bin
-data.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dictionary containing the requested structure functions and separation
-distances for the x- and y-direction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
@@ -686,8 +665,8 @@ data track.</p>
 <li><p><strong>x</strong> (<em>ndarray</em>) – 1D array of coordinates. If you have lat-lon data, set x to 1D array of
 latitudes.</p></li>
 <li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate. Accepted types are: “LL”,
-“LLL”, “LTT”, “LSS”. Defaults to “LLL”. If you include “LSS”, you must
-provide a 1D array for scalar.</p></li>
+“TT”, “SS”, “LLL”, “LTT”, “LSS”. Defaults to “LLL”. If you include “SS” or
+“LSS”, you must provide a 1D array for scalar.</p></li>
 <li><p><strong>v</strong> (<em>ndarray</em>) – 1D array of v velocity components. Defaults to None.</p></li>
 <li><p><strong>y</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 1D array of coordinates orthogonal to x. Defaults to None. If you have
 lat-lon data, set y to 1D array of longitudes.</p></li>
@@ -703,6 +682,43 @@ data.</p></li>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dictionary containing the requested structure functions and separation
 distances along the data track.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fluidsf.generate_structure_functions_2d">
+<span class="sig-prename descclassname"><span class="pre">fluidsf.</span></span><span class="sig-name descname"><span class="pre">generate_structure_functions_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sf_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['ASF_V']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'periodic-all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluidsf.generate_structure_functions_2d" title="Link to this definition">¶</a></dt>
+<dd><p>Full method for generating structure functions for 2D data, either advective or
+traditional structure functions. Supports velocity-based and scalar-based structure
+functions. Defaults to calculating the velocity-based advective structure functions
+for the x and y directions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>ndarray</em>) – 2D array of u velocity components.</p></li>
+<li><p><strong>v</strong> (<em>ndarray</em>) – 2D array of v velocity components.</p></li>
+<li><p><strong>x</strong> (<em>ndarray</em>) – 1D array of x-coordinates.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – 1D array of y-coordinates.</p></li>
+<li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate.
+Accepted types are: “ASF_V, “ASF_S”, “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”.
+Defaults to “ASF_V”.</p></li>
+<li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 2D array of scalar values. Defaults to None.</p></li>
+<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the x-direction. Defaults to None.</p></li>
+<li><p><strong>dy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>optional</em>) – Grid spacing in the y-direction. Defaults to None.</p></li>
+<li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition of the data. Accepted strings are “periodic-x”,
+“periodic-y”, and “periodic-all”. Defaults to “periodic-all”.</p></li>
+<li><p><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Type of grid, either “uniform” or “latlon”. Defaults to “uniform”.</p></li>
+<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Number of bins for binning the data. Defaults to None, i.e. does not bin
+data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the requested structure functions and separation
+distances for the x- and y-direction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a></p>
@@ -727,7 +743,8 @@ velocity-based advective structure functions for the x, y, and z directions.</p>
 <li><p><strong>y</strong> (<em>ndarray</em>) – 1D array of y-coordinates.</p></li>
 <li><p><strong>z</strong> (<em>ndarray</em>) – 1D array of z-coordinates.</p></li>
 <li><p><strong>sf_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of structure function types to calculate. Accepted types are:
-“ASF_V”, “ASF_S”, “LL”, “LLL”, “LTT”, “LSS”. Defaults to [“ASF_V”].</p></li>
+“ASF_V”, “ASF_S”, “LL”, “TT”, “SS”, “LLL”, “LTT”, “LSS”. Defaults to
+[“ASF_V”].</p></li>
 <li><p><strong>scalar</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – 3D array of scalar values. Defaults to None.</p></li>
 <li><p><strong>boundary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – Boundary condition of the data. Accepted strings are “periodic-x”,
 “periodic-y”, “periodic-z”, and “periodic-all”. Defaults to “periodic-all”.</p></li>
@@ -888,17 +905,17 @@ Defaults to “periodic-all”.</p></li>
             <ul>
 <li><a class="reference internal" href="#">API Documentation</a><ul>
 <li><a class="reference internal" href="#fluidsf.bin_data"><code class="docutils literal notranslate"><span class="pre">bin_data()</span></code></a></li>
-<li><a class="reference internal" href="#fluidsf.calculate_advection"><code class="docutils literal notranslate"><span class="pre">calculate_advection()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.calculate_advection_2d"><code class="docutils literal notranslate"><span class="pre">calculate_advection_2d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.calculate_advection_3d"><code class="docutils literal notranslate"><span class="pre">calculate_advection_3d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.calculate_separation_distances"><code class="docutils literal notranslate"><span class="pre">calculate_separation_distances()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.calculate_separation_distances_3d"><code class="docutils literal notranslate"><span class="pre">calculate_separation_distances_3d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.calculate_sf_maps_2d"><code class="docutils literal notranslate"><span class="pre">calculate_sf_maps_2d()</span></code></a></li>
-<li><a class="reference internal" href="#fluidsf.calculate_structure_function"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.calculate_structure_function_1d"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function_1d()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.calculate_structure_function_2d"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function_2d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.calculate_structure_function_3d"><code class="docutils literal notranslate"><span class="pre">calculate_structure_function_3d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.generate_sf_maps_2d"><code class="docutils literal notranslate"><span class="pre">generate_sf_maps_2d()</span></code></a></li>
-<li><a class="reference internal" href="#fluidsf.generate_structure_functions"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.generate_structure_functions_1d"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions_1d()</span></code></a></li>
+<li><a class="reference internal" href="#fluidsf.generate_structure_functions_2d"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions_2d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.generate_structure_functions_3d"><code class="docutils literal notranslate"><span class="pre">generate_structure_functions_3d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.shift_array_1d"><code class="docutils literal notranslate"><span class="pre">shift_array_1d()</span></code></a></li>
 <li><a class="reference internal" href="#fluidsf.shift_array_2d"><code class="docutils literal notranslate"><span class="pre">shift_array_2d()</span></code></a></li>

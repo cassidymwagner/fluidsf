@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Modules in FluidSF" href="modules.html" /><link rel="prev" title="Create 2D Maps of Various Structure Functions" href="maps_2d_ex.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Modules in FluidSF" href="modules.html" /><link rel="prev" title="Estimate cascade rates from structure functions" href="ex_cascade.html" />
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 -->
         <title>Using SWOT satellite altimetry - FluidSF</title>
@@ -203,11 +203,12 @@
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d.html">Structure functions with 2D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_3d.html">Structure functions with 3D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">2D maps of structure functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d_bootstrap.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_cascade.html">Estimate cascade rates from structure functions</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
@@ -831,7 +832,7 @@ Attributes: (12/42)
 <span class="n">y</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">num_lines</span><span class="o">.</span><span class="n">values</span>
 
 <span class="c1"># Compute the structure functions</span>
-<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">vgos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_2d</span><span class="p">(</span><span class="n">u</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">vgos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
                                           <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ASF_V&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">],</span>
                                           <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
 </pre></div>
@@ -953,12 +954,12 @@ y-diffs
 </section>
 <section id="Binned-structure-functions">
 <h2>Binned structure functions<a class="headerlink" href="#Binned-structure-functions" title="Link to this heading">¶</a></h2>
-<p>You can also provide an argument to <code class="docutils literal notranslate"><span class="pre">fluidsf.generate_structure_functions()</span></code> that bins the data. This may be useful when you have more data in one direction.</p>
+<p>You can also provide an argument to <code class="docutils literal notranslate"><span class="pre">fluidsf.generate_structure_functions_2d()</span></code> that bins the data. This may be useful when you have more data in one direction.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_binned</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span><span class="n">u</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_binned</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_2d</span><span class="p">(</span><span class="n">u</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">ugos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
                                                  <span class="n">v</span> <span class="o">=</span> <span class="n">ds_cut</span><span class="o">.</span><span class="n">vgos</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
                                                  <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
                                                  <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LL&quot;</span><span class="p">],</span>
@@ -1012,14 +1013,14 @@ y-diffs
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="maps_2d_ex.html">
+          <a class="prev-page" href="ex_cascade.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Create 2D Maps of Various Structure Functions</div>
+                <div class="title">Estimate cascade rates from structure functions</div>
                 
               </div>
             </a>

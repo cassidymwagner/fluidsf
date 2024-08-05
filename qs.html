@@ -203,11 +203,12 @@
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d.html">Structure functions with 2D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_3d.html">Structure functions with 3D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">2D maps of structure functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d_bootstrap.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_cascade.html">Estimate cascade rates from structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
@@ -323,7 +324,7 @@
 </section>
 <section id="Generate-the-velocity-structure-function">
 <h2>Generate the velocity structure function<a class="headerlink" href="#Generate-the-velocity-structure-function" title="Link to this heading">¶</a></h2>
-<p>We can generate structure function using the function <code class="docutils literal notranslate"><span class="pre">generate_structure_functions</span></code>. The function returns a dictionary with the all supported structure functions and separation distances in each direction.</p>
+<p>We can generate structure function using the function <code class="docutils literal notranslate"><span class="pre">generate_structure_functions_2d</span></code>. The function returns a dictionary with the all supported structure functions and separation distances in each direction.</p>
 <p>By default the advective velocity structure functions are calculated and the remaining structure functions are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>. To calculate all velocity structure functions we set <code class="docutils literal notranslate"><span class="pre">sf_type=[&quot;ASF_V&quot;,</span> <span class="pre">&quot;LLL&quot;,</span> <span class="pre">&quot;LL&quot;,</span> <span class="pre">&quot;LTT&quot;]</span></code>.</p>
 <p>We set the boundary condition to <code class="docutils literal notranslate"><span class="pre">None</span></code> because our random data is non-periodic. If we had periodic data we could set the boundary condition based on the direction of periodicity (i.e. <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-x&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-y&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">boundary=&quot;periodic-all&quot;</span></code> for 2D data).</p>
 <div class="nbinput nblast docutils container">
@@ -332,7 +333,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">fluidsf</span>
 
-<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_2d</span><span class="p">(</span>
     <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ASF_V&quot;</span><span class="p">,</span> <span class="s2">&quot;LLL&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">,</span> <span class="s2">&quot;LTT&quot;</span><span class="p">],</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span>
 </pre></div>
@@ -428,7 +429,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Y</span>
 
-<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions</span><span class="p">(</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_2d</span><span class="p">(</span>
     <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sf_type</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ASF_S&quot;</span><span class="p">,</span> <span class="s2">&quot;LSS&quot;</span><span class="p">],</span> <span class="n">scalar</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span>
 </pre></div>

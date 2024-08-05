@@ -202,11 +202,12 @@
 <li class="toctree-l1"><a class="reference internal" href="sfs.html">What are structure functions?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d.html">Structure functions with 2D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_3d.html">Structure functions with 3D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">2D maps of structure functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d_bootstrap.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_cascade.html">Estimate cascade rates from structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
@@ -258,44 +259,75 @@
 <h1>Modules in FluidSF<a class="headerlink" href="#modules-in-fluidsf" title="Link to this heading">¶</a></h1>
 <section id="generate-structure-functions">
 <h2>Generate Structure Functions<a class="headerlink" href="#generate-structure-functions" title="Link to this heading">¶</a></h2>
-<p>There is one primary module in FluidSF that is used to generate structure functions from fluid data. FluidSF supports 1D, 2D, and 3D data so there are 3 separate veresions of the generate module.</p>
+<p>FluidSF supports 1D, 2D, and 3D data, and uses a distinct module to generate (and output) structure functions for each of these systems:</p>
+<p><code class="code docutils literal notranslate"><span class="pre">generate_structure_functions_2d()</span></code></p>
+<ul class="simple">
+<li><p>Generates structure functions from 2D data. It generates two sets of structure functions, one with <span class="math notranslate nohighlight">\(x\)</span>-directed separation vectors, and the other with <span class="math notranslate nohighlight">\(y\)</span>-directed separation vectors. It supports the calculation of second- and third-order SFs of velocity and/or scalars, and advective structure functions.</p></li>
+</ul>
+<p><code class="code docutils literal notranslate"><span class="pre">generate_structure_functions_3d()</span></code></p>
+<ul class="simple">
+<li><p>Generates structure functions from 3D data. Has the same functionality as <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions_2d()</span></code>, and generates three sets of SFs (with <span class="math notranslate nohighlight">\(x\)</span>-, <span class="math notranslate nohighlight">\(y\)</span>-, and <span class="math notranslate nohighlight">\(z\)</span>-directed separation vectors).</p></li>
+</ul>
 <p><code class="code docutils literal notranslate"><span class="pre">generate_structure_functions_1d()</span></code></p>
-<p>This module is used to generate structure functions from 1D data. Supported structure functions include second- and third-order structure functions of velocity and scalars. Advective structure functions are not supported.</p>
-<p><cite>generate_structure_functions_2d()</cite></p>
-<p>This module is used to generate structure functions from 2D data. Supported structure functions include second- and third-order structure functions of velocity and scalars. Advective structure functions are supported.</p>
-<p><cite>generate_structure_functions_3d()</cite></p>
-<p>This module is used to generate structure functions from 3D data. Supported structure functions include second- and third-order structure functions of velocity and scalars. Advective structure functions are supported. Non-uniform grid spacing is not supported.</p>
+<ul class="simple">
+<li><p>Generates structure functions from 1D data. It has the same functionality as <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions_2d()</span></code>, except it cannot diagnose advective structure functions, since these require multi-directional information to diagnose the required gradients. It generates one set of SFs (<span class="math notranslate nohighlight">\(x\)</span>-directed separation vectors).</p></li>
+</ul>
+<p><strong>Generating 2D Maps of Structure Functions</strong></p>
+<p>There is also a module that calculates the 2D spatial variations of structure functions.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">generate_sf_maps_2d()</span></code></p>
+<ul class="simple">
+<li><p>Generates a 2D field of structure function values as a function of separation distance and direction. This module can only be applied to evenly-spaced data from domains that are periodic in both directions. It supports the calculation of second- and third-order SFs of velocity and/or scalars, and advective structure functions.</p></li>
+</ul>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Any <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code> module can generate several types of structure functions as a function of separation distance. This is the only module you need to use to generate structure functions from your data. The modules described below are helper modules that are used by the <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code> modules.</p>
-<p><strong>Do not get confused between</strong> <code class="code docutils literal notranslate"><span class="pre">generate_structure_functions()</span></code> <strong>and</strong> <code class="code docutils literal notranslate"><span class="pre">calculate_structure_function()</span></code> <strong>, which is used to calculate a single structure function value for a given separation vector, not a range of separation distances.</strong></p>
+<p>All the above modules can generate several types of structure functions as a function of separation distance. These are the primary modules that users will interact with. The modules described below are helper modules used by the above modules.</p>
+<p><strong>Do not get confused between</strong> <code class="code docutils literal notranslate"><span class="pre">generate_()</span></code> <strong>and</strong> <code class="code docutils literal notranslate"><span class="pre">calculate_()</span></code> ** modules. The latter are used to calculate a single structure function value for a given separation vector, <code class="code docutils literal notranslate"><span class="pre">generate_()</span></code> modules then accumulate this information for a range of separation distances.**</p>
 </div>
 </section>
 <section id="calculate-structure-functions">
 <h2>Calculate Structure Functions<a class="headerlink" href="#calculate-structure-functions" title="Link to this heading">¶</a></h2>
-<p>This module calculates a single structure function value for a given separation vector.</p>
-<p><cite>calculate_structure_function_1d()</cite>, <cite>calculate_structure_function_2d()</cite>, <cite>calculate_structure_function_3d()</cite></p>
-</section>
-<section id="calculate-advection">
-<h2>Calculate Advection<a class="headerlink" href="#calculate-advection" title="Link to this heading">¶</a></h2>
-<p><cite>calculate_advection_2d()</cite>, <cite>calculate_advection_3d()</cite></p>
-<p>Describe the module</p>
-<p>Since the advective structure functions are supported in 2D and 3D, there are two versions of this module.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">calculate_structure_function_1d()</span></code>,
+<code class="code docutils literal notranslate"><span class="pre">calculate_structure_function_2d()</span></code>,
+<code class="code docutils literal notranslate"><span class="pre">calculate_structure_function_3d()</span></code>,
+<code class="code docutils literal notranslate"><span class="pre">calculate_sf_maps_2d()</span></code></p>
+<p>These modules calculate the average structure functions for a given separation vector and flow field snapshot. They are called by their respective <code class="code docutils literal notranslate"><span class="pre">generate_structure_function_</span></code> modules, and calculate all the structure functions that are requested by the user. These modules utilize the <em>shift array</em> utilities discussed below.</p>
 </section>
 <section id="utilities">
 <h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
 <section id="shift-arrays">
 <h3>Shift Arrays<a class="headerlink" href="#shift-arrays" title="Link to this heading">¶</a></h3>
-<p>Text</p>
+<p><code class="code docutils literal notranslate"><span class="pre">shift_array_1d()</span></code>, <code class="code docutils literal notranslate"><span class="pre">shift_array_2d()</span></code>, and <code class="code docutils literal notranslate"><span class="pre">shift_array_3d()</span></code></p>
+<ul class="simple">
+<li><p>These modules shift data arrays in a specific direction (x, y or z) and by specific number of array elements, to efficiently calculate structure functions. The modules are used for 1D, 2D and 3D data respectively. The <code class="code docutils literal notranslate"><span class="pre">generate_()</span></code> modules iterate over the approprite number of dimensions and element-shifts.</p></li>
+</ul>
+<p><code class="code docutils literal notranslate"><span class="pre">shift_array_xy()</span></code></p>
+<ul class="simple">
+<li><p>This module shifts 2D data arrays in two simultaneous directions (x and y) by a module-specified number of array elements that can differ between the two directions. This module is utilized by <code class="code docutils literal notranslate"><span class="pre">generate_sf_maps_2d()</span></code>.</p></li>
+</ul>
 </section>
 <section id="calculate-separation-distance">
-<h3>Calculate Separation distance<a class="headerlink" href="#calculate-separation-distance" title="Link to this heading">¶</a></h3>
-<p>Text</p>
+<h3>Calculate Separation Distance<a class="headerlink" href="#calculate-separation-distance" title="Link to this heading">¶</a></h3>
+<p><code class="code docutils literal notranslate"><span class="pre">calculate_separation_distances()</span></code></p>
+<ul class="simple">
+<li><p>This module calculates the separation distance between pairs of points in a 1D dataset, or in a 2D Cartesian or latitude-longitude grid. For latitude-longitude grids, the module utilizes a Great Circle function to calculate the separation distance.</p></li>
+</ul>
+<p><code class="code docutils literal notranslate"><span class="pre">calculate_separation_distances_3d()</span></code></p>
+<ul class="simple">
+<li><p>This module calculates the separation distance between pairs of points in a 3D Cartseian grid.</p></li>
+</ul>
 </section>
 <section id="bin-data">
 <h3>Bin Data<a class="headerlink" href="#bin-data" title="Link to this heading">¶</a></h3>
-<p>Text</p>
+<p><code class="code docutils literal notranslate"><span class="pre">bin_data()</span></code></p>
+<ul class="simple">
+<li><p>This module bins structure function data based on separation distances, and calculates the <em>bin-averaged</em> structure functions.</p></li>
+</ul>
 </section>
+</section>
+<section id="calculate-advection">
+<h2>Calculate Advection<a class="headerlink" href="#calculate-advection" title="Link to this heading">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">calculate_advection_2d()</span></code>, <code class="code docutils literal notranslate"><span class="pre">calculate_advection_3d()</span></code></p>
+<p>These modules process the provided velocity fields and grid information to diagnose the advection (vector) field required to calculate advective structure functions. Since the advective structure functions are supported in 2D and 3D, there are two versions of this module.</p>
 </section>
 </section>
 
@@ -357,13 +389,13 @@
 <li><a class="reference internal" href="#">Modules in FluidSF</a><ul>
 <li><a class="reference internal" href="#generate-structure-functions">Generate Structure Functions</a></li>
 <li><a class="reference internal" href="#calculate-structure-functions">Calculate Structure Functions</a></li>
-<li><a class="reference internal" href="#calculate-advection">Calculate Advection</a></li>
 <li><a class="reference internal" href="#utilities">Utilities</a><ul>
 <li><a class="reference internal" href="#shift-arrays">Shift Arrays</a></li>
-<li><a class="reference internal" href="#calculate-separation-distance">Calculate Separation distance</a></li>
+<li><a class="reference internal" href="#calculate-separation-distance">Calculate Separation Distance</a></li>
 <li><a class="reference internal" href="#bin-data">Bin Data</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#calculate-advection">Calculate Advection</a></li>
 </ul>
 </li>
 </ul>
@@ -380,5 +412,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

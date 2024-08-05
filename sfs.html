@@ -202,11 +202,12 @@
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">What are structure functions?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qs.html">Getting started</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="ex1.html">Estimating cascade rates from advective structure functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ex2.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ex_1d.html">Structure functions with 1D data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="langmuir_3d_ex.html">3D Structure Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">Create 2D Maps of Various Structure Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d.html">Structure functions with 2D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_3d.html">Structure functions with 3D data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maps_2d_ex.html">2D maps of structure functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_2d_bootstrap.html">Structure functions for multiple snapshots or observations with bootstrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ex_cascade.html">Estimate cascade rates from structure functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="swot_ex.html">Using SWOT satellite altimetry</a></li>
 </ul>
 </li>
@@ -256,7 +257,7 @@
         <article role="main" id="furo-main-content">
           <section id="what-are-structure-functions">
 <h1>What are structure functions?<a class="headerlink" href="#what-are-structure-functions" title="Link to this heading">¶</a></h1>
-<p id="overview">The structure functions calculated within this package are statistics that describe how fluid properties vary between pairs of points as a function of their separation vector (<span class="math notranslate nohighlight">\(\mathbf{r}\)</span>), averaged over all pairs of points with the same separation vector. There are numerous structure functions, describing different-order correlations of various variables, that can provide fundamental insights into the physical properties of dynamic fluid systems.</p>
+<p id="overview">The structure functions (SFs) calculated within this package are statistics that describe how fluid properties vary between pairs of points as a function of their separation vector (<span class="math notranslate nohighlight">\(\mathbf{r}\)</span>), averaged over all pairs of points with the same separation vector. There are numerous structure functions, describing different-order correlations of various variables, that can provide fundamental insights into the physical properties of dynamic fluid systems.</p>
 <section id="structure-functions-and-how-to-calculate-them">
 <span id="theory"></span><h2>Structure functions and how to calculate them<a class="headerlink" href="#structure-functions-and-how-to-calculate-them" title="Link to this heading">¶</a></h2>
 <p><strong>Scalar Structure Functions</strong></p>
@@ -265,9 +266,9 @@
 <div class="math notranslate nohighlight">
 \[SF_{\phi\phi}(\mathbf{r}) = \overline{{\left[\phi(\mathbf{x}+\mathbf{r}) - \phi(\mathbf{x})\right]^2}} = \overline{{\left[\delta \phi \right]^2}}\]</div>
 </div>
-<p>where <span class="math notranslate nohighlight">\(\theta(\mathbf{x})\)</span> is the scalar at position <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, and  <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is the separation vector between pairs of points. The overline represents an average over all pairs of data in the flow field that are separated by <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, and <span class="math notranslate nohighlight">\(\delta \phi\)</span> is a short-hand notation for the spatial difference in the scalar. This second-order (i.e. squared) structure function can be used to characterize the spatial distribution of scalar variance, analogous to the power spectra of the scalar field. Common scalars for fluid systems include temperature, density, and (vertical) vorticity.</p>
+<p>where <span class="math notranslate nohighlight">\(\theta(\mathbf{x})\)</span> is the scalar at position <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, and  <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is the separation vector between pairs of points. The overline represents an average over all pairs of data in the flow field that are separated by <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, and <span class="math notranslate nohighlight">\(\delta \phi\)</span> is a short-hand notation for the spatial difference in the scalar. This second-order (i.e. product of two <span class="math notranslate nohighlight">\(\delta\)</span>) structure function can be used to characterize the distribution of scalar variance across different scales of motion (McCaffrey et al., 2015), analogous to the power spectra of the scalar field. Common scalars for fluid systems include temperature, density, and (vertical) vorticity.</p>
 <p><strong>Velocity Structure Functions</strong></p>
-<p>Since velocity is a vector, structure functions often decompose a (two dimensional) velocity field into a longitudinal component (<span class="math notranslate nohighlight">\(u_L = \mathbf{u} \cdot \mathbf{\hat{r}}\)</span>) and a transverse component (<span class="math notranslate nohighlight">\(u_T = \mathbf{u} \times \mathbf{\hat{r}}\)</span>). These velocity components can be visualized by considering a pair of velocity observations separated by a vector <span class="math notranslate nohighlight">\(r\)</span>, as illustrated below.</p>
+<p>Since velocity is a vector, structure functions often decompose a (two dimensional) velocity field into a longitudinal component (<span class="math notranslate nohighlight">\(u_L = \mathbf{u} \cdot \mathbf{\hat{r}}\)</span>) and a transverse component (<span class="math notranslate nohighlight">\(u_T = \mathbf{u} \times \mathbf{\hat{r}}\)</span>). These velocity components can be visualized by considering a pair of velocity observations separated by a vector <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, as illustrated below.</p>
 <a class="reference internal image-reference" href="_images/sf_mooring_diagram.png"><img alt="A diagram showing two moorings in the ocean separated by a distance r." class="align-center" src="_images/sf_mooring_diagram.png" style="width: 50%;" /></a>
 <p>There are a variety of physically-useful velocity structure functions including second-order structure functions of both velocity components,</p>
 <div class="math-wrapper docutils container">
@@ -278,7 +279,7 @@
 <div class="math notranslate nohighlight">
 \[SF_{TT}(\mathbf{r}) = \overline{{\left[\delta u_T \right]^2}}\]</div>
 </div>
-<p>The spatial variations of <span class="math notranslate nohighlight">\(SF_{LL}\)</span> and <span class="math notranslate nohighlight">\(SF_{TT}\)</span>, and their ratio, are often used to explore the distribution of energy across scales, and the relative prevalence of rotational and divergent motions within a fluid.</p>
+<p>The spatial variations of <span class="math notranslate nohighlight">\(SF_{LL}\)</span> and <span class="math notranslate nohighlight">\(SF_{TT}\)</span>, and their ratio, are often used to explore the distribution of energy across scales (LaCasce, 2016), and the relative prevalence of rotational and divergent motions within a fluid (Lindborg, 2015).</p>
 <p>It is also common to utilize third-order velocity structure functions,</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -298,7 +299,7 @@
 </section>
 <section id="advective-structure-functions">
 <span id="id1"></span><h2>Advective structure functions<a class="headerlink" href="#advective-structure-functions" title="Link to this heading">¶</a></h2>
-<p>Advective structure functions are a particular type of blended structure function, introduced by Pearson et al. (2021). The advective structure functions for velocity and scalars are,</p>
+<p>Advective structure functions (herein ASFs) are a novel type of blended structure function (Pearson et al., 2021). The advective structure functions for velocity and scalars are,</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[ASF_{velocity}(\mathbf{r}) = \overline{\delta \mathbf{u} \cdot \delta \boldsymbol{\mathcal{A}}_{\mathbf{u}}}\]</div>
@@ -308,35 +309,31 @@
 \[ASF_{\phi}(\mathbf{r}) = \overline{\delta \phi \delta \mathcal{A}_{\phi}}\]</div>
 </div>
 <p>As the name suggests, advective structure functions depend on the advection of scalars (<span class="math notranslate nohighlight">\(\mathcal{A}_{\phi}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \phi\)</span>) or velocity (<span class="math notranslate nohighlight">\(\boldsymbol{\mathcal{A}}_{\mathbf{u}}(\mathbf{x}) = \left[\mathbf{u} \cdot \nabla\right] \mathbf{u}\)</span>) where <span class="math notranslate nohighlight">\(\nabla\)</span> is the gradient operator.</p>
-<p>Similar to the third-order structure functions above, advective structure functions can provide information about inter-scale transfers of energy, enstrophy, and tracer variance in simple/idealized flows. An advantage of advective structure functions is that can also be used to diagnose these properties to more complex flows (e.g., with strong anisotropy), and have different statisical properties.</p>
+<p>Similar to the third-order structure functions above, advective structure functions can provide information about inter-scale transfers of energy, enstrophy, and tracer variance in simple/idealized flows. An advantage of advective structure functions is that can also be used to diagnose these properties to more complex flows (e.g., with strong anisotropy), and have different statisical properties (Pearson et al., 2021).</p>
 </section>
-<section id="derived-relationships-between-various-structure-functions-and-turbulent-properties">
-<span id="id2"></span><h2>Derived relationships between various structure functions and turbulent properties<a class="headerlink" href="#derived-relationships-between-various-structure-functions-and-turbulent-properties" title="Link to this heading">¶</a></h2>
-<p>As mentioned earlier, fundamental fluid dynamics equations have been used to estimate a relationship between structure functions and turbulent properties. The following table shows the relationships between various velocity-based structure functions and turbulent properties, but the table is not exhaustive. For more information, see the references below.</p>
+<section id="example-relations-between-various-structure-functions-and-turbulent-properties">
+<span id="derived-relationships-between-various-structure-functions-and-turbulent-properties"></span><h2>Example relations between various structure functions and turbulent properties<a class="headerlink" href="#example-relations-between-various-structure-functions-and-turbulent-properties" title="Link to this heading">¶</a></h2>
+<p>As mentioned earlier, structure functions have been used to estimate to infer physical properties of turbulent properties. For example, in 2D turbulence, the following table shows several SF relationships that can be used to diagnose the inverse (upscale) cascade rate of energy (after some assumptions about flow properties):</p>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Structure function</p></th>
-<th class="head"><p>Downscale energy flux</p></th>
-<th class="head"><p>Energy spectrum</p></th>
+<th class="head"><p>Relation to 2D upscale energy transfer (<span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>)</p></th>
 <th class="head"><p>Reference</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(SF^2_v\)</span></p></td>
-<td><p>N/A</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(SF_{LLL}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{3}{2}\epsilon r\)</span></p></td>
+<td><p><a class="reference external" href="https://doi.org/10.1017/S0022112099004851">Lindborg (1999)</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(SF^3_v\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\epsilon = -2 SF^3_v /3\mathbf{r}\)</span></p></td>
-<td><p>N/A</p></td>
-<td><p>Lindborg (1999)</p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(SF_{L\mathbf{u}\mathbf{u}}=SF_{LLL}+SF_{LTT}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(2\epsilon r\)</span></p></td>
+<td><p><a class="reference external" href="https://doi.org/10.1017/S0022112099004851">Lindborg (1999)</a></p></td>
 </tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(ASF_v\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\epsilon = - ASF_v /2\)</span></p></td>
-<td><p>N/A</p></td>
-<td><p>Pearson et al. (2021)</p></td>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(ASF_{velocity}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(2\epsilon\)</span></p></td>
+<td><p><a class="reference external" href="https://doi.org/10.1017/jfm.2021.247">Pearson et al. (2021)</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -346,7 +343,10 @@
 <span id="id3"></span><h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Lindborg, E., 1999: <a class="reference external" href="https://doi.org/10.1017/S0022112099004851">Can the atmospheric kinetic energy spectrum be explained by two-dimensional turbulence?</a> <em>Journal of Fluid Mechanics.</em></p></li>
-<li><p>Pearson, B. et al., 2021: <a class="reference external" href="https://doi.org/10.1017/jfm.2021.247">Advective structure functions in anisotropic two-dimensional turbulence.</a> <em>Journal of Fluid Mechanics.</em></p></li>
+<li><p>Lindborg, E., 2015: <a class="reference external" href="https://doi.org/10.1017/jfm.2014.685">A Helmholtz decomposition of structure functions and spectra calculated from aircraft data.</a> <em>Journal of Fluid Mechanics.</em></p></li>
+<li><p>LaCasce, J. H., 2016: <a class="reference external" href="https://doi.org/10.3390/fluids1040033">Estimating Eulerian energy spectra from drifters.</a> <em>Fluids</em></p></li>
+<li><p>McCaffrey, K., B. Fox-Kemper, &amp; G. Forget, 2015: <a class="reference external" href="https://doi.org/10.1175/JPO-D-14-0023.1">Estimates of ocean macroturbulence: Structure function and spectral slope from Argo profiling floats.</a> <em>Journal of Physical Oceanography</em></p></li>
+<li><p>Pearson, B., J. Pearson, &amp; B. Fox-Kemper, 2021: <a class="reference external" href="https://doi.org/10.1017/jfm.2021.247">Advective structure functions in anisotropic two-dimensional turbulence.</a> <em>Journal of Fluid Mechanics.</em></p></li>
 </ul>
 </section>
 </section>
@@ -409,7 +409,7 @@
 <li><a class="reference internal" href="#">What are structure functions?</a><ul>
 <li><a class="reference internal" href="#structure-functions-and-how-to-calculate-them">Structure functions and how to calculate them</a></li>
 <li><a class="reference internal" href="#advective-structure-functions">Advective structure functions</a></li>
-<li><a class="reference internal" href="#derived-relationships-between-various-structure-functions-and-turbulent-properties">Derived relationships between various structure functions and turbulent properties</a></li>
+<li><a class="reference internal" href="#example-relations-between-various-structure-functions-and-turbulent-properties">Example relations between various structure functions and turbulent properties</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
