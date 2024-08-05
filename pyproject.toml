@@ -62,3 +62,6 @@ extend-ignore = [
 
 [tool.hatch]
 version.path = "fluidsf/_version.py"
+
+[tool.setuptools]
+packages = ["fluidsf"]
