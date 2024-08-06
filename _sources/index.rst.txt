@@ -24,12 +24,21 @@ This package can be applied to data from general fluid flows, although our resea
 Installing
 **********
 
+The easiest method to install FluidSF is with `pip <https://pip.pypa.io/>`_:
+
 Fork or clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine. 
 Install FluidSF with pip:
 
 .. code-block:: bash
 
-   pip install . --user
+   pip install fluidsf
+
+You can also fork/clone this repository to your local machine and install it locally with pip as well:
+
+.. code-block:: bash
+
+   pip install .
+
 
 .. _Citing:
 
