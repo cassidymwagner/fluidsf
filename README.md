@@ -1,5 +1,6 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10463864.svg)](https://doi.org/10.5281/zenodo.10463864)
-[![documentation](https://img.shields.io/badge/documentation-in%20development-orange?)](https://cassidymwagner.github.io/fluidsf)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10463864.svg)](https://zenodo.org/doi/10.5281/zenodo.10463863)
+[![PyPI - Version](https://img.shields.io/pypi/v/fluidsf?color=blue)](https://pypi.org/project/fluidsf)
+[![documentation](https://img.shields.io/badge/documentation-stable%20release-blue)](https://cassidymwagner.github.io/fluidsf)
 [![CI](https://github.com/cassidymwagner/FluidSF/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cassidymwagner/FluidSF/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/cassidymwagner/fluidsf/graph/badge.svg?token=1ZZ2HUONX4)](https://codecov.io/github/cassidymwagner/fluidsf)
 
@@ -20,7 +21,7 @@ Installation
 Fork/clone this repository to your local machine. The easiest method to install FluidSF is with [pip](https://pip.pypa.io/):
 
 ```console
-$ pip install .
+$ pip install fluidsf
 ```
 
 Quickstart
