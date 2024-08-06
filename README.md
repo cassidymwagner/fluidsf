@@ -18,10 +18,16 @@ FluidSF is a Python package for calculating structure functions from fluid data.
 
 Installation
 ---
-Fork/clone this repository to your local machine. The easiest method to install FluidSF is with [pip](https://pip.pypa.io/):
+The easiest method to install FluidSF is with [pip](https://pip.pypa.io/):
 
 ```console
 $ pip install fluidsf
+```
+
+You can also fork/clone this repository to your local machine and install it locally with pip as well:
+
+```console
+$ pip install .
 ```
 
 Quickstart
