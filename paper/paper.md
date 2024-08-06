@@ -54,6 +54,6 @@ where $\mathbf{x}$ denotes the position of a data point, $\delta \phi$ denotes t
 
 # Acknowledgements
 
-The development of FluidSF was primarily supported by the National Science Foundation (NSF) under Grant No. 2023721 (Wagner \& Pearson) with additional support from the NSF under Grant No. 2146910 (Lee).
+The development of `FluidSF` was primarily supported by the National Science Foundation (NSF) under Grant No. 2023721 (Wagner \& Pearson) with additional support from the NSF under Grant No. 2146910 (Lee).
 
 # References
