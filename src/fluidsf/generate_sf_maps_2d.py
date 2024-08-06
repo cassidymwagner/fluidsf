@@ -54,6 +54,51 @@ def generate_sf_maps_2d(  # noqa: C901, D417
             distances for the x- and y-directions.
 
     """
+    # Error handling
+
+    if not isinstance(sf_type, list):
+        raise ValueError("sf_type must be a list of strings.")
+
+    if len(sf_type) == 0:
+        raise ValueError(
+            "sf_type cannot be an empty list. All elements in sf_type must be strings. "
+            "Accepted strings are: ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
+        )
+
+    if not all(isinstance(t, str) for t in sf_type):
+        raise ValueError(
+            "All elements in sf_type must be strings. Accepted strings are: "
+            "ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
+        )
+
+    for t in sf_type:
+        if t not in ["ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS"]:
+            raise ValueError(
+                "All elements in sf_type must be one of the following: "
+                "ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
+            )
+
+    if grid_type != "uniform":
+        raise ValueError("grid_type must be 'uniform' for this method.")
+
+    if (
+        scalar is not None
+        and (("SS" not in sf_type) and ("LSS" not in sf_type))
+        and ("ASF_S" not in sf_type)
+    ):
+        raise ValueError(
+            "If scalar is provided, you must include 'SS', 'LSS' or 'ASF_S' "
+            "in SF_type."
+        )
+
+    if scalar is None and (
+        ("SS" in sf_type) or ("LSS" in sf_type) or ("ASF_S" in sf_type)
+    ):
+        raise ValueError(
+            "If you include 'SS', 'LSS' or 'ASF_S' in SF_type, you must provide "
+            "a scalar array."
+        )
+
     # Initialize variables as NoneType
     SF_adv = None
     adv_x = None
