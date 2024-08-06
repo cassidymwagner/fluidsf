@@ -1,12 +1,12 @@
 on:
   push:
     branches:
-      - paper
+      - main
     tags:
-      - "v*"
+      - "paper*"
   pull_request:
     branches:
-      - paper
+      - main
 jobs:
   paper:
     runs-on: ubuntu-latest
