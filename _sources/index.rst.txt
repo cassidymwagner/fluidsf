@@ -26,14 +26,11 @@ Installing
 
 The easiest method to install FluidSF is with `pip <https://pip.pypa.io/>`_:
 
-Fork or clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine. 
-Install FluidSF with pip:
-
 .. code-block:: bash
 
    pip install fluidsf
 
-You can also fork/clone this repository to your local machine and install it locally with pip as well:
+You can also fork/clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine and install it locally with pip as well:
 
 .. code-block:: bash
 
