@@ -19,6 +19,7 @@ from .generate_structure_functions_3d import generate_structure_functions_3d
 from .shift_array_1d import shift_array_1d
 from .shift_array_2d import shift_array_2d
 from .shift_array_3d import shift_array_3d
+from .shift_array_xy import shift_array_xy
 
 __version__ = "0.2.0"
 
@@ -38,5 +39,6 @@ __all__ = (
     "shift_array_1d",
     "shift_array_2d",
     "shift_array_3d",
+    "shift_array_xy",
     "bin_data",
 )

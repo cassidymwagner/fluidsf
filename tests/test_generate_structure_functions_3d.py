@@ -114,6 +114,107 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
                 "z-diffs": np.linspace(0, 8, 9),
             },  # expected_dict
         ),
+        # Test 4: sf_type is None raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            None,  # sf_type
+            np.zeros((3, 3, 3)),  # scalar
+            "periodic-all",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
+        # Test 5: sf_type is an empty list raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            [],  # sf_type
+            np.zeros((3, 3, 3)),  # scalar
+            "periodic-all",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
+        # Test 6: sf_type contains integers raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            [1, 2, 3],  # sf_type
+            np.zeros((3, 3, 3)),  # scalar
+            "periodic-all",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
+        # Test 7: sf_type contains strings not in ["ASF_V", "ASF_S", "LLL", "LTT",
+        # "LSS", "LL", "TT", "SS"] raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            ["Q"],  # sf_type
+            np.zeros((3, 3, 3)),  # scalar
+            "periodic-all",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
+        # Test 8: boundary is not either None, "periodic-all", "periodic-y",
+        # "periodic-x", "periodic-z" raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            ["ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS"],  # sf_type
+            np.zeros((3, 3, 3)),  # scalar
+            "periodic",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
+        # Test 9: scalar is None and "ASF_S" in sf_type raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            ["ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS"],  # sf_type
+            None,  # scalar
+            "periodic-all",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
+        # Test 10: scalar is not None and sf_type does not include "ASF_S" and "SS"
+        # and "LSS" raises ValueError
+        (
+            np.zeros((3, 3, 3)),  # u
+            np.zeros((3, 3, 3)),  # v
+            np.zeros((3, 3, 3)),  # w
+            np.linspace(1, 3, 3),  # x
+            np.linspace(1, 3, 3),  # y
+            np.linspace(1, 3, 3),  # z
+            ["ASF_V", "LLL", "LTT", "LL", "TT"],  # sf_type
+            np.zeros((3, 3, 3)),  # scalar
+            "periodic-all",  # boundary
+            None,  # nbins
+            ValueError,  # expected_dict
+        ),
     ],
 )
 def test_generate_structure_functions_3d_parameterized(
@@ -129,18 +230,33 @@ def test_generate_structure_functions_3d_parameterized(
     nbins,
     expected_dict,
 ):
-    """Test generate_structure_functions produces expected results."""
-    output_dict = generate_structure_functions_3d(
-        u, v, w, x, y, z, sf_type, scalar, boundary, nbins
-    )
-    for key, value in expected_dict.items():
-        if key in output_dict:
-            if not np.allclose(output_dict[key], value):
-                print(output_dict[key])
-                print(expected_dict[key])
-                raise AssertionError(
-                    f"Output dict value for key '{key}' does not match "
-                    f"expected value '{output_dict[key]}'."
-                )
-        else:
-            raise AssertionError(f"Output dict does not contain key '{key}'.")
+    if expected_dict == ValueError:
+        with pytest.raises(ValueError):
+            generate_structure_functions_3d(
+                u,
+                v,
+                w,
+                x,
+                y,
+                z,
+                sf_type,
+                scalar,
+                boundary,
+                nbins,
+            )
+        return
+    else:
+        output_dict = generate_structure_functions_3d(
+            u, v, w, x, y, z, sf_type, scalar, boundary, nbins
+        )
+        for key, value in expected_dict.items():
+            if key in output_dict:
+                if not np.allclose(output_dict[key], value):
+                    print(output_dict[key])
+                    print(expected_dict[key])
+                    raise AssertionError(
+                        f"Output dict value for key '{key}' does not match "
+                        f"expected value '{output_dict[key]}'."
+                    )
+            else:
+                raise AssertionError(f"Output dict does not contain key '{key}'.")
