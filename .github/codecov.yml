@@ -1,2 +1,7 @@
 ignore:
   - "tests"
+  - "docs"
+  - "paper"
+
+fixes:
+  - "^fluidsf::fluidsf/src"
