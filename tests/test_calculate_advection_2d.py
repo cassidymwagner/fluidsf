@@ -1,7 +1,6 @@
 import numpy as np
 import pytest
-
-from fluidsf.calculate_advection import calculate_advection
+from fluidsf.calculate_advection_2d import calculate_advection_2d
 
 
 @pytest.mark.parametrize(
@@ -165,5 +164,5 @@ def test_calculate_advection(
     u, v, x, y, dx, dy, grid_type, scalar, expected_advection_result
 ):
     """Test that calculate_advection works correctly for multiple cases."""
-    output_advection = calculate_advection(u, v, x, y, dx, dy, grid_type, scalar)
+    output_advection = calculate_advection_2d(u, v, x, y, dx, dy, grid_type, scalar)
     np.testing.assert_allclose(output_advection, expected_advection_result)

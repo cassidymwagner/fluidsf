@@ -14,22 +14,28 @@ FluidSF
 
 .. _Overview:
 
-FluidSF is a Python package for calculating structure functions (SFs) from fluid data. 
-The package diagnose various SFs that utilize velocity and/or scalar fields. These SFs can then be used to quantify various physical properties of fluid systems, including the distribution of energy/variance across scales, the inter-scale transfers of this energy/variance, the intermittency of the fluid flow, and the spatial anisotropy of the flow. 
+FluidSF is a Python package for calculating spatial structure functions (SFs) from 1-, 2-, and 3-dimensional fluid data. 
+The package can calculate various SFs that utilize velocity and/or scalar fields. These SFs can then be used to quantify various physical properties of fluid systems, including the distribution of energy/variance across scales, the inter-scale transfers of this energy/variance, the intermittency of the fluid flow, and the spatial anisotropy of the flow. 
 
-This package can be applied to general fluid flow data, although our research motivation for developing this package is to analyze large-scale ocean turbulence from model output and observational (satellite) data.
+This package can be applied to data from general fluid flows, although our research motivation for developing this package is to analyze large-scale ocean turbulence from model output and observational (satellite) data.
 
 .. _Installing:
 
 Installing
 **********
 
-Fork or clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine. 
-Install FluidSF with pip:
+The easiest method to install FluidSF is with `pip <https://pip.pypa.io/>`_:
 
 .. code-block:: bash
 
-   pip install . --user
+   pip install fluidsf
+
+You can also fork/clone the `FluidSF repository <https://github.com/cassidymwagner/FluidSF>`_ to your local machine and install it locally with pip as well:
+
+.. code-block:: bash
+
+   pip install .
+
 
 .. _Citing:
 

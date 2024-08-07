@@ -1,8 +1,7 @@
 import numpy as np
 import pytest
+from fluidsf.generate_structure_functions_2d import generate_structure_functions_2d
 from geopy.distance import great_circle
-
-from fluidsf.generate_structure_functions import generate_structure_functions
 
 
 @pytest.mark.parametrize(
@@ -598,7 +597,7 @@ def test_generate_structure_functions_parameterized(
     """Test generate_structure_functions produces expected results."""
     if expected_dict == ValueError:
         with pytest.raises(ValueError):
-            generate_structure_functions(
+            generate_structure_functions_2d(
                 u,
                 v,
                 x,
@@ -617,7 +616,7 @@ def test_generate_structure_functions_parameterized(
             )
         return
     else:
-        output_dict = generate_structure_functions(
+        output_dict = generate_structure_functions_2d(
             u,
             v,
             x,

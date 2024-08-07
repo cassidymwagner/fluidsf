@@ -41,7 +41,8 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             1D array of z-coordinates.
         sf_type: list
             List of structure function types to calculate. Accepted types are:
-            "ASF_V", "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to ["ASF_V"].
+            "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            ["ASF_V"].
         scalar: ndarray, optional
             3D array of scalar values. Defaults to None.
         boundary: str, optional
@@ -72,6 +73,12 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     SF_x_LL = None
     SF_y_LL = None
     SF_z_LL = None
+    SF_x_TT = None
+    SF_y_TT = None
+    SF_z_TT = None
+    SF_x_SS = None
+    SF_y_SS = None
+    SF_z_SS = None
     SF_x_LLL = None
     SF_y_LLL = None
     SF_z_LLL = None
@@ -120,6 +127,14 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         SF_x_LL = np.zeros(len(sep_x) + 1)
         SF_y_LL = np.zeros(len(sep_y) + 1)
         SF_z_LL = np.zeros(len(sep_z) + 1)
+    if "TT" in sf_type:
+        SF_x_TT = np.zeros(len(sep_x) + 1)
+        SF_y_TT = np.zeros(len(sep_y) + 1)
+        SF_z_TT = np.zeros(len(sep_z) + 1)
+    if "SS" in sf_type:
+        SF_x_SS = np.zeros(len(sep_x) + 1)
+        SF_y_SS = np.zeros(len(sep_y) + 1)
+        SF_z_SS = np.zeros(len(sep_z) + 1)
     if "LLL" in sf_type:
         SF_x_LLL = np.zeros(len(sep_x) + 1)
         SF_y_LLL = np.zeros(len(sep_y) + 1)
@@ -170,6 +185,10 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
         if "LL" in sf_type:
             SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
+        if "TT" in sf_type:
+            SF_x_TT[x_shift] = SF_dicts["SF_TT_x"]
+        if "SS" in sf_type:
+            SF_x_SS[x_shift] = SF_dicts["SF_SS_x"]
         if "LLL" in sf_type:
             SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
         if "LTT" in sf_type:
@@ -218,6 +237,10 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             SF_y_scalar[y_shift] = SF_dicts["SF_advection_scalar_y"]
         if "LL" in sf_type:
             SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
+        if "TT" in sf_type:
+            SF_y_TT[y_shift] = SF_dicts["SF_TT_y"]
+        if "SS" in sf_type:
+            SF_y_SS[y_shift] = SF_dicts["SF_SS_y"]
         if "LLL" in sf_type:
             SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
         if "LTT" in sf_type:
@@ -266,6 +289,10 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             SF_z_scalar[z_shift] = SF_dicts["SF_advection_scalar_z"]
         if "LL" in sf_type:
             SF_z_LL[z_shift] = SF_dicts["SF_LL_z"]
+        if "TT" in sf_type:
+            SF_z_TT[z_shift] = SF_dicts["SF_TT_z"]
+        if "SS" in sf_type:
+            SF_z_SS[z_shift] = SF_dicts["SF_SS_z"]
         if "LLL" in sf_type:
             SF_z_LLL[z_shift] = SF_dicts["SF_LLL_z"]
         if "LTT" in sf_type:
@@ -291,6 +318,14 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
             yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
             zd_bin, SF_z_LL = bin_data(zd, SF_z_LL, nbins)
+        if "TT" in sf_type:
+            xd_bin, SF_x_TT = bin_data(xd, SF_x_TT, nbins)
+            yd_bin, SF_y_TT = bin_data(yd, SF_y_TT, nbins)
+            zd_bin, SF_z_TT = bin_data(zd, SF_z_TT, nbins)
+        if "SS" in sf_type:
+            xd_bin, SF_x_SS = bin_data(xd, SF_x_SS, nbins)
+            yd_bin, SF_y_SS = bin_data(yd, SF_y_SS, nbins)
+            zd_bin, SF_z_SS = bin_data(zd, SF_z_SS, nbins)
         if "LLL" in sf_type:
             xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
             yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
@@ -317,6 +352,12 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         "SF_LL_x": SF_x_LL,
         "SF_LL_y": SF_y_LL,
         "SF_LL_z": SF_z_LL,
+        "SF_TT_x": SF_x_TT,
+        "SF_TT_y": SF_y_TT,
+        "SF_TT_z": SF_z_TT,
+        "SF_SS_x": SF_x_SS,
+        "SF_SS_y": SF_y_SS,
+        "SF_SS_z": SF_z_SS,
         "SF_LLL_x": SF_x_LLL,
         "SF_LLL_y": SF_y_LLL,
         "SF_LLL_z": SF_z_LLL,

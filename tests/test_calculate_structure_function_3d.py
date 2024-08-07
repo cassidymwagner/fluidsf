@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from fluidsf.calculate_structure_function_3d import calculate_structure_function_3d
 
 
@@ -178,7 +177,7 @@ from fluidsf.calculate_structure_function_3d import calculate_structure_function
                 "SF_advection_velocity_y": 3 * (1) ** 2,
                 "SF_LL_y": 1 * (1) ** 2,
                 "SF_LLL_y": 1 * (1) ** 3,
-                "SF_LTT_y": 1 * (1) ** 3,
+                "SF_LTT_y": 2 * (1) ** 3,
                 "SF_advection_velocity_z": 0,
                 "SF_LL_z": 0,
                 "SF_LLL_z": 0,

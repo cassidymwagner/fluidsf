@@ -25,8 +25,8 @@ def calculate_structure_function_1d(  # noqa: D417
             Array of separation distances.
         sf_type: list
             List of traditional structure function types to calculate.
-            Accepted types are: "LL", "LLL", "LTT", "LSS". Defaults to "LLL". If you
-            include "LSS", you must provide a 1D array for scalar.
+            Accepted types are: "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            "LLL". If you include "SS" or "LSS", you must provide a 1D array for scalar.
         v: ndarray
             Array of v velocities. Defaults to None.
         scalar: ndarray, optional
@@ -42,6 +42,8 @@ def calculate_structure_function_1d(  # noqa: D417
             scalar structure functions (if applicable).
             The dictionary has the following keys:
                 'SF_LL': The second-order longitudinal velocity structure function.
+                'SF_TT': The second-order transverse velocity structure function.
+                'SF_SS': The second-order scalar structure function.
                 'SF_LLL': The third-order longitudinal velocity structure function.
                 'SF_LTT': The longitudinal-transverse velocity structure function.
                 'SF_LSS': The longitudinal-scalar structure function.
@@ -60,6 +62,10 @@ def calculate_structure_function_1d(  # noqa: D417
 
     if "LL" in sf_type:
         SF_dict["SF_LL"] = np.nanmean((inputs["u_shift"] - u) ** 2)
+    if "TT" in sf_type and v is not None:
+        SF_dict["SF_TT"] = np.nanmean((inputs["v_shift"] - v) ** 2)
+    if "SS" in sf_type and scalar is not None:
+        SF_dict["SF_SS"] = np.nanmean((inputs["scalar_shift"] - scalar) ** 2)
     if "LLL" in sf_type:
         SF_dict["SF_LLL"] = np.nanmean((inputs["u_shift"] - u) ** 3)
     if "LTT" in sf_type and v is not None:

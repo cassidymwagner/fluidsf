@@ -91,13 +91,13 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     if len(sf_type) == 0:
         raise ValueError(
             "sf_type cannot be an empty list. All elements in sf_type must be strings. "
-            "Accepted strings are: ASF_V, ASF_S, LL, LLL, LTT, LSS."
+            "Accepted strings are: ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
         )
 
     if not all(isinstance(t, str) for t in sf_type):
         raise ValueError(
             "All elements in sf_type must be strings. Accepted strings are: "
-            "ASF_V, ASF_S, LL, LLL, LTT, LSS."
+            "ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
         )
 
     if boundary not in ["periodic-all", "periodic-x", "periodic-y", None]:
@@ -131,14 +131,18 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         raise ValueError(
             "If grid_type is 'latlon', you must set boundary to 'periodic-x' or None."
         )
-
-    if scalar is not None and (("LSS" not in sf_type) and ("ASF_S" not in sf_type)):
+    if scalar is not None and (
+        ("SS" not in sf_type) and ("LSS" not in sf_type) and ("ASF_S" not in sf_type)
+    ):
         raise ValueError(
-            "If scalar is provided, you must include 'LSS' or 'ASF_S' " "in SF_type."
+            "If scalar is provided, you must include 'SS', 'LSS' or 'ASF_S' "
+            "in SF_type."
         )
-    if scalar is None and (("LSS" in sf_type) or ("ASF_S" in sf_type)):
+    if scalar is None and (
+        ("SS" in sf_type) or ("LSS" in sf_type) or ("ASF_S" in sf_type)
+    ):
         raise ValueError(
-            "If you include 'LSS' or 'ASF_S' in SF_type, you must provide "
+            "If you include 'SS', 'LSS' or 'ASF_S' in SF_type, you must provide "
             "a scalar array."
         )
 
@@ -152,6 +156,10 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     adv_scalar = None
     SF_x_LL = None
     SF_y_LL = None
+    SF_x_TT = None
+    SF_y_TT = None
+    SF_x_SS = None
+    SF_y_SS = None
     SF_x_LLL = None
     SF_y_LLL = None
     SF_x_LTT = None
@@ -217,6 +225,12 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     if "LL" in sf_type:
         SF_x_LL = np.zeros(len(sep_x) + 1)
         SF_y_LL = np.zeros(len(sep_y) + 1)
+    if "TT" in sf_type:
+        SF_x_TT = np.zeros(len(sep_x) + 1)
+        SF_y_TT = np.zeros(len(sep_y) + 1)
+    if "SS" in sf_type:
+        SF_x_SS = np.zeros(len(sep_x) + 1)
+        SF_y_SS = np.zeros(len(sep_y) + 1)
     if "LLL" in sf_type:
         SF_x_LLL = np.zeros(len(sep_x) + 1)
         SF_y_LLL = np.zeros(len(sep_y) + 1)
@@ -260,6 +274,10 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             SF_adv_x[x_shift] = SF_dicts["SF_advection_velocity_x"]
         if "LL" in sf_type:
             SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
+        if "TT" in sf_type:
+            SF_x_TT[x_shift] = SF_dicts["SF_TT_x"]
+        if "SS" in sf_type:
+            SF_x_SS[x_shift] = SF_dicts["SF_SS_x"]
         if "LLL" in sf_type:
             SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
         if "LTT" in sf_type:
@@ -318,6 +336,10 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             SF_adv_y[y_shift] = SF_dicts["SF_advection_velocity_y"]
         if "LL" in sf_type:
             SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
+        if "TT" in sf_type:
+            SF_y_TT[y_shift] = SF_dicts["SF_TT_y"]
+        if "SS" in sf_type:
+            SF_y_SS[y_shift] = SF_dicts["SF_SS_y"]
         if "LLL" in sf_type:
             SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
         if "LTT" in sf_type:
@@ -359,6 +381,12 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         if "LL" in sf_type:
             xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins, grid_type)
             yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins, grid_type)
+        if "TT" in sf_type:
+            xd_bin, SF_x_TT = bin_data(xd, SF_x_TT, nbins, grid_type)
+            yd_bin, SF_y_TT = bin_data(yd, SF_y_TT, nbins, grid_type)
+        if "SS" in sf_type:
+            xd_bin, SF_x_SS = bin_data(xd, SF_x_SS, nbins, grid_type)
+            yd_bin, SF_y_SS = bin_data(yd, SF_y_SS, nbins, grid_type)
         if "LLL" in sf_type:
             xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins, grid_type)
             yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins, grid_type)
