@@ -4,4 +4,4 @@ ignore:
   - "paper"
 
 fixes:
-  - "fluidsf/fluidsf::fluidsf/fluidsf/src"
+  - "fluidsf/src::fluidsf/"
