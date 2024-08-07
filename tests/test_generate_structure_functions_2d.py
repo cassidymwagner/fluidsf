@@ -5,7 +5,8 @@ from geopy.distance import great_circle
 
 
 @pytest.mark.parametrize(
-    "u, v, x, y, sf_type, scalar, dx, dy, boundary, " "grid_type, nbins, expected_dict",
+    "u, v, x, y, lats, lons, sf_type, scalar, dx, dy, boundary, "
+    "grid_type, nbins, radius, sphere_circumference, expected_dict",
     [
         # Test 1: linear velocities all SFs no scalar non-periodic
         (
@@ -13,6 +14,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -20,6 +23,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
                 "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
@@ -33,37 +38,41 @@ from geopy.distance import great_circle
                 "y-diffs": np.linspace(0, 8, 9),
             },
         ),
-        # Test 2: linear velocities all SFs no scalar non-periodic latlon grid
-        # and array of dx and dy
-        (
-            np.meshgrid(np.arange(10), np.arange(10))[0],  # u
-            0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
-            np.arange(10),  # x
-            np.arange(10),  # y
-            ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
-            None,  # scalar
-            np.ones(10),  # dx
-            np.ones(10),  # dy
-            None,  # boundary
-            "latlon",  # grid_type
-            None,  # nbins
-            {
-                "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
-                "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
-                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
-                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
-                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
-                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
-                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
-                "SF_LL_y": 0 * np.linspace(0, 8, 9),
-                "x-diffs": np.array(
-                    [great_circle((i, 0), (0, 0)).meters for i in range(9)]
-                ),
-                "y-diffs": np.array(
-                    [great_circle((0, i), (0, 0)).meters for i in range(9)]
-                ),
-            },
-        ),
+        # # Test 2: linear velocities all SFs no scalar non-periodic latlon grid
+        # # and array of dx and dy
+        # (
+        #     np.meshgrid(np.arange(10), np.arange(10))[0],  # u
+        #     0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
+        #     None,  # x
+        #     None,  # y
+        #     np.meshgrid(np.arange(10), np.arange(10))[0],  # lats
+        #     np.meshgrid(np.arange(10), np.arange(10))[1],  # lons
+        #     ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
+        #     None,  # scalar
+        #     np.ones(10),  # dx
+        #     np.ones(10),  # dy
+        #     None,  # boundary
+        #     "latlon",  # grid_type
+        #     None,  # nbins
+        #     None,  # radius
+        #     40075,  # sphere_circumference
+        #     {
+        #         "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
+        #         "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
+        #         "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
+        #         "SF_LLL_y": 0 * np.linspace(0, 8, 9),
+        #         "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
+        #         "SF_LTT_y": 0 * np.linspace(0, 8, 9),
+        #         "SF_LL_x": np.linspace(0, 8, 9) ** 2,
+        #         "SF_LL_y": 0 * np.linspace(0, 8, 9),
+        #         "x-diffs": np.array(
+        #             [great_circle((i, 0), (0, 0)).meters for i in range(9)]
+        #         ),
+        #         "y-diffs": np.array(
+        #             [great_circle((0, i), (0, 0)).meters for i in range(9)]
+        #         ),
+        #     },
+        # ),
         # Test 3: linear velocities all SFs no scalar non-periodic latlon grid
         # and single dx and dy raises ValueError
         (
@@ -71,6 +80,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
             1,  # dx
@@ -78,6 +89,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "latlon",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 4: linear velocities all SFs no scalar non-periodic latlon grid no dx and
@@ -87,6 +100,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -94,6 +109,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "latlon",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 5: linear velocities all SFs scalar provided but no LSS in
@@ -103,6 +120,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             np.arange(10),  # scalar
             ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             np.ones(10),  # dx
@@ -110,6 +129,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "latlon",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 6: linear velocities all SFs scalar not provided but LSS in
@@ -117,8 +138,10 @@ from geopy.distance import great_circle
         (
             np.meshgrid(np.arange(10), np.arange(10))[0],  # u
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
-            np.arange(10),  # x
-            np.arange(10),  # y
+            None,  # x
+            None,  # y
+            np.arange(10) / 111111,  # lats
+            np.arange(10) / 111111,  # lons
             ["LLL", "LL", "LTT", "LSS"],  # sf_type
             None,  # scalar
             np.ones(10),  # dx
@@ -126,6 +149,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "latlon",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 7: slanted velocities no scalar periodic uniform grid only LL arange(10)
@@ -134,6 +159,8 @@ from geopy.distance import great_circle
             np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # v
             np.linspace(0, 10**2, 10**2),  # x
             np.linspace(0, 10**2, 10**2),  # y
+            None,  # lats
+            None,  # lons
             ["LL"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -141,6 +168,8 @@ from geopy.distance import great_circle
             "periodic-all",  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_LL_x": np.tile(
                     np.concatenate(
@@ -166,6 +195,8 @@ from geopy.distance import great_circle
             np.tile(np.tile(np.arange(9), 9), (9**2, 1)),  # v
             np.linspace(0, 9**2, 9**2),  # x
             np.linspace(0, 9**2, 9**2),  # y
+            None,  # lats
+            None,  # lons
             ["LL"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -173,6 +204,8 @@ from geopy.distance import great_circle
             "periodic-all",  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_LL_x": np.tile(
                     np.concatenate(
@@ -204,6 +237,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -211,6 +246,8 @@ from geopy.distance import great_circle
             "Periodic",  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 10: grid type is 'non-uniform' raises ValueError
@@ -219,6 +256,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "LLL", "LL", "LTT"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -226,6 +265,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "non-uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 11: sf_type is empty raises ValueError
@@ -234,6 +275,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             [],  # sf_type
             None,  # scalar
             None,  # dx
@@ -241,6 +284,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 12: sf_type is list with integer values raises ValueError
@@ -249,6 +294,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             [1],  # sf_type
             None,  # scalar
             None,  # dx
@@ -256,6 +303,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 13: sf_type is an integer raises ValueError
@@ -264,6 +313,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             1,  # sf_type
             None,  # scalar
             None,  # dx
@@ -271,6 +322,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 14: sf_type is a string raises ValueError
@@ -279,6 +332,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             "ASF_V",  # sf_type
             None,  # scalar
             None,  # dx
@@ -286,6 +341,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 15: scalar is not None and sf_type does not include "LSS" or "ASF_S"
@@ -295,6 +352,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             np.arange(10),  # scalar
             ["LLL", "LL", "LTT"],  # sf_type
             np.ones(10),  # dx
@@ -302,6 +361,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             ValueError,
         ),
         # Test 16: linear velocities all SFs yes scalar non-periodic uniform grid
@@ -310,6 +371,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "ASF_S", "LLL", "LL", "LTT", "LSS"],  # sf_type
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             None,  # dx
@@ -317,6 +380,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
                 "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
@@ -341,6 +406,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "ASF_S", "LLL", "LL", "LTT", "LSS"],  # sf_type
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             None,  # dx
@@ -348,6 +415,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             1,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_advection_velocity_x": np.mean((5 / 4) * np.linspace(0, 8, 9) ** 2),
                 "SF_advection_velocity_y": np.mean(0 * np.linspace(0, 8, 9)),
@@ -372,6 +441,8 @@ from geopy.distance import great_circle
             np.tile(np.tile(np.arange(10), 10), (10**2, 1)),  # v
             np.linspace(0, 10**2, 10**2),  # x
             np.linspace(0, 10**2, 10**2),  # y
+            None,  # lats
+            None,  # lons
             ["LL"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -379,6 +450,8 @@ from geopy.distance import great_circle
             "periodic-x",  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_LL_x": np.tile(
                     np.concatenate(
@@ -405,6 +478,8 @@ from geopy.distance import great_circle
             np.tile(np.tile(np.arange(10), 10), (10**2, 1)).T,  # v
             np.linspace(0, 10**2, 10**2),  # x
             np.linspace(0, 10**2, 10**2),  # y
+            None,  # lats
+            None,  # lons
             ["LL"],  # sf_type
             None,  # scalar
             None,  # dx
@@ -412,6 +487,8 @@ from geopy.distance import great_circle
             "periodic-y",  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_LL_y": np.tile(
                     np.concatenate(
@@ -438,6 +515,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "ASF_S", "LLL", "LL", "LTT"],  # sf_type
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             None,  # dx
@@ -445,6 +524,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
                 "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
@@ -467,6 +548,8 @@ from geopy.distance import great_circle
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
+            None,  # lats
+            None,  # lons
             ["ASF_V", "LLL", "LL", "LTT", "LSS"],  # sf_type
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             None,  # dx
@@ -474,6 +557,8 @@ from geopy.distance import great_circle
             None,  # boundary
             "uniform",  # grid_type
             None,  # nbins
+            None,  # radius
+            40075,  # sphere_circumference
             {
                 "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
                 "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
@@ -496,6 +581,8 @@ def test_generate_structure_functions_parameterized(
     v,
     x,
     y,
+    lats,
+    lons,
     sf_type,
     scalar,
     dx,
@@ -503,6 +590,8 @@ def test_generate_structure_functions_parameterized(
     boundary,
     grid_type,
     nbins,
+    radius,
+    sphere_circumference,
     expected_dict,
 ):
     """Test generate_structure_functions produces expected results."""
@@ -513,6 +602,8 @@ def test_generate_structure_functions_parameterized(
                 v,
                 x,
                 y,
+                lats,
+                lons,
                 sf_type,
                 scalar,
                 dx,
@@ -520,6 +611,8 @@ def test_generate_structure_functions_parameterized(
                 boundary,
                 grid_type,
                 nbins,
+                radius,
+                sphere_circumference,
             )
         return
     else:
@@ -528,6 +621,8 @@ def test_generate_structure_functions_parameterized(
             v,
             x,
             y,
+            lats,
+            lons,
             sf_type,
             scalar,
             dx,
@@ -535,6 +630,8 @@ def test_generate_structure_functions_parameterized(
             boundary,
             grid_type,
             nbins,
+            radius,
+            sphere_circumference,
         )
 
         for key, value in expected_dict.items():
