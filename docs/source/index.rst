@@ -54,7 +54,12 @@ Development and Contributing
 ****************************
 
 The development of FluidSF started as a Ph.D. project for Cassidy Wagner, 
-advised by Brodie Pearson. The developers welcome contributions and suggestions 
+advised by Brodie Pearson. This software package is based upon work supported 
+by the National Science Foundation under Grant No. 2023721.
+
+The developers welcome contributions and suggestions 
 through the `FluidSF GitHub repository <https://github.com/cassidymwagner/FluidSF>`_
 Feel free to open an issue, submit a pull request, and/or 
 `contact the owner directly <https://github.com/cassidymwagner>`_.
+
+Any opinions, findings, and conclusions or recommendations expressed in this package are those of the authors and do not necessarily reflect the views of the National Science Foundation.Any opinions, findings, and conclusions or recommendations expressed in this package are those of the authors and do not necessarily reflect the views of the National Science Foundation.
