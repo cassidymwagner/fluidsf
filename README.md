@@ -81,6 +81,12 @@ Contributing
 ---
 This project welcomes contributions and suggestions. Feel free to open an issue, submit a pull request, and/or [contact the owner directly](https://github.com/cassidymwagner).
 
+Funding Acknowledgement
+---
+This software package is based upon work supported by the National Science Foundation under Grant No. 2023721. 
+
+Any opinions, findings, and conclusions or recommendations expressed in this package are those of the authors and do not necessarily reflect the views of the National Science Foundation.
+
 References
 ---
 - Pearson, B. et al., 2021: _Advective structure functions in anisotropic two-dimensional turbulence._ Journal of Fluid Mechanics.
