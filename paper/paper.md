@@ -9,14 +9,15 @@ authors:
   - name: Cassidy M. Wagner
     orcid: 0000-0002-1186-2082
     corresponding: true
-    affiliation: 1
+    affiliation: '1'
   - name: Ara Lee
     orcid:
-    affiliation: 1
+    affiliation: '1'
   - name: Brodie Pearson
     orcid: 0000-0002-0202-0481
-    affiliation: 1
+    affiliation: '1'
 affiliations:
+ - index: 1
  - name: Oregon State University
 date: 05 August 2024
 bibliography: paper.bib
