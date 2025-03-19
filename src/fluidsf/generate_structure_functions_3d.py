@@ -113,37 +113,37 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     zd = np.zeros(len(sep_z) + 1)
 
     # Initialize the structure function arrays
-    if any("ASF_V" in t for t in sf_type):
+    if "ASF_V" in sf_type:
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
         SF_adv_z = np.zeros(len(sep_z) + 1)
         adv_x, adv_y, adv_z = calculate_advection_3d(u, v, w, x, y, z)
-    if any("ASF_S" in t for t in sf_type):
+    if "ASF_S" in sf_type:
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
         SF_z_scalar = np.zeros(len(sep_z) + 1)
         adv_scalar = calculate_advection_3d(u, v, w, x, y, z, scalar)
-    if any("LL" in t for t in sf_type):
+    if "LL" in sf_type:
         SF_x_LL = np.zeros(len(sep_x) + 1)
         SF_y_LL = np.zeros(len(sep_y) + 1)
         SF_z_LL = np.zeros(len(sep_z) + 1)
-    if any("TT" in t for t in sf_type):
+    if "TT" in sf_type:
         SF_x_TT = np.zeros(len(sep_x) + 1)
         SF_y_TT = np.zeros(len(sep_y) + 1)
         SF_z_TT = np.zeros(len(sep_z) + 1)
-    if any("SS" in t for t in sf_type):
+    if "SS" in sf_type:
         SF_x_SS = np.zeros(len(sep_x) + 1)
         SF_y_SS = np.zeros(len(sep_y) + 1)
         SF_z_SS = np.zeros(len(sep_z) + 1)
-    if any("LLL" in t for t in sf_type):
+    if "LLL" in sf_type:
         SF_x_LLL = np.zeros(len(sep_x) + 1)
         SF_y_LLL = np.zeros(len(sep_y) + 1)
         SF_z_LLL = np.zeros(len(sep_z) + 1)
-    if any("LTT" in t for t in sf_type):
+    if "LTT" in sf_type:
         SF_x_LTT = np.zeros(len(sep_x) + 1)
         SF_y_LTT = np.zeros(len(sep_y) + 1)
         SF_z_LTT = np.zeros(len(sep_z) + 1)
-    if any("LSS" in t for t in sf_type):
+    if "LSS" in sf_type:
         SF_x_LSS = np.zeros(len(sep_x) + 1)
         SF_y_LSS = np.zeros(len(sep_y) + 1)
         SF_z_LSS = np.zeros(len(sep_z) + 1)
@@ -179,21 +179,21 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             boundary,
         )
 
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             SF_adv_x[x_shift] = SF_dicts["SF_advection_velocity_x"]
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
-        if any("TT" in t for t in sf_type):
+        if "TT" in sf_type:
             SF_x_TT[x_shift] = SF_dicts["SF_TT_x"]
-        if any("SS" in t for t in sf_type):
+        if "SS" in sf_type:
             SF_x_SS[x_shift] = SF_dicts["SF_SS_x"]
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
 
         # Calculate separation distances in x
@@ -231,21 +231,21 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             boundary,
         )
 
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             SF_adv_y[y_shift] = SF_dicts["SF_advection_velocity_y"]
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             SF_y_scalar[y_shift] = SF_dicts["SF_advection_scalar_y"]
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
-        if any("TT" in t for t in sf_type):
+        if "TT" in sf_type:
             SF_y_TT[y_shift] = SF_dicts["SF_TT_y"]
-        if any("SS" in t for t in sf_type):
+        if "SS" in sf_type:
             SF_y_SS[y_shift] = SF_dicts["SF_SS_y"]
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
 
         # Calculate separation distances in y
@@ -283,21 +283,21 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             boundary,
         )
 
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             SF_adv_z[z_shift] = SF_dicts["SF_advection_velocity_z"]
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             SF_z_scalar[z_shift] = SF_dicts["SF_advection_scalar_z"]
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             SF_z_LL[z_shift] = SF_dicts["SF_LL_z"]
-        if any("TT" in t for t in sf_type):
+        if "TT" in sf_type:
             SF_z_TT[z_shift] = SF_dicts["SF_TT_z"]
-        if any("SS" in t for t in sf_type):
+        if "SS" in sf_type:
             SF_z_SS[z_shift] = SF_dicts["SF_SS_z"]
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             SF_z_LLL[z_shift] = SF_dicts["SF_LLL_z"]
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             SF_z_LTT[z_shift] = SF_dicts["SF_LTT_z"]
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             SF_z_LSS[z_shift] = SF_dicts["SF_LSS_z"]
 
         # Calculate separation distances in z
@@ -306,35 +306,35 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         )
 
     if nbins is not None:
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins)
             yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins)
             zd_bin, SF_adv_z = bin_data(zd, SF_adv_z, nbins)
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             xd_bin, SF_x_scalar = bin_data(xd, SF_x_scalar, nbins)
             yd_bin, SF_y_scalar = bin_data(yd, SF_y_scalar, nbins)
             zd_bin, SF_z_scalar = bin_data(zd, SF_z_scalar, nbins)
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
             yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
             zd_bin, SF_z_LL = bin_data(zd, SF_z_LL, nbins)
-        if any("TT" in t for t in sf_type):
+        if "TT" in sf_type:
             xd_bin, SF_x_TT = bin_data(xd, SF_x_TT, nbins)
             yd_bin, SF_y_TT = bin_data(yd, SF_y_TT, nbins)
             zd_bin, SF_z_TT = bin_data(zd, SF_z_TT, nbins)
-        if any("SS" in t for t in sf_type):
+        if "SS" in sf_type:
             xd_bin, SF_x_SS = bin_data(xd, SF_x_SS, nbins)
             yd_bin, SF_y_SS = bin_data(yd, SF_y_SS, nbins)
             zd_bin, SF_z_SS = bin_data(zd, SF_z_SS, nbins)
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
             yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
             zd_bin, SF_z_LLL = bin_data(zd, SF_z_LLL, nbins)
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins)
             yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins)
             zd_bin, SF_z_LTT = bin_data(zd, SF_z_LTT, nbins)
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins)
             yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins)
             zd_bin, SF_z_LSS = bin_data(zd, SF_z_LSS, nbins)

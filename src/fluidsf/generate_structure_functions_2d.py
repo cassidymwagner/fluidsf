@@ -12,8 +12,10 @@ from .shift_array_1d import shift_array_1d
 def generate_structure_functions_2d(  # noqa: C901, D417
     u,
     v,
-    x,
-    y,
+    x=None,
+    y=None,
+    lats=None,
+    lons=None,
     sf_type=["ASF_V"],  # noqa: B006
     scalar=None,
     dx=None,
@@ -21,6 +23,8 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     boundary="periodic-all",
     grid_type="uniform",
     nbins=None,
+    radius=None,
+    sphere_circumference=40075,
 ):
     """
     Full method for generating structure functions for 2D data, either advective or
@@ -34,14 +38,22 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             2D array of u velocity components.
         v: ndarray
             2D array of v velocity components.
-        x: ndarray
-            1D array of x-coordinates.
-        y: ndarray
-            1D array of y-coordinates.
+        x: ndarray, optional
+            1D array of x-coordinates. Defaults to None, but must be provided if
+            grid_type is not "latlon".
+        y: ndarray, optional
+            1D array of y-coordinates. Defaults to None, but must be provided if
+            grid_type is not "latlon".
+        lats: ndarray, optional
+            2D array of latitudes. Defaults to None, but must be provided if
+            grid_type is "latlon".
+        lons: ndarray, optional
+            2D array of longitudes. Defaults to None, but must be provided if
+            grid_type is "latlon".
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
-            Defaults to "ASF_V".
+            Accepted types are: "ASF_V, "ASF_S", "LL", "LLL", "LTT", "LSS". Defaults to
+            "ASF_V".
         scalar: ndarray, optional
             2D array of scalar values. Defaults to None.
         dx: float, optional
@@ -56,6 +68,13 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         nbins: int, optional
             Number of bins for binning the data. Defaults to None, i.e. does not bin
             data.
+        radius: float, optional
+            The radius of the sphere for latlon grids. Defaults to None, which will use
+            the default value of the Earth's radius. Must be in units of kilometers if
+            provided.
+        sphere_circumference: float, optional
+            The circumference of the sphere for latlon grids in kilometers.
+            Defaults to 40075 km for Earth.
 
     Returns
     -------
@@ -85,16 +104,33 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         raise ValueError(
             "Boundary must be 'periodic-all', 'periodic-x', 'periodic-y', or None."
         )
-    if grid_type not in ["uniform", "latlon"]:
-        raise ValueError("Grid type must be 'uniform' or 'latlon'.")
+    if grid_type not in ["uniform", "latlon", None]:
+        raise ValueError("Grid type must be 'uniform', 'latlon', or None.")
 
     if grid_type == "latlon" and (
-        isinstance(dx, int | float | None) or isinstance(dy, int | float | None)
+        isinstance(lats, int | float | None) or isinstance(lons, int | float | None)
     ):
         raise ValueError(
-            "If grid_type is 'latlon', dx and dy must be provided as arrays."
+            "If grid_type is 'latlon', you must provide 2D arrays of latitudes and "
+            "longitudes."
         )
 
+    if grid_type == "uniform" and (lats is not None or lons is not None):
+        raise ValueError(
+            "If grid_type is 'uniform', you cannot provide 2D arrays of latitudes and "
+            "longitudes."
+        )
+
+    if grid_type != "latlon" and (x is None or y is None):
+        raise ValueError(
+            "If grid_type is not 'latlon', you must provide 1D arrays of x and y "
+            "coordinates."
+        )
+
+    if grid_type == "latlon" and (boundary != "periodic-x" and boundary is not None):
+        raise ValueError(
+            "If grid_type is 'latlon', you must set boundary to 'periodic-x' or None."
+        )
     if scalar is not None and (
         ("SS" not in sf_type) and ("LSS" not in sf_type) and ("ASF_S" not in sf_type)
     ):
@@ -137,44 +173,71 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         sep_x = range(1, int(len(x) / 2))
         sep_y = range(1, int(len(y) / 2))
     elif boundary == "periodic-x":
-        sep_x = range(1, int(len(x) / 2))
-        sep_y = range(1, int(len(y) - 1))
+        if grid_type == "latlon":
+            sep_x = range(1, int(len(lons[0, :]) / 2))
+            sep_y = range(1, int(len(lats[:, 0]) - 1))
+        else:
+            sep_x = range(1, int(len(x) / 2))
+            sep_y = range(1, int(len(y) - 1))
     elif boundary == "periodic-y":
         sep_x = range(1, int(len(x) - 1))
         sep_y = range(1, int(len(y) / 2))
     elif boundary is None:
-        sep_x = range(1, int(len(x) - 1))
-        sep_y = range(1, int(len(y) - 1))
+        if grid_type == "latlon":
+            sep_x = range(1, int(len(lons[0, :]) - 1))
+            sep_y = range(1, int(len(lats[:, 0]) - 1))
+        else:
+            sep_x = range(1, int(len(x) - 1))
+            sep_y = range(1, int(len(y) - 1))
 
     # Initialize the separation distance arrays
-    xd = np.zeros(len(sep_x) + 1)
-    yd = np.zeros(len(sep_y) + 1)
+    if grid_type == "latlon":
+        xd = np.zeros((len(sep_x) + 1, len(sep_y) + 1))
+        yd = np.zeros((len(sep_y) + 1, len(sep_y) + 1))
+
+    else:
+        xd = np.zeros(len(sep_x) + 1)
+        yd = np.zeros(len(sep_y) + 1)
 
     # Calculate advection if requested
-    if any("ASF_V" in t for t in sf_type):
+    if "ASF_V" in sf_type:
         SF_adv_x = np.zeros(len(sep_x) + 1)
         SF_adv_y = np.zeros(len(sep_y) + 1)
-        adv_x, adv_y = calculate_advection_2d(u, v, x, y, dx, dy, grid_type)
-    if any("ASF_S" in t for t in sf_type):
+        adv_x, adv_y = calculate_advection_2d(
+            u,
+            v,
+            x,
+            y,
+            lats,
+            lons,
+            dx,
+            dy,
+            grid_type,
+            scalar=None,
+            sphere_circumference=sphere_circumference,
+        )
+    if "ASF_S" in sf_type:
         SF_x_scalar = np.zeros(len(sep_x) + 1)
         SF_y_scalar = np.zeros(len(sep_y) + 1)
-        adv_scalar = calculate_advection_2d(u, v, x, y, dx, dy, grid_type, scalar)
-    if any("LL" in t for t in sf_type):
+        adv_scalar = calculate_advection_2d(
+            u, v, x, y, lats, lons, dx, dy, grid_type, scalar, sphere_circumference
+        )
+    if "LL" in sf_type:
         SF_x_LL = np.zeros(len(sep_x) + 1)
         SF_y_LL = np.zeros(len(sep_y) + 1)
-    if any("TT" in t for t in sf_type):
+    if "TT" in sf_type:
         SF_x_TT = np.zeros(len(sep_x) + 1)
         SF_y_TT = np.zeros(len(sep_y) + 1)
-    if any("SS" in t for t in sf_type):
+    if "SS" in sf_type:
         SF_x_SS = np.zeros(len(sep_x) + 1)
         SF_y_SS = np.zeros(len(sep_y) + 1)
-    if any("LLL" in t for t in sf_type):
+    if "LLL" in sf_type:
         SF_x_LLL = np.zeros(len(sep_x) + 1)
         SF_y_LLL = np.zeros(len(sep_y) + 1)
-    if any("LTT" in t for t in sf_type):
+    if "LTT" in sf_type:
         SF_x_LTT = np.zeros(len(sep_x) + 1)
         SF_y_LTT = np.zeros(len(sep_y) + 1)
-    if any("LSS" in t for t in sf_type):
+    if "LSS" in sf_type:
         SF_x_LSS = np.zeros(len(sep_x) + 1)
         SF_y_LSS = np.zeros(len(sep_y) + 1)
 
@@ -182,9 +245,17 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     for x_shift in sep_x:
         y_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-x":
-            xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
+            if grid_type == "latlon":
+                lonroll = shift_array_1d(
+                    lons[0, :], shift_by=x_shift, boundary="Periodic"
+                )
+            else:
+                xroll = shift_array_1d(x, shift_by=x_shift, boundary="Periodic")
         else:
-            xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
+            if grid_type == "latlon":
+                lonroll = shift_array_1d(lons[0, :], shift_by=x_shift, boundary=None)
+            else:
+                xroll = shift_array_1d(x, shift_by=x_shift, boundary=None)
 
         SF_dicts = calculate_structure_function_2d(
             u,
@@ -199,34 +270,54 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             boundary,
         )
 
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             SF_adv_x[x_shift] = SF_dicts["SF_advection_velocity_x"]
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             SF_x_LL[x_shift] = SF_dicts["SF_LL_x"]
-        if any("TT" in t for t in sf_type):
+        if "TT" in sf_type:
             SF_x_TT[x_shift] = SF_dicts["SF_TT_x"]
-        if any("SS" in t for t in sf_type):
+        if "SS" in sf_type:
             SF_x_SS[x_shift] = SF_dicts["SF_SS_x"]
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             SF_x_LLL[x_shift] = SF_dicts["SF_LLL_x"]
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             SF_x_LTT[x_shift] = SF_dicts["SF_LTT_x"]
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
 
         # Calculate separation distances in x
-        xd[x_shift], tmp = calculate_separation_distances(
-            x[0], y[0], xroll[0], y[0], grid_type
-        )
+        if grid_type == "latlon":
+            for lat in range(len(lats[:, 0]) - 1):
+                xd[x_shift][lat], tmp = calculate_separation_distances(
+                    lons[0, 0],
+                    lats[lat, 0],
+                    lonroll[0],
+                    lats[lat, 0],
+                    grid_type,
+                    radius,
+                )
+
+        else:
+            xd[x_shift], tmp = calculate_separation_distances(
+                x[0], y[0], xroll[0], y[0], grid_type
+            )
 
     for y_shift in sep_y:
         x_shift = 1
         if boundary == "periodic-all" or boundary == "periodic-y":
-            yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
+            if grid_type == "latlon":
+                latroll = shift_array_1d(
+                    lats[:, 0], shift_by=y_shift, boundary="Periodic"
+                )
+            else:
+                yroll = shift_array_1d(y, shift_by=y_shift, boundary="Periodic")
         else:
-            yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
+            if grid_type == "latlon":
+                latroll = shift_array_1d(lats[:, 0], shift_by=y_shift, boundary=None)
+            else:
+                yroll = shift_array_1d(y, shift_by=y_shift, boundary=None)
 
         SF_dicts = calculate_structure_function_2d(
             u,
@@ -241,54 +332,70 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             boundary,
         )
 
-        if any("ASF_V" in t for t in sf_type):
+        if "ASF_V" in sf_type:
             SF_adv_y[y_shift] = SF_dicts["SF_advection_velocity_y"]
-        if any("LL" in t for t in sf_type):
+        if "LL" in sf_type:
             SF_y_LL[y_shift] = SF_dicts["SF_LL_y"]
-        if any("TT" in t for t in sf_type):
+        if "TT" in sf_type:
             SF_y_TT[y_shift] = SF_dicts["SF_TT_y"]
-        if any("SS" in t for t in sf_type):
+        if "SS" in sf_type:
             SF_y_SS[y_shift] = SF_dicts["SF_SS_y"]
-        if any("LLL" in t for t in sf_type):
+        if "LLL" in sf_type:
             SF_y_LLL[y_shift] = SF_dicts["SF_LLL_y"]
-        if any("LTT" in t for t in sf_type):
+        if "LTT" in sf_type:
             SF_y_LTT[y_shift] = SF_dicts["SF_LTT_y"]
-        if any("ASF_S" in t for t in sf_type):
+        if "ASF_S" in sf_type:
             SF_y_scalar[y_shift] = SF_dicts["SF_advection_scalar_y"]
-        if any("LSS" in t for t in sf_type):
+        if "LSS" in sf_type:
             SF_y_LSS[y_shift] = SF_dicts["SF_LSS_y"]
 
         # Calculate separation distances in y
-        tmp, yd[y_shift] = calculate_separation_distances(
-            x[0], y[0], x[0], yroll[0], grid_type
-        )
+        if grid_type == "latlon":
+            for start_lat in range(len(lats[:, 0]) - 1):
+                try:
+                    tmp, yd[y_shift][start_lat] = calculate_separation_distances(
+                        lons[0, 0],
+                        lats[start_lat, 0],
+                        lons[0, 0],
+                        latroll[start_lat],
+                        grid_type,
+                        radius,
+                    )
 
-    # Bin the data if requested
+                except ValueError:
+                    yd[y_shift][start_lat] = np.nan
+
+        else:
+            tmp, yd[y_shift] = calculate_separation_distances(
+                x[0], y[0], x[0], yroll[0], grid_type
+            )
+
+    # Bin the data if requested or if grid_type is latlon
     if nbins is not None:
-        if any("ASF_V" in t for t in sf_type):
-            xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins)
-            yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins)
-        if any("ASF_S" in t for t in sf_type):
-            xd_bin, SF_x_scalar = bin_data(xd, SF_x_scalar, nbins)
-            yd_bin, SF_y_scalar = bin_data(yd, SF_y_scalar, nbins)
-        if any("LL" in t for t in sf_type):
-            xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins)
-            yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins)
-        if any("TT" in t for t in sf_type):
-            xd_bin, SF_x_TT = bin_data(xd, SF_x_TT, nbins)
-            yd_bin, SF_y_TT = bin_data(yd, SF_y_TT, nbins)
-        if any("SS" in t for t in sf_type):
-            xd_bin, SF_x_SS = bin_data(xd, SF_x_SS, nbins)
-            yd_bin, SF_y_SS = bin_data(yd, SF_y_SS, nbins)
-        if any("LLL" in t for t in sf_type):
-            xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins)
-            yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins)
-        if any("LTT" in t for t in sf_type):
-            xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins)
-            yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins)
-        if any("LSS" in t for t in sf_type):
-            xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins)
-            yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins)
+        if "ASF_V" in sf_type:
+            xd_bin, SF_adv_x = bin_data(xd, SF_adv_x, nbins, grid_type)
+            yd_bin, SF_adv_y = bin_data(yd, SF_adv_y, nbins, grid_type)
+        if "ASF_S" in sf_type:
+            xd_bin, SF_x_scalar = bin_data(xd, SF_x_scalar, nbins, grid_type)
+            yd_bin, SF_y_scalar = bin_data(yd, SF_y_scalar, nbins, grid_type)
+        if "LL" in sf_type:
+            xd_bin, SF_x_LL = bin_data(xd, SF_x_LL, nbins, grid_type)
+            yd_bin, SF_y_LL = bin_data(yd, SF_y_LL, nbins, grid_type)
+        if "TT" in sf_type:
+            xd_bin, SF_x_TT = bin_data(xd, SF_x_TT, nbins, grid_type)
+            yd_bin, SF_y_TT = bin_data(yd, SF_y_TT, nbins, grid_type)
+        if "SS" in sf_type:
+            xd_bin, SF_x_SS = bin_data(xd, SF_x_SS, nbins, grid_type)
+            yd_bin, SF_y_SS = bin_data(yd, SF_y_SS, nbins, grid_type)
+        if "LLL" in sf_type:
+            xd_bin, SF_x_LLL = bin_data(xd, SF_x_LLL, nbins, grid_type)
+            yd_bin, SF_y_LLL = bin_data(yd, SF_y_LLL, nbins, grid_type)
+        if "LTT" in sf_type:
+            xd_bin, SF_x_LTT = bin_data(xd, SF_x_LTT, nbins, grid_type)
+            yd_bin, SF_y_LTT = bin_data(yd, SF_y_LTT, nbins, grid_type)
+        if "LSS" in sf_type:
+            xd_bin, SF_x_LSS = bin_data(xd, SF_x_LSS, nbins, grid_type)
+            yd_bin, SF_y_LSS = bin_data(yd, SF_y_LSS, nbins, grid_type)
         xd = xd_bin
         yd = yd_bin
 
@@ -299,10 +406,6 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         "SF_advection_scalar_y": SF_y_scalar,
         "SF_LL_x": SF_x_LL,
         "SF_LL_y": SF_y_LL,
-        "SF_TT_x": SF_x_TT,
-        "SF_TT_y": SF_y_TT,
-        "SF_SS_x": SF_x_SS,
-        "SF_SS_y": SF_y_SS,
         "SF_LLL_x": SF_x_LLL,
         "SF_LLL_y": SF_y_LLL,
         "SF_LTT_x": SF_x_LTT,
