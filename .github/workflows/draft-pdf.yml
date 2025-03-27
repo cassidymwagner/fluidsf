@@ -33,4 +33,4 @@ jobs:
         with:
           message: '(auto) Paper PDF Draft'
           add: 'paper/paper.pdf'
-          push: origin HEAD:{{ github.head_ref }}
+          push: origin HEAD:${{ github.head_ref }}
