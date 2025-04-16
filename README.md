@@ -30,6 +30,10 @@ You can also fork/clone this repository to your local machine and install it loc
 $ pip install .
 ```
 
+**Optional dependencies to run example notebooks**: [matplotlib](https://matplotlib.org), [seaborn](https://seaborn.pydata.org), [h5py](https://www.h5py.org), [scipy](https://scipy.org), [xarray](https://xarray.dev)
+
+
+
 Quickstart
 ---
 Once FluidSF is installed, you can load the module into Python and run some basic calculations with any data. Here we'll initialize linearly increasing velocity fields. For more detail on this example, [see the full notebook on the FluidSF website.](https://cassidymwagner.github.io/fluidsf/qs.html)
