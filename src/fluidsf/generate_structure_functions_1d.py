@@ -174,6 +174,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         xd = xd_bin
 
     data = {
+        key: value
+        for key, value in {
         "SF_LL": SF_LL,
         "SF_TT": SF_TT,
         "SF_SS": SF_SS,
@@ -181,5 +183,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         "SF_LTT": SF_LTT,
         "SF_LSS": SF_LSS,
         "x-diffs": xd,
+        }.items()
+        if value is not None
     }
     return data
