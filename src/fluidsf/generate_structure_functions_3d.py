@@ -59,6 +59,55 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             distances for the x, y, and z directions.
 
     """
+    # Error handling
+
+    if not isinstance(sf_type, list):
+        raise ValueError("sf_type must be a list of strings.")
+
+    if len(sf_type) == 0:
+        raise ValueError("sf_type must contain at least one structure function type.")
+
+    if not all(isinstance(t, str) for t in sf_type):
+        raise ValueError("All elements in sf_type must be strings.")
+
+    for t in sf_type:
+        if t not in [
+            "ASF_V",
+            "ASF_S",
+            "LL",
+            "TT",
+            "SS",
+            "LLL",
+            "LTT",
+            "LSS",
+        ]:
+            raise ValueError(
+                "All elements in sf_type must be one of the following: "
+                "ASF_V, ASF_S, LL, TT, SS, LLL, LTT, LSS."
+            )
+
+    if boundary not in [None, "periodic-x", "periodic-y", "periodic-z", "periodic-all"]:
+        raise ValueError(
+            "boundary must be one of the following: "
+            "None, 'periodic-x', 'periodic-y', 'periodic-z', 'periodic-all'."
+        )
+
+    if scalar is not None and (
+        ("SS" not in sf_type) and ("LSS" not in sf_type) and ("ASF_S" not in sf_type)
+    ):
+        raise ValueError(
+            "If scalar is provided, you must include 'SS', 'LSS' or 'ASF_S' "
+            "in SF_type."
+        )
+
+    if scalar is None and (
+        ("SS" in sf_type) or ("LSS" in sf_type) or ("ASF_S" in sf_type)
+    ):
+        raise ValueError(
+            "If you include 'SS', 'LSS' or 'ASF_S' in SF_type, you must provide "
+            "a scalar field."
+        )
+
     # Initialize variables as NoneType
     SF_adv_x = None
     SF_adv_y = None

@@ -491,7 +491,7 @@ from geopy.distance import great_circle
         ),
     ],
 )
-def test_generate_structure_functions_parameterized(
+def test_generate_structure_functions_2d_parameterized(
     u,
     v,
     x,
@@ -505,7 +505,7 @@ def test_generate_structure_functions_parameterized(
     nbins,
     expected_dict,
 ):
-    """Test generate_structure_functions produces expected results."""
+    """Test generate_structure_functions_2d produces expected results."""
     if expected_dict == ValueError:
         with pytest.raises(ValueError):
             generate_structure_functions_2d(
