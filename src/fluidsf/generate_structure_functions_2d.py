@@ -293,24 +293,28 @@ def generate_structure_functions_2d(  # noqa: C901, D417
         yd = yd_bin
 
     data = {
-        "SF_advection_velocity_x": SF_adv_x,
-        "SF_advection_velocity_y": SF_adv_y,
-        "SF_advection_scalar_x": SF_x_scalar,
-        "SF_advection_scalar_y": SF_y_scalar,
-        "SF_LL_x": SF_x_LL,
-        "SF_LL_y": SF_y_LL,
-        "SF_TT_x": SF_x_TT,
-        "SF_TT_y": SF_y_TT,
-        "SF_SS_x": SF_x_SS,
-        "SF_SS_y": SF_y_SS,
-        "SF_LLL_x": SF_x_LLL,
-        "SF_LLL_y": SF_y_LLL,
-        "SF_LTT_x": SF_x_LTT,
-        "SF_LTT_y": SF_y_LTT,
-        "SF_LSS_x": SF_x_LSS,
-        "SF_LSS_y": SF_y_LSS,
-        "x-diffs": xd,
-        "y-diffs": yd,
+        key: value
+        for key, value in {
+            "SF_advection_velocity_x": SF_adv_x,
+            "SF_advection_velocity_y": SF_adv_y,
+            "SF_advection_scalar_x": SF_x_scalar,
+            "SF_advection_scalar_y": SF_y_scalar,
+            "SF_LL_x": SF_x_LL,
+            "SF_LL_y": SF_y_LL,
+            "SF_TT_x": SF_x_TT,
+            "SF_TT_y": SF_y_TT,
+            "SF_SS_x": SF_x_SS,
+            "SF_SS_y": SF_y_SS,
+            "SF_LLL_x": SF_x_LLL,
+            "SF_LLL_y": SF_y_LLL,
+            "SF_LTT_x": SF_x_LTT,
+            "SF_LTT_y": SF_y_LTT,
+            "SF_LSS_x": SF_x_LSS,
+            "SF_LSS_y": SF_y_LSS,
+            "x-diffs": xd,
+            "y-diffs": yd,
+        }.items()
+        if value is not None
     }
 
     return data
