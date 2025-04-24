@@ -41,22 +41,20 @@ def calculate_structure_function_1d(  # noqa: D417
         dict:
             A dictionary containing the velocity structure functions and
             scalar structure functions (if applicable).
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
 
-    Notes
-    -----
-        The returned dictionary has the following keys:
+                **SF_LL**: The second-order longitudinal velocity structure function.
 
-            SF_LL: The second-order longitudinal velocity structure function.
-
-            SF_TT: The second-order transverse velocity structure function.
-            
-            SF_SS: The second-order scalar structure function.
-            
-            SF_LLL: The third-order longitudinal velocity structure function.
-            
-            SF_LTT: The longitudinal-transverse velocity structure function.
-            
-            SF_LSS: The longitudinal-scalar structure function.
+                **SF_TT**: The second-order transverse velocity structure function.
+                
+                **SF_SS**: The second-order scalar structure function.
+                
+                **SF_LLL**: The third-order longitudinal velocity structure function.
+                
+                **SF_LTT**: The longitudinal-transverse velocity structure function.
+                
+                **SF_LSS**: The longitudinal-scalar structure function.
     """
     inputs = {"u": u, "v": v, "scalar": scalar}
 
