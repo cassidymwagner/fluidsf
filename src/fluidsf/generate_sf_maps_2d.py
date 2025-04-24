@@ -53,6 +53,44 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         dict:
             Dictionary containing the requested structure functions and separation
             distances for the x- and y-directions.
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_advection_velocity_xy**: The advection velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_advection_scalar_xy**: The advection scalar structure function
+                for separation vectors in the x-y plane.
+
+                **SF_LL_xy**: The second-order longitudinal velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_TT_xy**: The second-order transverse velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_SS_xy**: The second-order scalar structure function for separation
+                vectors in the x-y plane.
+
+                **SF_LLL_xy**: The third-order longitudinal velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_LTT_xy**: The longitudinal-transverse velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_LSS_xy**: The longitudinal-scalar structure function for
+                separation vectors in the x-y plane.
+
+                **separation_distances**: 2D array of separation distances between
+                points in the x-y plane.
+
+                **separation_angles**: 2D array of angles between points in the x-y
+                plane.
+
+                **x_separations**: 2D array of x-separations between points in the
+                x-y plane.
+
+                **y_separations**: 2D array of y-separations between points in the
+                x-y plane.
 
     """
     # Initialize variables as NoneType

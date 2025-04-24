@@ -60,6 +60,22 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         dict:
             Dictionary containing the requested structure functions and separation
             distances along the data track.
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_LL**: The second-order longitudinal velocity structure function.
+
+                **SF_TT**: The second-order transverse velocity structure function.
+
+                **SF_SS**: The second-order scalar structure function.
+
+                **SF_LLL**: The third-order longitudinal velocity structure function.
+
+                **SF_LTT**: The longitudinal-transverse velocity structure function.
+
+                **SF_LSS**: The longitudinal-scalar structure function.
+
+                **x-diffs**: The separation distances along the data track.
     """
     # Error handling
     if boundary not in ["Periodic", None]:
