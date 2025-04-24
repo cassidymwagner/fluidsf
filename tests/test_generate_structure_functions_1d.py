@@ -150,6 +150,25 @@ from fluidsf.generate_structure_functions_1d import generate_structure_functions
                 "x-diffs": np.array([0.0, 111195.08372419, 222390.16744838]),
             },
         ),
+        # Test 10: LLL and LSS only for a uniform grid, LTT and LL should not be in the
+        # expected_dict
+        (
+            np.array([1, 2, 3, 4]),  # u
+            np.array([1, 2, 3, 4]),  # x
+            ["LLL", "LSS"],  # sf_type
+            np.array([2, 4, 6, 8]),  # v
+            None,  # y
+            np.array([3, 6, 9, 12]),  # scalar
+            None,  # dx
+            None,  # boundary
+            "uniform",  # grid_type
+            None,  # nbins
+            {
+                "SF_LLL": np.array([0, 1, 8]),
+                "SF_LSS": np.array([0, 9, 72]),
+                "x-diffs": np.array([0, 1, 2]),
+            },
+        ),
     ],
 )
 def test_generate_structure_functions_1d_parameterized(

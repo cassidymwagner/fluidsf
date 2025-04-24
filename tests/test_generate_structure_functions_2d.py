@@ -461,13 +461,13 @@ from geopy.distance import great_circle
             },
         ),
         # Test 21: linear velocities all SFs yes scalar non-periodic uniform grid and
-        # only LSS for scalar SFs
+        # only ASF_V and ASF_S
         (
             np.meshgrid(np.arange(10), np.arange(10))[0],  # u
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # v
             np.arange(10),  # x
             np.arange(10),  # y
-            ["ASF_V", "LLL", "LL", "LTT", "LSS"],  # sf_type
+            ["ASF_V", "ASF_S"],  # sf_type
             0.5 * np.meshgrid(np.arange(10), np.arange(10))[0],  # scalar
             None,  # dx
             None,  # dy
@@ -477,14 +477,8 @@ from geopy.distance import great_circle
             {
                 "SF_advection_velocity_x": (5 / 4) * np.linspace(0, 8, 9) ** 2,
                 "SF_advection_velocity_y": 0 * np.linspace(0, 8, 9),
-                "SF_LLL_x": np.linspace(0, 8, 9) ** 3,
-                "SF_LLL_y": 0 * np.linspace(0, 8, 9),
-                "SF_LTT_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
-                "SF_LTT_y": 0 * np.linspace(0, 8, 9),
-                "SF_LL_x": np.linspace(0, 8, 9) ** 2,
-                "SF_LL_y": 0 * np.linspace(0, 8, 9),
-                "SF_LSS_x": (1 / 4) * np.linspace(0, 8, 9) ** 3,
-                "SF_LSS_y": 0 * np.linspace(0, 8, 9),
+                "SF_advection_scalar_x": (1 / 4) * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_scalar_y": 0 * np.linspace(0, 8, 9),
                 "x-diffs": np.linspace(0, 8, 9),
                 "y-diffs": np.linspace(0, 8, 9),
             },

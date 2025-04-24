@@ -114,6 +114,30 @@ from fluidsf.generate_structure_functions_3d import generate_structure_functions
                 "z-diffs": np.linspace(0, 8, 9),
             },  # expected_dict
         ),
+        # Test 4: linear velocities only ASF_V/S no scalar non-periodic no bins
+        (
+            np.meshgrid(np.arange(10), np.arange(10), np.arange(10))[0],  # u
+            np.meshgrid(np.arange(10), np.arange(10), np.arange(10))[0],  # v
+            np.meshgrid(np.arange(10), np.arange(10), np.arange(10))[0],  # w
+            np.arange(10),  # x
+            np.arange(10),  # y
+            np.arange(10),  # z
+            ["ASF_V", "ASF_S"],  # sf_type
+            np.meshgrid(np.arange(10), np.arange(10), np.arange(10))[0],  # scalar
+            None,  # boundary
+            None,  # nbins
+            {
+                "SF_advection_velocity_x": 0 * np.linspace(0, 8, 9),
+                "SF_advection_velocity_y": 3 * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_velocity_z": 0 * np.linspace(0, 8, 9),
+                "SF_advection_scalar_x": 0 * np.linspace(0, 8, 9),
+                "SF_advection_scalar_y": 1 * np.linspace(0, 8, 9) ** 2,
+                "SF_advection_scalar_z": 0 * np.linspace(0, 8, 9),
+                "x-diffs": np.linspace(0, 8, 9),
+                "y-diffs": np.linspace(0, 8, 9),
+                "z-diffs": np.linspace(0, 8, 9),
+            },  # expected_dict
+        ),
     ],
 )
 def test_generate_structure_functions_3d_parameterized(
