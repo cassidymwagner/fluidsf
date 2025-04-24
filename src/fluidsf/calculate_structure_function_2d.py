@@ -35,7 +35,7 @@ def calculate_structure_function_2d(  # noqa: D417, C901
             Shift amount for y shift.
         sf_type: list
             List of structure function types to calculate.
-            Accepted list entries must be one or more of the following strings: 
+            Accepted list entries must be one or more of the following strings:
             "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
             Defaults to "ASF_V".
         scalar: ndarray, optional
@@ -52,27 +52,44 @@ def calculate_structure_function_2d(  # noqa: D417, C901
         dict:
             A dictionary containing the advection velocity structure functions and
             scalar structure functions (if applicable).
-            The dictionary has the following keys:
-                'SF_advection_velocity_x': The advection velocity structure function in
-                the x direction.
-                'SF_advection_velocity_y': The advection velocity structure function in
-                the y direction.
-                'SF_advection_scalar_x': The scalar structure function in the x
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_advection_velocity_x**: The advection velocity structure function
+                in the x direction.
+
+                **SF_advection_velocity_y**: The advection velocity structure function
+                in the y direction.
+
+                **SF_advection_scalar_x**: The scalar structure function in the x
                 direction.
-                'SF_advection_scalar_y': The scalar structure function in the y
+
+                **SF_advection_scalar_y**: The scalar structure function in the y
                 direction.
-                'SF_LL_x': The traditional structure function LL in the x direction.
-                'SF_LL_y': The traditional structure function LL in the y direction.
-                'SF_TT_x': The traditional structure function TT in the x direction.
-                'SF_TT_y': The traditional structure function TT in the y direction.
-                'SF_SS_x': The traditional structure function SS in the x direction.
-                'SF_SS_y': The traditional structure function SS in the y direction.
-                'SF_LLL_x': The traditional structure function LLL in the x direction.
-                'SF_LLL_y': The traditional structure function LLL in the y direction.
-                'SF_LTT_x': The traditional structure function LTT in the x direction.
-                'SF_LTT_y': The traditional structure function LTT in the y direction.
-                'SF_LSS_x': The traditional structure function LSS in the x direction.
-                'SF_LSS_y': The traditional structure function LSS in the y direction.
+
+                **SF_LL_x**: The traditional structure function LL in the x direction.
+
+                **SF_LL_y**: The traditional structure function LL in the y direction.
+
+                **SF_TT_x**: The traditional structure function TT in the x direction.
+
+                **SF_TT_y**: The traditional structure function TT in the y direction.
+
+                **SF_SS_x**: The traditional structure function SS in the x direction.
+
+                **SF_SS_y**: The traditional structure function SS in the y direction.
+
+                **SF_LLL_x**: The traditional structure function LLL in the x direction.
+
+                **SF_LLL_y**: The traditional structure function LLL in the y direction.
+
+                **SF_LTT_x**: The traditional structure function LTT in the x direction.
+
+                **SF_LTT_y**: The traditional structure function LTT in the y direction.
+
+                **SF_LSS_x**: The traditional structure function LSS in the x direction.
+
+                **SF_LSS_y**: The traditional structure function LSS in the y direction.
     """
     inputs = {
         "u": u,
