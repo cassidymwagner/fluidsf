@@ -160,17 +160,21 @@ def generate_sf_maps_2d(  # noqa: C901, D417
     # most negative towards zero, since new_array[-n] writes to the n-th from last index
 
     data = {
-        "SF_advection_velocity_xy": SF_adv,
-        "SF_advection_scalar_xy": SF_scalar_adv,
-        "SF_LL_xy": SF_LL,
-        "SF_TT_xy": SF_TT,
-        "SF_SS_xy": SF_SS,
-        "SF_LLL_xy": SF_LLL,
-        "SF_LTT_xy": SF_LTT,
-        "SF_LSS_xy": SF_LSS,
-        "separation_distances": separation_distances,
-        "separation_angles": separation_angles,
-        "x_separations": x_separations,
-        "y_separations": y_separations,
+        key: value
+        for key, value in {
+            "SF_advection_velocity_xy": SF_adv,
+            "SF_advection_scalar_xy": SF_scalar_adv,
+            "SF_LL_xy": SF_LL,
+            "SF_TT_xy": SF_TT,
+            "SF_SS_xy": SF_SS,
+            "SF_LLL_xy": SF_LLL,
+            "SF_LTT_xy": SF_LTT,
+            "SF_LSS_xy": SF_LSS,
+            "separation_distances": separation_distances,
+            "separation_angles": separation_angles,
+            "x_separations": x_separations,
+            "y_separations": y_separations,
+            }.items()
+        if value is not None
     }
     return data
