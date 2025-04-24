@@ -174,7 +174,7 @@ def generate_sf_maps_2d(  # noqa: C901, D417
             "separation_angles": separation_angles,
             "x_separations": x_separations,
             "y_separations": y_separations,
-            }.items()
+        }.items()
         if value is not None
     }
     return data

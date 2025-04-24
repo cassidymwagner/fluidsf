@@ -183,7 +183,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             "SF_LTT": SF_LTT,
             "SF_LSS": SF_LSS,
             "x-diffs": xd,
-            }.items()
+        }.items()
         if value is not None
     }
     return data
