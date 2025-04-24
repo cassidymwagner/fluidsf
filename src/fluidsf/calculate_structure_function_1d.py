@@ -25,7 +25,8 @@ def calculate_structure_function_1d(  # noqa: D417
             Array of separation distances.
         sf_type: list
             List of traditional structure function types to calculate.
-            Accepted types are: "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            Accepted list entries must be one or more of the following strings:
+            "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
             "LLL". If you include "SS" or "LSS", you must provide a 1D array for scalar.
         v: ndarray
             Array of v velocities. Defaults to None.
@@ -40,13 +41,22 @@ def calculate_structure_function_1d(  # noqa: D417
         dict:
             A dictionary containing the velocity structure functions and
             scalar structure functions (if applicable).
-            The dictionary has the following keys:
-                'SF_LL': The second-order longitudinal velocity structure function.
-                'SF_TT': The second-order transverse velocity structure function.
-                'SF_SS': The second-order scalar structure function.
-                'SF_LLL': The third-order longitudinal velocity structure function.
-                'SF_LTT': The longitudinal-transverse velocity structure function.
-                'SF_LSS': The longitudinal-scalar structure function.
+
+    Notes
+    -----
+        The returned dictionary has the following keys:
+
+            SF_LL: The second-order longitudinal velocity structure function.
+
+            SF_TT: The second-order transverse velocity structure function.
+            
+            SF_SS: The second-order scalar structure function.
+            
+            SF_LLL: The third-order longitudinal velocity structure function.
+            
+            SF_LTT: The longitudinal-transverse velocity structure function.
+            
+            SF_LSS: The longitudinal-scalar structure function.
     """
     inputs = {"u": u, "v": v, "scalar": scalar}
 
