@@ -35,7 +35,8 @@ def calculate_structure_function_2d(  # noqa: D417, C901
             Shift amount for y shift.
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
+            Accepted list entries must be one or more of the following strings: 
+            "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
             Defaults to "ASF_V".
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
