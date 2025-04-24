@@ -35,7 +35,8 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         y: ndarray
             1D array of y-coordinates.
         sf_type: list
-            List of structure function types to calculate. Accepted types are:
+            List of structure function types to calculate. Accepted list entries must 
+            be one or more of the following strings:
             "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
             ["ASF_V"].
         scalar: ndarray, optional

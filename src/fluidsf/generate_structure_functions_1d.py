@@ -32,9 +32,11 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             1D array of coordinates. If you have lat-lon data, set x to 1D array of
             latitudes.
         sf_type: list
-            List of structure function types to calculate. Accepted types are: "LL",
-            "TT", "SS", "LLL", "LTT", "LSS". Defaults to "LLL". If you include "SS" or
-            "LSS", you must provide a 1D array for scalar.
+            List of traditional structure function types to calculate.
+            Accepted list entries must be one or more of the following strings:
+            "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            ["LLL"]. If you include "SS" or "LSS", you must provide a 1D array for 
+            scalar.
         v: ndarray
             1D array of v velocity components. Defaults to None.
         y: ndarray, optional
