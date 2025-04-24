@@ -53,22 +53,31 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
         dict:
             A dictionary containing the advection velocity structure functions and
             scalar structure functions (if applicable).
-            The dictionary has the following keys:
-                'SF_advection_velocity_xy': The advection velocity structure function
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_advection_velocity_xy**: The advection velocity structure function
                 for separation vectors in the x-y plane.
-                'SF_advection_scalar_xy': The scalar advective structure function
+
+                **SF_advection_scalar_xy**: The scalar advective structure function
                 for separation vectors in the x-y plane.
-                'SF_LL_xy': The traditional structure function LL for separation
+
+                **SF_LL_xy**: The traditional structure function LL for separation
                 vectors in the x-y plane.
-                'SF_TT_xy': The traditional structure function TT for separation
+
+                **SF_TT_xy**: The traditional structure function TT for separation
                 vectors in the x-y plane.
-                'SF_SS_xy': The traditional structure function SS for separation
+
+                **SF_SS_xy**: The traditional structure function SS for separation
                 vectors in the x-y plane.
-                'SF_LLL_xy': The traditional structure function LLL for separation
-                vectors in the x-y plane..
-                'SF_LTT_xy': The traditional structure function LTT for separation
+
+                **SF_LLL_xy**: The traditional structure function LLL for separation
                 vectors in the x-y plane.
-                'SF_LSS_xy': The traditional structure function LSS for separation
+
+                **SF_LTT_xy**: The traditional structure function LTT for separation
+                vectors in the x-y plane.
+
+                **SF_LSS_xy**: The traditional structure function LSS for separation
                 vectors in the x-y plane.
 
     """
