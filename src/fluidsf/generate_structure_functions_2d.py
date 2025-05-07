@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 from .bin_data import bin_data
 from .calculate_advection_2d import calculate_advection_2d
@@ -215,6 +216,8 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
         if any("LSS" in t for t in sf_type):
             SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
+        if any("LLLL" in t for t in sf_type):
+            warnings.warn('Structure functions of order 4+ require manual coding. LL and LLL will still be computed.')
 
         # Calculate separation distances in x
         xd[x_shift], tmp = calculate_separation_distances(
