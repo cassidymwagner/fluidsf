@@ -81,9 +81,65 @@ The best way to communicate about your data needs is to [start a discussion](htt
 
 We have plans to support many different types of data, especially oceanographic data, but we encourage any users to engage with us so we can make sure we support as many datasets as possible!
 
-Contributing
+Contributing/Developing Guidelines
 ---
-This project welcomes contributions and suggestions. Feel free to open an issue, submit a pull request, and/or [contact the owner directly](https://github.com/cassidymwagner).
+This project welcomes contributions and suggestions. The following contribution/development guidelines have been modified from those provided with [pyqg](https://github.com/pyqg/pyqg), an open-source software package for simulating geophysical fluids. Feel free to open an issue, submit a pull request, and/or [contact the owner directly](https://github.com/cassidymwagner).
+
+Anyone interested in helping to develop FluidSF needs to create their own fork of our [git repository](https://github.com/cassidymwagner/fluidsf). (Follow the github [forking instructions](https://help.github.com/articles/fork-a-repo/). You will need a github account.)
+
+Clone your fork on your local machine.
+
+    $ git clone git@github.com:USERNAME/fluidsf
+
+(In the above, replace USERNAME with your github user name.)
+
+Then set your fork to track the upstream FluidSF repo.
+
+    $ cd fluidsf
+    $ git remote add upstream git://github.com/fluidsf/fluidsf.git
+
+You will want to periodically sync your master branch with the upstream master.
+
+    $ git fetch upstream
+    $ git rebase upstream/master
+
+Never make any commits on your local master branch. Instead open a feature branch for every new development task.
+
+    $ git checkout -b cool_new_feature
+
+(Replace `cool_new_feature` with an appropriate description of your feature.) At this point you work on your new feature, using `git add` to add your changes. When your feature is complete and well tested, commit your changes
+
+    $ git commit -m 'did a bunch of great work'
+
+and push your branch to github.
+
+    $ git push origin cool_new_feature
+
+At this point, you go find your fork on github.com and create a [pull request](https://help.github.com/articles/using-pull-requests/). Clearly describe what you have done in the comments. If your pull request fixes an issue or adds a useful new feature, the team will gladly merge it.
+
+After your pull request is merged, you can switch back to the master branch, rebase, and delete your feature branch. You will find your new feature incorporated into fluidsf.
+
+    $ git checkout master
+    $ git fetch upstream
+    $ git rebase upstream/master
+    $ git branch -d cool_new_feature
+
+### Adding Tests for New Functionality
+
+FluidSF contains automatic tests for all its functions. These tests ensure that any commits/code changes do not affect FluidSF's existing computations. If new functionality is added to FluidSF (i.e., computation of an additional structure function) the a test should be added for each of these new functions. The existing tests [can be found here](https://github.com/cassidymwagner/fluidsf/tree/main/tests), and most new structure functions can be tested by simply adding an additional structure function to the existing test code (see [test_calculate_structure_function_1d.py](https://github.com/cassidymwagner/fluidsf/blob/main/tests/test_calculate_structure_function_1d.py) for a simple 1D example that tests second- and third-order structure functions. If you need help constructing tests, reach out to the FluidSF team!
+
+### Virtual Testing Environment
+
+This is how to create a virtual environment into which to test-install FluidSF,
+install it, check the version, and tear down the virtual environment.
+
+    $ conda create --yes -n test_env python=3.9 pip [space-separated list of dependencies]
+    $ conda install --yes -n test_env -c conda-forge fluidsf
+    $ source activate test_env
+    $ pip install fluidsf
+    $ python -c 'import fluidsf; print(fluidsf.__version__);'
+    $ conda deactivate
+    $ conda env remove --yes -n test_env
 
 Funding Acknowledgement
 ---
