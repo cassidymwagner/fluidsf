@@ -178,6 +178,8 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     if any("LSS" in t for t in sf_type):
         SF_x_LSS = np.zeros(len(sep_x) + 1)
         SF_y_LSS = np.zeros(len(sep_y) + 1)
+    if any("LLLL" in t for t in sf_type):
+            warnings.warn('Structure functions of order 4 or higher require manual coding. LL and LLL will still be computed.')
 
     # Iterate over separations in x and y
     for x_shift in sep_x:
@@ -216,8 +218,6 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             SF_x_scalar[x_shift] = SF_dicts["SF_advection_scalar_x"]
         if any("LSS" in t for t in sf_type):
             SF_x_LSS[x_shift] = SF_dicts["SF_LSS_x"]
-        if any("LLLL" in t for t in sf_type):
-            warnings.warn('Structure functions of order 4 or higher require manual coding. LL and LLL will still be computed.')
 
         # Calculate separation distances in x
         xd[x_shift], tmp = calculate_separation_distances(
