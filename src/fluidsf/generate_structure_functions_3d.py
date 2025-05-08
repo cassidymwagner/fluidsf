@@ -147,6 +147,8 @@ def generate_structure_functions_3d(  # noqa: C901, D417
         SF_x_LSS = np.zeros(len(sep_x) + 1)
         SF_y_LSS = np.zeros(len(sep_y) + 1)
         SF_z_LSS = np.zeros(len(sep_z) + 1)
+    if any("LLLL" in t for t in sf_type):
+            warnings.warn('Structure functions of order 4 or higher require manual coding. LL and LLL will still be computed.')
 
     # Iterate over separations in x, y, and z
     for x_shift in sep_x:
