@@ -115,7 +115,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     if "LSS" in sf_type:
         SF_LSS = np.zeros(len(sep) + 1)
     if "LLLL" in sf_type:
-        warnings.warn('Structure functions of order 4+ require manual coding. LL and LLL will still be computed.')
+            warnings.warn('Structure functions of order 4 or higher require manual coding. LL and LLL will still be computed.')
 
     # Iterate over separations
     for sep_id in sep:
