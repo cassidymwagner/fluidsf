@@ -126,12 +126,11 @@ After your pull request is merged, you can switch back to the main branch, rebas
 
 ### Adding Tests for New Functionality
 
-FluidSF contains automatic tests for all its functions. These tests ensure that any commits/code changes do not affect FluidSF's existing computations. If new functionality is added to FluidSF (i.e., computation of an additional structure function) the a test should be added for each of these new functions. The existing tests [can be found here](https://github.com/cassidymwagner/fluidsf/tree/main/tests), and most new structure functions can be tested by simply adding an additional structure function to the existing test code (see [test_calculate_structure_function_1d.py](https://github.com/cassidymwagner/fluidsf/blob/main/tests/test_calculate_structure_function_1d.py) for a simple 1D example that tests second- and third-order structure functions. If you need help constructing tests, reach out to the FluidSF team!
+FluidSF contains automatic tests for all its functions. These tests ensure that any commits/code changes do not affect FluidSF's existing computations. If new functionality is added to FluidSF (i.e., computation of an additional structure function) then a test should be added for each of these new functions. The existing tests [can be found here](https://github.com/cassidymwagner/fluidsf/tree/main/tests), and most new structure functions can be tested by simply adding an additional structure function to the existing test code (see [test_calculate_structure_function_1d.py](https://github.com/cassidymwagner/fluidsf/blob/main/tests/test_calculate_structure_function_1d.py) for a simple 1D example that tests second- and third-order structure functions. If you need help constructing tests, reach out to the FluidSF team!
 
 ### Virtual Testing Environment
 
-This is how to create a virtual environment into which to test-install FluidSF,
-install it, check the version, and tear down the virtual environment.
+This is how to create a virtual environment into which to test-install FluidSF, install it, check the version, and tear down the virtual environment.
 
     $ conda create --yes -n test_env python=3.9 pip [space-separated list of dependencies]
     $ conda install --yes -n test_env -c conda-forge fluidsf
