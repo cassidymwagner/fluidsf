@@ -86,7 +86,7 @@ sfs_list = [
 # error and variability are possible. We will use a confidence level of 90%.
 
 # Reformat single sfs_list for ease of boostrapping
-sf_ASF_x = [] 
+sf_ASF_x = []
 sf_ASF_y = []
 sf_LLL_x = []
 sf_LLL_y = []
