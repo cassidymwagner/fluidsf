@@ -69,7 +69,7 @@ jobs:
         pre-commit run --all-files
     
   # Run example python scripts and notebooks
-  example:
+  examples:
     runs-on: ubuntu-latest
 
     steps:
@@ -82,7 +82,7 @@ jobs:
     
     - name: Install Dependencies
       run: |
-        pip install .[example]
+        pip install .[examples]
         pip install jupyterlab
 
     - name: Run example scripts
