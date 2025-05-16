@@ -36,8 +36,6 @@ ax.plot(x, v, label="v", linestyle="--")
 ax.plot(x, scalar, label="scalar", linestyle=":")
 ax.set_xlabel("x")
 ax.legend()
-plt.show()
-
 
 # Calculate various velocity-based structure functions
 # We will calculate two different structure functions at the same time with this step.
@@ -104,4 +102,3 @@ plt.hlines(0, 0, 1, color="k", lw=1, zorder=0)
 ax.set_xlabel("Separation distance (r)")
 ax.set_ylabel("Structure function (SF(r))")
 ax.legend(loc="lower right")
-plt.show()
