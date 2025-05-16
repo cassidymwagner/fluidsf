@@ -98,12 +98,12 @@ Then set your fork to track the upstream FluidSF repo.
     $ cd fluidsf
     $ git remote add upstream git://github.com/fluidsf/fluidsf.git
 
-You will want to periodically sync your master branch with the upstream master.
+You will want to periodically sync your main branch with the upstream main.
 
     $ git fetch upstream
-    $ git rebase upstream/master
+    $ git rebase upstream/main
 
-Never make any commits on your local master branch. Instead open a feature branch for every new development task.
+Never make any commits on your local main branch. Instead open a feature branch for every new development task.
 
     $ git checkout -b cool_new_feature
 
@@ -117,11 +117,11 @@ and push your branch to github.
 
 At this point, you go find your fork on github.com and create a [pull request](https://help.github.com/articles/using-pull-requests/). Clearly describe what you have done in the comments. If your pull request fixes an issue or adds a useful new feature, the team will gladly merge it.
 
-After your pull request is merged, you can switch back to the master branch, rebase, and delete your feature branch. You will find your new feature incorporated into fluidsf.
+After your pull request is merged, you can switch back to the main branch, rebase, and delete your feature branch. You will find your new feature incorporated into fluidsf.
 
-    $ git checkout master
+    $ git checkout main
     $ git fetch upstream
-    $ git rebase upstream/master
+    $ git rebase upstream/main
     $ git branch -d cool_new_feature
 
 ### Adding Tests for New Functionality
