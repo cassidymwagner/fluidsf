@@ -74,11 +74,11 @@ def generate_sf_maps_2d(  # noqa: C901, D417
                 **SF_LLL_xy**: The third-order longitudinal velocity structure function
                 for separation vectors in the x-y plane.
 
-                **SF_LTT_xy**: The longitudinal-transverse velocity structure function
-                for separation vectors in the x-y plane.
+                **SF_LTT_xy**: The third-order longitudinal-transverse-transverse velocity
+                structure function for separation vectors in the x-y plane.
 
-                **SF_LSS_xy**: The longitudinal-scalar structure function for
-                separation vectors in the x-y plane.
+                **SF_LSS_xy**: The third-order longitudinal-scalar-scalar structure function
+                for separation vectors in the x-y plane.
 
                 **separation_distances**: 2D array of separation distances between
                 points in the x-y plane.
@@ -86,11 +86,11 @@ def generate_sf_maps_2d(  # noqa: C901, D417
                 **separation_angles**: 2D array of angles between points in the x-y
                 plane.
 
-                **x_separations**: 2D array of x-separations between points in the
-                x-y plane.
+                **x_separations**: 2D array of x-component of separation distance
+                between points in the x-y plane.
 
-                **y_separations**: 2D array of y-separations between points in the
-                x-y plane.
+                **y_separations**: 2D array of y-component of separation distance
+                between points in the x-y plane.
 
     """
     # Initialize variables as NoneType
