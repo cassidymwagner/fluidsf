@@ -12,7 +12,7 @@ def calculate_structure_function_1d(  # noqa: D417
     boundary="Periodic",
 ):
     """
-    Calculate traditional structure functions for 1D data.
+    Calculate structure functions for 1D data.
     Supports velocity-based structure functions and scalar-based structure functions.
     Defaults to calculating the third-order longitudinal velocity structure function
     ('LLL') along the data track.
@@ -24,7 +24,7 @@ def calculate_structure_function_1d(  # noqa: D417
         sep_id: ndarray
             Array of separation distances.
         sf_type: list
-            List of traditional structure function types to calculate.
+            List of structure function types to calculate.
             Accepted list entries must be one or more of the following strings:
             "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
             "LLL". If you include "SS" or "LSS", you must provide a 1D array for scalar.
@@ -52,9 +52,10 @@ def calculate_structure_function_1d(  # noqa: D417
                 
                 **SF_LLL**: The third-order longitudinal velocity structure function.
                 
-                **SF_LTT**: The longitudinal-transverse velocity structure function.
+                **SF_LTT**: The third-order longitudinal-transverse-transverse 
+                velocity structure function.
                 
-                **SF_LSS**: The longitudinal-scalar structure function.
+                **SF_LSS**: The third-order longitudinal-scalar-scalar structure function.
     """
     inputs = {"u": u, "v": v, "scalar": scalar}
 
