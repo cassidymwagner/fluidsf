@@ -71,9 +71,10 @@ def generate_structure_functions_1d(  # noqa: C901, D417
 
                 **SF_LLL**: The third-order longitudinal velocity structure function.
 
-                **SF_LTT**: The longitudinal-transverse velocity structure function.
+                **SF_LTT**: The third-order longitudinal-transverse-transverse
+                velocity structure function.
 
-                **SF_LSS**: The longitudinal-scalar structure function.
+                **SF_LSS**: The third-order longitudinal-scalar-scalar structure function.
 
                 **x-diffs**: The separation distances along the data track.
     """
