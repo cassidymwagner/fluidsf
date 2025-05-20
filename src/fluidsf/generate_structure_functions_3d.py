@@ -20,8 +20,8 @@ def generate_structure_functions_3d(  # noqa: C901, D417
     nbins=None,
 ):
     """
-    Full method for generating structure functions for uniform and even 3D data, either
-    advective or traditional structure functions. Supports velocity-based and
+    Full method for generating structure functions for uniform and even 3D data,
+    including advective structure functions. Supports velocity-based and
     scalar-based structure functions. Defaults to calculating the
     velocity-based advective structure functions for the x, y, and z directions.
 
@@ -61,22 +61,22 @@ def generate_structure_functions_3d(  # noqa: C901, D417
             The returned dictionary may contain the following keys, with some keys
             removed if the structure function is not calculated:
 
-                **SF_advection_velocity_x**: The advection velocity structure function
+                **SF_advection_velocity_x**: The advective velocity structure function
                 in the x direction.
 
-                **SF_advection_velocity_y**: The advection velocity structure function
+                **SF_advection_velocity_y**: The advective velocity structure function
                 in the y direction.
 
-                **SF_advection_velocity_z**: The advection velocity structure function
+                **SF_advection_velocity_z**: The advective velocity structure function
                 in the z direction.
 
-                **SF_advection_scalar_x**: The scalar advective structure function
+                **SF_advection_scalar_x**: The advective scalar structure function
                 in the x direction.
 
-                **SF_advection_scalar_y**: The scalar advective structure function
+                **SF_advection_scalar_y**: The advective scalar structure function
                 in the y direction.
 
-                **SF_advection_scalar_z**: The scalar advective structure function
+                **SF_advection_scalar_z**: The advective scalar structure function
                 in the z direction.
 
                 **SF_LL_x**: The second-order longitudinal velocity structure function
@@ -115,23 +115,23 @@ def generate_structure_functions_3d(  # noqa: C901, D417
                 **SF_LLL_z**: The third-order longitudinal velocity structure function
                 in the z direction.
 
-                **SF_LTT_x**: The longitudinal-transverse velocity structure function
-                in the x direction.
+                **SF_LTT_x**: The third-order longitudinal-transverse-transverse velocity
+                structure function in the x direction.
 
-                **SF_LTT_y**: The longitudinal-transverse velocity structure function
-                in the y direction.
+                **SF_LTT_y**: The third-order longitudinal-transverse-transverse velocity
+                structure function in the y direction.
 
-                **SF_LTT_z**: The longitudinal-transverse velocity structure function
-                in the z direction.
+                **SF_LTT_z**: The third-order longitudinal-transverse-transverse velocity
+                structure function in the z direction.
 
-                **SF_LSS_x**: The longitudinal-scalar structure function in the x
-                direction.
+                **SF_LSS_x**: The third-order longitudinal-scalar-scalar velocity
+                structure function in the x direction.
 
-                **SF_LSS_y**: The longitudinal-scalar structure function in the y
-                direction.
+                **SF_LSS_y**: The third-order longitudinal-scalar-scalar velocity
+                structure function in the y direction.
 
-                **SF_LSS_z**: The longitudinal-scalar structure function in the z
-                direction.
+                **SF_LSS_z**: The third-order longitudinal-scalar-scalar velocity
+                structure function in the z direction.
 
                 **x-diffs**: The separation distances in the x direction.
 
