@@ -12,7 +12,7 @@ def calculate_structure_function_1d(  # noqa: D417
     boundary="Periodic",
 ):
     """
-    Calculate traditional structure functions for 1D data.
+    Calculate structure functions for 1D data.
     Supports velocity-based structure functions and scalar-based structure functions.
     Defaults to calculating the third-order longitudinal velocity structure function
     ('LLL') along the data track.
@@ -24,8 +24,9 @@ def calculate_structure_function_1d(  # noqa: D417
         sep_id: ndarray
             Array of separation distances.
         sf_type: list
-            List of traditional structure function types to calculate.
-            Accepted types are: "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
+            List of structure function types to calculate.
+            Accepted list entries must be one or more of the following strings:
+            "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
             "LLL". If you include "SS" or "LSS", you must provide a 1D array for scalar.
         v: ndarray
             Array of v velocities. Defaults to None.
@@ -40,13 +41,21 @@ def calculate_structure_function_1d(  # noqa: D417
         dict:
             A dictionary containing the velocity structure functions and
             scalar structure functions (if applicable).
-            The dictionary has the following keys:
-                'SF_LL': The second-order longitudinal velocity structure function.
-                'SF_TT': The second-order transverse velocity structure function.
-                'SF_SS': The second-order scalar structure function.
-                'SF_LLL': The third-order longitudinal velocity structure function.
-                'SF_LTT': The longitudinal-transverse velocity structure function.
-                'SF_LSS': The longitudinal-scalar structure function.
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_LL**: The second-order longitudinal velocity structure function.
+
+                **SF_TT**: The second-order transverse velocity structure function.
+                
+                **SF_SS**: The second-order scalar structure function.
+                
+                **SF_LLL**: The third-order longitudinal velocity structure function.
+                
+                **SF_LTT**: The third-order longitudinal-transverse-transverse 
+                velocity structure function.
+                
+                **SF_LSS**: The third-order longitudinal-scalar-scalar structure function.
     """
     inputs = {"u": u, "v": v, "scalar": scalar}
 
