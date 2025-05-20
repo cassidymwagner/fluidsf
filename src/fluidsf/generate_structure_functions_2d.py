@@ -23,8 +23,8 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     nbins=None,
 ):
     """
-    Full method for generating structure functions for 2D data, either advective or
-    traditional structure functions. Supports velocity-based and scalar-based structure
+    Full method for generating structure functions for 2D data, including advective
+    structure functions. Supports velocity-based and scalar-based structure
     functions. Defaults to calculating the velocity-based advective structure functions
     for the x and y directions.
 
