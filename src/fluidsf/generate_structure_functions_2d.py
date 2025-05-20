@@ -66,16 +66,16 @@ def generate_structure_functions_2d(  # noqa: C901, D417
             The returned dictionary may contain the following keys, with some keys
             removed if the structure function is not calculated:
 
-                **SF_advection_velocity_x**: The advection velocity structure function
+                **SF_advection_velocity_x**: The advective velocity structure function
                 in the x direction.
 
-                **SF_advection_velocity_y**: The advection velocity structure function
+                **SF_advection_velocity_y**: The advective velocity structure function
                 in the y direction.
 
-                **SF_advection_scalar_x**: The scalar advective structure function
+                **SF_advection_scalar_x**: The advective scalar structure function
                 in the x direction.
 
-                **SF_advection_scalar_y**: The scalar advective structure function
+                **SF_advection_scalar_y**: The advective scalar structure function
                 in the y direction.
 
                 **SF_LL_x**: The second-order longitudinal velocity structure function
@@ -102,23 +102,21 @@ def generate_structure_functions_2d(  # noqa: C901, D417
                 **SF_LLL_y**: The third-order longitudinal velocity structure function
                 in the y direction.
 
-                **SF_LTT_x**: The longitudinal-transverse velocity structure function
+                **SF_LTT_x**: The third-order longitudinal-transverse-transverse velocity
+                structure function in the x direction.
+
+                **SF_LTT_y**: The third-order longitudinal-transverse-transverse velocity
+                structure function in the y direction.
+
+                **SF_LSS_x**: The third-order longitudinal-scalar-scalar structure function
                 in the x direction.
 
-                **SF_LTT_y**: The longitudinal-transverse velocity structure function
+                **SF_LSS_y**: The third-order longitudinal-scalar-scalar structure function
                 in the y direction.
 
-                **SF_LSS_x**: The longitudinal-scalar structure function in the x
-                direction.
+                **x-diffs**: The separation distances in the x direction.
 
-                **SF_LSS_y**: The longitudinal-scalar structure function in the y
-                direction.
-
-                **x-diffs**: The separation distances in the x
-                direction.
-
-                **y-diffs**: The separation distances in the y
-                direction.
+                **y-diffs**: The separation distances in the y direction.
 
     """
     # Error handling
