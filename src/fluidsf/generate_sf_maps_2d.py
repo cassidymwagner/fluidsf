@@ -56,10 +56,10 @@ def generate_sf_maps_2d(  # noqa: C901, D417
             The returned dictionary may contain the following keys, with some keys
             removed if the structure function is not calculated:
 
-                **SF_advection_velocity_xy**: The advection velocity structure function
+                **SF_advection_velocity_xy**: The advective velocity structure function
                 for separation vectors in the x-y plane.
 
-                **SF_advection_scalar_xy**: The advection scalar structure function
+                **SF_advection_scalar_xy**: The advective scalar structure function
                 for separation vectors in the x-y plane.
 
                 **SF_LL_xy**: The second-order longitudinal velocity structure function
