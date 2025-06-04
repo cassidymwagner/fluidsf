@@ -35,7 +35,7 @@ def generate_structure_functions_1d(  # noqa: C901, D417
             List of traditional structure function types to calculate.
             Accepted list entries must be one or more of the following strings:
             "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
-            ["LLL"]. If you include "SS" or "LSS", you must provide a 1D array for 
+            ["LLL"]. If you include "SS" or "LSS", you must provide a 1D array for
             scalar.
         v: ndarray
             1D array of v velocity components. Defaults to None.
@@ -74,7 +74,8 @@ def generate_structure_functions_1d(  # noqa: C901, D417
                 **SF_LTT**: The third-order longitudinal-transverse-transverse
                 velocity structure function.
 
-                **SF_LSS**: The third-order longitudinal-scalar-scalar structure function.
+                **SF_LSS**: The third-order longitudinal-scalar-scalar structure
+                function.
 
                 **x-diffs**: The separation distances along the data track.
     """

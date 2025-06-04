@@ -102,17 +102,17 @@ def generate_structure_functions_2d(  # noqa: C901, D417
                 **SF_LLL_y**: The third-order longitudinal velocity structure function
                 in the y direction.
 
-                **SF_LTT_x**: The third-order longitudinal-transverse-transverse velocity
-                structure function in the x direction.
+                **SF_LTT_x**: The third-order longitudinal-transverse-transverse
+                velocity structure function in the x direction.
 
-                **SF_LTT_y**: The third-order longitudinal-transverse-transverse velocity
-                structure function in the y direction.
+                **SF_LTT_y**: The third-order longitudinal-transverse-transverse
+                velocity structure function in the y direction.
 
-                **SF_LSS_x**: The third-order longitudinal-scalar-scalar structure function
-                in the x direction.
+                **SF_LSS_x**: The third-order longitudinal-scalar-scalar structure
+                function in the x direction.
 
-                **SF_LSS_y**: The third-order longitudinal-scalar-scalar structure function
-                in the y direction.
+                **SF_LSS_y**: The third-order longitudinal-scalar-scalar structure
+                function in the y direction.
 
                 **x-diffs**: The separation distances in the x direction.
 

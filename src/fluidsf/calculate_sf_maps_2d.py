@@ -62,23 +62,23 @@ def calculate_sf_maps_2d(  # noqa: D417, C901
                 **SF_advection_scalar_xy**: The advective scalar structure function
                 for separation vectors in the x-y plane.
 
-                **SF_LL_xy**: The second-order longitudinal velocity structure function for 
-                separation vectors in the x-y plane.
-
-                **SF_TT_xy**: The second-order transverse velocity structure function for 
-                separation vectors in the x-y plane.
-
-                **SF_SS_xy**: The second-order scalar structure function for 
-                separation vectors in the x-y plane.
-
-                **SF_LLL_xy**: The third-order longitudinal velocity structure function for 
-                separation vectors in the x-y plane.
-
-                **SF_LTT_xy**: The third-order longitudinal-transverse-transverse velocity 
-                structure function for separation vectors in the x-y plane.
-
-                **SF_LSS_xy**: The third-order longitudinal-scalar-scalar structure function 
+                **SF_LL_xy**: The second-order longitudinal velocity structure function
                 for separation vectors in the x-y plane.
+
+                **SF_TT_xy**: The second-order transverse velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_SS_xy**: The second-order scalar structure function for
+                separation vectors in the x-y plane.
+
+                **SF_LLL_xy**: The third-order longitudinal velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_LTT_xy**: The third-order longitudinal-transverse-transverse
+                velocity structure function for separation vectors in the x-y plane.
+
+                **SF_LSS_xy**: The third-order longitudinal-scalar-scalar structure
+                function for separation vectors in the x-y plane.
 
     """
     inputs = {
