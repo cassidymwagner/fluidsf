@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 
 from .bin_data import bin_data
@@ -232,6 +234,12 @@ def generate_structure_functions_2d(  # noqa: C901, D417
     if any("LSS" in t for t in sf_type):
         SF_x_LSS = np.zeros(len(sep_x) + 1)
         SF_y_LSS = np.zeros(len(sep_y) + 1)
+    if any("LLLL" in t for t in sf_type):
+        warnings.warn(
+            "Structure functions of order 4 or higher require manual coding. "
+            "LL and LLL will still be computed.",
+            stacklevel=2,
+        )
 
     # Iterate over separations in x and y
     for x_shift in sep_x:
