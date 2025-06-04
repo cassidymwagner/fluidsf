@@ -1,5 +1,6 @@
-import numpy as np
 import warnings
+
+import numpy as np
 
 from .bin_data import bin_data
 from .calculate_separation_distances import calculate_separation_distances
@@ -115,7 +116,11 @@ def generate_structure_functions_1d(  # noqa: C901, D417
     if "LSS" in sf_type:
         SF_LSS = np.zeros(len(sep) + 1)
     if "LLLL" in sf_type:
-            warnings.warn('Structure functions of order 4 or higher require manual coding. LL and LLL will still be computed.')
+        warnings.warn(
+            "Structure functions of order 4 or higher require manual coding. "
+            "LL and LLL will still be computed.",
+            stacklevel=2,
+        )
 
     # Iterate over separations
     for sep_id in sep:
