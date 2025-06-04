@@ -16,7 +16,7 @@ def calculate_structure_function_2d(  # noqa: D417, C901
     boundary="periodic-all",
 ):
     """
-    Calculate structure function, either advective or traditional.
+    Calculate structure functions, including advective structure functions.
     Supports velocity-based structure functions and scalar-based structure functions.
 
     Parameters
@@ -35,7 +35,8 @@ def calculate_structure_function_2d(  # noqa: D417, C901
             Shift amount for y shift.
         sf_type: list
             List of structure function types to calculate.
-            Accepted types are: "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
+            Accepted list entries must be one or more of the following strings:
+            "ASF_V, "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS".
             Defaults to "ASF_V".
         scalar: ndarray, optional
             Array of scalar values. Defaults to None.
@@ -51,27 +52,56 @@ def calculate_structure_function_2d(  # noqa: D417, C901
         dict:
             A dictionary containing the advection velocity structure functions and
             scalar structure functions (if applicable).
-            The dictionary has the following keys:
-                'SF_advection_velocity_x': The advection velocity structure function in
-                the x direction.
-                'SF_advection_velocity_y': The advection velocity structure function in
-                the y direction.
-                'SF_advection_scalar_x': The scalar structure function in the x
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_advection_velocity_x**: The advective velocity structure function
+                in the x direction.
+
+                **SF_advection_velocity_y**: The advective velocity structure function
+                in the y direction.
+
+                **SF_advection_scalar_x**: The advective scalar structure function in the x
                 direction.
-                'SF_advection_scalar_y': The scalar structure function in the y
+
+                **SF_advection_scalar_y**: The advective scalar structure function in the y
                 direction.
-                'SF_LL_x': The traditional structure function LL in the x direction.
-                'SF_LL_y': The traditional structure function LL in the y direction.
-                'SF_TT_x': The traditional structure function TT in the x direction.
-                'SF_TT_y': The traditional structure function TT in the y direction.
-                'SF_SS_x': The traditional structure function SS in the x direction.
-                'SF_SS_y': The traditional structure function SS in the y direction.
-                'SF_LLL_x': The traditional structure function LLL in the x direction.
-                'SF_LLL_y': The traditional structure function LLL in the y direction.
-                'SF_LTT_x': The traditional structure function LTT in the x direction.
-                'SF_LTT_y': The traditional structure function LTT in the y direction.
-                'SF_LSS_x': The traditional structure function LSS in the x direction.
-                'SF_LSS_y': The traditional structure function LSS in the y direction.
+
+                **SF_LL_x**: The second-order longitudinal velocity structure function 
+                in the x direction.
+
+                **SF_LL_y**: The second-order longitudinal velocity structure function 
+                in the y direction.
+
+                **SF_TT_x**: The second-order transverse velocity structure function 
+                in the x direction.
+
+                **SF_TT_y**: The second-order transverse velocity structure function 
+                in the y direction.
+
+                **SF_SS_x**: The second-order scalar structure function 
+                in the x direction.
+
+                **SF_SS_y**: The second-order scalar velocity structure function 
+                in the y direction.
+
+                **SF_LLL_x**: The third-order longitudinal velocity structure function 
+                in the x direction.
+
+                **SF_LLL_y**: The third-order longitudinal velocity structure function 
+                in the y direction.
+
+                **SF_LTT_x**: The third-order longitudinal velocity structure function 
+                in the x direction.
+
+                **SF_LTT_y**: The third-order longitudinal-transverse-transverse velocity 
+                structure function in the y direction.
+
+                **SF_LSS_x**: The third-order longitudinal-scalar-scalar structure function 
+                in the x direction.
+
+                **SF_LSS_y**: The third-order longitudinal-scalar-scalar structure function 
+                in the y direction.
     """
     inputs = {
         "u": u,
