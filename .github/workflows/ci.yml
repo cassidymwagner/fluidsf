@@ -44,7 +44,7 @@ jobs:
         coverage run -m pytest tests/
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.0.1
+      uses: codecov/codecov-action@v5.4.3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -67,3 +67,28 @@ jobs:
     - name: Lint
       run: |
         pre-commit run --all-files
+    
+  # Run example python scripts and notebooks
+  examples:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+    
+    - name: Install Dependencies
+      run: |
+        pip install .[examples]
+        pip install jupyterlab
+
+    - name: Run example scripts
+      run: |
+        python examples/python_scripts/*.py
+
+    - name: Run example notebooks
+      run: |
+        jupyter execute examples/jupyter_notebooks/*.ipynb
