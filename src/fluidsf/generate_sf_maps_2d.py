@@ -35,7 +35,8 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         y: ndarray
             1D array of y-coordinates.
         sf_type: list
-            List of structure function types to calculate. Accepted types are:
+            List of structure function types to calculate. Accepted list entries must
+            be one or more of the following strings:
             "ASF_V", "ASF_S", "LL", "TT", "SS", "LLL", "LTT", "LSS". Defaults to
             ["ASF_V"].
         scalar: ndarray, optional
@@ -52,6 +53,44 @@ def generate_sf_maps_2d(  # noqa: C901, D417
         dict:
             Dictionary containing the requested structure functions and separation
             distances for the x- and y-directions.
+            The returned dictionary may contain the following keys, with some keys
+            removed if the structure function is not calculated:
+
+                **SF_advection_velocity_xy**: The advective velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_advection_scalar_xy**: The advective scalar structure function
+                for separation vectors in the x-y plane.
+
+                **SF_LL_xy**: The second-order longitudinal velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_TT_xy**: The second-order transverse velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_SS_xy**: The second-order scalar structure function for separation
+                vectors in the x-y plane.
+
+                **SF_LLL_xy**: The third-order longitudinal velocity structure function
+                for separation vectors in the x-y plane.
+
+                **SF_LTT_xy**: The third-order longitudinal-transverse-transverse
+                velocity structure function for separation vectors in the x-y plane.
+
+                **SF_LSS_xy**: The third-order longitudinal-scalar-scalar structure
+                function for separation vectors in the x-y plane.
+
+                **separation_distances**: 2D array of separation distances between
+                points in the x-y plane.
+
+                **separation_angles**: 2D array of angles between points in the x-y
+                plane.
+
+                **x_separations**: 2D array of x-component of separation distance
+                between points in the x-y plane.
+
+                **y_separations**: 2D array of y-component of separation distance
+                between points in the x-y plane.
 
     """
     # Initialize variables as NoneType

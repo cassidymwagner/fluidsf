@@ -2,7 +2,6 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/fluidsf?color=blue)](https://pypi.org/project/fluidsf)
 [![documentation](https://img.shields.io/badge/documentation-stable%20release-blue)](https://cassidymwagner.github.io/fluidsf)
 [![CI](https://github.com/cassidymwagner/FluidSF/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cassidymwagner/FluidSF/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/github/cassidymwagner/fluidsf/graph/badge.svg?token=1ZZ2HUONX4)](https://codecov.io/github/cassidymwagner/fluidsf)
 
 
 ### Overview
