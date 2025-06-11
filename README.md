@@ -172,7 +172,7 @@ To run a specific test:
 
 ### Example notebooks and scripts
 
-Example Jupyter notebooks and python scripts can be found in the [examples directory](https://github.com/cassidymwagner/fluidsf/tree/main/examples/jupyter_notebooks). If you would like to write a new example, follow the format of the [current Jupyter notebook examples](https://github.com/cassidymwagner/fluidsf/tree/main/examples/jupyter_notebooks) and then create a stripped-down python script to accompany your example, similar to the [current python scripts](https://github.com/cassidymwagner/fluidsf/tree/main/examples/python_scripts). 
+Example Jupyter notebooks and python scripts can be found in the [examples directory](https://github.com/cassidymwagner/fluidsf/tree/main/examples). If you would like to write a new example, follow the format of the [current Jupyter notebook examples](https://github.com/cassidymwagner/fluidsf/tree/main/examples/jupyter_notebooks) and then create a stripped-down python script to accompany your example, similar to the [current python scripts](https://github.com/cassidymwagner/fluidsf/tree/main/examples/python_scripts). 
 
 Steps for running the examples:
 
