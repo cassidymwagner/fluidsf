@@ -47,7 +47,7 @@ You can cite the specific version of FluidSF with `Zenodo <https://zenodo.org/re
    Wagner, C., Pearson, B., & Lee, A. (2024). fluidsf (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.11406185
 
 
-.. _Contributing/Developing Guidelines:
+.. _Contributing/Developing Guidelines: 
 
 Contributing/Developing Guidelines
 **********************************
