@@ -5,9 +5,9 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Getting started" href="qs.html" /><link rel="prev" title="FluidSF" href="index.html" />
 
-    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>What are structure functions? - FluidSF</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -269,7 +269,8 @@
 <p>where <span class="math notranslate nohighlight">\(\theta(\mathbf{x})\)</span> is the scalar at position <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, and  <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is the separation vector between pairs of points. The overline represents an average over all pairs of data in the flow field that are separated by <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, and <span class="math notranslate nohighlight">\(\delta \phi\)</span> is a short-hand notation for the spatial difference in the scalar. This second-order (i.e. product of two <span class="math notranslate nohighlight">\(\delta\)</span>) structure function can be used to characterize the distribution of scalar variance across different scales of motion (McCaffrey et al., 2015), analogous to the power spectra of the scalar field. Common scalars for fluid systems include temperature, density, and (vertical) vorticity.</p>
 <p><strong>Velocity Structure Functions</strong></p>
 <p>Since velocity is a vector, structure functions often decompose a (two dimensional) velocity field into a longitudinal component (<span class="math notranslate nohighlight">\(u_L = \mathbf{u} \cdot \mathbf{\hat{r}}\)</span>) and a transverse component (<span class="math notranslate nohighlight">\(u_T = \mathbf{u} \times \mathbf{\hat{r}}\)</span>). These velocity components can be visualized by considering a pair of velocity observations separated by a vector <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, as illustrated below.</p>
-<a class="reference internal image-reference" href="_images/sf_mooring_diagram.png"><img alt="A diagram showing two moorings in the ocean separated by a distance r." class="align-center" src="_images/sf_mooring_diagram.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="_images/sf_mooring_diagram.png"><img alt="A diagram showing two moorings in the ocean separated by a distance r." class="align-center" src="_images/sf_mooring_diagram.png" style="width: 50%;" />
+</a>
 <p>There are a variety of physically-useful velocity structure functions including second-order structure functions of both velocity components,</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -295,7 +296,8 @@
 </div>
 <p>which can provide information about the inter-scale transfers of energy (<span class="math notranslate nohighlight">\(SF_{LTT}\)</span> and <span class="math notranslate nohighlight">\(SF_{LTT}\)</span>) or tracer variance (<span class="math notranslate nohighlight">\(SF_{L\phi\phi}\)</span>) within a fluid flow. Note that <span class="math notranslate nohighlight">\(SF_{LTT}\)</span> and <span class="math notranslate nohighlight">\(SF_{L\phi\phi}\)</span> are blended structure functions, in that they utilize the spatial differences of multiple properties.</p>
 <p>Now consider an array of moorings. The structure function is calculated for all pairs of moorings separated by <span class="math notranslate nohighlight">\(r\)</span>, and the average is taken over all pairs. The diagram below depicts an array of moorings and highlights mooring pairs with separation vectors of <span class="math notranslate nohighlight">\(r = 1\)</span>, <span class="math notranslate nohighlight">\(r = 2\)</span>, and <span class="math notranslate nohighlight">\(r = 3\)</span>.</p>
-<a class="reference internal image-reference" href="_images/sf_grid.png"><img alt="3 figures showing a grid of data points in a flow field. The separation vector r is shown between pairs of data points where the first panel is shows r = 1, the second panel shows r = 2, and the third panel shows r = 3." class="align-center" src="_images/sf_grid.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/sf_grid.png"><img alt="3 figures showing a grid of data points in a flow field. The separation vector r is shown between pairs of data points where the first panel is shows r = 1, the second panel shows r = 2, and the third panel shows r = 3." class="align-center" src="_images/sf_grid.png" style="width: 100%;" />
+</a>
 </section>
 <section id="advective-structure-functions">
 <span id="id1"></span><h2>Advective structure functions<a class="headerlink" href="#advective-structure-functions" title="Link to this heading">¶</a></h2>
@@ -423,7 +425,7 @@
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=938c9ccc"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
