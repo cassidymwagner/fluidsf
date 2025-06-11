@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/github/cassidymwagner/fluidsf/graph/badge.svg?token=1ZZ2HUONX4)](https://codecov.io/github/cassidymwagner/fluidsf)
 
 
-# Overview
+### Overview
 FluidSF is a Python package for calculating structure functions from fluid data. These structure functions can be used to estimate turbulence cascade rates without the constraints of spectral methods. This package serves as a useful tool for analyzing turbulent dynamics in the ocean, atmosphere, and beyond.
 
 <p align="center">
@@ -16,26 +16,21 @@ FluidSF is a Python package for calculating structure functions from fluid data.
 
 **For detailed documentation and examples, see the [FluidSF website](https://cassidymwagner.github.io/fluidsf).**
 
-Installation
----
+### Installation
 The easiest method to install FluidSF is with [pip](https://pip.pypa.io/):
 
-```console
-$ pip install fluidsf
-```
+    $ pip install fluidsf
 
-You can also fork/clone this repository to your local machine and install it locally with pip as well:
+You can also fork/clone this repository to your local machine and install it locally with pip:
 
-```console
-$ pip install .
-```
+    $ pip install .
 
-**Optional dependencies to run example notebooks**: [matplotlib](https://matplotlib.org), [seaborn](https://seaborn.pydata.org), [h5py](https://www.h5py.org), [scipy](https://scipy.org), [xarray](https://xarray.dev)
+**List of optional dependencies to run example notebooks**: [matplotlib](https://matplotlib.org), [seaborn](https://seaborn.pydata.org), [h5py](https://www.h5py.org), [scipy](https://scipy.org), [xarray](https://xarray.dev)
 
 
 
-Quickstart
----
+### Quickstart
+
 Once FluidSF is installed, you can load the module into Python and run some basic calculations with any data. Here we'll initialize linearly increasing velocity fields. For more detail on this example, [see the full notebook on the FluidSF website.](https://cassidymwagner.github.io/fluidsf/qs.html)
 
 First we'll initialize a random 2-D field to analyze:
@@ -73,16 +68,24 @@ plt.show()
 <img src="https://github.com/cassidymwagner/fluidsf/blob/main/docs/quickstart.png" alt="Advective structure function plots" width="400"/>
 </p>
 
-"Can I use FluidSF with my data?"
----
+### "Can I use FluidSF with my data?"
+
 Hopefully! FluidSF was initially developed for numerical simulations and satellite data, but there are of course many different types of data. If you are interested in using this package but you are unsure how to use it with your dataset, please reach out and we are happy to assist! 
 
 The best way to communicate about your data needs is to [start a discussion](https://github.com/cassidymwagner/fluidsf/discussions) where you can describe your dataset and what you're hoping to learn with FluidSF. Before starting a discussion you can check through other discussion posts or review the open (and closed) issues to see if any other users have a similar question or dataset. 
 
 We have plans to support many different types of data, especially oceanographic data, but we encourage any users to engage with us so we can make sure we support as many datasets as possible!
+### Citing
 
-Contributing/Developing Guidelines
----
+If you use FluidSF in your research or educational activities, we would be grateful if you credit FluidSF by name! 
+
+You can cite the specific version of FluidSF with [Zenodo](https://zenodo.org/records/11406185) or use the following citations (replacing your version number):
+
+> Wagner, C., Pearson, B., & Lee, A. (2024). fluidsf (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.11406185
+
+
+### Contributing/Developing Guidelines
+
 This project welcomes contributions and suggestions. The following contribution/development guidelines have been modified from those provided with [pyqg](https://github.com/pyqg/pyqg), an open-source software package for simulating geophysical fluids. Feel free to open an issue, submit a pull request, and/or [contact the owner directly](https://github.com/cassidymwagner).
 
 Anyone interested in helping to develop FluidSF needs to create their own fork of our [git repository](https://github.com/cassidymwagner/fluidsf). (Follow the github [forking instructions](https://help.github.com/articles/fork-a-repo/). You will need a github account.)
@@ -124,21 +127,49 @@ After your pull request is merged, you can switch back to the main branch, rebas
     $ git rebase upstream/main
     $ git branch -d cool_new_feature
 
-### Adding Tests for New Functionality
-
-FluidSF contains automatic tests for all its functions. These tests ensure that any commits/code changes do not affect FluidSF's existing computations. If new functionality is added to FluidSF (i.e., computation of an additional structure function) then a test should be added for each of these new functions. The existing tests [can be found here](https://github.com/cassidymwagner/fluidsf/tree/main/tests), and most new structure functions can be tested by simply adding an additional structure function to the existing test code (see [test_calculate_structure_function_1d.py](https://github.com/cassidymwagner/fluidsf/blob/main/tests/test_calculate_structure_function_1d.py) for a simple 1D example that tests second- and third-order structure functions. If you need help constructing tests, reach out to the FluidSF team!
-
 ### Virtual Testing Environment
 
 This is how to create a virtual environment into which to test-install FluidSF, install it, check the version, and tear down the virtual environment.
 
-    $ conda create --yes -n test_env python=3.9 pip [space-separated list of dependencies]
-    $ conda install --yes -n test_env -c conda-forge fluidsf
-    $ source activate test_env
+    $ conda create --yes -n test_env python=3.7 pip [space-separated list of dependencies]
+    $ conda activate test_env
     $ pip install fluidsf
     $ python -c 'import fluidsf; print(fluidsf.__version__);'
     $ conda deactivate
     $ conda env remove --yes -n test_env
+
+If you prefer to install your local version of FluidSF, run `pip install .` instead of `pip install fluidsf`.
+
+### Installing optional dependencies 
+
+Assuming a local version of FluidSF, install optional dependencies with pip:
+
+    $ pip install .'[examples]'
+    $ pip install .'[test]'
+
+### Adding Tests for New Functionality
+
+FluidSF contains automatic tests for all its functions. These tests ensure that any commits/code changes do not affect FluidSF's existing computations. If new functionality is added to FluidSF (i.e., computation of an additional structure function) then a test should be added for each of these new functions. The existing tests [can be found here](https://github.com/cassidymwagner/fluidsf/tree/main/tests), and most new structure functions can be tested by simply adding an additional structure function to the existing test code (see [test_calculate_structure_function_1d.py](https://github.com/cassidymwagner/fluidsf/blob/main/tests/test_calculate_structure_function_1d.py) for a simple 1D example that tests second- and third-order structure functions. If you need help constructing tests, reach out to the FluidSF team!
+
+#### pytest
+
+FluidSF uses [pytest](https://docs.pytest.org/en/stable/) to write and execute tests.
+
+Install `pytest` with `pip` (also available through conda-forge): 
+
+    $ pip install -U pytest
+
+You can skip the previous step if you already installed the `test` optional dependencies ([see above](#installing-optional-dependencies)). 
+
+To run all tests in the `tests` directory:
+
+    $ pytest tests/*
+
+To run a specific test:
+
+    $ pytest tests/test_bin_data.py
+
+`pytest` provides an output including the number of tests that pass and a traceback of failed tests. It is typically easier to debug one test at a time, so we suggest contributors add one test, ensure the test passes, and then add the next test. 
 
 Funding Acknowledgement
 ---
