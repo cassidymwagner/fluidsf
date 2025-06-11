@@ -43,6 +43,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "numpydoc",
     "nbsphinx",
+    "myst_nb",
 ]
 templates_path = ["_templates"]
 exclude_patterns = ["tests/test_*", "test_*"]

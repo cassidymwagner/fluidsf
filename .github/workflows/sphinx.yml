@@ -36,6 +36,7 @@ jobs:
         pip install sphinx-rtd-theme
         pip install sphinx-press-theme
         pip install furo
+        pip install myst-nb
 
     - uses: actions/checkout@master
     - uses: nikeee/setup-pandoc@v1
