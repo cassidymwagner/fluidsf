@@ -93,6 +93,26 @@ After your pull request is merged, you can switch back to the main branch, rebas
    $ git rebase upstream/main
    $ git branch -d cool_new_feature
 
+
+.. _Pull requests:
+
+Pull requests
+-------------
+
+The FluidSF team is happy to help with the pull request process! Here are a few notes to get you started:
+
+1. PR name should include the new feature or bug fix you are addressing.
+2. Clearly describe the changes you have made in the comments.
+3. If you make additional changes after you first open the PR, update the top comment or add new comments describing your changes.
+4. GitHub Actions will run several processes to make sure your PR won't break FluidSF or change code formatting:
+
+   - In your local repository, use `pre-commit <https://pre-commit.com>`_ and `pytest <https://docs.pytest.org/en/stable/>`_ to make sure your changes pass FluidSF's linting check and test suite.
+   - After you install `pre-commit` you can run ``pre-commit run --all-files`` (or see `pre-commit` documentation to set it up to run automatically with ``git commit``).
+   - See :ref:`Adding tests for new functionality` for details on running `pytest`.
+   - Once your local code passes these checks, push your changes to remote and you should see that your PR passes these checks as well! 🎉
+
+Please don't hesitate to reach out to the FluidSF team if you are having trouble -- we are grateful for your contributions!!
+
 .. _Virtual testing environment:
 
 Virtual Testing Environment
@@ -134,7 +154,7 @@ Install ``pytest`` with ``pip`` (also available through conda-forge): ::
 
    $ pip install -U pytest
 
-You can skip the previous step if you already installed the ``test`` optional dependencies (`see above <#installing-optional-dependencies>`_). 
+You can skip the previous step if you already installed the ``test`` optional dependencies (see :ref:`Installing optional dependencies`).
 
 To run all tests in the ``tests`` directory: ::
 
