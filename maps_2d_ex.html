@@ -267,27 +267,31 @@
 <li><p>Plot 2D maps of structure functions</p></li>
 <li><p>Validate 2D-map structure functions against other modules</p></li>
 </ol>
-<section id="Setup-plot-environment-&amp;-load/format-the-velocity-data-set">
-<h2>Setup plot environment &amp; load/format the velocity data set<a class="headerlink" href="#Setup-plot-environment-&-load/format-the-velocity-data-set" title="Link to this heading">¶</a></h2>
-<p>We will use <code class="docutils literal notranslate"><span class="pre">h5py</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.jld2</span></code> file, the output from <code class="docutils literal notranslate"><span class="pre">GeophysicalFlows.jl</span></code>, a numerical ocean simulator written in Julia. The data consists of 2D (horizontal) fields simulated a periodic domain. There are multiple snapshots of this data, corresponding to different times. We will</p>
+<section id="Download-sample-dataset-with-Pooch">
+<h2>Download sample dataset with Pooch<a class="headerlink" href="#Download-sample-dataset-with-Pooch" title="Link to this heading">¶</a></h2>
+<p>We will use <a class="reference external" href="https://github.com/fatiando/pooch">Pooch</a> to download a sample dataset.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pooch</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib_inline.backend_inline</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://zenodo.org/records/15278227/files/2layer_128.jld2&quot;</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="s2">&quot;a04abc602ca3bbc4ff9a868a96848b6815a17f697202fb12e3ff40762de92ec6&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Setup-plot-environment-&amp;-load/format-the-velocity-data-set">
+<h3>Setup plot environment &amp; load/format the velocity data set<a class="headerlink" href="#Setup-plot-environment-&-load/format-the-velocity-data-set" title="Link to this heading">¶</a></h3>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">h5py</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.jld2</span></code> file, the output from <code class="docutils literal notranslate"><span class="pre">GeophysicalFlows.jl</span></code>, a numerical ocean simulator written in Julia. The data consists of 2D (horizontal) fields simulated a periodic domain. There are multiple snapshots of this data, corresponding to different times. We will</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
 
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>  <span class="c1"># Ignore warnings for the purpose of this tutorial</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
-<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-
-<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;example_data/2layer_128.jld2&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
 <span class="n">grid</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">]</span>
 <span class="n">snapshots</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;snapshots&quot;</span><span class="p">]</span>
 
@@ -304,10 +308,10 @@
 <p>Make a couple of quick plots to see the velocity fields.</p>
 </section>
 <section id="Calculate-2D-maps-of-structure-functions">
-<h2>Calculate 2D maps of structure functions<a class="headerlink" href="#Calculate-2D-maps-of-structure-functions" title="Link to this heading">¶</a></h2>
+<h3>Calculate 2D maps of structure functions<a class="headerlink" href="#Calculate-2D-maps-of-structure-functions" title="Link to this heading">¶</a></h3>
 <p>By default this calculates the velocity advective structure function, but we also specify the traditional longitudinal structure functions (LLL and LL; the latter is calculated by default when LLL is calculated)</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">fluidsf</span>
@@ -320,10 +324,10 @@
 </div>
 </section>
 <section id="Format-output-to-create-2D-(x-y)-map-of-structure-functions">
-<h2>Format output to create 2D (x-y) map of structure functions<a class="headerlink" href="#Format-output-to-create-2D-(x-y)-map-of-structure-functions" title="Link to this heading">¶</a></h2>
+<h3>Format output to create 2D (x-y) map of structure functions<a class="headerlink" href="#Format-output-to-create-2D-(x-y)-map-of-structure-functions" title="Link to this heading">¶</a></h3>
 <p>For computational efficiency, the package only calculates structure functions for separation vectors <span class="math notranslate nohighlight">\(\bf{r}\)</span> where <span class="math notranslate nohighlight">\(\bf{r}\cdot\bf{\hat{x}} \ge 0\)</span>. The structure functions for the other half of the domain (<span class="math notranslate nohighlight">\(\bf{r}\cdot\bf{\hat{x}} \lt 0\)</span>) can be diagnosed from reflectional symmetry, noting that the structure functions here have the property <span class="math notranslate nohighlight">\(SF(\mathbf{r})=SF(-\mathbf{r})\)</span>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we construct a 2D map of the advective structure function</span>
@@ -359,7 +363,7 @@
 </div>
 </section>
 <section id="Plot-2D-maps-of-structure-functions">
-<h2>Plot 2D maps of structure functions<a class="headerlink" href="#Plot-2D-maps-of-structure-functions" title="Link to this heading">¶</a></h2>
+<h3>Plot 2D maps of structure functions<a class="headerlink" href="#Plot-2D-maps-of-structure-functions" title="Link to this heading">¶</a></h3>
 <p>We plot maps of the three velocity-based statistics that were diagnosed by the package:</p>
 <ul class="simple">
 <li><p>Advective structure function,</p></li>
@@ -367,7 +371,7 @@
 <li><p>Second-order longitudinal structure function</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
@@ -433,15 +437,15 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/maps_2d_ex_10_0.png" src="_images/maps_2d_ex_10_0.png" />
+<img alt="_images/maps_2d_ex_13_0.png" src="_images/maps_2d_ex_13_0.png" />
 </div>
 </div>
 </section>
 <section id="Plot-some-other-useful-output:-separation-distance-and-separation-angle">
-<h2>Plot some other useful output: separation distance and separation angle<a class="headerlink" href="#Plot-some-other-useful-output:-separation-distance-and-separation-angle" title="Link to this heading">¶</a></h2>
+<h3>Plot some other useful output: separation distance and separation angle<a class="headerlink" href="#Plot-some-other-useful-output:-separation-distance-and-separation-angle" title="Link to this heading">¶</a></h3>
 <p>The 2D map modules also output separation distance and angle. These could be useful for users, for example when binning or performing analyses. We visualize them here to demonstrate how to access and use these arrays</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
@@ -479,15 +483,15 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/maps_2d_ex_12_0.png" src="_images/maps_2d_ex_12_0.png" />
+<img alt="_images/maps_2d_ex_15_0.png" src="_images/maps_2d_ex_15_0.png" />
 </div>
 </div>
 </section>
 <section id="Validate-2D-map-structure-functions-against-other-modules">
-<h2>Validate 2D-map structure functions against other modules<a class="headerlink" href="#Validate-2D-map-structure-functions-against-other-modules" title="Link to this heading">¶</a></h2>
+<h3>Validate 2D-map structure functions against other modules<a class="headerlink" href="#Validate-2D-map-structure-functions-against-other-modules" title="Link to this heading">¶</a></h3>
 <p>First, let us check that the polar code calculates the same zonal (purely x-separated) and meridional (purely y-separated) advective structure functions as the core 1D calculation modules. Then we will repeat for the third- and second-order longitudinal structure functions. We will start by calculating the zonal and meridional structure functions directly.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_zonal_meridional</span> <span class="o">=</span> <span class="n">fluidsf</span><span class="o">.</span><span class="n">generate_structure_functions_2d</span><span class="p">(</span>
@@ -497,7 +501,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contrasting advective structure functions</span>
@@ -546,11 +550,11 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/maps_2d_ex_15_0.png" src="_images/maps_2d_ex_15_0.png" />
+<img alt="_images/maps_2d_ex_18_0.png" src="_images/maps_2d_ex_18_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Then repeat check for third-order longitudinal SF</span>
@@ -599,11 +603,11 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/maps_2d_ex_16_0.png" src="_images/maps_2d_ex_16_0.png" />
+<img alt="_images/maps_2d_ex_19_0.png" src="_images/maps_2d_ex_19_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Then repeat check for second-order longitudinal SF</span>
@@ -652,9 +656,10 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/maps_2d_ex_17_0.png" src="_images/maps_2d_ex_17_0.png" />
+<img alt="_images/maps_2d_ex_20_0.png" src="_images/maps_2d_ex_20_0.png" />
 </div>
 </div>
+</section>
 </section>
 </section>
 
@@ -714,12 +719,15 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">2D maps of structure functions</a><ul>
+<li><a class="reference internal" href="#Download-sample-dataset-with-Pooch">Download sample dataset with Pooch</a><ul>
 <li><a class="reference internal" href="#Setup-plot-environment-&amp;-load/format-the-velocity-data-set">Setup plot environment &amp; load/format the velocity data set</a></li>
 <li><a class="reference internal" href="#Calculate-2D-maps-of-structure-functions">Calculate 2D maps of structure functions</a></li>
 <li><a class="reference internal" href="#Format-output-to-create-2D-(x-y)-map-of-structure-functions">Format output to create 2D (x-y) map of structure functions</a></li>
 <li><a class="reference internal" href="#Plot-2D-maps-of-structure-functions">Plot 2D maps of structure functions</a></li>
 <li><a class="reference internal" href="#Plot-some-other-useful-output:-separation-distance-and-separation-angle">Plot some other useful output: separation distance and separation angle</a></li>
 <li><a class="reference internal" href="#Validate-2D-map-structure-functions-against-other-modules">Validate 2D-map structure functions against other modules</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

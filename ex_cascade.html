@@ -267,32 +267,31 @@
 <li><p>Estimate cascade rates</p></li>
 <li><p>Plot cascade rates as a function of length scale</p></li>
 </ol>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib_inline.backend_inline</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>  <span class="c1"># Ignore warnings for the purpose of this tutorial</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
-<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<section id="Initialize-the-data">
-<h2>Initialize the data<a class="headerlink" href="#Initialize-the-data" title="Link to this heading">¶</a></h2>
-<p>We will use <code class="docutils literal notranslate"><span class="pre">h5py</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.jld2</span></code> file, the output from <a class="reference external" href="https://fourierflows.github.io/GeophysicalFlowsDocumentation/stable/">GeophysicalFlows.jl</a>, a numerical ocean simulator written in Julia. The data consists of 2D (horizontal) fields simulated over a periodic domain. There are multiple snapshots of this data, corresponding to different times. We will select the last snapshot to analyze.</p>
+<section id="Download-sample-dataset-with-Pooch">
+<h2>Download sample dataset with Pooch<a class="headerlink" href="#Download-sample-dataset-with-Pooch" title="Link to this heading">¶</a></h2>
+<p>We will use <a class="reference external" href="https://github.com/fatiando/pooch">Pooch</a> to download a sample dataset.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;example_data/2layer_128.jld2&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pooch</span>
+
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://zenodo.org/records/15278227/files/2layer_128.jld2&quot;</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="s2">&quot;a04abc602ca3bbc4ff9a868a96848b6815a17f697202fb12e3ff40762de92ec6&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Initialize-the-data">
+<h3>Initialize the data<a class="headerlink" href="#Initialize-the-data" title="Link to this heading">¶</a></h3>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">h5py</span></code> to load a <code class="docutils literal notranslate"><span class="pre">.jld2</span></code> file, the output from <a class="reference external" href="https://fourierflows.github.io/GeophysicalFlowsDocumentation/stable/">GeophysicalFlows.jl</a>, a numerical ocean simulator written in Julia. The data consists of 2D (horizontal) fields simulated over a periodic domain. There are multiple snapshots of this data, corresponding to different times. We will select the last snapshot to analyze.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
 <span class="n">grid</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;grid&quot;</span><span class="p">]</span>
 <span class="n">snapshots</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;snapshots&quot;</span><span class="p">]</span>
 
@@ -308,7 +307,7 @@
 </div>
 <p>Make a couple of quick plots of the top layer at the last timestep to see the velocity fields.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -330,15 +329,15 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/ex_cascade_5_0.png" src="_images/ex_cascade_5_0.png" />
+<img alt="_images/ex_cascade_7_0.png" src="_images/ex_cascade_7_0.png" />
 </div>
 </div>
 </section>
 <section id="Calculate-structure-functions-for-all-snapshots">
-<h2>Calculate structure functions for all snapshots<a class="headerlink" href="#Calculate-structure-functions-for-all-snapshots" title="Link to this heading">¶</a></h2>
+<h3>Calculate structure functions for all snapshots<a class="headerlink" href="#Calculate-structure-functions-for-all-snapshots" title="Link to this heading">¶</a></h3>
 <p>Here we will calculate the advective velocity structure function and the third order longitudinal velocity structure function. We will calculate each structure function in the x-direction and the y-direction for a total of four unique structure functions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">fluidsf</span>
@@ -359,10 +358,10 @@
 </div>
 </section>
 <section id="Bootstrap-structure-functions">
-<h2>Bootstrap structure functions<a class="headerlink" href="#Bootstrap-structure-functions" title="Link to this heading">¶</a></h2>
+<h3>Bootstrap structure functions<a class="headerlink" href="#Bootstrap-structure-functions" title="Link to this heading">¶</a></h3>
 <p>We are using <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html">scipy’s bootstrapping method</a> here, though other methods of estimating error and variability are possible. We will use a confidence level of 90%.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -403,7 +402,7 @@
 </div>
 </section>
 <section id="Estimate-cascade-rates">
-<h2>Estimate cascade rates<a class="headerlink" href="#Estimate-cascade-rates" title="Link to this heading">¶</a></h2>
+<h3>Estimate cascade rates<a class="headerlink" href="#Estimate-cascade-rates" title="Link to this heading">¶</a></h3>
 <p>Different types of structure functions have different relationships to properties of turbulent flow, including cascade rates (inter-scale fluxes). Both velocity structure functions we have calculated can be related to the inverse energy cascade present in 2D turbulent systems. For more details about structure functions and their relevance to fluid properties, see the section <a class="reference external" href="https://cassidymwagner.github.io/fluidsf/sfs.html">What are structure functions?</a></p>
 <p>The advective velocity structure function (<code class="docutils literal notranslate"><span class="pre">SF_advection_velocity</span></code> or <span class="math notranslate nohighlight">\(ASF_v\)</span>) and the third order longitudinal velocity structure function (<code class="docutils literal notranslate"><span class="pre">SF_LLL</span></code> or <span class="math notranslate nohighlight">\(SF_v^3\)</span>) have the following relationships with the inverse energy cascade rate in a 2D quasi-geostrophic system:</p>
 <p><span class="math notranslate nohighlight">\(\epsilon = -2 SF^3_v /3\mathbf{r}\)</span></p>
@@ -411,7 +410,7 @@
 <p>where <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is an array of separation differences (<code class="docutils literal notranslate"><span class="pre">x-diffs</span></code> or <code class="docutils literal notranslate"><span class="pre">y-diffs</span></code> in this case).</p>
 <p>Now we can estimate the cascade rates using both structure functions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon_LLL_x_mean</span> <span class="o">=</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">boot_LLL_x_mean</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">sfs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x-diffs&#39;</span><span class="p">])</span>
@@ -423,9 +422,9 @@
 </div>
 </section>
 <section id="Plot-cascade-rates-and-compare">
-<h2>Plot cascade rates and compare<a class="headerlink" href="#Plot-cascade-rates-and-compare" title="Link to this heading">¶</a></h2>
+<h3>Plot cascade rates and compare<a class="headerlink" href="#Plot-cascade-rates-and-compare" title="Link to this heading">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -500,9 +499,10 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/ex_cascade_13_0.png" src="_images/ex_cascade_13_0.png" />
+<img alt="_images/ex_cascade_15_0.png" src="_images/ex_cascade_15_0.png" />
 </div>
 </div>
+</section>
 </section>
 </section>
 
@@ -562,11 +562,14 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Estimate cascade rates from structure functions</a><ul>
+<li><a class="reference internal" href="#Download-sample-dataset-with-Pooch">Download sample dataset with Pooch</a><ul>
 <li><a class="reference internal" href="#Initialize-the-data">Initialize the data</a></li>
 <li><a class="reference internal" href="#Calculate-structure-functions-for-all-snapshots">Calculate structure functions for all snapshots</a></li>
 <li><a class="reference internal" href="#Bootstrap-structure-functions">Bootstrap structure functions</a></li>
 <li><a class="reference internal" href="#Estimate-cascade-rates">Estimate cascade rates</a></li>
 <li><a class="reference internal" href="#Plot-cascade-rates-and-compare">Plot cascade rates and compare</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

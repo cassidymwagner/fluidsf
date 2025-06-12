@@ -265,25 +265,6 @@
 <li><p>Calculate different types of structure functions</p></li>
 <li><p>Plot the structure functions as a function of separation distance</p></li>
 </ol>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib_inline.backend_inline</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>  <span class="c1"># Ignore warnings for the purpose of this tutorial</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
-
-<span class="n">matplotlib_inline</span><span class="o">.</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <section id="Create-1D-data">
 <h2>Create 1D data<a class="headerlink" href="#Create-1D-data" title="Link to this heading">¶</a></h2>
 <p>We will generate u and v velocity arrays that increase linearly. The v velocity will be half the magnitude of the u velocity. We will also create an arbitrary scalar array at half the magnitude of the v velocity.</p>
@@ -291,7 +272,9 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nx</span> <span class="o">=</span> <span class="mi">100</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">nx</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">x</span>
 <span class="n">v</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span>

@@ -1,6 +1,26 @@
 {
  "cells": [
   {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+   "nbsphinx": "hidden"
+   },
+   "outputs": [],
+   "source": [
+    "import warnings\n",
+    "\n",
+    "import matplotlib_inline.backend_inline\n",
+    "import seaborn as sns\n",
+    "\n",
+    "warnings.filterwarnings(\"ignore\")  # Ignore warnings for the purpose of this tutorial\n",
+    "\n",
+    "sns.set_style(style=\"white\")\n",
+    "sns.set_context(\"talk\")\n",
+    "matplotlib_inline.backend_inline.set_matplotlib_formats(\"png\", dpi=200)"
+   ]
+  },
+  {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
@@ -26,30 +46,40 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "### Download sample dataset with Pooch\n",
+    "We will use [Pooch](https://github.com/fatiando/pooch) to download a sample dataset."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pooch\n",
+    "\n",
+    "file_path = pooch.retrieve(\n",
+    "    url=\"https://zenodo.org/records/15278227/files/2layer_128.jld2\",\n",
+    "    known_hash=\"a04abc602ca3bbc4ff9a868a96848b6815a17f697202fb12e3ff40762de92ec6\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Setup plot environment & load/format the velocity data set \n",
     "We will use `h5py` to load a `.jld2` file, the output from `GeophysicalFlows.jl`, a numerical ocean simulator written in Julia. The data consists of 2D (horizontal) fields simulated  a periodic domain. There are multiple snapshots of this data, corresponding to different times. We will "
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [],
    "source": [
-    "import warnings\n",
-    "\n",
     "import h5py\n",
-    "import matplotlib_inline.backend_inline\n",
-    "import seaborn as sns\n",
     "\n",
-    "warnings.filterwarnings(\"ignore\")  # Ignore warnings for the purpose of this tutorial\n",
-    "\n",
-    "sns.set_style(style=\"white\")\n",
-    "sns.set_context(\"talk\")\n",
-    "matplotlib_inline.backend_inline.set_matplotlib_formats(\"png\", dpi=200)\n",
-    "\n",
-    "\n",
-    "f = h5py.File(\"example_data/2layer_128.jld2\", \"r\")\n",
+    "f = h5py.File(file_path, \"r\")\n",
     "grid = f[\"grid\"]\n",
     "snapshots = f[\"snapshots\"]\n",
     "\n",
@@ -79,7 +109,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -101,7 +131,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -149,7 +179,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
@@ -233,7 +263,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
@@ -288,7 +318,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -299,7 +329,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [
     {
@@ -357,7 +387,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
@@ -415,7 +445,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -474,7 +504,7 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3",
+   "display_name": "py311",
    "language": "python",
    "name": "python3"
   },
