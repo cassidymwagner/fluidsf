@@ -66,4 +66,3 @@ nbsphinx_execute_arguments = [
     "--InlineBackend.figure_formats={'png'}",
     "--InlineBackend.rc={'figure.dpi': 200}",
 ]
-
