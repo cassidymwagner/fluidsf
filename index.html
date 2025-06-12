@@ -321,8 +321,26 @@ $ git rebase upstream/main
 $ git branch -d cool_new_feature
 </pre></div>
 </div>
+<section id="pull-requests">
+<span id="id4"></span><h3>Pull requests<a class="headerlink" href="#pull-requests" title="Link to this heading">¶</a></h3>
+<p>The FluidSF team is happy to help with the pull request process! Here are a few notes to get you started:</p>
+<ol class="arabic simple">
+<li><p>PR name should include the new feature or bug fix you are addressing.</p></li>
+<li><p>Clearly describe the changes you have made in the comments.</p></li>
+<li><p>If you make additional changes after you first open the PR, update the top comment or add new comments describing your changes.</p></li>
+<li><p>GitHub Actions will run several processes to make sure your PR won’t break FluidSF or change code formatting:</p>
+<ul class="simple">
+<li><p>In your local repository, use <a class="reference external" href="https://pre-commit.com">pre-commit</a> and <a class="reference external" href="https://docs.pytest.org/en/stable/">pytest</a> to make sure your changes pass FluidSF’s linting check and test suite.</p></li>
+<li><p>After you install <cite>pre-commit</cite> you can run <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all-files</span></code> (or see <cite>pre-commit</cite> documentation to set it up to run automatically with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code>).</p></li>
+<li><p>See <a class="reference internal" href="#adding-tests-for-new-functionality"><span class="std std-ref">Adding tests for new functionality</span></a> for details on running <cite>pytest</cite>.</p></li>
+<li><p>Once your local code passes these checks, push your changes to remote and you should see that your PR passes these checks as well! 🎉</p></li>
+</ul>
+</li>
+</ol>
+<p>Please don’t hesitate to reach out to the FluidSF team if you are having trouble – we are grateful for your contributions!!</p>
+</section>
 <section id="virtual-testing-environment">
-<span id="id4"></span><h3>Virtual Testing Environment<a class="headerlink" href="#virtual-testing-environment" title="Link to this heading">¶</a></h3>
+<span id="id5"></span><h3>Virtual Testing Environment<a class="headerlink" href="#virtual-testing-environment" title="Link to this heading">¶</a></h3>
 <p>This is how to create a virtual environment into which to test-install FluidSF, install it, check the version, and tear down the virtual environment.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --yes -n test_env python=3.7 pip [space-separated list of dependencies]
 $ conda activate test_env
@@ -335,7 +353,7 @@ $ conda env remove --yes -n test_env
 <p>If you prefer to install your local version of FluidSF, run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> instead of <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">fluidsf</span></code>.</p>
 </section>
 <section id="installing-optional-dependencies">
-<span id="id5"></span><h3>Installing optional dependencies<a class="headerlink" href="#installing-optional-dependencies" title="Link to this heading">¶</a></h3>
+<span id="id6"></span><h3>Installing optional dependencies<a class="headerlink" href="#installing-optional-dependencies" title="Link to this heading">¶</a></h3>
 <p>Assuming a local version of FluidSF, install optional dependencies with pip:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install .&#39;[examples]&#39;
 $ pip install .&#39;[test]&#39;
@@ -343,7 +361,7 @@ $ pip install .&#39;[test]&#39;
 </div>
 </section>
 <section id="adding-tests-for-new-functionality">
-<span id="id6"></span><h3>Adding tests for new functionality<a class="headerlink" href="#adding-tests-for-new-functionality" title="Link to this heading">¶</a></h3>
+<span id="id7"></span><h3>Adding tests for new functionality<a class="headerlink" href="#adding-tests-for-new-functionality" title="Link to this heading">¶</a></h3>
 <p>FluidSF contains automatic tests for all its functions. These tests ensure that any commits/code changes do not affect FluidSF’s existing computations. If new functionality is added to FluidSF (i.e., computation of an additional structure function) then a test should be added for each of these new functions. The existing tests <a class="reference external" href="https://github.com/cassidymwagner/fluidsf/tree/main/tests">can be found here</a>, and most new structure functions can be tested by simply adding an additional structure function to the existing test code (see <a class="reference external" href="https://github.com/cassidymwagner/fluidsf/blob/main/tests/test_calculate_structure_function_1d.py">test_calculate_structure_function_1d.py</a> for a simple 1D example that tests second- and third-order structure functions.) If you need help constructing tests, reach out to the FluidSF team!</p>
 <p><strong>pytest</strong></p>
 <p>FluidSF uses <a class="reference external" href="https://docs.pytest.org/en/stable/">pytest</a> to write and execute tests.</p>
@@ -351,7 +369,7 @@ $ pip install .&#39;[test]&#39;
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install -U pytest
 </pre></div>
 </div>
-<p>You can skip the previous step if you already installed the <code class="docutils literal notranslate"><span class="pre">test</span></code> optional dependencies (see above).</p>
+<p>You can skip the previous step if you already installed the <code class="docutils literal notranslate"><span class="pre">test</span></code> optional dependencies (see <a class="reference internal" href="#installing-optional-dependencies"><span class="std std-ref">Installing optional dependencies</span></a>).</p>
 <p>To run all tests in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest tests/*
 </pre></div>
@@ -363,7 +381,7 @@ $ pip install .&#39;[test]&#39;
 <p><code class="docutils literal notranslate"><span class="pre">pytest</span></code> provides an output including the number of tests that pass and a traceback of failed tests. It is typically easier to debug one test at a time, so we suggest contributors add one test, ensure the test passes, and then add the next test.</p>
 </section>
 <section id="example-notebooks-and-scripts">
-<span id="id7"></span><h3>Example notebooks and scripts<a class="headerlink" href="#example-notebooks-and-scripts" title="Link to this heading">¶</a></h3>
+<span id="id9"></span><h3>Example notebooks and scripts<a class="headerlink" href="#example-notebooks-and-scripts" title="Link to this heading">¶</a></h3>
 <p>Example Jupyter notebooks and python scripts can be found in the <a class="reference external" href="https://github.com/cassidymwagner/fluidsf/tree/main/examples">examples directory</a>. If you would like to write a new example, follow the format of the <a class="reference external" href="https://github.com/cassidymwagner/fluidsf/tree/main/examples/jupyter_notebooks">current Jupyter notebook examples</a> and then create a stripped-down python script to accompany your example, similar to the <a class="reference external" href="https://github.com/cassidymwagner/fluidsf/tree/main/examples/python_scripts">current python scripts</a>.</p>
 <p>Steps for running the examples:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd fluidsf
@@ -428,6 +446,7 @@ $ jupyter execute examples/jupyter_notebooks/*.ipynb
 <li><a class="reference internal" href="#installing">Installing</a></li>
 <li><a class="reference internal" href="#citing">Citing</a></li>
 <li><a class="reference internal" href="#contributing-developing-guidelines">Contributing/Developing Guidelines</a><ul>
+<li><a class="reference internal" href="#pull-requests">Pull requests</a></li>
 <li><a class="reference internal" href="#virtual-testing-environment">Virtual Testing Environment</a></li>
 <li><a class="reference internal" href="#installing-optional-dependencies">Installing optional dependencies</a></li>
 <li><a class="reference internal" href="#adding-tests-for-new-functionality">Adding tests for new functionality</a></li>
