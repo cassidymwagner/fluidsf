@@ -175,7 +175,7 @@ ax1.fill_between(
 ax1.fill_between(
     sfs_list[0]["y-diffs"],
     -boot_ASF_y_conf[0] / 2,
-    -boot_ASF_x_conf[1] / 2,
+    -boot_ASF_y_conf[1] / 2,
     color="tab:red",
     alpha=0.3,
     edgecolor=None,
