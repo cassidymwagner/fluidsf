@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10463864.svg)](https://zenodo.org/doi/10.5281/zenodo.10463863)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17155189.svg)](https://zenodo.org/doi/10.5281/zenodo.17155189)
 [![PyPI - Version](https://img.shields.io/pypi/v/fluidsf?color=blue)](https://pypi.org/project/fluidsf)
 [![documentation](https://img.shields.io/badge/documentation-stable%20release-blue)](https://cassidymwagner.github.io/fluidsf)
 [![CI](https://github.com/cassidymwagner/FluidSF/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cassidymwagner/FluidSF/actions/workflows/ci.yml)
@@ -77,9 +77,9 @@ We have plans to support many different types of data, especially oceanographic 
 
 If you use FluidSF in your research or educational activities, we would be grateful if you credit FluidSF by name! 
 
-You can cite the specific version of FluidSF with [Zenodo](https://zenodo.org/records/11406185) or use the following citations (replacing your version number):
+You can cite the specific version of FluidSF with [Zenodo](https://zenodo.org/records/17155189) or use the following citations (replacing your version number):
 
-> Wagner, C., Pearson, B., & Lee, A. (2024). fluidsf (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.11406185
+> Wagner, C., Pearson, B., & Lee, A. (2024). fluidsf (v0.2.1). Zenodo. https://doi.org/10.5281/zenodo.17155189
 
 
 ## Contributing/Developing Guidelines
