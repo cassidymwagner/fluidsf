@@ -1,12 +1,14 @@
 on:
   push:
-    # branches:
-    #   - main
-    tags:
-      - "paper*"
-  # pull_request:
-  #   branches:
-  #     - main
+    branches:
+      - main
+    paths:
+      - paper/paper.md
+  pull_request:
+    branches:
+      - main
+    paths:
+      - paper/paper.md
 jobs:
   paper:
     runs-on: ubuntu-latest
