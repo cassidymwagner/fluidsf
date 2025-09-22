@@ -3,12 +3,12 @@ on:
     branches:
       - main
     paths:
-      - paper/paper.md
+      - paper/paper.*
   pull_request:
     branches:
       - main
     paths:
-      - paper/paper.md
+      - paper/paper.*
 jobs:
   paper:
     runs-on: ubuntu-latest
