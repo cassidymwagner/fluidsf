@@ -77,9 +77,9 @@ We have plans to support many different types of data, especially oceanographic 
 
 If you use FluidSF in your research or educational activities, we would be grateful if you credit FluidSF by name! 
 
-You can cite the specific version of FluidSF with [Zenodo](https://zenodo.org/records/17155189) or use the following citations (replacing your version number):
+You can cite the specific version of FluidSF with [Zenodo](https://zenodo.org/records/10463863) or use the following citations (replacing your version number):
 
-> Wagner, C., Pearson, B., & Lee, A. (2024). fluidsf (v0.2.1). Zenodo. https://doi.org/10.5281/zenodo.17155189
+> Wagner, C., Lee, A., & Pearson, B. (2025). FluidSF: A Python package for calculating turbulent flow statistics (v0.2.2). Zenodo. https://doi.org/10.5281/zenodo.10463863
 
 
 ## Contributing/Developing Guidelines
