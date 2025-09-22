@@ -21,7 +21,7 @@ from .shift_array_2d import shift_array_2d
 from .shift_array_3d import shift_array_3d
 from .shift_array_xy import shift_array_xy
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 __all__ = (
     "generate_sf_maps_2d",
