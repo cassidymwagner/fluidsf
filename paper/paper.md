@@ -17,7 +17,7 @@ authors:
     orcid: 0000-0002-0202-0481
     affiliation: '1'
 affiliations:
- - name: Oregon State University
+ - name: College of Earth, Ocean, and Atmospheric Sciences, Oregon State University, 1500 SW Jefferson Way, Corvallis, OR 97331
    index: 1
 date: 05 August 2024
 bibliography: paper.bib
