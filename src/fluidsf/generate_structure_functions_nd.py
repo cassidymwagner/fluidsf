@@ -1,6 +1,7 @@
 import numpy as np
 import xarray as xr
 
+
 def compute_LLL(
     ds,
     shiftby,
@@ -60,26 +61,26 @@ def compute_LLL(
         # The shifting list comp is doing all the heavy lifting in terms of iteration, 
         # so it would also be a bottle neck. Supplying a pre-chunked dataset should help
         # at this point, but there might be better options. 
-        sf_results = [
-            (
+        LLL_lst = []
+        dx_lst = []
+        for shift_i in shift_values:
+            sf_results = (
                 ds[U_i].roll({X_i: int(shift_i)}, roll_coords=False)
                 if periodic_i
                 else ds[U_i].shift({X_i: int(shift_i)})
             )
-            for shift_i in shift_values
-        ]
-
+            LLL_lst.append(
+                ((ds[U_i] - sf_results) ** 3)
+                .mean(dim=avg_dim)
+                .expand_dims(shiftby=[shift_i])
+            )
+            dx_lst.append(float(ds[X_i][int(shift_i)] - ds[X_i][0]))
         # Just reformatting the results of the list comp into a dataset with a new 
         # shiftby dimension. Since we call a mean here, this might take longer if 
         # the initial dataset is not already chunked.
         ds_LLL[f"SF_{U_i}{U_i}{U_i}"] = xr.concat(
-            [
-                ((ds[U_i] - shifted) ** 3).mean(dim=avg_dim).expand_dims(
-                    shiftby=[shift_i]
-                )
-                for shifted, shift_i in zip(sf_results, shift_values, strict=False)
-            ],
+            LLL_lst,
             dim="shiftby",
-        ).assign_coords(shiftby=shift_values)
+        ).assign_coords(shiftby=np.atleast_1d(dx_lst))
 
     return ds_LLL
