@@ -179,7 +179,7 @@ def generate_sf_maps_2d(  # noqa: C901, D417
             ]
         if any("ASF_S" in t for t in sf_type):
             SF_scalar_adv[x_shift, y_shift + int(len(y) / 2)] = SF_dicts[
-                "SF_advection_velocity_xy"
+                "SF_advection_scalar_xy"
             ]
         if any("LL" in t for t in sf_type):
             SF_LL[x_shift, y_shift + int(len(y) / 2)] = SF_dicts["SF_LL_xy"]
