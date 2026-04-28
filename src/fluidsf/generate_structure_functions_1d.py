@@ -147,11 +147,17 @@ def generate_structure_functions_1d(  # noqa: C901, D417
         if boundary == "Periodic":
             xroll = shift_array_1d(x, shift_by=sep_id, boundary="Periodic")
             if y is not None:
-                yroll = shift_array_1d(y, shift_by=1, boundary="Periodic")
+                if grid_type == "latlon":
+                    yroll = shift_array_1d(y, shift_by=sep_id, boundary="Periodic")
+                else:
+                    yroll = y
         else:
             xroll = shift_array_1d(x, shift_by=sep_id, boundary=None)
             if y is not None:
-                yroll = shift_array_1d(y, shift_by=1, boundary=None)
+                if grid_type == "latlon":
+                    yroll = shift_array_1d(y, shift_by=sep_id, boundary=None)
+                else:
+                    yroll = y
 
         SF_dicts = calculate_structure_function_1d(
             u,
